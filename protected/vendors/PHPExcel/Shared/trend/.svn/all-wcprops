@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/mvs_rep/!svn/ver/312/trunk/contratos_ctipaume/protected/vendors/PHPExcel/Shared/trend
+END
+logarithmicBestFitClass.php
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/mvs_rep/!svn/ver/312/trunk/contratos_ctipaume/protected/vendors/PHPExcel/Shared/trend/logarithmicBestFitClass.php
+END
+bestFitClass.php
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/mvs_rep/!svn/ver/312/trunk/contratos_ctipaume/protected/vendors/PHPExcel/Shared/trend/bestFitClass.php
+END
+trendClass.php
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/mvs_rep/!svn/ver/312/trunk/contratos_ctipaume/protected/vendors/PHPExcel/Shared/trend/trendClass.php
+END
+polynomialBestFitClass.php
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/mvs_rep/!svn/ver/312/trunk/contratos_ctipaume/protected/vendors/PHPExcel/Shared/trend/polynomialBestFitClass.php
+END
+exponentialBestFitClass.php
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/mvs_rep/!svn/ver/312/trunk/contratos_ctipaume/protected/vendors/PHPExcel/Shared/trend/exponentialBestFitClass.php
+END
+linearBestFitClass.php
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/mvs_rep/!svn/ver/312/trunk/contratos_ctipaume/protected/vendors/PHPExcel/Shared/trend/linearBestFitClass.php
+END
+powerBestFitClass.php
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/mvs_rep/!svn/ver/312/trunk/contratos_ctipaume/protected/vendors/PHPExcel/Shared/trend/powerBestFitClass.php
+END

@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/mvs_rep/!svn/ver/539/trunk/contratos_ctipaume/protected/views/garantias
+END
+_search.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/mvs_rep/!svn/ver/478/trunk/contratos_ctipaume/protected/views/garantias/_search.php
+END
+update.php
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/mvs_rep/!svn/ver/376/trunk/contratos_ctipaume/protected/views/garantias/update.php
+END
+delete.php
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/mvs_rep/!svn/ver/497/trunk/contratos_ctipaume/protected/views/garantias/delete.php
+END
+create.php
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/mvs_rep/!svn/ver/376/trunk/contratos_ctipaume/protected/views/garantias/create.php
+END
+adminGarantias.php
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/mvs_rep/!svn/ver/382/trunk/contratos_ctipaume/protected/views/garantias/adminGarantias.php
+END
+admin.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/mvs_rep/!svn/ver/478/trunk/contratos_ctipaume/protected/views/garantias/admin.php
+END
+agregar.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/mvs_rep/!svn/ver/539/trunk/contratos_ctipaume/protected/views/garantias/agregar.php
+END
+editGarantia.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/mvs_rep/!svn/ver/539/trunk/contratos_ctipaume/protected/views/garantias/editGarantia.php
+END
+index.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/mvs_rep/!svn/ver/376/trunk/contratos_ctipaume/protected/views/garantias/index.php
+END
+_form.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/mvs_rep/!svn/ver/478/trunk/contratos_ctipaume/protected/views/garantias/_form.php
+END
+_view.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/mvs_rep/!svn/ver/478/trunk/contratos_ctipaume/protected/views/garantias/_view.php
+END
+view.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/mvs_rep/!svn/ver/478/trunk/contratos_ctipaume/protected/views/garantias/view.php
+END

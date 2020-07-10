@@ -1,0 +1,100 @@
+10
+
+dir
+600
+https://subversion.assembla.com/svn/mvs_rep/trunk/contratos_ctipaume/protected/views
+https://subversion.assembla.com/svn/mvs_rep
+
+
+
+2013-11-15T23:57:06.601181Z
+582
+crmoya
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+bae9b43b-3144-47ef-8438-16da80aae333
+
+
+
+
+
+
+
+
+()
+
+admin
+dir
+
+administrativo
+dir
+
+contratos
+dir
+
+contratosAdjudicados
+dir
+
+datos
+dir
+
+epAnticipo
+dir
+
+epCanjeRetencion
+dir
+
+epObra
+dir
+
+financiero
+dir
+
+garantias
+dir
+
+informeGarantias
+dir
+
+instituciones
+dir
+
+layouts
+dir
+
+objetosGarantias
+dir
+
+operador
+dir
+
+site
+dir
+
+tiposContratos
+dir
+
+tiposGarantias
+dir
+
+tiposReajustes
+dir
+
+usuarios
+dir
+
+visualizador
+dir
+

@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/mvs_rep/!svn/ver/458/trunk/contratos_ctipaume/protected/extensions/phpexcel/Classes/PHPExcel/Shared/JAMA
+END
+QRDecomposition.php
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/mvs_rep/!svn/ver/458/trunk/contratos_ctipaume/protected/extensions/phpexcel/Classes/PHPExcel/Shared/JAMA/QRDecomposition.php
+END
+CholeskyDecomposition.php
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn/mvs_rep/!svn/ver/458/trunk/contratos_ctipaume/protected/extensions/phpexcel/Classes/PHPExcel/Shared/JAMA/CholeskyDecomposition.php
+END
+CHANGELOG.TXT
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/mvs_rep/!svn/ver/458/trunk/contratos_ctipaume/protected/extensions/phpexcel/Classes/PHPExcel/Shared/JAMA/CHANGELOG.TXT
+END
+SingularValueDecomposition.php
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/svn/mvs_rep/!svn/ver/458/trunk/contratos_ctipaume/protected/extensions/phpexcel/Classes/PHPExcel/Shared/JAMA/SingularValueDecomposition.php
+END
+LUDecomposition.php
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/mvs_rep/!svn/ver/458/trunk/contratos_ctipaume/protected/extensions/phpexcel/Classes/PHPExcel/Shared/JAMA/LUDecomposition.php
+END
+Matrix.php
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/mvs_rep/!svn/ver/458/trunk/contratos_ctipaume/protected/extensions/phpexcel/Classes/PHPExcel/Shared/JAMA/Matrix.php
+END
+EigenvalueDecomposition.php
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svn/mvs_rep/!svn/ver/458/trunk/contratos_ctipaume/protected/extensions/phpexcel/Classes/PHPExcel/Shared/JAMA/EigenvalueDecomposition.php
+END

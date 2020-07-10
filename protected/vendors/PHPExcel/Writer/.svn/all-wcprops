@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/mvs_rep/!svn/ver/312/trunk/contratos_ctipaume/protected/vendors/PHPExcel/Writer
+END
+CSV.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/mvs_rep/!svn/ver/312/trunk/contratos_ctipaume/protected/vendors/PHPExcel/Writer/CSV.php
+END
+HTML.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/mvs_rep/!svn/ver/312/trunk/contratos_ctipaume/protected/vendors/PHPExcel/Writer/HTML.php
+END
+Excel2007.php
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/mvs_rep/!svn/ver/312/trunk/contratos_ctipaume/protected/vendors/PHPExcel/Writer/Excel2007.php
+END
+IWriter.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/mvs_rep/!svn/ver/312/trunk/contratos_ctipaume/protected/vendors/PHPExcel/Writer/IWriter.php
+END
+Excel5.php
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/mvs_rep/!svn/ver/312/trunk/contratos_ctipaume/protected/vendors/PHPExcel/Writer/Excel5.php
+END
+PDF.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/mvs_rep/!svn/ver/312/trunk/contratos_ctipaume/protected/vendors/PHPExcel/Writer/PDF.php
+END
+Serialized.php
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/mvs_rep/!svn/ver/312/trunk/contratos_ctipaume/protected/vendors/PHPExcel/Writer/Serialized.php
+END
