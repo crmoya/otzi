@@ -5,56 +5,44 @@ class SiteController extends Controller
 	/**
 	 * Declares class-based actions.
 	 */
+
 	public function actions()
 	{
 		return array(
-			// captcha action renders the CAPTCHA image displayed on the contact page
+		// captcha action renders the CAPTCHA image displayed on the contact page
 			'captcha'=>array(
 				'class'=>'CCaptchaAction',
 				'backColor'=>0xFFFFFF,
-			),
-			// page action renders "static" pages stored under 'protected/views/site/pages'
-			// They can be accessed via: index.php?r=site/page&view=FileName
+		),
+		// page action renders "static" pages stored under 'protected/views/site/pages'
+		// They can be accessed via: index.php?r=site/page&view=FileName
 			'page'=>array(
 				'class'=>'CViewAction',
-			),
+		),
 		);
 	}
 
-	public function filters()
-	{
-		return array(
-			'accessControl', // perform access control for CRUD operations
-		);
-	}
 
-	public function accessRules()
-	{
-		return array(
-		array('allow',
-				'actions'=>array('login','logout','error','index'),
-				'users'=>array('*'),
-		),
-		array('allow',
-				'actions'=>array('cambiarClave'),
-				'users'=>array('@'),
-		),
-		array('allow',
-				'actions'=>array('informes'),
-				'roles'=>array('operador'),
-		),
-		array('allow',
-				'actions'=>array('configureRoles'),
-				'users'=>array('*'),
-		),
-		array('allow',
-				'actions'=>array('download'),
-				'roles'=>array('operador'),
-		),
-		array('deny',  // deny all users
-				'users'=>array('*'),
-		),
-		);
+	public function actionConfigureRoles(){
+
+/*
+		$record=Authassignment::model()->deleteAll();
+		$record=Authitem::model()->deleteAll();
+		$record=Authitemchild::model()->deleteAll();
+		$auth=Yii::app()->authManager;
+
+		$auth->createOperation('configureRoles','configure app roles');
+
+		$role=$auth->createRole('administrador');
+		$role->addChild('configureRoles');
+
+		$role=$auth->createRole('operativo');
+		$role=$auth->createRole('gerencia');
+		
+		$auth->assign('administrador',4);
+
+		$this->render("//admin/indexAdmin",array('nombre'=>Yii::app()->user->nombre));
+*/
 	}
 	/**
 	 * This is the default 'index' action that is invoked
@@ -62,7 +50,6 @@ class SiteController extends Controller
 	 */
 	public function actionIndex()
 	{
-		
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
 
@@ -70,60 +57,35 @@ class SiteController extends Controller
 			$this->actionLogin();
 		}
 		else{
-                    
-                    $usuario = Usuarios::model()->findByPk(Yii::app()->user->id);
-                    $nombre = "SIN USUARIO";
-                    if($usuario != null){
-                        $nombre = $usuario->nombre;
-                    }
-                    
 			if(Yii::app()->user->rol == 'administrador'){
-				$this->render("//admin/indexAdmin",array('nombre'=>$nombre));
+				$this->render("//admin/indexAdmin",array('nombre'=>Yii::app()->user->nombre));
 			}
-			else if(Yii::app()->user->rol == 'operador'){
-				$this->render("//operador/indexOper",array('nombre'=>$nombre));
+			if(Yii::app()->user->rol == 'operativo'){
+				$this->render("//operativo/indexOper",array('nombre'=>Yii::app()->user->nombre));
 			}
-			else{
-				$this->render("//site/error",array('code'=>'Rol no existe','message'=>'Por favor reingrese a la Aplicación, si el error persiste contacte al administrador del sitio.'));
+			if(Yii::app()->user->rol == 'gerencia'){
+				$this->render("//gerencia/indexGerencia",array('nombre'=>Yii::app()->user->nombre));
 			}
 		}
 
 
 	}
-	
-	public function actionDownload($path,$nombre,$tipo)
+
+	/**
+	 * This is the action to handle external exceptions.
+	 */
+	public function actionError()
 	{
-		if($tipo == "contrato"){
-			return Yii::app()->getRequest()->sendFile($nombre, @file_get_contents(Yii::app()->basePath.'/adjuntos/contratos/'.$path));
-		}	
-		if($tipo == "resolucion"){
-			return Yii::app()->getRequest()->sendFile($nombre, @file_get_contents(Yii::app()->basePath.'/adjuntos/resoluciones/'.$path));
+		if($error=Yii::app()->errorHandler->error)
+		{
+			if(Yii::app()->request->isAjaxRequest)
+			echo $error['message'];
+			else
+			$this->render('error', $error);
 		}
-		if($tipo == "garantia"){
-			return Yii::app()->getRequest()->sendFile($nombre, @file_get_contents(Yii::app()->basePath.'/adjuntos/garantias/'.$path));
-		}
-		if($tipo == "libro"){
-			return Yii::app()->getRequest()->sendFile($nombre, @file_get_contents(Yii::app()->basePath.'/adjuntos/libros/'.$path));
-		}		
 	}
-	public function actionInformes()
-	{
-		
-		// renders the view file 'protected/views/site/index.php'
-		// using the default layout 'protected/views/layouts/main.php'
 
-		if(Yii::app()->user->isGuest){
-			$this->actionLogin();
-		}
-		else{
-			if(Yii::app()->user->rol == 'operador'){
-				$this->render("//admin/informes",array('nombre'=>Yii::app()->user->nombre));
-			}
-		}
-
-
-	}
-/**
+	/**
 	 * This is the action to handle external exceptions.
 	 */
 	public function actionCambiarClave()
@@ -136,7 +98,7 @@ class SiteController extends Controller
 				$form->attributes = $_POST['CambiarClaveForm'];
 				if($form->validate())
 				{
-					$new_password = Usuarios::model()->findByPk(Yii::app()->user->id);
+					$new_password = Usuario::model()->findByPk(Yii::app()->user->id);
 					if($new_password->clave != sha1($form->clave))
 					{
 						$form->addError('clave', "clave incorrecta");
@@ -168,20 +130,6 @@ class SiteController extends Controller
 	 		$this->render('//site/cambiarClave',array('model'=>$form));
 	 	}
 	}
-	
-	/**
-	 * This is the action to handle external exceptions.
-	 */
-	public function actionError()
-	{
-		if($error=Yii::app()->errorHandler->error)
-		{
-			if(Yii::app()->request->isAjaxRequest)
-				echo $error['message'];
-			else
-				$this->render('error', $error);
-		}
-	}
 
 	/**
 	 * Displays the contact page
@@ -194,21 +142,32 @@ class SiteController extends Controller
 			$model->attributes=$_POST['ContactForm'];
 			if($model->validate())
 			{
-				$name='=?UTF-8?B?'.base64_encode($model->name).'?=';
-				$subject='=?UTF-8?B?'.base64_encode($model->subject).'?=';
-				$headers="From: $name <{$model->email}>\r\n".
-					"Reply-To: {$model->email}\r\n".
-					"MIME-Version: 1.0\r\n".
-					"Content-type: text/plain; charset=UTF-8";
-
-				mail(Yii::app()->params['adminEmail'],$subject,$model->body,$headers);
+				$headers="From: {$model->email}\r\nReply-To: {$model->email}";
+				mail(Yii::app()->params['adminEmail'],$model->subject,$model->body,$headers);
 				Yii::app()->user->setFlash('contact','Thank you for contacting us. We will respond to you as soon as possible.');
 				$this->refresh();
 			}
 		}
 		$this->render('contact',array('model'=>$model));
 	}
+
 /**
+	 * Displays the contact page
+	 */
+	public function actionTest()
+	{
+		$model=new TestForm();
+		if(isset($_POST['TestForm']))
+		{
+			$model->attributes=$_POST['TestForm'];
+			if($model->validate())
+			{
+				
+			}
+		}
+		$this->render('test',array('model'=>$model));
+	}
+	/**
 	 * Displays the login page
 	 */
 	public function actionLogin()
@@ -233,23 +192,6 @@ class SiteController extends Controller
 		// display the login form
 		$this->render('login',array('model'=>$model));
 	}
-	
-	public function actionConfigureRoles(){
-
-		$record=AuthAssignment::model()->deleteAll();
-		$record=AuthItem::model()->deleteAll();
-		$record=AuthItemChild::model()->deleteAll();
-		$auth=Yii::app()->authManager;
-
-		$role=$auth->createRole('administrador');
-		$role=$auth->createRole('operador');
-		
-		$auth->assign('administrador',1);
-
-                
-		$this->render("//admin/indexAdmin",array('nombre'=>'SIN NOMBRE'));
-
-	}
 
 	/**
 	 * Logs out the current user and redirect to homepage.
@@ -259,5 +201,32 @@ class SiteController extends Controller
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
 	}
-	
+
+	public function filters()
+	{
+		return array(
+			'accessControl', // perform access control for CRUD operations
+		);
+	}
+
+	public function accessRules()
+	{
+		return array(
+		array('allow',
+				'actions'=>array('login','logout','error','index','test'),
+				'users'=>array('*'),
+		),
+		array('allow',
+				'actions'=>array('cambiarClave'),
+				'users'=>array('@'),
+		),
+		array('allow',
+				'actions'=>array('configureRoles'),
+				'roles'=>array('administrador'),
+		),
+		array('deny',  // deny all users
+				'users'=>array('*'),
+		),
+		);
+	}
 }

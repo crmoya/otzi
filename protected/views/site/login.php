@@ -31,23 +31,3 @@
 
 <?php $this->endWidget(); ?>
 </div><!-- form -->
-
-
-<?php 
-/*
-$dias = Tools::dias();
-if($dias > 0){
-	echo "
-	<script>
-	alert('ATENCIÓN: ESTA APLICACIÓN SERÁ DADA DE BAJA EN $dias DÍAS.');
-	</script>";
-}
-else{
-	echo "
-	<script>
-	alert('APLICACIÓN DADA DE BAJA, CONTACTE AL EQUIPO DESARROLLADOR');
-	</script>";
-}
-*/
-
-?>

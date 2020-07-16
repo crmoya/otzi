@@ -5,59 +5,12 @@ body {
 	font: normal 10pt Arial, Helvetica, sans-serif;
 	background: #EFEFEF;
 }
-.digitalizaciones{
-	border:solid 1px silver;
-}
-.rodeado{
-	border:dotted 1px silver;
-	border-radius:3px;
-	padding:5px;	
-}
-.rodeado_sin{
-	border-radius:3px;
-	padding:5px;	
-}
-.btn{
-	display:inline;
-	border:solid 1px silver;
-	border-radius:3px;
-	padding:3px;
-	background:buttonface;
-}
-.btn:hover{
-	background:#e3f0fc;
-	color:buttontext;
-	cursor:pointer;
-}
+
 #page {
 	margin-top: 5px;
 	margin-bottom: 5px;
 	background: white;
 	border: 1px solid #C9E0ED;
-}
-.fixed{
-	text-align:right;
-}
-.spacer{
-	width:30px;
-	display:inline-block;
-}
-.menu{
-	text-align:left;
-}
-.boton{
-	display:inline-block;
-	text-align:center;
-	text-decoration:none;
-	color:black;
-	width:100px;
-	padding:5px;
-	border-radius:10px;
-	border:silver 1px solid;
-	font-size:0.9em;
-}
-.boton a{
-	text-decoration:none;
 }
 
 #header {
@@ -196,10 +149,6 @@ div.search-form {
 	margin: 0px 0;
 	background: #eee;
 }
-.label{
-	font-size:0.9em;
-	font-weight: bold;
-}
 
 .portlet {
 	
@@ -263,45 +212,4 @@ div.search-form {
 
 .operations li a:hover {
 	background: #80CFFF;
-}
-.tableResolucion{
-	border:solid 1px silver;
-}
-.divObserv{
-	width:100%;
-	height:50px;
-	overflow:auto;
-	border:solid 1px silver;
-	padding: 2px 2px 2px 2px;
-	background:white;
-	font-size:0.8em;
-	font-family: verdana, arial, sans-serif;
-}
-.flujoProgramado{
-	display:block;
-	font-size:1em;
-}
-.flujoReal2{
-	display:block;
-	background:#F2F2F2;
-}
-.flujoReal3{
-	display:block;
-	background:#F2F2F2;
-	
-}
-.flujoReal{
-	display:inline;
-	float:left;
-	font-size:1.2em;
-}
-.divResolucion{
-	display:block;
-	font-size:0.9em;
-}
-
-.tableGarantias{
-	border:solid 1px silver;
-	background:#F2F2F2;
-	
 }

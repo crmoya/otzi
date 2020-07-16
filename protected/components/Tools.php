@@ -1,124 +1,180 @@
 <?php
 class Tools{
-	/*
-	public static function conectarOK(){
-		if(Tools::dias() <= 0){
-			return false;
-		}
-		else{
-			return true;
-		}
-	}*/
+		
+    
+        public static function cleanDirectory($path){
+            $dir = $path."/";     
+            $files = scandir($dir);
+            foreach($files as $f){
+                if($f != '.' && $f != '..'){
+                    if (is_file($dir.$f)) {
+                        unlink($dir.$f);
+                    }
+                }
+            }
+            $files = scandir($dir."Faena/");
+            foreach($files as $f){
+                if($f != '.' && $f != '..'){
+                    if (is_file($dir."Faena/".$f)) {
+                        unlink($dir."Faena/".$f);
+                    }
+                }
+            }
+        }
+    
+        public static function cleanExport($data,$tipo = 'string'){
+            $devolver = $data;
+            $devolver = str_replace('"','',$devolver);
+            $devolver = str_replace('*','',$devolver);
+            $devolver = str_replace(':','',$devolver);
+            $devolver = str_replace('<','',$devolver);
+            $devolver = str_replace('>','',$devolver);
+            $devolver = str_replace('?','',$devolver);
+            $devolver = str_replace('/','',$devolver);
+            $devolver = str_replace('\\','',$devolver);
+            $devolver = str_replace('|','',$devolver);
+            $devolver = str_replace('~','',$devolver);
+            $devolver = str_replace('#','',$devolver);
+            $devolver = str_replace('%','',$devolver);
+            $devolver = str_replace('&','',$devolver);
+            $devolver = str_replace(':','',$devolver);
+            $devolver = str_replace('{','',$devolver);
+            $devolver = str_replace('}','',$devolver);
+            if($tipo == 'string'){
+                $devolver = str_replace('.','',$devolver);
+            }
+            return $devolver;
+        }
+        
+        public static function getTipoDocumento($id){
+            $dev = "";
+            switch ($id) {
+                case 'B':
+                    $dev = "BOLETA";
+                    break;
+                case 'N':
+                    $dev = "NOTA DE CRÉDITO";
+                    break;
+                case 'F':
+                    $dev = "FACTURA";
+                    break;
+                default:
+                    break;
+            }
+            return $dev;
+        }
+        
+        public static function getTipoDocumentoComb($id){
+            $dev = "";
+            switch ($id) {
+                case 'B':
+                    $dev = "BOLETA";
+                    break;
+                case 'G':
+                    $dev = "GUÍA";
+                    break;
+                case 'F':
+                    $dev = "FACTURA";
+                    break;
+                default:
+                    break;
+            }
+            return $dev;
+        }
 	
-	public static function dias(){
-		$day = (int)date("d");
-		$month = (int)date("m");
-		$quedan = 20-$day;
-		if($month == 12){
-			$quedan = 0;
-		}
-		return $quedan;
+	public static function listarTiposDocumentos(){
+		/*return array(
+				array('id'=>'Rendición fondo por rendir','nombre'=>'Rendición fondo por rendir'),
+				array('id'=>'Rendición Anticipo Proveedores','nombre'=>'Rendición Anticipo Proveedores'),
+				array('id'=>'Remesa','nombre'=>'Remesa'),);
+                */
+                return array(
+				array('id'=>'B','nombre'=>'Boleta'),
+				array('id'=>'F','nombre'=>'Factura'),
+                                array('id'=>'N','nombre'=>'Nota de Crédito'),);
 	}
-	
-	public static function getEP($eps,$mes,$agno,$resolucion){
-		$arr_ret = array();
-		foreach($eps as $por_tipo){
-			$tipo = $por_tipo['tipo'];
-			$flujos = $por_tipo['eps'];
-			foreach($flujos as $flujo){
-				if($flujo->mes == $mes && $flujo->agno == $agno && $flujo->resoluciones_id == $resolucion){
-					$arr_ret[] = array('tipo'=>$tipo,'ep'=>$flujo);
-				}
-			}
-		}
-		return $arr_ret;
+        
+        public static function listarTiposDocumentosComb(){
+		/*return array(
+				array('id'=>'Rendición fondo por rendir','nombre'=>'Rendición fondo por rendir'),
+				array('id'=>'Rendición Anticipo Proveedores','nombre'=>'Rendición Anticipo Proveedores'),
+				array('id'=>'Remesa','nombre'=>'Remesa'),);
+                */
+                return array(
+				array('id'=>'B','nombre'=>'Boleta'),
+				array('id'=>'F','nombre'=>'Factura'),
+                                array('id'=>'G','nombre'=>'Guía'),);
 	}
-	
-	public static function sacaPorcentaje($palabra){
-		return str_replace("%","_PORCENTAJE_",$palabra);
-	}
-	
-	public static function ponePorcentaje($palabra){
-		return str_replace("_PORCENTAJE_","%",$palabra);
-	}
-	public static function cambiarSeparadorDecimal($porcentaje)
-	{
-		return str_replace(".", ",", $porcentaje);
-	}
-	public static function estadoGarantia($estado){
-		if($estado){
-			return "Vigente";
-		}else{
-			return "No vigente";
-		}
-	}
-	
-	public static function getEstadosGarantias(){
-		return array(
-				array('id'=>'1','nombre'=>'Vigente'),
-				array('id'=>'0','nombre'=>'NO Vigente'),
-		);
-	}
-	
-	public static function getTiposArchivos(){
-		return "doc,pdf,xls,xlsx,docx,jpg, gif, png,zip,rar,tar,tgz,7z,gzip";
-	}
-	public static function calculaNeto($valorConIva){
-		return $valorConIva/1.19;
-	}
-	
-	public static function getTiposMontos(){
-		return array(
-			array('id'=>'$','nombre'=>'$'),
-			array('id'=>'UF','nombre'=>'UF')
-		);
-	}
+                
+	public static function listarHoras(){
+		$horas = array();
+		$horas[0] = array('id'=>'08:00','nombre'=>'08:00');
+		$horas[1] = array('id'=>'08:30','nombre'=>'08:30');
+		$horas[2] = array('id'=>'09:00','nombre'=>'09:00');
+		$horas[3] = array('id'=>'09:30','nombre'=>'09:30');
+		$horas[4] = array('id'=>'10:00','nombre'=>'10:00');
+		$horas[5] = array('id'=>'10:30','nombre'=>'10:30');
+		$horas[6] = array('id'=>'11:00','nombre'=>'11:00');
+		$horas[7] = array('id'=>'11:30','nombre'=>'11:30');
+		$horas[8] = array('id'=>'12:00','nombre'=>'12:00');
+		$horas[9] = array('id'=>'12:30','nombre'=>'12:30');
+		$horas[10] = array('id'=>'13:00','nombre'=>'13:00');
+		$horas[11] = array('id'=>'13:30','nombre'=>'13:30');
+		$horas[12] = array('id'=>'14:00','nombre'=>'14:00');
+		$horas[13] = array('id'=>'14:30','nombre'=>'14:30');
+		$horas[14] = array('id'=>'15:00','nombre'=>'15:00');
+		$horas[15] = array('id'=>'15:30','nombre'=>'15:30');
+		$horas[16] = array('id'=>'16:00','nombre'=>'16:00');
+		$horas[17] = array('id'=>'16:30','nombre'=>'16:30');
+		$horas[18] = array('id'=>'17:00','nombre'=>'17:00');
+		$horas[19] = array('id'=>'17:30','nombre'=>'17:30');
+		$horas[20] = array('id'=>'18:00','nombre'=>'18:00');
+		$horas[21] = array('id'=>'18:30','nombre'=>'18:30');
+		$horas[22] = array('id'=>'19:00','nombre'=>'19:00');
+		$horas[23] = array('id'=>'19:30','nombre'=>'19:30');
+		$horas[24] = array('id'=>'20:00','nombre'=>'20:00');
+		$horas[25] = array('id'=>'20:30','nombre'=>'20:30');
+		$horas[26] = array('id'=>'21:00','nombre'=>'21:00');
+		$horas[27] = array('id'=>'21:30','nombre'=>'21:30');
+		$horas[28] = array('id'=>'22:00','nombre'=>'22:00');
+		$horas[29] = array('id'=>'22:30','nombre'=>'22:30');
+		$horas[30] = array('id'=>'23:00','nombre'=>'23:00');
+		$horas[31] = array('id'=>'23:30','nombre'=>'23:30');
+		$horas[32] = array('id'=>'00:00','nombre'=>'00:00');
+		return $horas;
+  	}
 	public static function fixFecha($fecha){
 		$fechaArr = explode("/", $fecha);
 		if(count($fechaArr)==3) return $fechaArr[2]."-".$fechaArr[1]."-".$fechaArr[0];
 		else return "";
 	}
-	
-	public static function fixPlata($monto){
-		$monto = str_replace(".","",$monto);
-		$monto = str_replace(",","",$monto);
-		return $monto;
-	}
-	
-	public static function fixPlataDecimales($monto){
-		$monto = str_replace(".","",$monto);
-		$monto = str_replace(",",".",$monto);
-		return $monto;
-	}
-	
 	public static function backFecha($fecha){
 		$fechaArr = explode("-", $fecha);
 		if(count($fechaArr)==3) return $fechaArr[2]."/".$fechaArr[1]."/".$fechaArr[0];
 		else return "";
 	}
 	
+	public static function getNombreUnidad($unidad){
+		if($unidad == "U"){
+			return "unidades";
+		}
+		if($unidad == "L"){
+			return "lts.";
+		}
+		if($unidad == "K"){
+			return "kgs.";
+		}
+	}
+	
+	public static function sacarExtension($archivo){
+		return substr($archivo,0,strpos($archivo,"."));
+	}
+
 	public static function dv($r){
 		$s=1;
 		for($m=0;$r!=0;$r/=10)
 			$s=($s+$r%10*(9-$m++%6))%11;
 		return chr($s?$s+47:75);
-	}
-	
-	public static function esAntesODurante($mes,$agno){
-		$mesActual = date("m");
-		$agnoActual = date("Y");
-		if($agnoActual > $agno){
-			return true;
-		}else if($agnoActual == $agno){
-			if($mesActual >= $mes){
-				return true;
-			}
-			else{
-				return false;
-			}
-		}else{
-			return false;
-		}
 	}
 	
 	public static function validaRut($rut){
@@ -131,90 +187,4 @@ class Tools{
 		}
 		return false;
 	} 
-	
-	public static function backMes($mes){
-		switch ($mes) {
-		    case "Enero":
-		        return 1;
-		    case "Febrero":
-		        return 2;
-		    case "Marzo":
-		        return 3;
-		    case "Abril":
-		        return 4;
-		    case "Mayo":
-		        return 5;
-		    case "Junio":
-		        return 6;
-		    case "Julio":
-		        return 7;
-		    case "Agosto":
-		        return 8;
-		    case "Septiembre":
-		        return 9;
-		    case "Octubre":
-		        return 10;
-		    case "Noviembre":
-		        return 11;
-		    case "Diciembre":
-		        return 12;        
-		}
-	}
-	
-	public static function getMes($mes){
-		switch ($mes) {
-		    case 1:
-		        return "Enero";
-		    case 2:
-		        return "Febrero";
-		    case 3:
-		        return "Marzo";
-		    case 4:
-		        return "Abril";
-		    case 5:
-		        return "Mayo";
-		    case 6:
-		        return "Junio";
-		    case 7:
-		        return "Julio";
-		    case 8:
-		        return "Agosto";
-		    case 9:
-		        return "Septiembre";
-		    case 10:
-		        return "Octubre";
-		    case 11:
-		        return "Noviembre";
-		    case 12:
-		        return "Diciembre";        
-		}
-	}
-	
-	public static function avanzaMes($mes,$agno){
-		if($mes == 12){
-			$arr = array('mes'=>1,'agno'=>$agno+1);
-			return $arr;
-		}else{
-			$arr = array('mes'=>$mes+1,'agno'=>$agno);
-			return $arr;
-		}
-	}
-	
-	public static function getMonth($date){
-		$arr = explode("-", $date);
-		if(count($arr)==3){
-			return $arr[1];
-		}else{
-			return "";
-		}
-	}
-	
-	public static function getYear($date){
-		$arr = explode("-", $date);
-		if(count($arr)==3){
-			return $arr[0];
-		}else{
-			return "";
-		}
-	}
 }

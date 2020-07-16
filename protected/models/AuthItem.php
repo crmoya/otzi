@@ -10,7 +10,7 @@
  * @property string $bizrule
  * @property string $data
  */
-class AuthItem extends CActiveRecord
+class Authitem extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.

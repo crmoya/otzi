@@ -1,80 +1,0 @@
-10
-
-dir
-600
-https://subversion.assembla.com/svn/mvs_rep/trunk/contratos_ctipaume/protected/vendors/PHPExcel/locale
-https://subversion.assembla.com/svn/mvs_rep
-
-
-
-2013-03-31T19:27:58.541475Z
-312
-crmoya
-
-
-svn:special svn:externals svn:needs-lock
-
-
-
-
-
-
-
-
-
-
-
-bae9b43b-3144-47ef-8438-16da80aae333
-
-
-
-
-
-
-0
-
-cs
-dir
-
-da
-dir
-
-de
-dir
-
-en
-dir
-
-es
-dir
-
-fi
-dir
-
-fr
-dir
-
-hu
-dir
-
-it
-dir
-
-nl
-dir
-
-no
-dir
-
-pl
-dir
-
-pt
-dir
-
-ru
-dir
-
-sv
-dir
-

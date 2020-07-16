@@ -51,7 +51,7 @@ class LoginForm extends CFormModel
 		{
 			$this->_identity=new UserIdentity($this->username,$this->password);
 			if(!$this->_identity->authenticate())
-				$this->addError('password','Usuario/Clave incorrecto.');
+				$this->addError('password','Incorrect username or password.');
 		}
 	}
 
@@ -60,12 +60,7 @@ class LoginForm extends CFormModel
 	 * @return boolean whether login is successful
 	 */
 	public function login()
-	{/*
-		if(!Tools::conectarOK()){
-			return false;
-		}
-		*/
-		
+	{
 		if($this->_identity===null)
 		{
 			$this->_identity=new UserIdentity($this->username,$this->password);
