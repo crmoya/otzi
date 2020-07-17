@@ -375,7 +375,8 @@ $cs->registerCoreScript('jquery');
 				}
 			}	
 		}
-                $(document.body).on('change','.faena',function(e){
+		
+		$(document.body).on('change','.faena',function(e){
 			var id = $(this).attr("id");
 			var i = id.substring(id.length-1);
 			var faena_id = $(this).val();
