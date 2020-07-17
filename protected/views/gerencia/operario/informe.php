@@ -33,11 +33,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'columns'=>array(
         'operario',
 		'maquina',
-		'consumoPromedio',
-		'coeficiente',     
-        'horas',
-		'horasContratadas',
-		'valorHora',
-		'total',	
+		['name' => 'consumoPromedio', 'value' => '"$".number_format($data->consumoPromedio,0,",",".")','htmlOptions'=>['style'=>'text-align:right;']],
+		['name' => 'coeficiente', 'value' => 'number_format($data->coeficiente,2,",",".")','htmlOptions'=>['style'=>'text-align:right;']],
+		['name' => 'horas', 'value' => 'number_format($data->horas,2,",",".")','htmlOptions'=>['style'=>'text-align:right;']],  
+		['name' => 'horasContratadas', 'value' => 'number_format($data->horasContratadas,2,",",".")','htmlOptions'=>['style'=>'text-align:right;']],  
+		['name' => 'valorHora', 'value' => '"$".number_format($data->valorHora,2,",",".")','htmlOptions'=>['style'=>'text-align:right;']],  
+		['name' => 'total', 'value' => '"$".number_format($data->total,0,",",".")','htmlOptions'=>['style'=>'text-align:right;']],
     ),
 ));

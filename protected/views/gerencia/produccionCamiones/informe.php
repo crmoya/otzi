@@ -33,9 +33,9 @@ $this->widget('zii.widgets.grid.CGridView', array(
         'camion',     
         'chofer',
 		'centroGestion',
-		'totalTransportado',
-		'produccion',
-		'produccionReal',
-		'diferencia',
+		['name' => 'totalTransportado', 'value' => 'number_format($data->totalTransportado,2,",",".")','htmlOptions'=>['style'=>'text-align:right;']],
+		['name' => 'produccion', 'value' => '"$".number_format($data->produccion,0,",",".")','htmlOptions'=>['style'=>'text-align:right;']],
+		['name' => 'produccionReal', 'value' => '"$".number_format($data->produccionReal,0,",",".")','htmlOptions'=>['style'=>'text-align:right;']],
+		['name' => 'diferencia', 'value' => '"$".number_format($data->diferencia,2,",",".")','htmlOptions'=>['style'=>'text-align:right;']],
     ),
 ));

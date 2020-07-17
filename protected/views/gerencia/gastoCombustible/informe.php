@@ -33,8 +33,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
         'maquina',     
         'operador',
 		'centroGestion',
-		'consumoLts',
-		'consumoPesos',
+		['name' => 'consumoLts', 'value' => 'number_format($data->consumoLts,2,",",".")','htmlOptions'=>['style'=>'text-align:right;']],
+		['name' => 'consumoPesos', 'value' => '"$".number_format($data->consumoPesos,0,",",".")','htmlOptions'=>['style'=>'text-align:right;']],
 		array(
 			'class'=>'CButtonColumn',
 			'template'=>'{view}',

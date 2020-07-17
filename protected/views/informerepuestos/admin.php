@@ -31,7 +31,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'equipo-propio-grid',
 	'columns'=>array(
         'repuesto',
-        'montoNeto',
+        ['name' => 'montoNeto', 'value' => '"$".number_format($data->montoNeto,0,",",".")', 'htmlOptions' => ['style' => 'text-align:right;']],
         array(            
             'name'=>'tipo_documento',
             'value'=>'Tools::getTipoDocumento($data->tipo_documento)', 

@@ -24,20 +24,21 @@
 			</tr>
 			<tr>
 				<td style='font-size:0.9em;'><b>Horómetro Inicial:</b></td>
-				<td><?php echo CHtml::encode($model->hInicial);?></td>
+				<td><?php echo CHtml::encode(number_format($model->hInicial,2,',','.'));?></td>
 				<td style='font-size:0.9em;'><b>Horómetro Final:</b></td>
-				<td ><?php echo CHtml::encode($model->hFinal);?></td>
+				<td ><?php echo CHtml::encode(number_format($model->hFinal,2,',','.'));?></td>
 			</tr>
 			<tr>
 				<td style='font-size:0.9em;'><b>Faena:</b></td>
 				<td><?php echo CHtml::encode(Faena::model()->getNombre($model['faena_id']));?></td>
 				<td style='font-size:0.9em;'><b>Horas:</b></td>
-				<td><?php echo CHtml::encode($model->horas);?></td>
-			</tr>
-			<td style='font-size:0.9em;'><b>Horómetro GPS:</b></td>
-				<td ><?php echo CHtml::encode($model->horasGps);?></td>
+				<td><?php echo CHtml::encode(number_format($model->horas,2,',','.'));?></td>
+			
+				<td style='font-size:0.9em;'><b>Horómetro GPS:</b></td>
+				<td ><?php echo CHtml::encode(number_format($model->horasGps,2,',','.'));?></td>
 				<td style='font-size:0.9em;'></td>
 				<td></td>
+			</tr>
 		</table>
 	</fieldset>
 	
@@ -53,15 +54,15 @@
 							  <td style='font-size:0.9em;'><b>Faena:</b></td>
 							  <td><?php echo Faena::model()->getNombre(CHtml::encode($combustible['faena_id']));?></td>
 							  <td style='font-size:0.9em;'><b>Combustible Lts:</b></td>
-							  <td><?php echo CHtml::encode($combustible['petroleoLts']);?></td>
+							  <td><?php echo CHtml::encode(number_format($combustible['petroleoLts'],2,',','.'));?></td>
 							  <td style='font-size:0.9em;'><b>Hr. Carguío:</b></td>
-							  <td><?php echo CHtml::encode($combustible['hCarguio']);?></td>															  
+							  <td><?php echo CHtml::encode(number_format($combustible['hCarguio'],2,',','.'));?></td>															  
 							</tr>
 							<tr>
 							  <td style='font-size:0.9em;'><b>Precio Unitario:</b></td>
-							  <td><?php echo CHtml::encode($combustible['precioUnitario']);?></td>
+							  <td><?php echo CHtml::encode("$".number_format($combustible['precioUnitario'],0,',','.'));?></td>
 							  <td style='font-size:0.9em;'><b>Valor Total:</b></td>
-							  <td><?php echo CHtml::encode($combustible['valorTotal']);?></td>
+							  <td><?php echo CHtml::encode("$".number_format($combustible['valorTotal'],0,',','.'));?></td>
 							  <td style='font-size:0.9em;'><b>Tipo Combustible:</b></td>
 							  <td><?php echo TipoCombustible::model()->getNombre(CHtml::encode($combustible['tipoCombustible_id']));?></td>														  
 							</tr>
@@ -100,7 +101,7 @@
 							  <td style='font-size:0.9em;'><b>Repuesto:</b></td>
 							  <td><?php echo CHtml::encode($compra['repuesto']);?></td>
 							  <td style='font-size:0.9em;'><b>Monto Neto:</b></td>
-							  <td><?php echo CHtml::encode($compra['montoNeto']);?></td>
+							  <td><?php echo CHtml::encode("$".number_format($compra['montoNeto'],0,',','.'));?></td>
 							  <td style='font-size:0.9em;'><b>Cantidad:</b></td>
 							  <td><?php echo CHtml::encode($compra['cantidad']." ".Tools::getNombreUnidad($compra['unidad']));?></td>															  
 							</tr>

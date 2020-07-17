@@ -31,12 +31,13 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'equipo-propio-grid',
 	'columns'=>array(
         'maquina',     
-        'operador',
-		'ltsFisicos',
-		'kmsFisicos',
-		'kmsGps',
-		'consumoReal',
-		'consumoGps',
-		'consumoSugerido',
+		'operador',
+		['name' => 'ltsFisicos', 'value' => 'number_format($data->ltsFisicos,2,",",".")','htmlOptions'=>['style'=>'text-align:right;']],
+		['name' => 'kmsFisicos', 'value' => 'number_format($data->kmsFisicos,2,",",".")','htmlOptions'=>['style'=>'text-align:right;']],
+		['name' => 'kmsGps', 'value' => 'number_format($data->kmsGps,2,",",".")','htmlOptions'=>['style'=>'text-align:right;']],
+		['name' => 'consumoReal', 'value' => 'number_format($data->consumoReal,2,",",".")','htmlOptions'=>['style'=>'text-align:right;']],
+		['name' => 'consumoGps', 'value' => 'number_format($data->consumoGps,2,",",".")','htmlOptions'=>['style'=>'text-align:right;']],
+		['name' => 'consumoSugerido', 'value' => 'number_format($data->consumoSugerido,2,",",".")','htmlOptions'=>['style'=>'text-align:right;']],
+		
     ),
 ));

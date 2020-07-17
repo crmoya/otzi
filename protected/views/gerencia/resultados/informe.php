@@ -33,9 +33,9 @@ $this->widget('zii.widgets.grid.CGridView', array(
         'maquina',     
         'operador',
 		'centroGestion',
-		'produccion',
-		'repuesto',
-		'combustible',
-		'resultado',
+		['name' => 'produccion', 'value' => '"$".number_format($data->produccion,0,",",".")','htmlOptions'=>['style'=>'text-align:right;']],
+		['name' => 'repuesto', 'value' => '"$".number_format($data->repuesto,0,",",".")','htmlOptions'=>['style'=>'text-align:right;']],
+		['name' => 'combustible', 'value' => '"$".number_format($data->combustible,0,",",".")','htmlOptions'=>['style'=>'text-align:right;']],
+		['name' => 'resultado', 'value' => '"$".number_format($data->resultado,0,",",".")','htmlOptions'=>['style'=>'text-align:right;']],
     ),
 ));

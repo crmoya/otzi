@@ -30,9 +30,9 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'dataProvider'=>$model->search(),
 	'id'=>'equipo-propio-grid',
 	'columns'=>array(
-        'petroleoLts',
-        'carguio',
-        'valorTotal',
+        ['name' => 'petroleoLts', 'value' => 'number_format($data->petroleoLts,2,",",".")', 'htmlOptions' => ['style' => 'text-align:right;']],
+        ['name' => 'carguio', 'value' => 'number_format($data->carguio,2,",",".")', 'htmlOptions' => ['style' => 'text-align:right;']],
+        ['name' => 'valorTotal', 'value' => '"$".number_format($data->valorTotal,0,",",".")', 'htmlOptions' => ['style' => 'text-align:right;']],
         'faena',
         'tipoCombustible',
         'numero',

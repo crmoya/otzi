@@ -9923,3 +9923,480 @@ Stack trace:
 #18 C:\xampp\yii\framework\base\CApplication.php(185): CWebApplication->processRequest()
 #19 C:\xampp\htdocs\otzi\index.php(14): CWebApplication->run()
 REQUEST_URI=/otzi/index.php/faena/create
+2020/07/17 21:03:09 [error] [exception.CHttpException.404] CHttpException: El sistema no ha podido encontrar la acción "simple.money.format.js" solicitada. in C:\xampp\yii\framework\web\CController.php:486
+Stack trace:
+#0 C:\xampp\yii\framework\web\CController.php(270): CController->missingAction('simple.money.fo...')
+#1 C:\xampp\yii\framework\web\CWebApplication.php(282): CController->run('simple.money.fo...')
+#2 C:\xampp\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('operativo/simpl...')
+#3 C:\xampp\yii\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#4 C:\xampp\htdocs\otzi\index.php(14): CApplication->run()
+#5 {main}
+REQUEST_URI=/otzi/index.php/operativo/simple.money.format.js
+HTTP_REFERER=http://localhost/otzi/index.php/operativo/camionesPropios
+---
+2020/07/17 21:04:06 [error] [exception.CHttpException.404] CHttpException: El sistema no ha podido encontrar la acción "simple.money.format.js" solicitada. in C:\xampp\yii\framework\web\CController.php:486
+Stack trace:
+#0 C:\xampp\yii\framework\web\CController.php(270): CController->missingAction('simple.money.fo...')
+#1 C:\xampp\yii\framework\web\CWebApplication.php(282): CController->run('simple.money.fo...')
+#2 C:\xampp\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('operativo/simpl...')
+#3 C:\xampp\yii\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#4 C:\xampp\htdocs\otzi\index.php(14): CApplication->run()
+#5 {main}
+REQUEST_URI=/otzi/index.php/operativo/simple.money.format.js
+HTTP_REFERER=http://localhost/otzi/index.php/operativo/camionesPropios
+---
+2020/07/17 21:04:06 [error] [exception.CHttpException.404] CHttpException: El sistema no ha podido encontrar la acción "simple.money.format.js" solicitada. in C:\xampp\yii\framework\web\CController.php:486
+Stack trace:
+#0 C:\xampp\yii\framework\web\CController.php(270): CController->missingAction('simple.money.fo...')
+#1 C:\xampp\yii\framework\web\CWebApplication.php(282): CController->run('simple.money.fo...')
+#2 C:\xampp\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('operativo/simpl...')
+#3 C:\xampp\yii\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#4 C:\xampp\htdocs\otzi\index.php(14): CApplication->run()
+#5 {main}
+REQUEST_URI=/otzi/index.php/operativo/simple.money.format.js
+HTTP_REFERER=http://localhost/otzi/index.php/operativo/camionesPropios
+---
+2020/07/17 21:04:29 [error] [exception.CHttpException.404] CHttpException: El sistema no ha podido encontrar la acción "simple.money.format.js" solicitada. in C:\xampp\yii\framework\web\CController.php:486
+Stack trace:
+#0 C:\xampp\yii\framework\web\CController.php(270): CController->missingAction('simple.money.fo...')
+#1 C:\xampp\yii\framework\web\CWebApplication.php(282): CController->run('simple.money.fo...')
+#2 C:\xampp\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('operativo/simpl...')
+#3 C:\xampp\yii\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#4 C:\xampp\htdocs\otzi\index.php(14): CApplication->run()
+#5 {main}
+REQUEST_URI=/otzi/index.php/operativo/simple.money.format.js
+HTTP_REFERER=http://localhost/otzi/index.php/operativo/camionesPropios
+---
+2020/07/17 21:04:29 [error] [exception.CHttpException.404] CHttpException: El sistema no ha podido encontrar la acción "simple.money.format.js" solicitada. in C:\xampp\yii\framework\web\CController.php:486
+Stack trace:
+#0 C:\xampp\yii\framework\web\CController.php(270): CController->missingAction('simple.money.fo...')
+#1 C:\xampp\yii\framework\web\CWebApplication.php(282): CController->run('simple.money.fo...')
+#2 C:\xampp\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('operativo/simpl...')
+#3 C:\xampp\yii\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#4 C:\xampp\htdocs\otzi\index.php(14): CApplication->run()
+#5 {main}
+REQUEST_URI=/otzi/index.php/operativo/simple.money.format.js
+HTTP_REFERER=http://localhost/otzi/index.php/operativo/camionesPropios
+---
+2020/07/17 21:06:32 [error] [exception.CHttpException.404] CHttpException: El sistema no ha podido encontrar la acción "js" solicitada. in C:\xampp\yii\framework\web\CController.php:486
+Stack trace:
+#0 C:\xampp\yii\framework\web\CController.php(270): CController->missingAction('js')
+#1 C:\xampp\yii\framework\web\CWebApplication.php(282): CController->run('js')
+#2 C:\xampp\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('operativo/js/si...')
+#3 C:\xampp\yii\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#4 C:\xampp\htdocs\otzi\index.php(14): CApplication->run()
+#5 {main}
+REQUEST_URI=/otzi/index.php/operativo/js/simple.money.format.js
+HTTP_REFERER=http://localhost/otzi/index.php/operativo/camionesPropios
+---
+2020/07/17 21:06:33 [error] [exception.CHttpException.404] CHttpException: El sistema no ha podido encontrar la acción "js" solicitada. in C:\xampp\yii\framework\web\CController.php:486
+Stack trace:
+#0 C:\xampp\yii\framework\web\CController.php(270): CController->missingAction('js')
+#1 C:\xampp\yii\framework\web\CWebApplication.php(282): CController->run('js')
+#2 C:\xampp\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('operativo/js/si...')
+#3 C:\xampp\yii\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#4 C:\xampp\htdocs\otzi\index.php(14): CApplication->run()
+#5 {main}
+REQUEST_URI=/otzi/index.php/operativo/js/simple.money.format.js
+HTTP_REFERER=http://localhost/otzi/index.php/operativo/camionesPropios
+---
+2020/07/17 21:22:18 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[28000]: Invalid authorization specification: 1045 Access denied for user 'cot27290_SAM'@'localhost' (using password: YES). The SQL statement executed was: 
+		insert into informerepuesto
+			(tipo_documento,observaciones,rut_proveedor,nombre_proveedor,cuenta,repuesto,montoNeto,guia,factura,cantidad,unidad,faena_id,faena,numero,nombre,fechaRendicion,camion,reporte,fecha)
+		select 	tipo_documento,observaciones,rut_proveedor,nombre_proveedor,cuenta,repuesto,montoNeto,guia,factura,cantidad,unidad,faena_id,faena,numero,nombre,fechaRendicion,camion,reporte,fecha	from 	vinformerepuestos
+				where	 fechaRendicion  >= '2020-07-01' and fechaRendicion <= '2020-07-17' and  1=1 
+				.
+2020/07/17 21:22:18 [error] [exception.CDbException] CDbException: CDbCommand falló al ejecutar la sentencia SQL: SQLSTATE[28000]: Invalid authorization specification: 1045 Access denied for user 'cot27290_SAM'@'localhost' (using password: YES) in C:\xampp\yii\framework\db\CDbCommand.php:358
+Stack trace:
+#0 C:\xampp\htdocs\otzi\protected\models\Informerepuesto.php(212): CDbCommand->execute()
+#1 C:\xampp\htdocs\otzi\protected\controllers\InformerepuestosController.php(99): Informerepuesto->generarInforme()
+#2 C:\xampp\yii\framework\web\actions\CInlineAction.php(49): InformerepuestosController->actionAdmin()
+#3 C:\xampp\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#4 C:\xampp\yii\framework\web\filters\CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#5 C:\xampp\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#6 C:\xampp\yii\framework\web\CController.php(1148): CFilter->filter(Object(CFilterChain))
+#7 C:\xampp\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#8 C:\xampp\yii\framework\web\filters\CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#9 C:\xampp\yii\framework\web\CController.php(291): CFilterChain->run()
+#10 C:\xampp\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 C:\xampp\yii\framework\web\CWebApplication.php(282): CController->run('admin')
+#12 C:\xampp\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('informerepuesto...')
+#13 C:\xampp\yii\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#14 C:\xampp\htdocs\otzi\index.php(14): CApplication->run()
+#15 {main}
+REQUEST_URI=/otzi/index.php/informerepuestos/admin
+HTTP_REFERER=http://localhost/otzi/index.php/site/index
+---
+2020/07/17 21:55:02 [error] [php] Undefined variable: data (C:\xampp\htdocs\otzi\protected\views\gerencia\produccionMaquinaria\informe.php:38)
+Stack trace:
+#0 C:\xampp\yii\framework\web\CController.php(872): GerenciaController->renderFile()
+#1 C:\xampp\yii\framework\web\CController.php(785): GerenciaController->renderPartial()
+#2 C:\xampp\htdocs\otzi\protected\controllers\GerenciaController.php(192): GerenciaController->render()
+#3 C:\xampp\yii\framework\web\actions\CInlineAction.php(49): GerenciaController->actionProduccionMaquinaria()
+#4 C:\xampp\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 C:\xampp\yii\framework\web\filters\CFilterChain.php(134): GerenciaController->runAction()
+#6 C:\xampp\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#7 C:\xampp\yii\framework\web\CController.php(1148): CAccessControlFilter->filter()
+#8 C:\xampp\yii\framework\web\filters\CInlineFilter.php(58): GerenciaController->filterAccessControl()
+#9 C:\xampp\yii\framework\web\filters\CFilterChain.php(131): CInlineFilter->filter()
+#10 C:\xampp\yii\framework\web\CController.php(291): CFilterChain->run()
+#11 C:\xampp\yii\framework\web\CController.php(265): GerenciaController->runActionWithFilters()
+#12 C:\xampp\yii\framework\web\CWebApplication.php(282): GerenciaController->run()
+#13 C:\xampp\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#14 C:\xampp\yii\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#15 C:\xampp\htdocs\otzi\index.php(14): CWebApplication->run()
+REQUEST_URI=/otzi/index.php/gerencia/produccionMaquinaria
+2020/07/17 21:55:26 [error] [php] Undefined variable: data (C:\xampp\htdocs\otzi\protected\views\gerencia\produccionMaquinaria\informe.php:38)
+Stack trace:
+#0 C:\xampp\yii\framework\web\CController.php(872): GerenciaController->renderFile()
+#1 C:\xampp\yii\framework\web\CController.php(785): GerenciaController->renderPartial()
+#2 C:\xampp\htdocs\otzi\protected\controllers\GerenciaController.php(192): GerenciaController->render()
+#3 C:\xampp\yii\framework\web\actions\CInlineAction.php(49): GerenciaController->actionProduccionMaquinaria()
+#4 C:\xampp\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 C:\xampp\yii\framework\web\filters\CFilterChain.php(134): GerenciaController->runAction()
+#6 C:\xampp\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#7 C:\xampp\yii\framework\web\CController.php(1148): CAccessControlFilter->filter()
+#8 C:\xampp\yii\framework\web\filters\CInlineFilter.php(58): GerenciaController->filterAccessControl()
+#9 C:\xampp\yii\framework\web\filters\CFilterChain.php(131): CInlineFilter->filter()
+#10 C:\xampp\yii\framework\web\CController.php(291): CFilterChain->run()
+#11 C:\xampp\yii\framework\web\CController.php(265): GerenciaController->runActionWithFilters()
+#12 C:\xampp\yii\framework\web\CWebApplication.php(282): GerenciaController->run()
+#13 C:\xampp\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#14 C:\xampp\yii\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#15 C:\xampp\htdocs\otzi\index.php(14): CWebApplication->run()
+REQUEST_URI=/otzi/index.php/gerencia/produccionMaquinaria
+2020/07/17 22:00:00 [error] [exception.CException] CException: Propiedad "CDataColumn"."attribute" no se encuentra definida. in C:\xampp\yii\framework\base\CComponent.php:173
+Stack trace:
+#0 C:\xampp\yii\framework\YiiBase.php(227): CComponent->__set('attribute', 'produccion')
+#1 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(388): YiiBase::createComponent(Array, Object(CGridView))
+#2 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(359): CGridView->initColumns()
+#3 C:\xampp\yii\framework\web\CBaseController.php(147): CGridView->init()
+#4 C:\xampp\yii\framework\web\CBaseController.php(181): CBaseController->createWidget('zii.widgets.gri...', Array)
+#5 C:\xampp\htdocs\otzi\protected\views\gerencia\produccionMaquinaria\informe.php(30): CBaseController->widget('zii.widgets.gri...', Array)
+#6 C:\xampp\yii\framework\web\CBaseController.php(126): require('C:\\xampp\\htdocs...')
+#7 C:\xampp\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\\xampp\\htdocs...', Array, true)
+#8 C:\xampp\yii\framework\web\CController.php(872): CBaseController->renderFile('C:\\xampp\\htdocs...', Array, true)
+#9 C:\xampp\yii\framework\web\CController.php(785): CController->renderPartial('produccionMaqui...', Array, true)
+#10 C:\xampp\htdocs\otzi\protected\controllers\GerenciaController.php(192): CController->render('produccionMaqui...', Array)
+#11 C:\xampp\yii\framework\web\actions\CInlineAction.php(49): GerenciaController->actionProduccionMaquinaria()
+#12 C:\xampp\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#13 C:\xampp\yii\framework\web\filters\CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#14 C:\xampp\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#15 C:\xampp\yii\framework\web\CController.php(1148): CFilter->filter(Object(CFilterChain))
+#16 C:\xampp\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#17 C:\xampp\yii\framework\web\filters\CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#18 C:\xampp\yii\framework\web\CController.php(291): CFilterChain->run()
+#19 C:\xampp\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#20 C:\xampp\yii\framework\web\CWebApplication.php(282): CController->run('produccionMaqui...')
+#21 C:\xampp\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gerencia/produc...')
+#22 C:\xampp\yii\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#23 C:\xampp\htdocs\otzi\index.php(14): CApplication->run()
+#24 {main}
+REQUEST_URI=/otzi/index.php/gerencia/produccionMaquinaria
+HTTP_REFERER=http://localhost/otzi/index.php/site/index
+---
+2020/07/17 22:04:45 [error] [php] Undefined variable: number_format (C:\xampp\yii\framework\base\CComponent.php(614) : eval()'d code:1)
+Stack trace:
+#0 C:\xampp\yii\framework\zii\widgets\grid\CGridColumn.php(231): CDataColumn->getDataCellContent()
+#1 C:\xampp\yii\framework\zii\widgets\grid\CGridColumn.php(154): CDataColumn->renderDataCellContent()
+#2 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(639): CDataColumn->renderDataCell()
+#3 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(623): CGridView->renderDataCell()
+#4 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(579): CGridView->renderTableRow()
+#5 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(489): CGridView->renderTableBody()
+#6 C:\xampp\yii\framework\zii\widgets\CBaseListView.php(181): CGridView->renderItems()
+#7 unknown(0): CGridView->renderSection()
+#8 C:\xampp\yii\framework\zii\widgets\CBaseListView.php(164): preg_replace_callback()
+#9 C:\xampp\yii\framework\zii\widgets\CBaseListView.php(149): CGridView->renderContent()
+#10 C:\xampp\yii\framework\web\CBaseController.php(182): CGridView->run()
+#11 C:\xampp\htdocs\otzi\protected\views\gerencia\gastoCombustible\informe.php(30): GerenciaController->widget()
+#12 C:\xampp\yii\framework\web\CBaseController.php(126): require()
+#13 C:\xampp\yii\framework\web\CBaseController.php(95): GerenciaController->renderInternal()
+#14 C:\xampp\yii\framework\web\CController.php(872): GerenciaController->renderFile()
+#15 C:\xampp\yii\framework\web\CController.php(785): GerenciaController->renderPartial()
+#16 C:\xampp\htdocs\otzi\protected\controllers\GerenciaController.php(267): GerenciaController->render()
+#17 C:\xampp\yii\framework\web\actions\CInlineAction.php(49): GerenciaController->actionGastoCombustible()
+#18 C:\xampp\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#19 C:\xampp\yii\framework\web\filters\CFilterChain.php(134): GerenciaController->runAction()
+#20 C:\xampp\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#21 C:\xampp\yii\framework\web\CController.php(1148): CAccessControlFilter->filter()
+#22 C:\xampp\yii\framework\web\filters\CInlineFilter.php(58): GerenciaController->filterAccessControl()
+#23 C:\xampp\yii\framework\web\filters\CFilterChain.php(131): CInlineFilter->filter()
+#24 C:\xampp\yii\framework\web\CController.php(291): CFilterChain->run()
+#25 C:\xampp\yii\framework\web\CController.php(265): GerenciaController->runActionWithFilters()
+#26 C:\xampp\yii\framework\web\CWebApplication.php(282): GerenciaController->run()
+#27 C:\xampp\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#28 C:\xampp\yii\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#29 C:\xampp\htdocs\otzi\index.php(14): CWebApplication->run()
+REQUEST_URI=/otzi/index.php/gerencia/gastoCombustible
+2020/07/17 22:05:22 [error] [exception.Error] Error: Call to undefined function money_format() in C:\xampp\yii\framework\base\CComponent.php(614) : eval()'d code:1
+Stack trace:
+#0 C:\xampp\yii\framework\base\CComponent.php(614): eval()
+#1 C:\xampp\yii\framework\zii\widgets\grid\CDataColumn.php(142): CComponent->evaluateExpression('money_format($d...', Array)
+#2 C:\xampp\yii\framework\zii\widgets\grid\CGridColumn.php(231): CDataColumn->getDataCellContent(0)
+#3 C:\xampp\yii\framework\zii\widgets\grid\CGridColumn.php(154): CGridColumn->renderDataCellContent(0, Object(InformeGastoCombustible))
+#4 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(639): CGridColumn->renderDataCell(0)
+#5 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(623): CGridView->renderDataCell(Object(CDataColumn), 0)
+#6 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(579): CGridView->renderTableRow(0)
+#7 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(489): CGridView->renderTableBody()
+#8 C:\xampp\yii\framework\zii\widgets\CBaseListView.php(181): CGridView->renderItems()
+#9 [internal function]: CBaseListView->renderSection(Array)
+#10 C:\xampp\yii\framework\zii\widgets\CBaseListView.php(164): preg_replace_callback('/{(\\w+)}/', Array, '{summary}\n{item...')
+#11 C:\xampp\yii\framework\zii\widgets\CBaseListView.php(149): CBaseListView->renderContent()
+#12 C:\xampp\yii\framework\web\CBaseController.php(182): CBaseListView->run()
+#13 C:\xampp\htdocs\otzi\protected\views\gerencia\gastoCombustible\informe.php(30): CBaseController->widget('zii.widgets.gri...', Array)
+#14 C:\xampp\yii\framework\web\CBaseController.php(126): require('C:\\xampp\\htdocs...')
+#15 C:\xampp\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\\xampp\\htdocs...', Array, true)
+#16 C:\xampp\yii\framework\web\CController.php(872): CBaseController->renderFile('C:\\xampp\\htdocs...', Array, true)
+#17 C:\xampp\yii\framework\web\CController.php(785): CController->renderPartial('gastoCombustibl...', Array, true)
+#18 C:\xampp\htdocs\otzi\protected\controllers\GerenciaController.php(267): CController->render('gastoCombustibl...', Array)
+#19 C:\xampp\yii\framework\web\actions\CInlineAction.php(49): GerenciaController->actionGastoCombustible()
+#20 C:\xampp\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#21 C:\xampp\yii\framework\web\filters\CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#22 C:\xampp\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#23 C:\xampp\yii\framework\web\CController.php(1148): CFilter->filter(Object(CFilterChain))
+#24 C:\xampp\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#25 C:\xampp\yii\framework\web\filters\CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#26 C:\xampp\yii\framework\web\CController.php(291): CFilterChain->run()
+#27 C:\xampp\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#28 C:\xampp\yii\framework\web\CWebApplication.php(282): CController->run('gastoCombustibl...')
+#29 C:\xampp\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gerencia/gastoC...')
+#30 C:\xampp\yii\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#31 C:\xampp\htdocs\otzi\index.php(14): CApplication->run()
+#32 {main}
+REQUEST_URI=/otzi/index.php/gerencia/gastoCombustible
+HTTP_REFERER=http://localhost/otzi/index.php/site/index
+---
+2020/07/17 22:06:05 [error] [exception.Error] Error: Call to undefined function money_format() in C:\xampp\yii\framework\base\CComponent.php(614) : eval()'d code:1
+Stack trace:
+#0 C:\xampp\yii\framework\base\CComponent.php(614): eval()
+#1 C:\xampp\yii\framework\zii\widgets\grid\CDataColumn.php(142): CComponent->evaluateExpression('money_format("$...', Array)
+#2 C:\xampp\yii\framework\zii\widgets\grid\CGridColumn.php(231): CDataColumn->getDataCellContent(0)
+#3 C:\xampp\yii\framework\zii\widgets\grid\CGridColumn.php(154): CGridColumn->renderDataCellContent(0, Object(InformeGastoCombustible))
+#4 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(639): CGridColumn->renderDataCell(0)
+#5 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(623): CGridView->renderDataCell(Object(CDataColumn), 0)
+#6 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(579): CGridView->renderTableRow(0)
+#7 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(489): CGridView->renderTableBody()
+#8 C:\xampp\yii\framework\zii\widgets\CBaseListView.php(181): CGridView->renderItems()
+#9 [internal function]: CBaseListView->renderSection(Array)
+#10 C:\xampp\yii\framework\zii\widgets\CBaseListView.php(164): preg_replace_callback('/{(\\w+)}/', Array, '{summary}\n{item...')
+#11 C:\xampp\yii\framework\zii\widgets\CBaseListView.php(149): CBaseListView->renderContent()
+#12 C:\xampp\yii\framework\web\CBaseController.php(182): CBaseListView->run()
+#13 C:\xampp\htdocs\otzi\protected\views\gerencia\gastoCombustible\informe.php(30): CBaseController->widget('zii.widgets.gri...', Array)
+#14 C:\xampp\yii\framework\web\CBaseController.php(126): require('C:\\xampp\\htdocs...')
+#15 C:\xampp\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\\xampp\\htdocs...', Array, true)
+#16 C:\xampp\yii\framework\web\CController.php(872): CBaseController->renderFile('C:\\xampp\\htdocs...', Array, true)
+#17 C:\xampp\yii\framework\web\CController.php(785): CController->renderPartial('gastoCombustibl...', Array, true)
+#18 C:\xampp\htdocs\otzi\protected\controllers\GerenciaController.php(267): CController->render('gastoCombustibl...', Array)
+#19 C:\xampp\yii\framework\web\actions\CInlineAction.php(49): GerenciaController->actionGastoCombustible()
+#20 C:\xampp\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#21 C:\xampp\yii\framework\web\filters\CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#22 C:\xampp\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#23 C:\xampp\yii\framework\web\CController.php(1148): CFilter->filter(Object(CFilterChain))
+#24 C:\xampp\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#25 C:\xampp\yii\framework\web\filters\CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#26 C:\xampp\yii\framework\web\CController.php(291): CFilterChain->run()
+#27 C:\xampp\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#28 C:\xampp\yii\framework\web\CWebApplication.php(282): CController->run('gastoCombustibl...')
+#29 C:\xampp\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gerencia/gastoC...')
+#30 C:\xampp\yii\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#31 C:\xampp\htdocs\otzi\index.php(14): CApplication->run()
+#32 {main}
+REQUEST_URI=/otzi/index.php/gerencia/gastoCombustible
+HTTP_REFERER=http://localhost/otzi/index.php/site/index
+---
+2020/07/17 22:11:18 [error] [exception.Error] Error: Call to undefined function money_format() in C:\xampp\yii\framework\base\CComponent.php(614) : eval()'d code:1
+Stack trace:
+#0 C:\xampp\yii\framework\base\CComponent.php(614): eval()
+#1 C:\xampp\yii\framework\zii\widgets\grid\CDataColumn.php(142): CComponent->evaluateExpression('money_format("%...', Array)
+#2 C:\xampp\yii\framework\zii\widgets\grid\CGridColumn.php(231): CDataColumn->getDataCellContent(0)
+#3 C:\xampp\yii\framework\zii\widgets\grid\CGridColumn.php(154): CGridColumn->renderDataCellContent(0, Object(InformeGastoCombustible))
+#4 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(639): CGridColumn->renderDataCell(0)
+#5 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(623): CGridView->renderDataCell(Object(CDataColumn), 0)
+#6 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(579): CGridView->renderTableRow(0)
+#7 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(489): CGridView->renderTableBody()
+#8 C:\xampp\yii\framework\zii\widgets\CBaseListView.php(181): CGridView->renderItems()
+#9 [internal function]: CBaseListView->renderSection(Array)
+#10 C:\xampp\yii\framework\zii\widgets\CBaseListView.php(164): preg_replace_callback('/{(\\w+)}/', Array, '{summary}\n{item...')
+#11 C:\xampp\yii\framework\zii\widgets\CBaseListView.php(149): CBaseListView->renderContent()
+#12 C:\xampp\yii\framework\web\CBaseController.php(182): CBaseListView->run()
+#13 C:\xampp\htdocs\otzi\protected\views\gerencia\gastoCombustible\informe.php(30): CBaseController->widget('zii.widgets.gri...', Array)
+#14 C:\xampp\yii\framework\web\CBaseController.php(126): require('C:\\xampp\\htdocs...')
+#15 C:\xampp\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\\xampp\\htdocs...', Array, true)
+#16 C:\xampp\yii\framework\web\CController.php(872): CBaseController->renderFile('C:\\xampp\\htdocs...', Array, true)
+#17 C:\xampp\yii\framework\web\CController.php(785): CController->renderPartial('gastoCombustibl...', Array, true)
+#18 C:\xampp\htdocs\otzi\protected\controllers\GerenciaController.php(267): CController->render('gastoCombustibl...', Array)
+#19 C:\xampp\yii\framework\web\actions\CInlineAction.php(49): GerenciaController->actionGastoCombustible()
+#20 C:\xampp\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#21 C:\xampp\yii\framework\web\filters\CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#22 C:\xampp\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#23 C:\xampp\yii\framework\web\CController.php(1148): CFilter->filter(Object(CFilterChain))
+#24 C:\xampp\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#25 C:\xampp\yii\framework\web\filters\CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#26 C:\xampp\yii\framework\web\CController.php(291): CFilterChain->run()
+#27 C:\xampp\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#28 C:\xampp\yii\framework\web\CWebApplication.php(282): CController->run('gastoCombustibl...')
+#29 C:\xampp\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gerencia/gastoC...')
+#30 C:\xampp\yii\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#31 C:\xampp\htdocs\otzi\index.php(14): CApplication->run()
+#32 {main}
+REQUEST_URI=/otzi/index.php/gerencia/gastoCombustible
+HTTP_REFERER=http://localhost/otzi/index.php/site/index
+---
+2020/07/17 22:11:49 [error] [exception.Error] Error: Call to undefined function money_format() in C:\xampp\yii\framework\base\CComponent.php(614) : eval()'d code:1
+Stack trace:
+#0 C:\xampp\yii\framework\base\CComponent.php(614): eval()
+#1 C:\xampp\yii\framework\zii\widgets\grid\CDataColumn.php(142): CComponent->evaluateExpression('money_format("%...', Array)
+#2 C:\xampp\yii\framework\zii\widgets\grid\CGridColumn.php(231): CDataColumn->getDataCellContent(0)
+#3 C:\xampp\yii\framework\zii\widgets\grid\CGridColumn.php(154): CGridColumn->renderDataCellContent(0, Object(InformeGastoCombustible))
+#4 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(639): CGridColumn->renderDataCell(0)
+#5 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(623): CGridView->renderDataCell(Object(CDataColumn), 0)
+#6 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(579): CGridView->renderTableRow(0)
+#7 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(489): CGridView->renderTableBody()
+#8 C:\xampp\yii\framework\zii\widgets\CBaseListView.php(181): CGridView->renderItems()
+#9 [internal function]: CBaseListView->renderSection(Array)
+#10 C:\xampp\yii\framework\zii\widgets\CBaseListView.php(164): preg_replace_callback('/{(\\w+)}/', Array, '{summary}\n{item...')
+#11 C:\xampp\yii\framework\zii\widgets\CBaseListView.php(149): CBaseListView->renderContent()
+#12 C:\xampp\yii\framework\web\CBaseController.php(182): CBaseListView->run()
+#13 C:\xampp\htdocs\otzi\protected\views\gerencia\gastoCombustible\informe.php(30): CBaseController->widget('zii.widgets.gri...', Array)
+#14 C:\xampp\yii\framework\web\CBaseController.php(126): require('C:\\xampp\\htdocs...')
+#15 C:\xampp\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\\xampp\\htdocs...', Array, true)
+#16 C:\xampp\yii\framework\web\CController.php(872): CBaseController->renderFile('C:\\xampp\\htdocs...', Array, true)
+#17 C:\xampp\yii\framework\web\CController.php(785): CController->renderPartial('gastoCombustibl...', Array, true)
+#18 C:\xampp\htdocs\otzi\protected\controllers\GerenciaController.php(267): CController->render('gastoCombustibl...', Array)
+#19 C:\xampp\yii\framework\web\actions\CInlineAction.php(49): GerenciaController->actionGastoCombustible()
+#20 C:\xampp\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#21 C:\xampp\yii\framework\web\filters\CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#22 C:\xampp\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#23 C:\xampp\yii\framework\web\CController.php(1148): CFilter->filter(Object(CFilterChain))
+#24 C:\xampp\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#25 C:\xampp\yii\framework\web\filters\CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#26 C:\xampp\yii\framework\web\CController.php(291): CFilterChain->run()
+#27 C:\xampp\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#28 C:\xampp\yii\framework\web\CWebApplication.php(282): CController->run('gastoCombustibl...')
+#29 C:\xampp\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gerencia/gastoC...')
+#30 C:\xampp\yii\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#31 C:\xampp\htdocs\otzi\index.php(14): CApplication->run()
+#32 {main}
+REQUEST_URI=/otzi/index.php/gerencia/gastoCombustible
+HTTP_REFERER=http://localhost/otzi/index.php/site/index
+---
+2020/07/17 22:18:51 [error] [exception.CException] CException: Propiedad "InformeResultados"."consumoPesos" no se encuentra definida. in C:\xampp\yii\framework\base\CComponent.php:130
+Stack trace:
+#0 C:\xampp\yii\framework\db\ar\CActiveRecord.php(145): CComponent->__get('consumoPesos')
+#1 C:\xampp\yii\framework\base\CComponent.php(614) : eval()'d code(1): CActiveRecord->__get('consumoPesos')
+#2 C:\xampp\yii\framework\base\CComponent.php(614): eval()
+#3 C:\xampp\yii\framework\zii\widgets\grid\CDataColumn.php(142): CComponent->evaluateExpression('"$".number_form...', Array)
+#4 C:\xampp\yii\framework\zii\widgets\grid\CGridColumn.php(231): CDataColumn->getDataCellContent(0)
+#5 C:\xampp\yii\framework\zii\widgets\grid\CGridColumn.php(154): CGridColumn->renderDataCellContent(0, Object(InformeResultados))
+#6 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(639): CGridColumn->renderDataCell(0)
+#7 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(623): CGridView->renderDataCell(Object(CDataColumn), 0)
+#8 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(579): CGridView->renderTableRow(0)
+#9 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(489): CGridView->renderTableBody()
+#10 C:\xampp\yii\framework\zii\widgets\CBaseListView.php(181): CGridView->renderItems()
+#11 [internal function]: CBaseListView->renderSection(Array)
+#12 C:\xampp\yii\framework\zii\widgets\CBaseListView.php(164): preg_replace_callback('/{(\\w+)}/', Array, '{summary}\n{item...')
+#13 C:\xampp\yii\framework\zii\widgets\CBaseListView.php(149): CBaseListView->renderContent()
+#14 C:\xampp\yii\framework\web\CBaseController.php(182): CBaseListView->run()
+#15 C:\xampp\htdocs\otzi\protected\views\gerencia\resultados\informe.php(30): CBaseController->widget('zii.widgets.gri...', Array)
+#16 C:\xampp\yii\framework\web\CBaseController.php(126): require('C:\\xampp\\htdocs...')
+#17 C:\xampp\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\\xampp\\htdocs...', Array, true)
+#18 C:\xampp\yii\framework\web\CController.php(872): CBaseController->renderFile('C:\\xampp\\htdocs...', Array, true)
+#19 C:\xampp\yii\framework\web\CController.php(785): CController->renderPartial('resultados/info...', Array, true)
+#20 C:\xampp\htdocs\otzi\protected\controllers\GerenciaController.php(303): CController->render('resultados/info...', Array)
+#21 C:\xampp\yii\framework\web\actions\CInlineAction.php(49): GerenciaController->actionResultados()
+#22 C:\xampp\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#23 C:\xampp\yii\framework\web\filters\CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#24 C:\xampp\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#25 C:\xampp\yii\framework\web\CController.php(1148): CFilter->filter(Object(CFilterChain))
+#26 C:\xampp\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#27 C:\xampp\yii\framework\web\filters\CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#28 C:\xampp\yii\framework\web\CController.php(291): CFilterChain->run()
+#29 C:\xampp\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#30 C:\xampp\yii\framework\web\CWebApplication.php(282): CController->run('resultados')
+#31 C:\xampp\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gerencia/result...')
+#32 C:\xampp\yii\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#33 C:\xampp\htdocs\otzi\index.php(14): CApplication->run()
+#34 {main}
+REQUEST_URI=/otzi/index.php/gerencia/resultados
+HTTP_REFERER=http://localhost/otzi/index.php/site/index
+---
+2020/07/17 23:24:28 [error] [exception.CException] CException: Propiedad "InformeChofer"."consumoPromedio" no se encuentra definida. in C:\xampp\yii\framework\base\CComponent.php:130
+Stack trace:
+#0 C:\xampp\yii\framework\db\ar\CActiveRecord.php(145): CComponent->__get('consumoPromedio')
+#1 C:\xampp\yii\framework\base\CComponent.php(614) : eval()'d code(1): CActiveRecord->__get('consumoPromedio')
+#2 C:\xampp\yii\framework\base\CComponent.php(614): eval()
+#3 C:\xampp\yii\framework\zii\widgets\grid\CDataColumn.php(142): CComponent->evaluateExpression('number_format($...', Array)
+#4 C:\xampp\yii\framework\zii\widgets\grid\CGridColumn.php(231): CDataColumn->getDataCellContent(0)
+#5 C:\xampp\yii\framework\zii\widgets\grid\CGridColumn.php(154): CGridColumn->renderDataCellContent(0, Object(InformeChofer))
+#6 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(639): CGridColumn->renderDataCell(0)
+#7 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(623): CGridView->renderDataCell(Object(CDataColumn), 0)
+#8 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(579): CGridView->renderTableRow(0)
+#9 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(489): CGridView->renderTableBody()
+#10 C:\xampp\yii\framework\zii\widgets\CBaseListView.php(181): CGridView->renderItems()
+#11 [internal function]: CBaseListView->renderSection(Array)
+#12 C:\xampp\yii\framework\zii\widgets\CBaseListView.php(164): preg_replace_callback('/{(\\w+)}/', Array, '{summary}\n{item...')
+#13 C:\xampp\yii\framework\zii\widgets\CBaseListView.php(149): CBaseListView->renderContent()
+#14 C:\xampp\yii\framework\web\CBaseController.php(182): CBaseListView->run()
+#15 C:\xampp\htdocs\otzi\protected\views\gerencia\chofer\informe.php(31): CBaseController->widget('zii.widgets.gri...', Array)
+#16 C:\xampp\yii\framework\web\CBaseController.php(126): require('C:\\xampp\\htdocs...')
+#17 C:\xampp\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\\xampp\\htdocs...', Array, true)
+#18 C:\xampp\yii\framework\web\CController.php(872): CBaseController->renderFile('C:\\xampp\\htdocs...', Array, true)
+#19 C:\xampp\yii\framework\web\CController.php(785): CController->renderPartial('chofer/informe', Array, true)
+#20 C:\xampp\htdocs\otzi\protected\controllers\GerenciaController.php(383): CController->render('chofer/informe', Array)
+#21 C:\xampp\yii\framework\web\actions\CInlineAction.php(49): GerenciaController->actionChofer()
+#22 C:\xampp\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#23 C:\xampp\yii\framework\web\filters\CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#24 C:\xampp\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#25 C:\xampp\yii\framework\web\CController.php(1148): CFilter->filter(Object(CFilterChain))
+#26 C:\xampp\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#27 C:\xampp\yii\framework\web\filters\CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#28 C:\xampp\yii\framework\web\CController.php(291): CFilterChain->run()
+#29 C:\xampp\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#30 C:\xampp\yii\framework\web\CWebApplication.php(282): CController->run('chofer')
+#31 C:\xampp\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gerencia/chofer')
+#32 C:\xampp\yii\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#33 C:\xampp\htdocs\otzi\index.php(14): CApplication->run()
+#34 {main}
+REQUEST_URI=/otzi/index.php/gerencia/chofer
+HTTP_REFERER=http://localhost/otzi/index.php/site/index
+---
+2020/07/17 23:39:30 [error] [exception.CException] CException: Propiedad "InformeRegExpEquipoPropio"."kmRecorridos" no se encuentra definida. in C:\xampp\yii\framework\base\CComponent.php:130
+Stack trace:
+#0 C:\xampp\yii\framework\db\ar\CActiveRecord.php(145): CComponent->__get('kmRecorridos')
+#1 C:\xampp\yii\framework\base\CComponent.php(614) : eval()'d code(1): CActiveRecord->__get('kmRecorridos')
+#2 C:\xampp\yii\framework\base\CComponent.php(614): eval()
+#3 C:\xampp\yii\framework\zii\widgets\grid\CDataColumn.php(142): CComponent->evaluateExpression('number_format($...', Array)
+#4 C:\xampp\yii\framework\zii\widgets\grid\CGridColumn.php(231): CDataColumn->getDataCellContent(0)
+#5 C:\xampp\yii\framework\zii\widgets\grid\CGridColumn.php(154): CGridColumn->renderDataCellContent(0, Object(InformeRegExpEquipoPropio))
+#6 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(639): CGridColumn->renderDataCell(0)
+#7 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(623): CGridView->renderDataCell(Object(CDataColumn), 0)
+#8 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(579): CGridView->renderTableRow(0)
+#9 C:\xampp\yii\framework\zii\widgets\grid\CGridView.php(489): CGridView->renderTableBody()
+#10 C:\xampp\yii\framework\zii\widgets\CBaseListView.php(181): CGridView->renderItems()
+#11 [internal function]: CBaseListView->renderSection(Array)
+#12 C:\xampp\yii\framework\zii\widgets\CBaseListView.php(164): preg_replace_callback('/{(\\w+)}/', Array, '{summary}\n{item...')
+#13 C:\xampp\yii\framework\zii\widgets\CBaseListView.php(149): CBaseListView->renderContent()
+#14 C:\xampp\yii\framework\web\CBaseController.php(182): CBaseListView->run()
+#15 C:\xampp\htdocs\otzi\protected\views\informeRegExpEquipoPropio\admin.php(36): CBaseController->widget('zii.widgets.gri...', Array)
+#16 C:\xampp\yii\framework\web\CBaseController.php(126): require('C:\\xampp\\htdocs...')
+#17 C:\xampp\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('C:\\xampp\\htdocs...', Array, true)
+#18 C:\xampp\yii\framework\web\CController.php(872): CBaseController->renderFile('C:\\xampp\\htdocs...', Array, true)
+#19 C:\xampp\yii\framework\web\CController.php(785): CController->renderPartial('admin', Array, true)
+#20 C:\xampp\htdocs\otzi\protected\controllers\InformeRegExpEquipoPropioController.php(176): CController->render('admin', Array)
+#21 C:\xampp\yii\framework\web\actions\CInlineAction.php(49): InformeRegExpEquipoPropioController->actionAdmin()
+#22 C:\xampp\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#23 C:\xampp\yii\framework\web\filters\CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#24 C:\xampp\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#25 C:\xampp\yii\framework\web\CController.php(1148): CFilter->filter(Object(CFilterChain))
+#26 C:\xampp\yii\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#27 C:\xampp\yii\framework\web\filters\CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#28 C:\xampp\yii\framework\web\CController.php(291): CFilterChain->run()
+#29 C:\xampp\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#30 C:\xampp\yii\framework\web\CWebApplication.php(282): CController->run('admin')
+#31 C:\xampp\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('informeRegExpEq...')
+#32 C:\xampp\yii\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#33 C:\xampp\htdocs\otzi\index.php(14): CApplication->run()
+#34 {main}
+REQUEST_URI=/otzi/index.php/informeRegExpEquipoPropio/admin
+HTTP_REFERER=http://localhost/otzi/index.php/site/index
+---

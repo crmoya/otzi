@@ -14,7 +14,7 @@
 				<td style='font-size:0.9em;'><b>camión, camioneta, auto:</b></td>
 				<td><?php echo CHtml::encode($camion->nombre);?></td>
 				<td style='font-size:0.9em;'><b>Capacidad:</b></td>
-				<td ><?php echo CHtml::encode($camion->capacidad);?></td>
+				<td ><?php echo CHtml::encode(number_format($camion->capacidad,2,',','.'));?></td>
 			</tr>
 			<tr>
 			 	<td style='font-size:0.9em;'><b>Orden de Compra o Contrato N°:</b></td>
@@ -24,15 +24,15 @@
 			</tr>
 			<tr>
 				<td style='font-size:0.9em;'><b>Km Inicial:</b></td>
-				<td><?php echo CHtml::encode($model->kmInicial);?></td>
+				<td><?php echo CHtml::encode(number_format($model->kmInicial,2,',','.'));?></td>
 				<td style='font-size:0.9em;'><b>Km Final:</b></td>
-				<td><?php echo CHtml::encode($model->kmFinal);?></td>
+			  	<td><?php echo CHtml::encode(number_format($model->kmFinal,2,',','.'));?></td>	
 			</tr>
 			<tr>
-			  <td style='font-size:0.9em;'><b>Km GPS:</b></td>
-			  <td><?php echo CHtml::encode($model->kmGps);?></td>
-			  <td style='font-size:0.9em;'><b>Km Recorridos:</b></td>
-			  <td><?php echo CHtml::encode($recorridos);?></td>	  
+				<td style='font-size:0.9em;'><b>Km GPS:</b></td>
+			  	<td><?php echo CHtml::encode(number_format($model->kmGps,2,',','.'));?></td>
+			  	<td style='font-size:0.9em;'><b>Km Recorridos:</b></td>
+			  	<td><?php echo CHtml::encode(number_format($recorridos,2,',','.'));?></td>
 			</tr>
 		</table>
 	</fieldset>
@@ -51,19 +51,19 @@
 							  <td style='font-size:0.9em;'><b>Origen / Destino:</b></td>
 							  <td><?php echo CHtml::encode(OrigendestinoFaena::model()->getNombre($expedicion['origendestino_faena_id']));?></td>	
 							  <td style='font-size:0.9em;'><b>N°Vueltas:</b></td>
-							  <td><?php echo CHtml::encode($expedicion['nVueltas']);?></td>				  
+							  <td><?php echo CHtml::encode(number_format($expedicion['nVueltas'],0,',','.'));?></td>			  
 							</tr>
 							<tr>
-							  <td style='font-size:0.9em;'><b>Km Recorridos:</b></td>
-							  <td><?php echo CHtml::encode($expedicion['kmRecorridos']);?></td>	
+							<td style='font-size:0.9em;'><b>Km Recorridos:</b></td>
+							  <td><?php echo CHtml::encode(number_format($expedicion['kmRecorridos'],2,',','.'));?></td>				  
 							  <td style='font-size:0.9em;'><b>Total Transportado:</b></td>
-							  <td><?php echo CHtml::encode($expedicion['totalTransportado']);?></td>	
+							  <td><?php echo CHtml::encode(number_format($expedicion['totalTransportado'],2,',','.'));?></td>	
 							  <td style='font-size:0.9em;'><b>Total:</b></td>
-							  <td><?php echo CHtml::encode($expedicion['total']);?></td>			  
+							  <td><?php echo CHtml::encode("$".number_format($expedicion['total'],0,',','.'));?></td>			  
 							</tr>
 							<tr>
 							  <td colspan='2' style='font-size:0.9em;'><b>Coeficiente Carga Parcial %:</b></td>
-							  <td colspan='4'><?php echo CHtml::encode($expedicion['coeficiente']);?></td>				  
+							  <td colspan='4'><?php echo CHtml::encode($expedicion['coeficiente']."%");?></td>				  
 							</tr>								
 						</table>	
 					</td>
@@ -84,15 +84,15 @@
 							  <td style='font-size:0.9em;'><b>Faena:</b></td>
 							  <td><?php echo Faena::model()->getNombre(CHtml::encode($combustible['faena_id']));?></td>
 							  <td style='font-size:0.9em;'><b>Combustible Lts:</b></td>
-							  <td><?php echo CHtml::encode($combustible['petroleoLts']);?></td>
+							  <td><?php echo CHtml::encode(number_format($combustible['petroleoLts'],2,',','.'));?></td>
 							  <td style='font-size:0.9em;'><b>Km Carguío:</b></td>
-							  <td><?php echo CHtml::encode($combustible['kmCarguio']);?></td>															  
+							  <td><?php echo CHtml::encode(number_format($combustible['kmCarguio'],2,',','.'));?></td>															  
 							</tr>
 							<tr>
 							  <td style='font-size:0.9em;'><b>Precio Unitario:</b></td>
-							  <td><?php echo CHtml::encode($combustible['precioUnitario']);?></td>
+							  <td><?php echo CHtml::encode("$".number_format($combustible['precioUnitario'],0,',','.'));?></td>
 							  <td style='font-size:0.9em;'><b>Valor Total:</b></td>
-							  <td><?php echo CHtml::encode($combustible['valorTotal']);?></td>
+							  <td><?php echo CHtml::encode("$".number_format($combustible['valorTotal'],0,',','.'));?></td>
 							  <td style='font-size:0.9em;'><b>Tipo Combustible:</b></td>
 							  <td><?php echo TipoCombustible::model()->getNombre(CHtml::encode($combustible['tipoCombustible_id']));?></td>														  
 							</tr>
@@ -131,7 +131,7 @@
 							  <td style='font-size:0.9em;'><b>Repuesto:</b></td>
 							  <td><?php echo CHtml::encode($compra['repuesto']);?></td>
 							  <td style='font-size:0.9em;'><b>Monto Neto:</b></td>
-							  <td><?php echo CHtml::encode($compra['montoNeto']);?></td>
+							  <td><?php echo CHtml::encode("$".number_format($compra['montoNeto'],0,',','.'));?></td>
 							  <td style='font-size:0.9em;'><b>Cantidad:</b></td>
 							  <td><?php echo CHtml::encode($compra['cantidad']." ".Tools::getNombreUnidad($compra['unidad']));?></td>															  
 							</tr>

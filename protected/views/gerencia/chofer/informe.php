@@ -33,10 +33,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'columns'=>array(
 		'chofer',
         'camion',
-		'produccionDia',
-		'produccionMinima', 
-		'coeficienteCombustible',    
-        'gastoCombustible',
-		'diferencia',	
+		['name' => 'produccionDia', 'value' => '"$".number_format($data->produccionDia,0,",",".")','htmlOptions'=>['style'=>'text-align:right;']],
+		['name' => 'produccionMinima', 'value' => '"$".number_format($data->produccionMinima,0,",",".")','htmlOptions'=>['style'=>'text-align:right;']],
+		['name' => 'coeficienteCombustible', 'value' => 'number_format($data->coeficienteCombustible,2,",",".")','htmlOptions'=>['style'=>'text-align:right;']],  
+		['name' => 'gastoCombustible', 'value' => '"$".number_format($data->gastoCombustible,0,",",".")','htmlOptions'=>['style'=>'text-align:right;']],  
+		['name' => 'diferencia', 'value' => '"$".number_format($data->diferencia,0,",",".")','htmlOptions'=>['style'=>'text-align:right;']],  
+		
     ),
 ));
