@@ -159,7 +159,7 @@ class FaenaController extends Controller {
     	if (isset($_POST['Faena'])) {
     		$model->attributes = $_POST['Faena'];
     		$model->vigente = $_POST['Faena']['vigente'];
-    		$valid = true;
+			$valid = true;
     		for($j=0;$j<count($_POST['OrigendestinoFaena']);$j++){
             	$od = new OrigendestinoFaena();
             	$od->origen_id = $_POST['OrigendestinoFaena'][$j]['origen'];

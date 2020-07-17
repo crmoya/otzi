@@ -46,7 +46,7 @@ $cs->registerCoreScript('jquery');
 									<td>&nbsp</td>
 								</tr>
 							<?php 
-							if($ods != null){	
+							if(isset($ods)){	
 								foreach($ods as $i=>$od): ?>
 								<tr class="templateContent">
 									<td>
