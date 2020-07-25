@@ -74,7 +74,7 @@ return array(
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
             'errorAction'=>'site/error',
-        ),
+		),
 		'log'=>array(
 			'class'=>'CLogRouter',
 			'routes'=>array(
@@ -97,5 +97,11 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'contacto@mvs.cl',
+	),
+	'modules'=>array(
+		'gii'=>array(
+			'class'=>'system.gii.GiiModule',
+			'password'=>'g11m0dul3',
+		),
 	),
 );
