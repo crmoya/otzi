@@ -4,7 +4,7 @@
 
 ?>
 
-<h1>Registros de RindeGastos</h1>
+<h1>Registros de gastos de <?=$gastoNombre?></h1>
 <?php echo CHtml::link('Exportar a Excel','exportar'); ?>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
