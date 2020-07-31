@@ -909,8 +909,8 @@ class InformeDetalleGastoCombustible extends CActiveRecord
 			$command->bindParam(":fechaFin",$this->fechaFin,PDO::PARAM_STR);
 		}
 		$maquina = trim($maquina);
-		$opRut = trim($opRut);
-		$opNombre = trim($opNombre);
+		/*$opRut = trim($opRut);
+		$opNombre = trim($opNombre);*/
 		
 		if($filtroMaquina!=""){
 			$command->bindParam(":maquina",$maquina,PDO::PARAM_INT);

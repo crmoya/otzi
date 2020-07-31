@@ -10996,3 +10996,20 @@ Stack trace:
 #31 C:\xampp\yii\framework\base\CApplication.php(185): CWebApplication->processRequest()
 #32 C:\xampp\htdocs\otzi\index.php(14): CWebApplication->run()
 REQUEST_URI=/otzi/index.php/gastoCompleta/admin
+2020/07/31 02:41:50 [error] [php] Undefined variable: opRut (C:\xampp\htdocs\otzi\protected\models\InformeDetalleGastoCombustible.php:912)
+Stack trace:
+#0 C:\xampp\yii\framework\web\actions\CAction.php(109): ReflectionMethod->invokeArgs()
+#1 C:\xampp\yii\framework\web\actions\CInlineAction.php(47): CInlineAction->runWithParamsInternal()
+#2 C:\xampp\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#3 C:\xampp\yii\framework\web\filters\CFilterChain.php(134): GerenciaController->runAction()
+#4 C:\xampp\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#5 C:\xampp\yii\framework\web\CController.php(1148): CAccessControlFilter->filter()
+#6 C:\xampp\yii\framework\web\filters\CInlineFilter.php(58): GerenciaController->filterAccessControl()
+#7 C:\xampp\yii\framework\web\filters\CFilterChain.php(131): CInlineFilter->filter()
+#8 C:\xampp\yii\framework\web\CController.php(291): CFilterChain->run()
+#9 C:\xampp\yii\framework\web\CController.php(265): GerenciaController->runActionWithFilters()
+#10 C:\xampp\yii\framework\web\CWebApplication.php(282): GerenciaController->run()
+#11 C:\xampp\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#12 C:\xampp\yii\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#13 C:\xampp\htdocs\otzi\index.php(14): CWebApplication->run()
+REQUEST_URI=/otzi/index.php/gerencia/viewGastoCombustible/1
