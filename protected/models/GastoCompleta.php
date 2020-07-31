@@ -32,6 +32,8 @@
 class GastoCompleta extends CActiveRecord
 {
 
+	public $policy;
+
 	public function getProveedor(){
 		if(isset($this->gasto))
 			return $this->gasto->supplier;
@@ -160,7 +162,9 @@ class GastoCompleta extends CActiveRecord
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
-		$criteria=new CDbCriteria;
+		$criteria=new CDbCriteria();
+
+		$criteria->join = 'JOIN gasto g ON t.gasto_id = g.id and g.expense_policy_id = '.$this->policy; 
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('retenido',$this->retenido,true);

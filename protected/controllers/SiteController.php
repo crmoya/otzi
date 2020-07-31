@@ -427,6 +427,7 @@ class SiteController extends Controller
 					$gasto->category = $expense->Category;
 					$gasto->category_group = $expense->CategoryGroup;
 					$gasto->note = $expense->Note;
+					$gasto->expense_policy_id = (int)$expense->ExpensePolicyId;
 					if(!$gasto->save()){
 						$errores[] = $gasto->errors;
 					}
