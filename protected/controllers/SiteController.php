@@ -151,6 +151,7 @@ class SiteController extends Controller
 		$this->render('contact',array('model'=>$model));
 	}
 
+	/*
 	public function actionCompleta()
 	{
 		set_time_limit(0);
@@ -393,9 +394,7 @@ class SiteController extends Controller
 
 		$connection->active=false;
 	}
-/**
-	 * Displays the contact page
-	 */
+
 	public function actionLoad()
 	{
 		set_time_limit(0);
@@ -482,6 +481,9 @@ class SiteController extends Controller
 
 	}
 
+	*/
+
+	
 	/**
 	 * Displays the login page
 	 */
