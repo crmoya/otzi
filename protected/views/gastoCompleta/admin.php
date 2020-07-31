@@ -38,5 +38,13 @@
 		'unidad',
 		'vehiculo_equipo',
 		'vehiculo_oficina_central',
+		[
+			'class' => 'CLinkColumn',
+			'header' => 'Imagen',
+			'urlExpression' => '$data->imagen',
+			'linkHtmlOptions'=>array('target'=>'_blank'),
+			'imageUrl' => Yii::app()->request->baseUrl.'/images/search.png',
+			'htmlOptions' => ['target'=>'_blank'],
+		],
 	),
 )); ?>

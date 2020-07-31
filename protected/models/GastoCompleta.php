@@ -68,6 +68,15 @@ class GastoCompleta extends CActiveRecord
 		return $this->gasto->note;
 	}
 
+	public function getImagen(){
+		if(isset($this->gasto)){
+			if(isset($this->gasto->gastoImagens)){
+				return $this->gasto->gastoImagens[0]->large;
+			};
+		}
+		
+	}
+
 	/**
 	 * @return string the associated database table name
 	 */
