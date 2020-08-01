@@ -5,7 +5,7 @@
 ?>
 
 <h1>Registros de gastos de <?=$gastoNombre?></h1>
-<?php echo CHtml::link('Exportar a Excel','exportar'); ?>
+<?php echo CHtml::link('Exportar a Excel','exportar?policy='.$model->policy); ?>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'gasto-completa-grid',

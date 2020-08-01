@@ -51,10 +51,16 @@ class GastoCompletaController extends Controller
 	}
 
 
-	function actionExportar()
+	function actionExportar($policy)
 	{
 		set_time_limit(0);
-		$data = GastoCompleta::model()->findAll();
+		$criteria = new CDbCriteria;
+		$criteria->with = array('gasto');
+		$criteria->addColumnCondition([
+			'gasto.expense_policy_id'=>$policy
+		]);
+		$data = GastoCompleta::model()->findAll($criteria);
+
 
 		$this->toExcel(
 			$data,
@@ -184,7 +190,7 @@ class GastoCompletaController extends Controller
 
 		$this->render('admin', array(
 			'model' => $model,
-			'gastoNombre' => $policy == 44639?"COMBUSTIBLE":"OTROS"
+			'gastoNombre' => $policy == 44639?"COMBUSTIBLE":"OTROS",
 		));
 	}
 
