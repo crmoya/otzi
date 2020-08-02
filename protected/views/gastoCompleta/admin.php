@@ -6,19 +6,70 @@
 
 <h1>Registros de gastos de <?=$gastoNombre?></h1>
 <?php echo CHtml::link('Exportar a Excel','exportar?policy='.$model->policy); ?>
+<?php 
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
+
+Yii::app()->clientScript->registerScript('re-install-date-picker', "
+function reinstallDatePicker(id, data) {
+	$('#datepicker_for_fecha').datepicker({
+        closeText: 'Cerrar',
+        prevText: '<Ant',
+        nextText: 'Sig>',
+        currentText: 'Hoy',
+        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+        dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+        weekHeader: 'Sm',
+        dateFormat: 'dd/mm/yy',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: ''
+    });
+}
+");
+
+
+$this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'gasto-completa-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
+	'afterAjaxUpdate' => 'reinstallDatePicker',
 	'columns'=>array(
-		'proveedor',
-		'fecha',
-		'neto',
-		'total',
-		'categoria',
-		'grupocategoria',
-		'nota',
+		['name'=>'proveedor', 'value'=>'$data->supplier'],
+		[
+			'name' => 'fecha',
+            'value' => array($model, 'gridDataColumn'),
+            'filter' => $this->widget(
+                'zii.widgets.jui.CJuiDatePicker',
+                array(
+                    'model' => $model,
+                    'attribute' => 'fecha',
+                    'language' => 'es',
+                    'htmlOptions' => array(
+                        'id' => 'datepicker_for_fecha',
+                        'size' => '10',
+                    ),
+                    'defaultOptions' => array( 
+                        'showOn' => 'focus',
+                        'dateFormat' => 'dd/mm/yy',
+                        'showOtherMonths' => true,
+                        'selectOtherMonths' => true,
+                        'changeMonth' => true,
+                        'changeYear' => true,
+                        'showButtonPanel' => true,
+                    )
+                ),
+				true
+			)
+		],
+		['name'=>'neto', 'value'=>'$data->net'],
+		['name'=>'total', 'value'=>'$data->tot'],
+		['name'=>'categoria', 'value'=>'$data->category'],
+		['name'=>'grupocategoria', 'value'=>'$data->categorygroup'],
+		['name'=>'nota', 'value'=>'$data->note'],
 		'retenido',
 		'cantidad',
 		'centro_costo_faena',
@@ -41,7 +92,7 @@
 		[
 			'class' => 'CLinkColumn',
 			'header' => 'Imagen',
-			'urlExpression' => '$data->imagen',
+			'urlExpression' => '$data->image',
 			'linkHtmlOptions'=>array('target'=>'_blank'),
 			'imageUrl' => Yii::app()->request->baseUrl.'/images/search.png',
 			'htmlOptions' => ['target'=>'_blank'],

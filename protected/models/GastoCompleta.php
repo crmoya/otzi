@@ -31,46 +31,129 @@
  */
 class GastoCompleta extends CActiveRecord
 {
+	/**
+	 * @return array validation rules for model attributes.
+	 */
+	public function rules()
+	{
+		// NOTE: you should only define rules for those attributes that
+		// will receive user inputs.
+		return array(
+			array('gasto_id', 'required'),
+			array('gasto_id', 'numerical', 'integerOnly'=>true),
+			array('retenido, cantidad, centro_costo_faena, departamento, faena, impuesto_especifico, iva, km_carguio, litros_combustible, monto_neto, nombre_quien_rinde, nro_documento, periodo_planilla, rut_proveedor, supervisor_combustible, tipo_documento, unidad, vehiculo_equipo, vehiculo_oficina_central', 'safe'),
+			// The following rule is used by search().
+			// @todo Please remove those attributes that should not be searched.
+			array('id,proveedor,fecha,neto,total,categoria,grupocategoria,nota', 'safe', 'on'=>'search'),
+		);
+	}
+
+	public function search()
+	{
+		// @todo Please modify the following code to remove attributes that should not be searched.
+
+		$criteria=new CDbCriteria();
+
+		//$criteria->join = 'JOIN gasto g ON t.gasto_id = g.id and g.expense_policy_id = '.$this->policy; 
+
+		$criteria->with = ["gasto"];
+		$criteria->compare('id',$this->id);
+		$criteria->compare('gasto.expense_policy_id',$this->policy);
+		$criteria->compare('gasto.supplier',$this->proveedor,true);
+		$criteria->compare('gasto.issue_date',Tools::fixFecha($this->fecha),true);
+		$criteria->compare('gasto.net',$this->neto);
+		$criteria->compare('gasto.total',$this->total);
+		$criteria->compare('gasto.category',$this->categoria,true);
+		$criteria->compare('gasto.category_group',$this->grupocategoria,true);
+		$criteria->compare('gasto.note',$this->nota,true);
+		$criteria->compare('retenido',$this->retenido);
+		$criteria->compare('cantidad',$this->cantidad);
+		$criteria->compare('centro_costo_faena',$this->centro_costo_faena,true);
+		$criteria->compare('departamento',$this->departamento,true);
+		$criteria->compare('faena',$this->faena,true);
+		$criteria->compare('impuesto_especifico',$this->impuesto_especifico);
+		$criteria->compare('iva',$this->iva);
+		$criteria->compare('km_carguio',$this->km_carguio);
+		$criteria->compare('litros_combustible',$this->litros_combustible);
+		$criteria->compare('monto_neto',$this->monto_neto);
+		$criteria->compare('nombre_quien_rinde',$this->nombre_quien_rinde,true);
+		$criteria->compare('nro_documento',$this->nro_documento,true);
+		$criteria->compare('periodo_planilla',$this->periodo_planilla,true);
+		$criteria->compare('rut_proveedor',$this->rut_proveedor,true);
+		$criteria->compare('supervisor_combustible',$this->supervisor_combustible,true);
+		$criteria->compare('tipo_documento',$this->tipo_documento,true);
+		$criteria->compare('unidad',$this->unidad,true);
+		$criteria->compare('vehiculo_equipo',$this->vehiculo_equipo,true);
+		$criteria->compare('vehiculo_oficina_central',$this->vehiculo_oficina_central,true);
+
+
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+			'sort' => array(
+				'defaultOrder' => 'gasto.issue_date DESC',
+				'attributes'=>array(
+					'proveedor'=>['asc' => 'gasto.supplier','desc' => 'gasto.supplier DESC',],
+					'fecha'=>['asc' => 'gasto.issue_date','desc' => 'gasto.issue_date DESC',],
+					'neto'=>['asc' => 'gasto.net','desc' => 'gasto.net DESC',],
+					'total'=>['asc' => 'gasto.total','desc' => 'gasto.total DESC',],
+					'categoria'=>['asc' => 'gasto.category','desc' => 'gasto.category DESC',],
+					'grupocategoria'=>['asc' => 'gasto.category_group','desc' => 'gasto.category_group DESC',],
+					'nota'=>['asc' => 'gasto.note','desc' => 'gasto.note DESC',],
+					'*',
+				),
+			),
+			'pagination'=>[
+				'pageSize'=>20,
+			]
+		));
+	}
 
 	public $policy;
+	public $proveedor;
+	public $fecha;
+	public $neto;
+	public $total;
+	public $categoria;
+	public $grupocategoria;
+	public $nota;
 
-	public function getProveedor(){
+	public function getSupplier(){
 		if(isset($this->gasto))
 			return $this->gasto->supplier;
 		return "";
 	}
 
-	public function getFecha(){
+	public function getDate(){
 		if(isset($this->gasto))
 		return $this->gasto->issue_date;
 	}
 
-	public function getNeto(){
+	public function getNet(){
 		if(isset($this->gasto))
 		return $this->gasto->net;
 	}
 
-	public function getTotal(){
+	public function getTot(){
 		if(isset($this->gasto))
 		return $this->gasto->total;
 	}
 
-	public function getCategoria(){
+	public function getCategory(){
 		if(isset($this->gasto))
 		return $this->gasto->category;
 	}
 
-	public function getGrupocategoria(){
+	public function getCategorygroup(){
 		if(isset($this->gasto))
 		return $this->gasto->category_group;
 	}
 
-	public function getNota(){
+	public function getNote(){
 		if(isset($this->gasto))
 		return $this->gasto->note;
 	}
 
-	public function getImagen(){
+	public function getImage(){
 		if(isset($this->gasto)){
 			if(isset($this->gasto->gastoImagens)){
 				if(count($this->gasto->gastoImagens)>0){
@@ -89,22 +172,7 @@ class GastoCompleta extends CActiveRecord
 		return 'gasto_completa';
 	}
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('gasto_id', 'required'),
-			array('gasto_id', 'numerical', 'integerOnly'=>true),
-			array('retenido, cantidad, centro_costo_faena, departamento, faena, impuesto_especifico, iva, km_carguio, litros_combustible, monto_neto, nombre_quien_rinde, nro_documento, periodo_planilla, rut_proveedor, supervisor_combustible, tipo_documento, unidad, vehiculo_equipo, vehiculo_oficina_central', 'safe'),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('id, retenido, cantidad, centro_costo_faena, departamento, faena, impuesto_especifico, iva, km_carguio, litros_combustible, monto_neto, nombre_quien_rinde, nro_documento, periodo_planilla, rut_proveedor, supervisor_combustible, tipo_documento, unidad, vehiculo_equipo, vehiculo_oficina_central, gasto_id', 'safe', 'on'=>'search'),
-		);
-	}
+	
 
 	/**
 	 * @return array relational rules.
@@ -145,55 +213,11 @@ class GastoCompleta extends CActiveRecord
 			'vehiculo_equipo' => 'Vehiculo Equipo',
 			'vehiculo_oficina_central' => 'Vehiculo Oficina Central',
 			'gasto_id' => 'Gasto',
+			'grupocategoria' => 'Grupo Categoría',
+			'categoria' => 'Categoría',
 		);
 	}
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 *
-	 * Typical usecase:
-	 * - Initialize the model fields with values from filter form.
-	 * - Execute this method to get CActiveDataProvider instance which will filter
-	 * models according to data in model fields.
-	 * - Pass data provider to CGridView, CListView or any similar widget.
-	 *
-	 * @return CActiveDataProvider the data provider that can return the models
-	 * based on the search/filter conditions.
-	 */
-	public function search()
-	{
-		// @todo Please modify the following code to remove attributes that should not be searched.
-
-		$criteria=new CDbCriteria();
-
-		$criteria->join = 'JOIN gasto g ON t.gasto_id = g.id and g.expense_policy_id = '.$this->policy; 
-
-		$criteria->compare('id',$this->id);
-		$criteria->compare('retenido',$this->retenido,true);
-		$criteria->compare('cantidad',$this->cantidad,true);
-		$criteria->compare('centro_costo_faena',$this->centro_costo_faena,true);
-		$criteria->compare('departamento',$this->departamento,true);
-		$criteria->compare('faena',$this->faena,true);
-		$criteria->compare('impuesto_especifico',$this->impuesto_especifico,true);
-		$criteria->compare('iva',$this->iva,true);
-		$criteria->compare('km_carguio',$this->km_carguio,true);
-		$criteria->compare('litros_combustible',$this->litros_combustible,true);
-		$criteria->compare('monto_neto',$this->monto_neto,true);
-		$criteria->compare('nombre_quien_rinde',$this->nombre_quien_rinde,true);
-		$criteria->compare('nro_documento',$this->nro_documento,true);
-		$criteria->compare('periodo_planilla',$this->periodo_planilla,true);
-		$criteria->compare('rut_proveedor',$this->rut_proveedor,true);
-		$criteria->compare('supervisor_combustible',$this->supervisor_combustible,true);
-		$criteria->compare('tipo_documento',$this->tipo_documento,true);
-		$criteria->compare('unidad',$this->unidad,true);
-		$criteria->compare('vehiculo_equipo',$this->vehiculo_equipo,true);
-		$criteria->compare('vehiculo_oficina_central',$this->vehiculo_oficina_central,true);
-		$criteria->compare('gasto_id',$this->gasto_id);
-
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -205,4 +229,9 @@ class GastoCompleta extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+	protected function gridDataColumn($data, $row)
+	{
+		return Tools::backFecha($data->date);
+	}
+
 }

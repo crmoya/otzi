@@ -39,7 +39,7 @@ class Gasto extends CActiveRecord
 			array('supplier, issue_date, category, category_group, note', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, supplier, issue_date, net, total, category, category_group, note', 'safe', 'on'=>'search'),
+			array('id, supplier, issue_date, net, total, category, category_group, note, retenido, cantidad,centro_costo_faena,departamento,faena,impuesto_especifico,iva,km_carguio,litros_combustible,monto_neto,nombre_quien_rinde,nro_documento,periodo_planilla,rut_proveedor,supervisor_combustible,tipo_documento,unidad,vehiculo_equipo,vehiculo_oficina_central', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -99,6 +99,7 @@ class Gasto extends CActiveRecord
 		$criteria->compare('category',$this->category,true);
 		$criteria->compare('category_group',$this->category_group,true);
 		$criteria->compare('note',$this->note,true);
+		
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -115,4 +116,5 @@ class Gasto extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
 }
