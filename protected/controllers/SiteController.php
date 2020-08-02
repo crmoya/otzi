@@ -151,7 +151,7 @@ class SiteController extends Controller
 		$this->render('contact',array('model'=>$model));
 	}
 
-	/*
+	
 	public function actionCompleta()
 	{
 		set_time_limit(0);
@@ -481,7 +481,7 @@ class SiteController extends Controller
 
 	}
 
-	*/
+	
 
 	
 	/**
