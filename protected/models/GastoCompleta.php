@@ -73,7 +73,9 @@ class GastoCompleta extends CActiveRecord
 	public function getImagen(){
 		if(isset($this->gasto)){
 			if(isset($this->gasto->gastoImagens)){
-				return $this->gasto->gastoImagens[0]->large;
+				if(count($this->gasto->gastoImagens)>0){
+					return $this->gasto->gastoImagens[0]->original;
+				}
 			};
 		}
 		
@@ -190,6 +192,9 @@ class GastoCompleta extends CActiveRecord
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+			'pagination'=>array(
+				'pageSize'=>100,
+			),
 		));
 	}
 
