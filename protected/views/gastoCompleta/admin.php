@@ -90,12 +90,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		'vehiculo_equipo',
 		'vehiculo_oficina_central',
 		[
-			'class' => 'CLinkColumn',
 			'header' => 'Imagen',
-			'urlExpression' => '$data->image',
-			'linkHtmlOptions'=>array('target'=>'_blank'),
-			'imageUrl' => Yii::app()->request->baseUrl.'/images/search.png',
-			'htmlOptions' => ['target'=>'_blank'],
+			'type' => 'raw',
+			'value'=>'($data->image!="SIN IMAGEN")?
+				CHtml::link("<img src=\''.Yii::app()->request->baseUrl.'/images/search.png\'>", ($data->image),["target"=>"_blank"])
+        		:"SIN IMAGEN"',
 		],
 	),
 )); ?>

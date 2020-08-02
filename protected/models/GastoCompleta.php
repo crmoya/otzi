@@ -157,11 +157,22 @@ class GastoCompleta extends CActiveRecord
 		if(isset($this->gasto)){
 			if(isset($this->gasto->gastoImagens)){
 				if(count($this->gasto->gastoImagens)>0){
-					return $this->gasto->gastoImagens[0]->original;
+					if(isset($this->gasto->gastoImagens[0]->original)){
+						return $this->gasto->gastoImagens[0]->original;
+					}
+					else if(isset($this->gasto->gastoImagens[0]->large)){
+						return $this->gasto->gastoImagens[0]->large;
+					}
+					else if(isset($this->gasto->gastoImagens[0]->medium)){
+						return $this->gasto->gastoImagens[0]->medium;
+					}
+					else if(isset($this->gasto->gastoImagens[0]->small)){
+						return $this->gasto->gastoImagens[0]->small;
+					}
 				}
-			};
+			}
 		}
-		
+		return "SIN IMAGEN";
 	}
 
 	/**
@@ -215,6 +226,13 @@ class GastoCompleta extends CActiveRecord
 			'gasto_id' => 'Gasto',
 			'grupocategoria' => 'Grupo Categoría',
 			'categoria' => 'Categoría',
+			'supplier' => 'Proveedor',
+			'date' => 'Fecha',
+			'net' => 'Neto',
+			'tot' => 'Total',
+			'category' => 'Categoría',
+			'categorygroup' => 'Grupo Categoría',
+			'note' => 'Nota',
 		);
 	}
 
