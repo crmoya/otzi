@@ -29,5 +29,5 @@ Bienvenido <?php echo CHtml::encode($nombre);?>, por favor seleccione una de las
 
  <li>&nbsp;</li>
  <li><?php echo CHtml::link("Visualizar gastos RindeGastos COMBUSTIBLES",CController::createUrl('//gastoCompleta/admin',['policy'=>44639])); ?></li>
- <li><?php echo CHtml::link("Visualizar gastos RindeGastos OTROS GASTOS",CController::createUrl('//gastoCompleta/admin',['policy'=>41786])); ?></li>
+ <li><?php echo CHtml::link("Visualizar gastos RindeGastos DEPARTAMENTO DE MAQUINARIA DIFERENTE DE COMBUSTIBLES",CController::createUrl('//gastoCompleta/admin',['policy'=>41786])); ?></li>
 </ul>

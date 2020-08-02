@@ -190,7 +190,7 @@ class GastoCompletaController extends Controller
 
 		$this->render('admin', array(
 			'model' => $model,
-			'gastoNombre' => $policy == 44639?"COMBUSTIBLE":"OTROS",
+			'gastoNombre' => $policy == 44639?"COMBUSTIBLE":"DEPARTAMENTO DE MAQUINARIA DIFERENTE DE COMBUSTIBLES",
 		));
 	}
 
