@@ -1005,15 +1005,19 @@ function checkNVueltas() {
 				$("#errorNVueltas" + i).html("Error: No puede ser blanco");
 				return false;
 			}
-			if (!is_int(valor)) {
+			else if (!is_int(valor)) {
 				$("#nVueltas" + i).css('background', 'pink');
 				$("#errorNVueltas" + i).html("Error: Debe ser número");
 				return false;
 			}
-			if (valor < 0) {
+			else if (valor < 0) {
 				$("#nVueltas" + i).css('background', 'pink');
 				$("#errorNVueltas" + i).html("Error: No puede ser negativo");
 				return false;
+			}
+			else{
+				$("#nVueltas" + i).css('background', 'white');
+				$("#errorNVueltas" + i).html('');
 			}
 		}
 	}
@@ -1131,6 +1135,24 @@ function checkFaena() {
 			}
 			else {
 				$("#faena_id" + i).css('background', 'white');
+				$("#errorFaena_id" + i).html("");
+			}
+		}
+	}
+	return true;
+}
+
+function checkOrigenDestino() {
+	for (i = 0; i < nExpediciones; i++) {		
+		if ($("#removeExpedicion" + i).attr("validate") == "true") {
+			var valor = $("#origenDestino" + i).val();
+			if (valor == "" || valor == null) {
+				$("#origenDestino" + i).css('background', 'pink');
+				$("#errorFaena_id" + i).html("Error: Seleccione un Origen Destino");
+				return false;
+			}
+			else {
+				$("#origenDestino0" + i).css('background', 'white');
 				$("#errorFaena_id" + i).html("");
 			}
 		}

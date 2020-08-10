@@ -339,6 +339,7 @@ $cs->registerCoreScript('jquery');
 			var faena_id = $(this).val();
 			var filtradas = filtrar(faena_id);
 			$("#origenDestino" + i).html('');
+			$("#errorFaena_id" + i).html('');
 			var primero = true;
 			for (j = 0; j < filtradas.length; j++) {
 				var reg = filtradas[j];
@@ -361,6 +362,7 @@ $cs->registerCoreScript('jquery');
 				$("#pu" + i).attr("pu", 0);
 				$("#kmRecorridos" + i).val(0);
 				$("#total" + i).val(0);
+				$("#errorFaena_id" + i).html('ERROR: La faena no tiene orígenes-destinos disponibles');
 			}
 		});
 
@@ -442,6 +444,7 @@ $cs->registerCoreScript('jquery');
 			valid = valid && checkNVueltas();
 			valid = valid && checkChofer();
 			valid = valid && checkFaena();
+			valid = valid && checkOrigenDestino();
 			valid = valid && checkTotal();
 			valid = valid && checkTotalTransportado();
 

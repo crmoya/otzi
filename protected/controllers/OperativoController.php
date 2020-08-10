@@ -152,16 +152,17 @@ class OperativoController extends Controller
 
 	public function actionCamionesPropios()
 	{
-
-
 		$model = new RCamionPropio();
 		if (isset($_POST['RCamionPropio'])) {
-
+			$connection=Yii::app()->db;
+			$connection->active=true;
+			$transaction=$connection->beginTransaction();
+			$ok = true;
+			
 			$model->attributes = $_POST['RCamionPropio'];
 			$model->observaciones_obra = $_POST['RCamionPropio']['observaciones_obra'];
 			$model->fecha = Tools::fixFecha($model->fecha);
 			$model->usuario_id = Yii::app()->user->id;
-
 
 			$model->iniPanne = $_POST['RCamionPropio']['iniPanne'];
 			$model->finPanne = $_POST['RCamionPropio']['finPanne'];
@@ -177,10 +178,8 @@ class OperativoController extends Controller
 			} else {
 				$model->minPanne = 0;
 			}
-			$valid = $model->validate();
 
-			if ($valid) {
-				$model->save();
+			if ($model->save()){
 				if (isset($_POST['ViajeCamionPropio'])) {
 					foreach ($_POST['ViajeCamionPropio'] as $i => $viajeArr) {
 						$viaje = new ViajeCamionPropio();
@@ -192,10 +191,9 @@ class OperativoController extends Controller
 						$viaje->total = $viajeArr['total'];
 						$viaje->totalTransportado = $viajeArr['totalTransportado'];
 						$viaje->coeficiente = $viajeArr['coeficiente'];
-
-						$valid = $valid && $viaje->validate();
-						if ($valid) {
-							$viaje->save();
+						if (!$viaje->save()) {
+							$ok = false;
+							break;
 						}
 					}
 				}
@@ -222,9 +220,9 @@ class OperativoController extends Controller
 						$carga->rut_proveedor = $cargaArr['rut_proveedor'];
 						Proveedor::model()->ingresaProveedor($carga->rut_proveedor, $carga->nombre_proveedor);
 						$carga->tipo_documento = $cargaArr['tipo_documento'];
-						$valid = $valid && $carga->validate();
-						if ($valid) {
-							$carga->save();
+						if (!$carga->save()) {
+							$ok = false;
+							break;
 						}
 					}
 				}
@@ -251,23 +249,31 @@ class OperativoController extends Controller
 						$compra->rut_proveedor = $compraArr['rut_proveedor'];
 						Proveedor::model()->ingresaProveedor($compra->rut_proveedor, $compra->nombre_proveedor);
 						$compra->cuenta = $compraArr['cuenta'];
-
-						$valid = $valid && $compra->validate();
-						if ($valid) {
-							$compra->save();
+						
+						if (!$compra->save()) {
+							$ok = false;
+							break;
 						}
 					}
 				}
-			} else {
-				Yii::app()->user->setFlash('camionesError', "Error. Datos del formulario erróneos: " . CHtml::errorSummary($model));
-				$this->refresh();
+			} 
+			else{
+				$ok = false;
 			}
 
-			if ($valid) {
+			if($ok){
+				$transaction->commit();
 				Yii::app()->user->setFlash('camionesMessage', "Datos guardados correctamente.");
-				$this->refresh();
 			}
-		}
+			else{
+				$transaction->rollback();
+				Yii::app()->user->setFlash('camionesError', "Error. Datos del formulario erróneos: " . CHtml::errorSummary($model));
+			}
+			$connection->active=false;
+			$this->refresh();
+
+		}		
+
 		$this->render('camionesPropios', array('model' => $model));
 	}
 
@@ -277,6 +283,13 @@ class OperativoController extends Controller
 
 		$model = new REquipoPropio();
 		if (isset($_POST['REquipoPropio'])) {
+
+			$connection=Yii::app()->db;
+			$connection->active=true;
+			$transaction=$connection->beginTransaction();
+			$ok = true;
+
+
 			$model->attributes = $_POST['REquipoPropio'];
 			$model->observaciones_obra = $_POST['REquipoPropio']['observaciones_obra'];
 			$model->fecha = Tools::fixFecha($model->fecha);
@@ -297,9 +310,7 @@ class OperativoController extends Controller
 				$model->minPanne = 0;
 			}
 
-			$valid = $model->validate();
-			if ($valid) {
-				$model->save();
+			if ($model->save()) {
 				if (isset($_POST['CargaCombEquipoPropio'])) {
 					foreach ($_POST['CargaCombEquipoPropio'] as $i => $cargaArr) {
 						$carga = new CargaCombEquipoPropio();
@@ -323,9 +334,9 @@ class OperativoController extends Controller
 						$carga->rut_proveedor = $cargaArr['rut_proveedor'];
 						Proveedor::model()->ingresaProveedor($carga->rut_proveedor, $carga->nombre_proveedor);
 						$carga->tipo_documento = $cargaArr['tipo_documento'];
-						$valid = $valid && $carga->validate();
-						if ($valid) {
-							$carga->save();
+						if (!$carga->save()) {
+							$ok = false;
+							break;
 						}
 					}
 				}
@@ -351,24 +362,26 @@ class OperativoController extends Controller
 						$compra->rut_proveedor = $compraArr['rut_proveedor'];
 						Proveedor::model()->ingresaProveedor($compra->rut_proveedor, $compra->nombre_proveedor);
 						$compra->cuenta = $compraArr['cuenta'];
-						$valid = $valid && $compra->validate();
-						if ($valid) {
-							$compra->save();
+						if (!$compra->save()) {
+							$ok = false;
+							break;
 						}
 					}
 				}
-			} else {
-				Yii::app()->user->setFlash('equiposError', CHtml::errorSummary($model));
-				$this->refresh();
+			}else{
+				$ok = false;
 			}
 
-			if ($valid) {
+			if($ok){
+				$transaction->commit();
 				Yii::app()->user->setFlash('equiposMessage', "Datos guardados correctamente.");
-				$this->refresh();
-			} else {
-				Yii::app()->user->setFlash('equiposError', CHtml::errorSummary($model));
-				$this->refresh();
 			}
+			else{
+				$transaction->rollback();
+				Yii::app()->user->setFlash('equiposError', CHtml::errorSummary($model));
+			}
+			$connection->active=false;
+			$this->refresh();
 		}
 		$this->render('equiposPropios', array('model' => $model));
 	}
@@ -378,6 +391,13 @@ class OperativoController extends Controller
 
 		$model = new REquipoArrendado();
 		if (isset($_POST['REquipoArrendado'])) {
+
+			$connection=Yii::app()->db;
+			$connection->active=true;
+			$transaction=$connection->beginTransaction();
+			$ok = true;
+
+
 			$model->attributes = $_POST['REquipoArrendado'];
 			$model->observaciones_obra = $_POST['REquipoArrendado']['observaciones_obra'];
 			$model->fecha = Tools::fixFecha($model->fecha);
@@ -397,11 +417,9 @@ class OperativoController extends Controller
 			} else {
 				$model->minPanne = 0;
 			}
+			
 
-			$valid = $model->validate();
-
-			if ($valid) {
-				$model->save();
+			if ($model->save()) {
 				if (isset($_POST['CargaCombEquipoArrendado'])) {
 					foreach ($_POST['CargaCombEquipoArrendado'] as $i => $cargaArr) {
 						$carga = new CargaCombEquipoArrendado();
@@ -425,9 +443,9 @@ class OperativoController extends Controller
 						$carga->rut_proveedor = $cargaArr['rut_proveedor'];
 						Proveedor::model()->ingresaProveedor($carga->rut_proveedor, $carga->nombre_proveedor);
 						$carga->tipo_documento = $cargaArr['tipo_documento'];
-						$valid = $valid && $carga->validate();
-						if ($valid) {
-							$carga->save();
+						if (!$carga->save()) {
+							$ok = false;
+							break;
 						}
 					}
 				}
@@ -453,21 +471,26 @@ class OperativoController extends Controller
 						$compra->rut_proveedor = $compraArr['rut_proveedor'];
 						Proveedor::model()->ingresaProveedor($compra->rut_proveedor, $compra->nombre_proveedor);
 						$compra->cuenta = $compraArr['cuenta'];
-						$valid = $valid && $compra->validate();
-						if ($valid) {
-							$compra->save();
+						if ($compra->save()) {
+							$ok = false;
+							break;
 						}
 					}
 				}
-			} else {
-				Yii::app()->user->setFlash('equiposError', CHtml::errorSummary($model));
-				$this->refresh();
+			} else{
+				$ok = false;
 			}
 
-			if ($valid) {
+			if($ok){
+				$transaction->commit();
 				Yii::app()->user->setFlash('equiposMessage', "Datos guardados correctamente.");
-				$this->refresh();
 			}
+			else{
+				$transaction->rollback();
+				Yii::app()->user->setFlash('equiposError', CHtml::errorSummary($model));
+			}
+			$connection->active=false;
+			$this->refresh();
 		}
 		$this->render('equiposArrendados', array('model' => $model));
 	}
@@ -479,6 +502,11 @@ class OperativoController extends Controller
 
 
 		if (isset($_POST['RCamionArrendado'])) {
+
+			$connection=Yii::app()->db;
+			$connection->active=true;
+			$transaction=$connection->beginTransaction();
+			$ok = true;
 
 			$model->attributes = $_POST['RCamionArrendado'];
 			$model->observaciones_obra = $_POST['RCamionArrendado']['observaciones_obra'];
@@ -499,10 +527,7 @@ class OperativoController extends Controller
 				$model->minPanne = 0;
 			}
 
-			$valid = $model->validate();
-
-			if ($valid) {
-				$model->save();
+			if ($model->save()) {
 				if (isset($_POST['ViajeCamionArrendado'])) {
 					foreach ($_POST['ViajeCamionArrendado'] as $i => $viajeArr) {
 						$viaje = new ViajeCamionArrendado();
@@ -514,9 +539,9 @@ class OperativoController extends Controller
 						$viaje->total = $viajeArr['total'];
 						$viaje->totalTransportado = $viajeArr['totalTransportado'];
 						$viaje->coeficiente = $viajeArr['coeficiente'];
-						$valid = $valid && $viaje->validate();
-						if ($valid) {
-							$viaje->save();
+						if (!$viaje->save()) {
+							$ok = false;
+							break;
 						}
 					}
 				}
@@ -543,9 +568,9 @@ class OperativoController extends Controller
 						$carga->rut_proveedor = $cargaArr['rut_proveedor'];
 						Proveedor::model()->ingresaProveedor($carga->rut_proveedor, $carga->nombre_proveedor);
 						$carga->tipo_documento = $cargaArr['tipo_documento'];
-						$valid = $valid && $carga->validate();
-						if ($valid) {
-							$carga->save();
+						if (!$carga->save()) {
+							$ok = false;
+							break;
 						}
 					}
 				}
@@ -572,21 +597,29 @@ class OperativoController extends Controller
 						$compra->rut_proveedor = $compraArr['rut_proveedor'];
 						Proveedor::model()->ingresaProveedor($compra->rut_proveedor, $compra->nombre_proveedor);
 						$compra->cuenta = $compraArr['cuenta'];
-						$valid = $valid && $compra->validate();
-						if ($valid) {
-							$compra->save();
+						if ($compra->save()) {
+							$ok = false;
+							break;
 						}
 					}
 				}
-			} else {
-				Yii::app()->user->setFlash('camionesError', CHtml::errorSummary($model));
-				$this->refresh();
+			} 
+			else{
+				$ok = false;
 			}
 
-			if ($valid) {
+			if($ok){
+				$transaction->commit();
 				Yii::app()->user->setFlash('camionesMessage', "Datos guardados correctamente.");
-				$this->refresh();
 			}
+			else{
+				$transaction->rollback();
+				Yii::app()->user->setFlash('camionesError', "Error. Datos del formulario erróneos: " . CHtml::errorSummary($model));
+			}
+			$connection->active=false;
+			$this->refresh();
+
+
 		}
 		$this->render('camionesArrendados', array('model' => $model));
 	}

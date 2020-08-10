@@ -243,7 +243,6 @@ class RCamionPropioController extends Controller
 			}
 
 			if ($model->validate()) {
-
 				if ($model->save()) {
 					$valid = true;
 					if ($model->validado == 0) {
@@ -355,23 +354,24 @@ class RCamionPropioController extends Controller
 						}
 						if ($valid) {
 							Yii::app()->user->setFlash('camionesMessage', "Formulario Guardado con éxito.");
-							$this->refresh();
+							
 						} else {
 							Yii::app()->user->setFlash('camionesError', "Error. No se pudo actualizar el formulario, inténtelo de nuevo. " . $model->errors);
-							$this->refresh();
+							
 						}
 					} else {
 						Yii::app()->user->setFlash('camionesError', "Error. No se pudo actualizar el formulario, inténtelo de nuevo. " . $model->errors);
-						$this->refresh();
+						
 					}
 				} else {
 					Yii::app()->user->setFlash('camionesError', "Error. No se pudo actualizar el formulario, inténtelo de nuevo. " . $model->errors);
-					$this->refresh();
+					
 				}
 			} else {
 				Yii::app()->user->setFlash('camionesError', "Existen errores en el formulario, por favor vuelva a intentarlo. " . $model->errors);
-				$this->refresh();
+				
 			}
+			$this->refresh();
 		}
 
 		$camion_id = $model->camionPropio_id;

@@ -11431,3 +11431,39 @@ Stack trace:
 #30 C:\xampp\yii\framework\base\CApplication.php(185): CWebApplication->processRequest()
 #31 C:\xampp\htdocs\otzi\index.php(14): CWebApplication->run()
 REQUEST_URI=/otzi/index.php/gastoCompleta/admin?policy=44639
+2020/08/10 00:06:23 [error] [php] Undefined index: origendestino_faena_id (C:\xampp\htdocs\otzi\protected\controllers\OperativoController.php:187)
+Stack trace:
+#0 C:\xampp\yii\framework\web\filters\CFilterChain.php(134): OperativoController->runAction()
+#1 C:\xampp\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#2 C:\xampp\yii\framework\web\CController.php(1148): CAccessControlFilter->filter()
+#3 C:\xampp\yii\framework\web\filters\CInlineFilter.php(58): OperativoController->filterAccessControl()
+#4 C:\xampp\yii\framework\web\filters\CFilterChain.php(131): CInlineFilter->filter()
+#5 C:\xampp\yii\framework\web\CController.php(291): CFilterChain->run()
+#6 C:\xampp\yii\framework\web\CController.php(265): OperativoController->runActionWithFilters()
+#7 C:\xampp\yii\framework\web\CWebApplication.php(282): OperativoController->run()
+#8 C:\xampp\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#9 C:\xampp\yii\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#10 C:\xampp\htdocs\otzi\index.php(14): CWebApplication->run()
+REQUEST_URI=/otzi/index.php/operativo/camionesPropios
+2020/08/10 00:13:13 [error] [php] Undefined index: origendestino_faena_id (C:\xampp\htdocs\otzi\protected\controllers\OperativoController.php:187)
+Stack trace:
+#0 C:\xampp\yii\framework\web\filters\CFilterChain.php(134): OperativoController->runAction()
+#1 C:\xampp\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#2 C:\xampp\yii\framework\web\CController.php(1148): CAccessControlFilter->filter()
+#3 C:\xampp\yii\framework\web\filters\CInlineFilter.php(58): OperativoController->filterAccessControl()
+#4 C:\xampp\yii\framework\web\filters\CFilterChain.php(131): CInlineFilter->filter()
+#5 C:\xampp\yii\framework\web\CController.php(291): CFilterChain->run()
+#6 C:\xampp\yii\framework\web\CController.php(265): OperativoController->runActionWithFilters()
+#7 C:\xampp\yii\framework\web\CWebApplication.php(282): OperativoController->run()
+#8 C:\xampp\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#9 C:\xampp\yii\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#10 C:\xampp\htdocs\otzi\index.php(14): CWebApplication->run()
+REQUEST_URI=/otzi/index.php/operativo/camionesPropios
+2020/08/10 17:00:46 [error] [exception.CHttpException.404] CHttpException: No es posible resolver la solicitud "camionPropiop/create" in C:\xampp\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 C:\xampp\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('camionPropiop/c...')
+#1 C:\xampp\yii\framework\base\CApplication.php(185): CWebApplication->processRequest()
+#2 C:\xampp\htdocs\otzi\index.php(14): CApplication->run()
+#3 {main}
+REQUEST_URI=/otzi/index.php/camionPropiop/create
+---
