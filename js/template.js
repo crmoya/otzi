@@ -14,8 +14,7 @@ function dv(T) {
 }
 
 jQuery(document).ready(function () {
-
-
+	
 
 	$(document.body).on('change', '.factura', function (e) {
 		var i = $(this).attr('i');
