@@ -117,7 +117,15 @@ class GastoCompleta extends CActiveRecord
 	public $grupocategoria;
 	public $nota;
 
+	const POLICY_COMBUSTIBLES = 44639;
+
 	public function getSupplier(){
+		if(isset($this->gasto))
+			return $this->gasto->supplier;
+		return "";
+	}
+
+	public function getCommerce(){
 		if(isset($this->gasto))
 			return $this->gasto->supplier;
 		return "";
@@ -210,7 +218,7 @@ class GastoCompleta extends CActiveRecord
 			'departamento' => 'Departamento',
 			'faena' => 'Faena',
 			'impuesto_especifico' => 'Impuesto Especifico',
-			'iva' => 'Iva',
+			'iva' => 'IVA',
 			'km_carguio' => 'Km Carguio',
 			'litros_combustible' => 'Litros Combustible',
 			'monto_neto' => 'Monto Neto',
@@ -227,6 +235,7 @@ class GastoCompleta extends CActiveRecord
 			'grupocategoria' => 'Grupo Categoría',
 			'categoria' => 'Categoría',
 			'supplier' => 'Proveedor',
+			'commerce' => 'Comercio', 
 			'date' => 'Fecha',
 			'net' => 'Neto',
 			'tot' => 'Total',

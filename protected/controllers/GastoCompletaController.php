@@ -65,7 +65,7 @@ class GastoCompletaController extends Controller
 		$this->toExcel(
 			$data,
 			[
-				'supplier',
+				($policy == GastoCompleta::POLICY_COMBUSTIBLES)?'supplier':'commerce',
 				'date',
 				'net',
 				'tot',
@@ -188,9 +188,16 @@ class GastoCompletaController extends Controller
 		if (isset($_GET['GastoCompleta']))
 			$model->attributes = $_GET['GastoCompleta'];
 
-		$this->render('admin', array(
+		$vista = "admin";
+		$gastoNombre = "DEPARTAMENTO DE MAQUINARIA DIFERENTE DE COMBUSTIBLES";
+		if($policy == GastoCompleta::POLICY_COMBUSTIBLES){
+			$gastoNombre = "COMBUSTIBLES";
+			$vista = "admincombustibles";
+		}
+
+		$this->render($vista, array(
 			'model' => $model,
-			'gastoNombre' => $policy == 44639?"COMBUSTIBLE":"DEPARTAMENTO DE MAQUINARIA DIFERENTE DE COMBUSTIBLES",
+			'gastoNombre' => $gastoNombre,
 		));
 	}
 

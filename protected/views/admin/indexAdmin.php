@@ -28,6 +28,6 @@ Bienvenido <?php echo CHtml::encode($nombre);?>, por favor seleccione una de las
  <li><?php echo CHtml::link("Cambiar mi clave",CController::createUrl('//site/cambiarClave')); ?></li>
 
  <li>&nbsp;</li>
- <li><?php echo CHtml::link("Visualizar gastos RindeGastos COMBUSTIBLES",CController::createUrl('//gastoCompleta/admin',['policy'=>44639])); ?></li>
+ <li><?php echo CHtml::link("Visualizar gastos RindeGastos COMBUSTIBLES",CController::createUrl('//gastoCompleta/admin',['policy'=>GastoCompleta::POLICY_COMBUSTIBLES])); ?></li>
  <li><?php echo CHtml::link("Visualizar gastos RindeGastos DEPARTAMENTO DE MAQUINARIA DIFERENTE DE COMBUSTIBLES",CController::createUrl('//gastoCompleta/admin',['policy'=>41786])); ?></li>
 </ul>
