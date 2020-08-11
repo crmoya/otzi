@@ -8,3 +8,4 @@ protected/runtime/application.log.5
 index.php
 .gitignore
 protected/config/main.php
+protected/config/main.php

@@ -293,3 +293,246 @@ Stack trace:
 REQUEST_URI=/otzi/
 HTTP_REFERER=http://localhost/otzi/
 ---
+2020/08/11 16:40:11 [error] [exception.CDbException] CDbException: CDbConnection failed to open the DB connection: SQLSTATE[HY000] [1045] Access denied for user 'cot27290_SAM'@'localhost' (using password: YES) in /Library/WebServer/yii/framework/db/CDbConnection.php:399
+Stack trace:
+#0 /Library/WebServer/yii/framework/db/CDbConnection.php(347): CDbConnection->open()
+#1 /Library/WebServer/yii/framework/db/CDbConnection.php(325): CDbConnection->setActive(true)
+#2 /Library/WebServer/yii/framework/base/CModule.php(394): CDbConnection->init()
+#3 /Library/WebServer/yii/framework/base/CApplication.php(459): CModule->getComponent('db')
+#4 /Library/WebServer/yii/framework/db/ar/CActiveRecord.php(639): CApplication->getDb()
+#5 /Library/WebServer/yii/framework/db/ar/CActiveRecord.php(1436): CActiveRecord->getDbConnection()
+#6 /Library/WebServer/yii/framework/db/ar/CActiveRecord.php(1525): CActiveRecord->getTableAlias(true)
+#7 /Library/WebServer/Documents/otzi/protected/components/UserIdentity.php(13): CActiveRecord->findByAttributes(Array)
+#8 /Library/WebServer/Documents/otzi/protected/models/LoginForm.php(53): UserIdentity->authenticate()
+#9 /Library/WebServer/yii/framework/validators/CInlineValidator.php(42): LoginForm->authenticate('password', Array)
+#10 /Library/WebServer/yii/framework/validators/CValidator.php(201): CInlineValidator->validateAttribute(Object(LoginForm), 'password')
+#11 /Library/WebServer/yii/framework/base/CModel.php(159): CValidator->validate(Object(LoginForm), Array)
+#12 /Library/WebServer/Documents/otzi/protected/controllers/SiteController.php(506): CModel->validate()
+#13 /Library/WebServer/Documents/otzi/protected/controllers/SiteController.php(57): SiteController->actionLogin()
+#14 /Library/WebServer/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
+#15 /Library/WebServer/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#16 /Library/WebServer/yii/framework/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#17 /Library/WebServer/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#18 /Library/WebServer/yii/framework/web/CController.php(1148): CFilter->filter(Object(CFilterChain))
+#19 /Library/WebServer/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#20 /Library/WebServer/yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#21 /Library/WebServer/yii/framework/web/CController.php(291): CFilterChain->run()
+#22 /Library/WebServer/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#23 /Library/WebServer/yii/framework/web/CWebApplication.php(282): CController->run('')
+#24 /Library/WebServer/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('')
+#25 /Library/WebServer/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#26 /Library/WebServer/Documents/otzi/index.php(14): CApplication->run()
+#27 {main}
+REQUEST_URI=/otzi/
+HTTP_REFERER=http://localhost/otzi/
+---
+2020/08/11 16:41:06 [error] [exception.CDbException] CDbException: CDbConnection failed to open the DB connection: SQLSTATE[HY000] [1045] Access denied for user 'cot27290_SAM'@'localhost' (using password: YES) in /Library/WebServer/yii/framework/db/CDbConnection.php:399
+Stack trace:
+#0 /Library/WebServer/yii/framework/db/CDbConnection.php(347): CDbConnection->open()
+#1 /Library/WebServer/yii/framework/db/CDbConnection.php(325): CDbConnection->setActive(true)
+#2 /Library/WebServer/yii/framework/base/CModule.php(394): CDbConnection->init()
+#3 /Library/WebServer/yii/framework/base/CApplication.php(459): CModule->getComponent('db')
+#4 /Library/WebServer/yii/framework/db/ar/CActiveRecord.php(639): CApplication->getDb()
+#5 /Library/WebServer/yii/framework/db/ar/CActiveRecord.php(1436): CActiveRecord->getDbConnection()
+#6 /Library/WebServer/yii/framework/db/ar/CActiveRecord.php(1525): CActiveRecord->getTableAlias(true)
+#7 /Library/WebServer/Documents/otzi/protected/components/UserIdentity.php(13): CActiveRecord->findByAttributes(Array)
+#8 /Library/WebServer/Documents/otzi/protected/models/LoginForm.php(53): UserIdentity->authenticate()
+#9 /Library/WebServer/yii/framework/validators/CInlineValidator.php(42): LoginForm->authenticate('password', Array)
+#10 /Library/WebServer/yii/framework/validators/CValidator.php(201): CInlineValidator->validateAttribute(Object(LoginForm), 'password')
+#11 /Library/WebServer/yii/framework/base/CModel.php(159): CValidator->validate(Object(LoginForm), Array)
+#12 /Library/WebServer/Documents/otzi/protected/controllers/SiteController.php(506): CModel->validate()
+#13 /Library/WebServer/Documents/otzi/protected/controllers/SiteController.php(57): SiteController->actionLogin()
+#14 /Library/WebServer/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
+#15 /Library/WebServer/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#16 /Library/WebServer/yii/framework/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#17 /Library/WebServer/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#18 /Library/WebServer/yii/framework/web/CController.php(1148): CFilter->filter(Object(CFilterChain))
+#19 /Library/WebServer/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#20 /Library/WebServer/yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#21 /Library/WebServer/yii/framework/web/CController.php(291): CFilterChain->run()
+#22 /Library/WebServer/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#23 /Library/WebServer/yii/framework/web/CWebApplication.php(282): CController->run('')
+#24 /Library/WebServer/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('')
+#25 /Library/WebServer/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#26 /Library/WebServer/Documents/otzi/index.php(14): CApplication->run()
+#27 {main}
+REQUEST_URI=/otzi/
+HTTP_REFERER=http://localhost/otzi/
+---
+2020/08/11 16:41:23 [error] [exception.CDbException] CDbException: CDbConnection failed to open the DB connection: SQLSTATE[HY000] [1045] Access denied for user 'cot27290_SAM'@'localhost' (using password: YES) in /Library/WebServer/yii/framework/db/CDbConnection.php:399
+Stack trace:
+#0 /Library/WebServer/yii/framework/db/CDbConnection.php(347): CDbConnection->open()
+#1 /Library/WebServer/yii/framework/db/CDbConnection.php(325): CDbConnection->setActive(true)
+#2 /Library/WebServer/yii/framework/base/CModule.php(394): CDbConnection->init()
+#3 /Library/WebServer/yii/framework/base/CApplication.php(459): CModule->getComponent('db')
+#4 /Library/WebServer/yii/framework/db/ar/CActiveRecord.php(639): CApplication->getDb()
+#5 /Library/WebServer/yii/framework/db/ar/CActiveRecord.php(1436): CActiveRecord->getDbConnection()
+#6 /Library/WebServer/yii/framework/db/ar/CActiveRecord.php(1525): CActiveRecord->getTableAlias(true)
+#7 /Library/WebServer/Documents/otzi/protected/components/UserIdentity.php(13): CActiveRecord->findByAttributes(Array)
+#8 /Library/WebServer/Documents/otzi/protected/models/LoginForm.php(53): UserIdentity->authenticate()
+#9 /Library/WebServer/yii/framework/validators/CInlineValidator.php(42): LoginForm->authenticate('password', Array)
+#10 /Library/WebServer/yii/framework/validators/CValidator.php(201): CInlineValidator->validateAttribute(Object(LoginForm), 'password')
+#11 /Library/WebServer/yii/framework/base/CModel.php(159): CValidator->validate(Object(LoginForm), Array)
+#12 /Library/WebServer/Documents/otzi/protected/controllers/SiteController.php(506): CModel->validate()
+#13 /Library/WebServer/Documents/otzi/protected/controllers/SiteController.php(57): SiteController->actionLogin()
+#14 /Library/WebServer/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
+#15 /Library/WebServer/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#16 /Library/WebServer/yii/framework/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#17 /Library/WebServer/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#18 /Library/WebServer/yii/framework/web/CController.php(1148): CFilter->filter(Object(CFilterChain))
+#19 /Library/WebServer/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#20 /Library/WebServer/yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#21 /Library/WebServer/yii/framework/web/CController.php(291): CFilterChain->run()
+#22 /Library/WebServer/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#23 /Library/WebServer/yii/framework/web/CWebApplication.php(282): CController->run('')
+#24 /Library/WebServer/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('')
+#25 /Library/WebServer/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#26 /Library/WebServer/Documents/otzi/index.php(14): CApplication->run()
+#27 {main}
+REQUEST_URI=/otzi/
+HTTP_REFERER=http://localhost/otzi/
+---
+2020/08/11 16:41:44 [error] [exception.CDbException] CDbException: CDbConnection failed to open the DB connection: SQLSTATE[HY000] [1045] Access denied for user 'cot27290_SAM'@'localhost' (using password: YES) in /Library/WebServer/yii/framework/db/CDbConnection.php:399
+Stack trace:
+#0 /Library/WebServer/yii/framework/db/CDbConnection.php(347): CDbConnection->open()
+#1 /Library/WebServer/yii/framework/db/CDbConnection.php(325): CDbConnection->setActive(true)
+#2 /Library/WebServer/yii/framework/base/CModule.php(394): CDbConnection->init()
+#3 /Library/WebServer/yii/framework/base/CApplication.php(459): CModule->getComponent('db')
+#4 /Library/WebServer/yii/framework/db/ar/CActiveRecord.php(639): CApplication->getDb()
+#5 /Library/WebServer/yii/framework/db/ar/CActiveRecord.php(1436): CActiveRecord->getDbConnection()
+#6 /Library/WebServer/yii/framework/db/ar/CActiveRecord.php(1525): CActiveRecord->getTableAlias(true)
+#7 /Library/WebServer/Documents/otzi/protected/components/UserIdentity.php(13): CActiveRecord->findByAttributes(Array)
+#8 /Library/WebServer/Documents/otzi/protected/models/LoginForm.php(53): UserIdentity->authenticate()
+#9 /Library/WebServer/yii/framework/validators/CInlineValidator.php(42): LoginForm->authenticate('password', Array)
+#10 /Library/WebServer/yii/framework/validators/CValidator.php(201): CInlineValidator->validateAttribute(Object(LoginForm), 'password')
+#11 /Library/WebServer/yii/framework/base/CModel.php(159): CValidator->validate(Object(LoginForm), Array)
+#12 /Library/WebServer/Documents/otzi/protected/controllers/SiteController.php(506): CModel->validate()
+#13 /Library/WebServer/Documents/otzi/protected/controllers/SiteController.php(57): SiteController->actionLogin()
+#14 /Library/WebServer/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
+#15 /Library/WebServer/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#16 /Library/WebServer/yii/framework/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#17 /Library/WebServer/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#18 /Library/WebServer/yii/framework/web/CController.php(1148): CFilter->filter(Object(CFilterChain))
+#19 /Library/WebServer/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#20 /Library/WebServer/yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#21 /Library/WebServer/yii/framework/web/CController.php(291): CFilterChain->run()
+#22 /Library/WebServer/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#23 /Library/WebServer/yii/framework/web/CWebApplication.php(282): CController->run('')
+#24 /Library/WebServer/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('')
+#25 /Library/WebServer/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#26 /Library/WebServer/Documents/otzi/index.php(14): CApplication->run()
+#27 {main}
+REQUEST_URI=/otzi/
+HTTP_REFERER=http://localhost/otzi/
+---
+2020/08/11 16:41:48 [error] [exception.CDbException] CDbException: CDbConnection failed to open the DB connection: SQLSTATE[HY000] [1045] Access denied for user 'cot27290_SAM'@'localhost' (using password: YES) in /Library/WebServer/yii/framework/db/CDbConnection.php:399
+Stack trace:
+#0 /Library/WebServer/yii/framework/db/CDbConnection.php(347): CDbConnection->open()
+#1 /Library/WebServer/yii/framework/db/CDbConnection.php(325): CDbConnection->setActive(true)
+#2 /Library/WebServer/yii/framework/base/CModule.php(394): CDbConnection->init()
+#3 /Library/WebServer/yii/framework/base/CApplication.php(459): CModule->getComponent('db')
+#4 /Library/WebServer/yii/framework/db/ar/CActiveRecord.php(639): CApplication->getDb()
+#5 /Library/WebServer/yii/framework/db/ar/CActiveRecord.php(1436): CActiveRecord->getDbConnection()
+#6 /Library/WebServer/yii/framework/db/ar/CActiveRecord.php(1525): CActiveRecord->getTableAlias(true)
+#7 /Library/WebServer/Documents/otzi/protected/components/UserIdentity.php(13): CActiveRecord->findByAttributes(Array)
+#8 /Library/WebServer/Documents/otzi/protected/models/LoginForm.php(53): UserIdentity->authenticate()
+#9 /Library/WebServer/yii/framework/validators/CInlineValidator.php(42): LoginForm->authenticate('password', Array)
+#10 /Library/WebServer/yii/framework/validators/CValidator.php(201): CInlineValidator->validateAttribute(Object(LoginForm), 'password')
+#11 /Library/WebServer/yii/framework/base/CModel.php(159): CValidator->validate(Object(LoginForm), Array)
+#12 /Library/WebServer/Documents/otzi/protected/controllers/SiteController.php(506): CModel->validate()
+#13 /Library/WebServer/Documents/otzi/protected/controllers/SiteController.php(57): SiteController->actionLogin()
+#14 /Library/WebServer/yii/framework/web/actions/CInlineAction.php(49): SiteController->actionIndex()
+#15 /Library/WebServer/yii/framework/web/CController.php(308): CInlineAction->runWithParams(Array)
+#16 /Library/WebServer/yii/framework/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#17 /Library/WebServer/yii/framework/web/filters/CFilter.php(40): CFilterChain->run()
+#18 /Library/WebServer/yii/framework/web/CController.php(1148): CFilter->filter(Object(CFilterChain))
+#19 /Library/WebServer/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#20 /Library/WebServer/yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#21 /Library/WebServer/yii/framework/web/CController.php(291): CFilterChain->run()
+#22 /Library/WebServer/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#23 /Library/WebServer/yii/framework/web/CWebApplication.php(282): CController->run('')
+#24 /Library/WebServer/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('')
+#25 /Library/WebServer/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#26 /Library/WebServer/Documents/otzi/index.php(14): CApplication->run()
+#27 {main}
+REQUEST_URI=/otzi/
+HTTP_REFERER=http://localhost/otzi/
+---
+2020/08/11 16:42:51 [error] [exception.CDbException] CDbException: CDbConnection failed to open the DB connection: SQLSTATE[HY000] [1045] Access denied for user 'cot27290_SAM'@'localhost' (using password: YES) in /Library/WebServer/yii/framework/db/CDbConnection.php:399
+Stack trace:
+#0 /Library/WebServer/yii/framework/db/CDbConnection.php(347): CDbConnection->open()
+#1 /Library/WebServer/yii/framework/db/CDbConnection.php(325): CDbConnection->setActive(true)
+#2 /Library/WebServer/yii/framework/base/CModule.php(394): CDbConnection->init()
+#3 /Library/WebServer/yii/framework/web/auth/CDbAuthManager.php(589): CModule->getComponent('db')
+#4 /Library/WebServer/yii/framework/web/auth/CDbAuthManager.php(59): CDbAuthManager->getDbConnection()
+#5 /Library/WebServer/yii/framework/base/CModule.php(394): CDbAuthManager->init()
+#6 /Library/WebServer/yii/framework/web/CWebApplication.php(185): CModule->getComponent('authManager')
+#7 /Library/WebServer/yii/framework/web/auth/CWebUser.php(817): CWebApplication->getAuthManager()
+#8 /Library/WebServer/yii/framework/web/auth/CAccessControlFilter.php(347): CWebUser->checkAccess('administrador')
+#9 /Library/WebServer/yii/framework/web/auth/CAccessControlFilter.php(285): CAccessRule->isRoleMatched(Object(CWebUser))
+#10 /Library/WebServer/yii/framework/web/auth/CAccessControlFilter.php(138): CAccessRule->isUserAllowed(Object(CWebUser), Object(RCamionPropioController), Object(CInlineAction), '::1', 'GET')
+#11 /Library/WebServer/yii/framework/web/filters/CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#12 /Library/WebServer/yii/framework/web/CController.php(1148): CFilter->filter(Object(CFilterChain))
+#13 /Library/WebServer/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#14 /Library/WebServer/yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#15 /Library/WebServer/yii/framework/web/CController.php(291): CFilterChain->run()
+#16 /Library/WebServer/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /Library/WebServer/yii/framework/web/CWebApplication.php(282): CController->run('admin')
+#18 /Library/WebServer/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('rCamionPropio/a...')
+#19 /Library/WebServer/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#20 /Library/WebServer/Documents/otzi/index.php(14): CApplication->run()
+#21 {main}
+REQUEST_URI=/otzi/index.php/rCamionPropio/admin
+---
+2020/08/11 16:43:37 [error] [exception.CDbException] CDbException: CDbConnection failed to open the DB connection: SQLSTATE[HY000] [1045] Access denied for user 'cot27290_SAM'@'localhost' (using password: YES) in /Library/WebServer/yii/framework/db/CDbConnection.php:399
+Stack trace:
+#0 /Library/WebServer/yii/framework/db/CDbConnection.php(347): CDbConnection->open()
+#1 /Library/WebServer/yii/framework/db/CDbConnection.php(325): CDbConnection->setActive(true)
+#2 /Library/WebServer/yii/framework/base/CModule.php(394): CDbConnection->init()
+#3 /Library/WebServer/yii/framework/web/auth/CDbAuthManager.php(589): CModule->getComponent('db')
+#4 /Library/WebServer/yii/framework/web/auth/CDbAuthManager.php(59): CDbAuthManager->getDbConnection()
+#5 /Library/WebServer/yii/framework/base/CModule.php(394): CDbAuthManager->init()
+#6 /Library/WebServer/yii/framework/web/CWebApplication.php(185): CModule->getComponent('authManager')
+#7 /Library/WebServer/yii/framework/web/auth/CWebUser.php(817): CWebApplication->getAuthManager()
+#8 /Library/WebServer/yii/framework/web/auth/CAccessControlFilter.php(347): CWebUser->checkAccess('administrador')
+#9 /Library/WebServer/yii/framework/web/auth/CAccessControlFilter.php(285): CAccessRule->isRoleMatched(Object(CWebUser))
+#10 /Library/WebServer/yii/framework/web/auth/CAccessControlFilter.php(138): CAccessRule->isUserAllowed(Object(CWebUser), Object(RCamionPropioController), Object(CInlineAction), '::1', 'GET')
+#11 /Library/WebServer/yii/framework/web/filters/CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#12 /Library/WebServer/yii/framework/web/CController.php(1148): CFilter->filter(Object(CFilterChain))
+#13 /Library/WebServer/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#14 /Library/WebServer/yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#15 /Library/WebServer/yii/framework/web/CController.php(291): CFilterChain->run()
+#16 /Library/WebServer/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /Library/WebServer/yii/framework/web/CWebApplication.php(282): CController->run('admin')
+#18 /Library/WebServer/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('rCamionPropio/a...')
+#19 /Library/WebServer/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#20 /Library/WebServer/Documents/otzi/index.php(14): CApplication->run()
+#21 {main}
+REQUEST_URI=/otzi/index.php/rCamionPropio/admin
+---
+2020/08/11 16:44:08 [error] [exception.CDbException] CDbException: CDbConnection failed to open the DB connection: SQLSTATE[HY000] [1045] Access denied for user 'cot27290_SAM'@'localhost' (using password: YES) in /Library/WebServer/yii/framework/db/CDbConnection.php:399
+Stack trace:
+#0 /Library/WebServer/yii/framework/db/CDbConnection.php(347): CDbConnection->open()
+#1 /Library/WebServer/yii/framework/db/CDbConnection.php(325): CDbConnection->setActive(true)
+#2 /Library/WebServer/yii/framework/base/CModule.php(394): CDbConnection->init()
+#3 /Library/WebServer/yii/framework/web/auth/CDbAuthManager.php(589): CModule->getComponent('db')
+#4 /Library/WebServer/yii/framework/web/auth/CDbAuthManager.php(59): CDbAuthManager->getDbConnection()
+#5 /Library/WebServer/yii/framework/base/CModule.php(394): CDbAuthManager->init()
+#6 /Library/WebServer/yii/framework/web/CWebApplication.php(185): CModule->getComponent('authManager')
+#7 /Library/WebServer/yii/framework/web/auth/CWebUser.php(817): CWebApplication->getAuthManager()
+#8 /Library/WebServer/yii/framework/web/auth/CAccessControlFilter.php(347): CWebUser->checkAccess('administrador')
+#9 /Library/WebServer/yii/framework/web/auth/CAccessControlFilter.php(285): CAccessRule->isRoleMatched(Object(CWebUser))
+#10 /Library/WebServer/yii/framework/web/auth/CAccessControlFilter.php(138): CAccessRule->isUserAllowed(Object(CWebUser), Object(RCamionPropioController), Object(CInlineAction), '::1', 'GET')
+#11 /Library/WebServer/yii/framework/web/filters/CFilter.php(38): CAccessControlFilter->preFilter(Object(CFilterChain))
+#12 /Library/WebServer/yii/framework/web/CController.php(1148): CFilter->filter(Object(CFilterChain))
+#13 /Library/WebServer/yii/framework/web/filters/CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#14 /Library/WebServer/yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#15 /Library/WebServer/yii/framework/web/CController.php(291): CFilterChain->run()
+#16 /Library/WebServer/yii/framework/web/CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 /Library/WebServer/yii/framework/web/CWebApplication.php(282): CController->run('admin')
+#18 /Library/WebServer/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('rCamionPropio/a...')
+#19 /Library/WebServer/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#20 /Library/WebServer/Documents/otzi/index.php(14): CApplication->run()
+#21 {main}
+REQUEST_URI=/otzi/index.php/rCamionPropio/admin
+---
