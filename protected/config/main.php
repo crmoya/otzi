@@ -63,11 +63,11 @@ return array(
 		'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=cot27290_SAM',
 			'emulatePrepare' => true,
-			'username' => 'root',
-			'password' => 'chile777',
+			'username' => 'cot27290_SAM',
+			'password' => 'R_?uyL,{VurF',
 			'charset' => 'utf8',
 		),
-		
+
 		'authManager'=>array(
             'class'=>'CDbAuthManager',
             'connectionID'=>'db',
