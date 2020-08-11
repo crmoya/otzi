@@ -9,3 +9,4 @@ index.php
 .gitignore
 protected/config/main.php
 protected/config/main.php
+protected/runtime/application.log
