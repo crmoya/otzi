@@ -151,7 +151,7 @@ class SiteController extends Controller
 		$this->render('contact',array('model'=>$model));
 	}
 
-	
+	/*
 	public function actionCarga()
 	{
 		set_time_limit(0);
@@ -160,7 +160,7 @@ class SiteController extends Controller
 
 			//LO PRIMERO ES TRAER LOS INFORMES, PUES NO TIENEN DEPENDENCIAS
 
-			/*
+			
 			
 			//TRAER INFORMES
 			$limite = 1;
@@ -210,7 +210,7 @@ class SiteController extends Controller
 
 			//END TRAER INFORMES
 
-			*/
+			
 			
 			//AHORA TRAIGO LOS
 			//GASTOS Y SUS DERIVADOS
@@ -508,8 +508,9 @@ class SiteController extends Controller
 			echo "Excepción: ".$e;
 		}
 		
+		
 	}
-
+*/
 	
 	/**
 	 * Displays the login page
