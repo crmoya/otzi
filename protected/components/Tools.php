@@ -191,6 +191,15 @@ class Tools
 		else return "";
 	}
 
+	public static function fixEstadoInforme($estado){
+		if($estado == 0){
+			return "Abierto o En proceso";
+		}
+		if($estado == 1){
+			return "Cerrado";
+		}
+	}
+
 	public static function getNombreUnidad($unidad)
 	{
 		if ($unidad == "U") {

@@ -151,7 +151,7 @@ class SiteController extends Controller
 		$this->render('contact',array('model'=>$model));
 	}
 
-	/*
+	
 	public function actionCarga()
 	{
 		set_time_limit(0);
@@ -456,7 +456,11 @@ class SiteController extends Controller
 											$gasto_completa = new GastoCompleta();
 											$gasto_completa->gasto_id = $gasto->id;
 										}
-										$gasto_completa->vehiculo_equipo = $extra_gasto->value;
+										$valor = $extra_gasto->value;
+										if($extra_gasto->value == "Taller (vehículo virtual para registrar tosdos los gastos excepto combustibles que son de Taller y que no pueden cargarse directamente a ningún equipo o vehic.)"){
+											$valor = "Taller (virtual no comb.)";
+										}
+										$gasto_completa->vehiculo_equipo = $valor;
 										if(!$gasto_completa->save()){
 											$errores[] = $gasto_completa->errors;
 										}
@@ -493,8 +497,13 @@ class SiteController extends Controller
 						}
 					}
 					//END GASTOS Y SUS DERIVADOS
-				}				
+				}
+				
+				
 			}
+
+			//ELIMINO LOS EXTRAS PUES YA NO SIRVEN
+			ExtraGasto::model()->deleteAll();
 
 			if(count($errores) > 0){
 				echo "<pre>";
@@ -510,7 +519,7 @@ class SiteController extends Controller
 		
 		
 	}
-*/
+
 	
 	/**
 	 * Displays the login page

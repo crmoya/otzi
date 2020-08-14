@@ -44,7 +44,7 @@ class GastoCompleta extends CActiveRecord
 			array('retenido, cantidad, centro_costo_faena, departamento, faena, impuesto_especifico, iva, km_carguio, litros_combustible, monto_neto, nombre_quien_rinde, nro_documento, periodo_planilla, rut_proveedor, supervisor_combustible, tipo_documento, unidad, vehiculo_equipo, vehiculo_oficina_central', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id,proveedor,fecha,neto,total,categoria,grupocategoria,nota', 'safe', 'on'=>'search'),
+			array('id,proveedor,fecha,neto,total,categoria,grupocategoria,nota,folio', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -66,6 +66,7 @@ class GastoCompleta extends CActiveRecord
 		$criteria->compare('gasto.category',$this->categoria,true);
 		$criteria->compare('gasto.category_group',$this->grupocategoria,true);
 		$criteria->compare('gasto.note',$this->nota,true);
+		$criteria->compare('gasto.report_id',$this->folio);
 		$criteria->compare('retenido',$this->retenido);
 		$criteria->compare('cantidad',$this->cantidad);
 		$criteria->compare('centro_costo_faena',$this->centro_costo_faena,true);
@@ -85,6 +86,7 @@ class GastoCompleta extends CActiveRecord
 		$criteria->compare('unidad',$this->unidad,true);
 		$criteria->compare('vehiculo_equipo',$this->vehiculo_equipo,true);
 		$criteria->compare('vehiculo_oficina_central',$this->vehiculo_oficina_central,true);
+		
 
 
 		return new CActiveDataProvider($this, array(
@@ -99,11 +101,12 @@ class GastoCompleta extends CActiveRecord
 					'categoria'=>['asc' => 'gasto.category','desc' => 'gasto.category DESC',],
 					'grupocategoria'=>['asc' => 'gasto.category_group','desc' => 'gasto.category_group DESC',],
 					'nota'=>['asc' => 'gasto.note','desc' => 'gasto.note DESC',],
+					'folio'=>['asc' => 'gasto.report_id','desc' => 'gasto.report_id DESC',],
 					'*',
 				),
 			),
 			'pagination'=>[
-				'pageSize'=>20,
+				'pageSize'=>10,
 			]
 		));
 	}
@@ -116,8 +119,15 @@ class GastoCompleta extends CActiveRecord
 	public $categoria;
 	public $grupocategoria;
 	public $nota;
+	public $folio;
 
 	const POLICY_COMBUSTIBLES = 44639;
+
+	public function getFolioinforme(){
+		if(isset($this->gasto))
+			return $this->gasto->report_id;
+		return "";
+	}
 
 	public function getSupplier(){
 		if(isset($this->gasto))
@@ -242,6 +252,7 @@ class GastoCompleta extends CActiveRecord
 			'category' => 'Categoría',
 			'categorygroup' => 'Grupo Categoría',
 			'note' => 'Nota',
+			'folio' => 'Folio Informe'
 		);
 	}
 

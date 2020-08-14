@@ -89,6 +89,12 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		//'supervisor_combustible',
 		
 		'vehiculo_equipo',
+		
+		[
+			'name' => 'folio',
+            'type' => 'raw',
+            'value'=>'CHtml::link($data->folioinforme, array("informeGasto/view", "id"=>$data->folioinforme))',
+		],
 		//'vehiculo_oficina_central',
 		[
 			'header' => 'Imagen',
