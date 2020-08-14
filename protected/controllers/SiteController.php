@@ -151,6 +151,7 @@ class SiteController extends Controller
 		$this->render('contact',array('model'=>$model));
 	}
 
+	/*
 	
 	public function actionCarga()
 	{
@@ -520,7 +521,7 @@ class SiteController extends Controller
 		
 	}
 
-	
+	*/
 	/**
 	 * Displays the login page
 	 */
