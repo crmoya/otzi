@@ -160,6 +160,7 @@ class SiteController extends Controller
 
 			//LO PRIMERO ES TRAER LOS INFORMES, PUES NO TIENEN DEPENDENCIAS
 
+			/*
 			
 			//TRAER INFORMES
 			$limite = 1;
@@ -209,12 +210,7 @@ class SiteController extends Controller
 
 			//END TRAER INFORMES
 
-			/*
-			if(count($errores)>0){
-				echo "<pre>";
-				print_r($errores);
-				echo "</pre>";
-			}*/
+			*/
 			
 			//AHORA TRAIGO LOS
 			//GASTOS Y SUS DERIVADOS
