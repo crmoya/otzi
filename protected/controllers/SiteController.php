@@ -151,274 +151,98 @@ class SiteController extends Controller
 		$this->render('contact',array('model'=>$model));
 	}
 
-	/*
-	public function actionCompleta()
+	
+	public function actionCarga()
 	{
 		set_time_limit(0);
-		$connection=Yii::app()->db;
-		$connection->active=true;
-		
-		$transaction=$connection->beginTransaction();
 		try
 		{
-			$errores = [];
-			$gastos = Gasto::model()->findAll();
-			foreach($gastos as $gasto){
-				$extras = $gasto->extraGastos;
-				foreach($extras as $extra){					
-					if(strtolower(trim($extra->name)) == "10% impto. retenido"){
-						$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
-						if(!isset($gasto_completa)){
-							$gasto_completa = new GastoCompleta();
-							$gasto_completa->gasto_id = $gasto->id;
-						}
-						$gasto_completa->retenido = $extra->value;
-						if(!$gasto_completa->save()){
-							$errores[] = $gasto_completa->errors;
-						}
-					}
-					if(strtolower(trim($extra->name)) == "cantidad"){
-						$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
-						if(!isset($gasto_completa)){
-							$gasto_completa = new GastoCompleta();
-							$gasto_completa->gasto_id = $gasto->id;
-						}
-						$gasto_completa->cantidad = $extra->value;
-						if(!$gasto_completa->save()){
-							$errores[] = $gasto_completa->errors;
-						}
-					}
-					if(strtolower(trim($extra->name)) == "centro de costo / faena"){
-						$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
-						if(!isset($gasto_completa)){
-							$gasto_completa = new GastoCompleta();
-							$gasto_completa->gasto_id = $gasto->id;
-						}
-						$gasto_completa->centro_costo_faena = $extra->value;
-						if(!$gasto_completa->save()){
-							$errores[] = $gasto_completa->errors;
-						}
-					}
-					if(strtolower(trim($extra->name)) == "departamento"){
-						$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
-						if(!isset($gasto_completa)){
-							$gasto_completa = new GastoCompleta();
-							$gasto_completa->gasto_id = $gasto->id;
-						}
-						$gasto_completa->departamento = $extra->value;
-						if(!$gasto_completa->save()){
-							$errores[] = $gasto_completa->errors;
-						}
-					}
-					if(strtolower(trim($extra->name)) == "faena"){
-						$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
-						if(!isset($gasto_completa)){
-							$gasto_completa = new GastoCompleta();
-							$gasto_completa->gasto_id = $gasto->id;
-						}
-						$gasto_completa->faena = $extra->value;
-						if(!$gasto_completa->save()){
-							$errores[] = $gasto_completa->errors;
-						}
-					}
-					if(trim($extra->name) == "Impuesto específico"){
-						$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
-						if(!isset($gasto_completa)){
-							$gasto_completa = new GastoCompleta();
-							$gasto_completa->gasto_id = $gasto->id;
-						}
-						$gasto_completa->impuesto_especifico = $extra->value;
-						if(!$gasto_completa->save()){
-							$errores[] = $gasto_completa->errors;
-						}
-					}
-					if(strtolower(trim($extra->name)) == "iva"){
-						$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
-						if(!isset($gasto_completa)){
-							$gasto_completa = new GastoCompleta();
-							$gasto_completa->gasto_id = $gasto->id;
-						}
-						$gasto_completa->iva = $extra->value;
-						if(!$gasto_completa->save()){
-							$errores[] = $gasto_completa->errors;
-						}
-					}
-					if(trim($extra->name) == "Km.Carguío"){
-						$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
-						if(!isset($gasto_completa)){
-							$gasto_completa = new GastoCompleta();
-							$gasto_completa->gasto_id = $gasto->id;
-						}
-						$gasto_completa->km_carguio = $extra->value;
-						if(!$gasto_completa->save()){
-							$errores[] = $gasto_completa->errors;
-						}
-					}
-					if(strtolower(trim($extra->name)) == "litros combustible"){
-						$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
-						if(!isset($gasto_completa)){
-							$gasto_completa = new GastoCompleta();
-							$gasto_completa->gasto_id = $gasto->id;
-						}
-						$gasto_completa->litros_combustible = $extra->value;
-						if(!$gasto_completa->save()){
-							$errores[] = $gasto_completa->errors;
-						}
-					}
-					if(strtolower(trim($extra->name)) == "monto neto"){
-						$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
-						if(!isset($gasto_completa)){
-							$gasto_completa = new GastoCompleta();
-							$gasto_completa->gasto_id = $gasto->id;
-						}
-						$gasto_completa->monto_neto = $extra->value;
-						if(!$gasto_completa->save()){
-							$errores[] = $gasto_completa->errors;
-						}
-					}
-					if(strtolower(trim($extra->name)) == "nombre quien rinde"){
-						$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
-						if(!isset($gasto_completa)){
-							$gasto_completa = new GastoCompleta();
-							$gasto_completa->gasto_id = $gasto->id;
-						}
-						$gasto_completa->nombre_quien_rinde = $extra->value;
-						if(!$gasto_completa->save()){
-							$errores[] = $gasto_completa->errors;
-						}
-					}
-					if(trim($extra->name) == "Número de Documento"){
-						$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
-						if(!isset($gasto_completa)){
-							$gasto_completa = new GastoCompleta();
-							$gasto_completa->gasto_id = $gasto->id;
-						}
-						$gasto_completa->nro_documento = $extra->value;
-						if(!$gasto_completa->save()){
-							$errores[] = $gasto_completa->errors;
-						}
-					}
-					if(trim($extra->name) == "Período de Planilla"){
-						$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
-						if(!isset($gasto_completa)){
-							$gasto_completa = new GastoCompleta();
-							$gasto_completa->gasto_id = $gasto->id;
-						}
-						$gasto_completa->periodo_planilla = $extra->value;
-						if(!$gasto_completa->save()){
-							$errores[] = $gasto_completa->errors;
-						}
-					}
-					if(strtolower(trim($extra->name)) == "rut proveedor"){
-						$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
-						if(!isset($gasto_completa)){
-							$gasto_completa = new GastoCompleta();
-							$gasto_completa->gasto_id = $gasto->id;
-						}
-						$gasto_completa->rut_proveedor = $extra->value;
-						if(!$gasto_completa->save()){
-							$errores[] = $gasto_completa->errors;
-						}
-					}
-					if(strtolower(trim($extra->name)) == "supervisor de combustible"){
-						$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
-						if(!isset($gasto_completa)){
-							$gasto_completa = new GastoCompleta();
-							$gasto_completa->gasto_id = $gasto->id;
-						}
-						$gasto_completa->supervisor_combustible = $extra->value;
-						if(!$gasto_completa->save()){
-							$errores[] = $gasto_completa->errors;
-						}
-					}
-					if(strtolower(trim($extra->name)) == "tipo de documento"){
-						$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
-						if(!isset($gasto_completa)){
-							$gasto_completa = new GastoCompleta();
-							$gasto_completa->gasto_id = $gasto->id;
-						}
-						$gasto_completa->tipo_documento = $extra->value;
-						if(!$gasto_completa->save()){
-							$errores[] = $gasto_completa->errors;
-						}
-					}
-					if(strtolower(trim($extra->name)) == "unidad"){
-						$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
-						if(!isset($gasto_completa)){
-							$gasto_completa = new GastoCompleta();
-							$gasto_completa->gasto_id = $gasto->id;
-						}
-						$gasto_completa->unidad = $extra->value;
-						if(!$gasto_completa->save()){
-							$errores[] = $gasto_completa->errors;
-						}
-					}
-					if(strtolower(trim($extra->name)) == "vehiculo o equipo"){
-						$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
-						if(!isset($gasto_completa)){
-							$gasto_completa = new GastoCompleta();
-							$gasto_completa->gasto_id = $gasto->id;
-						}
-						$gasto_completa->vehiculo_equipo = $extra->value;
-						if(!$gasto_completa->save()){
-							$errores[] = $gasto_completa->errors;
-						}
-					}
-					if(trim($extra->name) == "Vehículo Oficina Central"){
-						$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
-						if(!isset($gasto_completa)){
-							$gasto_completa = new GastoCompleta();
-							$gasto_completa->gasto_id = $gasto->id;
-						}
-						$gasto_completa->vehiculo_oficina_central = $extra->value;
-						if(!$gasto_completa->save()){
-							$errores[] = $gasto_completa->errors;
-						}
-					}
-				}
-			}	
-			if(count($errores) == 0){
-				$transaction->commit();
-			}
-			else{
-				echo "<pre>";
-				print_r($errores);
-				echo "</pre>";
-			}
-		}
-		catch(Exception $e)
-		{
-			$transaction->rollback();
-		}
-		
 
-		$connection->active=false;
-	}
+			//LO PRIMERO ES TRAER LOS INFORMES, PUES NO TIENEN DEPENDENCIAS
 
-	public function actionLoad()
-	{
-		set_time_limit(0);
-		$connection=Yii::app()->db;
-		$connection->active=true;
-		
-		$transaction=$connection->beginTransaction();
-		try
-		{
+			
+			//TRAER INFORMES
 			$limite = 1;
 			$primero = true;
 			$errores = [];
+			$informes = 0;
+			
+			
 			for($i = 1; $i <= $limite; $i++){
-				$resultado = Tools::jwt_request(
-					"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMzA2NDIiLCJjb21wYW55X2lkIjoiMzY0NiIsInJhbmRvbSI6InJhbmRBUEk1ZjEwNTdmYzVjOWU0MC4zNzY0MjU0MSJ9.Y3YjaG4SaO0SY9LPE_Uwuf809J4d_1lTTVgX8yCaQ5k",
-					$i
-				);
+				$resultado = Tools::getReports($i);
+				if($primero){
+					$limite = (int)$resultado->Records->Pages;
+					$primero = false;
+				}
+				$reports = $resultado->ExpenseReports;
+				foreach($reports as $report){
+					$informe = InformeGasto::model()->findByPk($report->Id);
+					if(isset($informe)){
+						continue;
+					}
+					$informe = new InformeGasto();
+					$informe->id = $report->Id;
+					$informe->titulo = $report->Title;
+					$informe->numero = $report->ReportNumber;
+					$informe->fecha_envio = $report->SendDate;
+					$informe->fecha_cierre = $report->CloseDate;
+					$informe->nombre_empleado = $report->EmployeeName;
+					$informe->rut_empleado = $report->EmployeeIdentification;
+					$informe->aprobado_por = $report->ApproverName;
+					$informe->politica_id = $report->PolicyId;
+					$informe->politica = $report->PolicyName;
+					$informe->estado = $report->Status;
+					$informe->total = $report->ReportTotal;
+					$informe->total_aprobado = $report->ReportTotalApproved;
+					$informe->nro_gastos = $report->NbrExpenses;
+					$informe->nro_gastos_aprobados = $report->NbrApprovedExpenses;
+					$informe->nro_gastos_rechazados = $report->NbrRejectedExpenses;
+					if(!$informe->save()){
+						$errores[] = $informe->errors;
+					}
+					else{
+						$informes++;
+					}
+				}
+						
+			}
+
+			//END TRAER INFORMES
+
+			/*
+			if(count($errores)>0){
+				echo "<pre>";
+				print_r($errores);
+				echo "</pre>";
+			}*/
+			
+			//AHORA TRAIGO LOS
+			//GASTOS Y SUS DERIVADOS
+
+			$no_aprobados = 0;
+			$limite = 1;
+			$primero = true;
+			for($i = 1; $i <= $limite; $i++){
+				$resultado = Tools::getExpenses($i);
 				if($primero){
 					$limite = (int)$resultado->Records->Pages;
 					$primero = false;
 				}
 				$expenses = $resultado->Expenses;
 				foreach($expenses as $expense){
+					//solo traer gastos aprobados
+					if((int)$expense->Status != 1){
+						$no_aprobados++;
+						continue;
+					}
+
+					$gasto = Gasto::model()->findByPk($expense->Id);
+					if(isset($gasto)){
+						continue;
+					}
+
 					$gasto = new Gasto();
+					$gasto->id = $expense->Id;
 					$gasto->supplier = $expense->Supplier;
 					$gasto->issue_date = $expense->IssueDate;
 					$gasto->net = $expense->Net;
@@ -427,6 +251,7 @@ class SiteController extends Controller
 					$gasto->category_group = $expense->CategoryGroup;
 					$gasto->note = $expense->Note;
 					$gasto->expense_policy_id = (int)$expense->ExpensePolicyId;
+					$gasto->report_id = (int)$expense->ReportId;
 					if(!$gasto->save()){
 						$errores[] = $gasto->errors;
 					}
@@ -441,47 +266,253 @@ class SiteController extends Controller
 								if(!$extra_gasto->save()){
 									$errores[] = $extra_gasto->errors;
 								}
+								else{
+									if(strtolower(trim($extra_gasto->name)) == "10% impto. retenido"){
+										$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
+										if(!isset($gasto_completa)){
+											$gasto_completa = new GastoCompleta();
+											$gasto_completa->gasto_id = $gasto->id;
+										}
+										$gasto_completa->retenido = $extra_gasto->value;
+										if(!$gasto_completa->save()){
+											$errores[] = $gasto_completa->errors;
+										}
+									}
+									if(strtolower(trim($extra_gasto->name)) == "cantidad"){
+										$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
+										if(!isset($gasto_completa)){
+											$gasto_completa = new GastoCompleta();
+											$gasto_completa->gasto_id = $gasto->id;
+										}
+										$gasto_completa->cantidad = $extra_gasto->value;
+										if(!$gasto_completa->save()){
+											$errores[] = $gasto_completa->errors;
+										}
+									}
+									if(strtolower(trim($extra_gasto->name)) == "centro de costo / faena"){
+										$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
+										if(!isset($gasto_completa)){
+											$gasto_completa = new GastoCompleta();
+											$gasto_completa->gasto_id = $gasto->id;
+										}
+										$gasto_completa->centro_costo_faena = $extra_gasto->value;
+										if(!$gasto_completa->save()){
+											$errores[] = $gasto_completa->errors;
+										}
+									}
+									if(strtolower(trim($extra_gasto->name)) == "departamento"){
+										$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
+										if(!isset($gasto_completa)){
+											$gasto_completa = new GastoCompleta();
+											$gasto_completa->gasto_id = $gasto->id;
+										}
+										$gasto_completa->departamento = $extra_gasto->value;
+										if(!$gasto_completa->save()){
+											$errores[] = $gasto_completa->errors;
+										}
+									}
+									if(strtolower(trim($extra_gasto->name)) == "faena"){
+										$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
+										if(!isset($gasto_completa)){
+											$gasto_completa = new GastoCompleta();
+											$gasto_completa->gasto_id = $gasto->id;
+										}
+										$gasto_completa->faena = $extra_gasto->value;
+										if(!$gasto_completa->save()){
+											$errores[] = $gasto_completa->errors;
+										}
+									}
+									if(trim($extra_gasto->name) == "Impuesto específico"){
+										$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
+										if(!isset($gasto_completa)){
+											$gasto_completa = new GastoCompleta();
+											$gasto_completa->gasto_id = $gasto->id;
+										}
+										$gasto_completa->impuesto_especifico = $extra_gasto->value;
+										if(!$gasto_completa->save()){
+											$errores[] = $gasto_completa->errors;
+										}
+									}
+									if(strtolower(trim($extra_gasto->name)) == "iva"){
+										$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
+										if(!isset($gasto_completa)){
+											$gasto_completa = new GastoCompleta();
+											$gasto_completa->gasto_id = $gasto->id;
+										}
+										$gasto_completa->iva = $extra_gasto->value;
+										if(!$gasto_completa->save()){
+											$errores[] = $gasto_completa->errors;
+										}
+									}
+									if(trim($extra_gasto->name) == "Km.Carguío"){
+										$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
+										if(!isset($gasto_completa)){
+											$gasto_completa = new GastoCompleta();
+											$gasto_completa->gasto_id = $gasto->id;
+										}
+										$gasto_completa->km_carguio = $extra_gasto->value;
+										if(!$gasto_completa->save()){
+											$errores[] = $gasto_completa->errors;
+										}
+									}
+									if(strtolower(trim($extra_gasto->name)) == "litros combustible"){
+										$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
+										if(!isset($gasto_completa)){
+											$gasto_completa = new GastoCompleta();
+											$gasto_completa->gasto_id = $gasto->id;
+										}
+										$gasto_completa->litros_combustible = $extra_gasto->value;
+										if(!$gasto_completa->save()){
+											$errores[] = $gasto_completa->errors;
+										}
+									}
+									if(strtolower(trim($extra_gasto->name)) == "monto neto"){
+										$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
+										if(!isset($gasto_completa)){
+											$gasto_completa = new GastoCompleta();
+											$gasto_completa->gasto_id = $gasto->id;
+										}
+										$gasto_completa->monto_neto = $extra_gasto->value;
+										if(!$gasto_completa->save()){
+											$errores[] = $gasto_completa->errors;
+										}
+									}
+									if(strtolower(trim($extra_gasto->name)) == "nombre quien rinde"){
+										$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
+										if(!isset($gasto_completa)){
+											$gasto_completa = new GastoCompleta();
+											$gasto_completa->gasto_id = $gasto->id;
+										}
+										$gasto_completa->nombre_quien_rinde = $extra_gasto->value;
+										if(!$gasto_completa->save()){
+											$errores[] = $gasto_completa->errors;
+										}
+									}
+									if(trim($extra_gasto->name) == "Número de Documento"){
+										$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
+										if(!isset($gasto_completa)){
+											$gasto_completa = new GastoCompleta();
+											$gasto_completa->gasto_id = $gasto->id;
+										}
+										$gasto_completa->nro_documento = $extra_gasto->value;
+										if(!$gasto_completa->save()){
+											$errores[] = $gasto_completa->errors;
+										}
+									}
+									if(trim($extra_gasto->name) == "Período de Planilla"){
+										$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
+										if(!isset($gasto_completa)){
+											$gasto_completa = new GastoCompleta();
+											$gasto_completa->gasto_id = $gasto->id;
+										}
+										$gasto_completa->periodo_planilla = $extra_gasto->value;
+										if(!$gasto_completa->save()){
+											$errores[] = $gasto_completa->errors;
+										}
+									}
+									if(strtolower(trim($extra_gasto->name)) == "rut proveedor"){
+										$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
+										if(!isset($gasto_completa)){
+											$gasto_completa = new GastoCompleta();
+											$gasto_completa->gasto_id = $gasto->id;
+										}
+										$gasto_completa->rut_proveedor = $extra_gasto->value;
+										if(!$gasto_completa->save()){
+											$errores[] = $gasto_completa->errors;
+										}
+									}
+									if(strtolower(trim($extra_gasto->name)) == "supervisor de combustible"){
+										$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
+										if(!isset($gasto_completa)){
+											$gasto_completa = new GastoCompleta();
+											$gasto_completa->gasto_id = $gasto->id;
+										}
+										$gasto_completa->supervisor_combustible = $extra_gasto->value;
+										if(!$gasto_completa->save()){
+											$errores[] = $gasto_completa->errors;
+										}
+									}
+									if(strtolower(trim($extra_gasto->name)) == "tipo de documento"){
+										$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
+										if(!isset($gasto_completa)){
+											$gasto_completa = new GastoCompleta();
+											$gasto_completa->gasto_id = $gasto->id;
+										}
+										$gasto_completa->tipo_documento = $extra_gasto->value;
+										if(!$gasto_completa->save()){
+											$errores[] = $gasto_completa->errors;
+										}
+									}
+									if(strtolower(trim($extra_gasto->name)) == "unidad"){
+										$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
+										if(!isset($gasto_completa)){
+											$gasto_completa = new GastoCompleta();
+											$gasto_completa->gasto_id = $gasto->id;
+										}
+										$gasto_completa->unidad = $extra_gasto->value;
+										if(!$gasto_completa->save()){
+											$errores[] = $gasto_completa->errors;
+										}
+									}
+									if(strtolower(trim($extra_gasto->name)) == "vehiculo o equipo"){
+										$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
+										if(!isset($gasto_completa)){
+											$gasto_completa = new GastoCompleta();
+											$gasto_completa->gasto_id = $gasto->id;
+										}
+										$gasto_completa->vehiculo_equipo = $extra_gasto->value;
+										if(!$gasto_completa->save()){
+											$errores[] = $gasto_completa->errors;
+										}
+									}
+									if(trim($extra_gasto->name) == "Vehículo Oficina Central"){
+										$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
+										if(!isset($gasto_completa)){
+											$gasto_completa = new GastoCompleta();
+											$gasto_completa->gasto_id = $gasto->id;
+										}
+										$gasto_completa->vehiculo_oficina_central = $extra_gasto->value;
+										if(!$gasto_completa->save()){
+											$errores[] = $gasto_completa->errors;
+										}
+									}
+								}
+							}
+						}
+						if(isset($expense->Files)){
+							$files = $expense->Files;
+							foreach($files as $file){
+								$gasto_imagen = new GastoImagen();
+								$gasto_imagen->file_name = $file->FileName;
+								$gasto_imagen->extension = $file->Extension;
+								$gasto_imagen->original = $file->Original;
+								$gasto_imagen->large = $file->Large;
+								$gasto_imagen->medium = $file->Medium;
+								$gasto_imagen->small = $file->Small;
+								$gasto_imagen->gasto_id = $gasto->id;
+								if(!$gasto_imagen->save()){
+									$errores[] = $gasto_imagen->errors;
+								}
 							}
 						}
 					}
-					if(isset($expense->Files)){
-						$files = $expense->Files;
-						foreach($files as $file){
-							$gasto_imagen = new GastoImagen();
-							$gasto_imagen->file_name = $file->FileName;
-							$gasto_imagen->extension = $file->Extension;
-							$gasto_imagen->original = $file->Original;
-							$gasto_imagen->large = $file->Large;
-							$gasto_imagen->medium = $file->Medium;
-							$gasto_imagen->small = $file->Small;
-							$gasto_imagen->gasto_id = $gasto->id;
-							if(!$gasto_imagen->save()){
-								$errores[] = $gasto_imagen->errors;
-							}
-						}
-					}
+					//END GASTOS Y SUS DERIVADOS
 				}				
 			}
-			if(count($errores) == 0){
-				$transaction->commit();
-			}
-			else{
+
+			if(count($errores) > 0){
 				echo "<pre>";
 				print_r($errores);
 				echo "</pre>";
 			}
+			
 		}
 		catch(Exception $e)
 		{
-			$transaction->rollback();
+			echo "Excepción: ".$e;
 		}
 		
-
-		$connection->active=false;
-
 	}
-
-	*/
 
 	
 	/**
@@ -530,7 +561,7 @@ class SiteController extends Controller
 	{
 		return array(
 		array('allow',
-				'actions'=>array('login','logout','error','index','load','completa'),
+				'actions'=>array('login','logout','error','index','carga'),
 				'users'=>array('*'),
 		),
 		array('allow',

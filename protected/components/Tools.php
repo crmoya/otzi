@@ -2,19 +2,30 @@
 class Tools
 {
 
-	public static function jwt_request($token,$page)
+	public static function getExpenses($page)
 	{
-
 		header('Content-Type: application/json'); // Specify the type of data
 		$ch = curl_init('https://api.rindegastos.com/v1/getExpenses?Page=' . $page); // Initialise cURL
-		$authorization = "Authorization: Bearer " . $token; // Prepare the authorisation token
+		$authorization = "Authorization: Bearer " . "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMzA2NDIiLCJjb21wYW55X2lkIjoiMzY0NiIsInJhbmRvbSI6InJhbmRBUEk1ZjEwNTdmYzVjOWU0MC4zNzY0MjU0MSJ9.Y3YjaG4SaO0SY9LPE_Uwuf809J4d_1lTTVgX8yCaQ5k"; // Prepare the authorisation token
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', $authorization)); // Inject the token into the header
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1); // This will follow any redirects
 		$result = curl_exec($ch); // Execute the cURL statement
 		curl_close($ch); // Close the cURL connection
 		return json_decode($result); // Return the received data
+	}
 
+	public static function getReports($page)
+	{
+		header('Content-Type: application/json'); // Specify the type of data
+		$ch = curl_init('https://api.rindegastos.com/v1/getExpenseReports?Page=' . $page); // Initialise cURL
+		$authorization = "Authorization: Bearer " . "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMzA2NDIiLCJjb21wYW55X2lkIjoiMzY0NiIsInJhbmRvbSI6InJhbmRBUEk1ZjEwNTdmYzVjOWU0MC4zNzY0MjU0MSJ9.Y3YjaG4SaO0SY9LPE_Uwuf809J4d_1lTTVgX8yCaQ5k"; // Prepare the authorisation token
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', $authorization)); // Inject the token into the header
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1); // This will follow any redirects
+		$result = curl_exec($ch); // Execute the cURL statement
+		curl_close($ch); // Close the cURL connection
+		return json_decode($result); // Return the received data
 	}
 
 	public static function cleanDirectory($path)
