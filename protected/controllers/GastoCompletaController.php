@@ -53,15 +53,22 @@ class GastoCompletaController extends Controller
 
 	function actionExportar($policy)
 	{
+		
 		set_time_limit(0);
 		$criteria = new CDbCriteria;
 		$criteria->with = array('gasto');
 		$criteria->addColumnCondition([
 			'gasto.expense_policy_id'=>$policy
 		]);
+		
+
+		$session=new CHttpSession;
+		$session->open();
+		if(isset($session['criteria'])){
+			$criteria = $session['criteria'];
+		}
 		$data = GastoCompleta::model()->findAll($criteria);
-
-
+		
 		$this->toExcel(
 			$data,
 			[

@@ -89,7 +89,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		//'supervisor_combustible',
 		
 		'vehiculo_equipo',
-		
 		[
 			'name' => 'folio',
             'type' => 'raw',
