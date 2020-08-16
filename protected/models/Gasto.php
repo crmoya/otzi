@@ -16,6 +16,7 @@
  * The followings are the available model relations:
  * @property ExtraGasto[] $extraGastos
  * @property GastoImagen[] $gastoImagens
+* @property InformeGasto $informeGasto
  */
 class Gasto extends CActiveRecord
 {
@@ -53,6 +54,7 @@ class Gasto extends CActiveRecord
 		return array(
 			'extraGastos' => array(self::HAS_MANY, 'ExtraGasto', 'gasto_id'),
 			'gastoImagens' => array(self::HAS_MANY, 'GastoImagen', 'gasto_id'),
+			'informeGasto' => array(self::BELONGS_TO, 'InformeGasto', 'report_id'),
 		);
 	}
 

@@ -6,6 +6,8 @@
 
 <h1>Registros de gastos de <?=$gastoNombre?></h1>
 <?php echo CHtml::link('Exportar a Excel','exportar?policy='.$model->policy); ?>
+<div class="wrapper">
+
 <?php 
 
 
@@ -38,7 +40,12 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'filter'=>$model,
 	'afterAjaxUpdate' => 'reinstallDatePicker',
 	'columns'=>array(
-		['name'=>'proveedor', 'value'=>'$data->supplier'],
+		[
+			'name'=>'proveedor', 
+			'type'=>'raw',
+			'value'=>'CHtml::link(CHtml::encode($data->supplier),"",["title"=>"$data->supplier", "data-toggle"=>"tooltip","style"=>"text-decoration: none;color:#555;"])', 
+			'htmlOptions'=>['style'=>'max-width:120px !important;'],
+		],
 		[
 			'name' => 'fecha',
             'value' => array($model, 'gridDataColumn'),
@@ -67,13 +74,29 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		],
 		['name' => 'neto', 'value' => '"$".number_format($data->net,0,",",".")', 'htmlOptions' => ['style' => 'text-align:right;']],
 		['name' => 'total', 'value' => '"$".number_format($data->tot,0,",",".")', 'htmlOptions' => ['style' => 'text-align:right;']],
-		['name'=>'categoria', 'value'=>'$data->category'],
+		[
+			'name'=>'categoria', 
+			'type'=>'raw',
+			'value'=>'CHtml::link(CHtml::encode($data->category),"",["title"=>"$data->category", "data-toggle"=>"tooltip","style"=>"text-decoration: none;color:#555;"])', 
+			'htmlOptions'=>['style'=>'max-width:100px !important;'],
+		],
 		['name'=>'grupocategoria', 'value'=>'$data->categorygroup'],
-		['name'=>'nota', 'value'=>'$data->note'],
+		[
+			'name'=>'nota', 
+			'type'=>'raw',
+			'value'=>'CHtml::link(CHtml::encode($data->note),"",["title"=>"$data->note", "data-toggle"=>"tooltip","style"=>"text-decoration: none;color:#555;"])', 
+			'header'=>'Nota',
+			'htmlOptions'=>['style'=>'max-width:60px !important;'],
+		],
 		//'retenido',
 		'cantidad',
 		'unidad',
-		'centro_costo_faena',
+		[
+			'name'=>'centro_costo_faena', 
+			'type'=>'raw',
+			'value'=>'CHtml::link(CHtml::encode($data->centro_costo_faena),"",["title"=>"$data->centro_costo_faena", "data-toggle"=>"tooltip","style"=>"text-decoration: none;color:#555;"])', 
+			'htmlOptions'=>['style'=>'max-width:100px !important;'],
+		],
 		//'departamento',
 		//'faena',
 		//'impuesto_especifico',
@@ -82,12 +105,27 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		//'litros_combustible',
 		//'monto_neto',
 		'nombre_quien_rinde',
-		'nro_documento',
+		[
+			'name'=>'nro_documento', 
+			'type'=>'raw',
+			'value'=>'CHtml::link(CHtml::encode($data->nro_documento),"",["title"=>"$data->nro_documento", "data-toggle"=>"tooltip","style"=>"text-decoration: none;color:#555;"])', 
+			'htmlOptions'=>['style'=>'max-width:100px !important;'],
+		],
 		//'periodo_planilla',
 		'rut_proveedor',
 		//'supervisor_combustible',
-		'tipo_documento',
-		'vehiculo_equipo',
+		[
+			'name'=>'tipo_documento', 
+			'type'=>'raw',
+			'value'=>'CHtml::link(CHtml::encode($data->tipo_documento),"",["title"=>"$data->tipo_documento", "data-toggle"=>"tooltip","style"=>"text-decoration: none;color:#555;"])', 
+			'htmlOptions'=>['style'=>'max-width:100px !important;'],
+		],
+		[
+			'name'=>'vehiculo_equipo', 
+			'type'=>'raw',
+			'value'=>'CHtml::link(CHtml::encode($data->vehiculo_equipo),"",["title"=>"$data->vehiculo_equipo", "data-toggle"=>"tooltip","style"=>"text-decoration: none;color:#555;"])', 
+			'htmlOptions'=>['style'=>'max-width:80px !important;'],
+		],
 		[
 			'name' => 'folio',
             'type' => 'raw',
@@ -103,3 +141,23 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		],
 	),
 )); ?>
+</div>
+<style>
+.wrapper{
+	width: 100%;
+	overflow: auto;	
+	margin-left:-60px;
+	padding-right:150px;
+}
+.span-19{
+	width: 100%;
+}
+tr td{
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+</style>
+<script>
+	
+</script>

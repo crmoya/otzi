@@ -134,6 +134,14 @@ class GastoCompleta extends CActiveRecord
 		return "";
 	}
 
+	public function getNumeroinforme(){
+		if(isset($this->gasto))
+			if(isset($this->gasto->informeGasto)){
+				return $this->gasto->informeGasto->numero;
+			}
+		return "";
+	}
+
 	public function getSupplier(){
 		if(isset($this->gasto))
 			return $this->gasto->supplier;

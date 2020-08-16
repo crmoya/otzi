@@ -20,6 +20,8 @@
  * @property integer $nro_gastos
  * @property integer $nro_gastos_aprobados
  * @property integer $nro_gastos_rechazados
+ * 
+ * @property Gasto[] $gastos
  */
 class InformeGasto extends CActiveRecord
 {
@@ -59,6 +61,7 @@ class InformeGasto extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'gastos' => array(self::HAS_MANY, 'Gasto', 'report_id'),
 		);
 	}
 
