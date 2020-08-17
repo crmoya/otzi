@@ -44,7 +44,7 @@ class GastoCompleta extends CActiveRecord
 			array('retenido, cantidad, centro_costo_faena, departamento, faena, impuesto_especifico, iva, km_carguio, litros_combustible, monto_neto, nombre_quien_rinde, nro_documento, periodo_planilla, rut_proveedor, supervisor_combustible, tipo_documento, unidad, vehiculo_equipo, vehiculo_oficina_central', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id,proveedor,fecha,neto,total,categoria,grupocategoria,nota,folio', 'safe', 'on'=>'search'),
+			array('id,proveedor,fecha,neto,total,categoria,grupocategoria,nota,folio_informe', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -106,7 +106,6 @@ class GastoCompleta extends CActiveRecord
 					'categoria'=>['asc' => 'gasto.category','desc' => 'gasto.category DESC',],
 					'grupocategoria'=>['asc' => 'gasto.category_group','desc' => 'gasto.category_group DESC',],
 					'nota'=>['asc' => 'gasto.note','desc' => 'gasto.note DESC',],
-					'folio'=>['asc' => 'gasto.report_id','desc' => 'gasto.report_id DESC',],
 					'*',
 				),
 			),
@@ -124,23 +123,9 @@ class GastoCompleta extends CActiveRecord
 	public $categoria;
 	public $grupocategoria;
 	public $nota;
-	public $folio;
 
 	const POLICY_COMBUSTIBLES = 44639;
 
-	public function getFolioinforme(){
-		if(isset($this->gasto))
-			return $this->gasto->report_id;
-		return "";
-	}
-
-	public function getNumeroinforme(){
-		if(isset($this->gasto))
-			if(isset($this->gasto->informeGasto)){
-				return $this->gasto->informeGasto->numero;
-			}
-		return "";
-	}
 
 	public function getSupplier(){
 		if(isset($this->gasto))
