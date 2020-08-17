@@ -130,7 +130,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		[
 			'name' => 'folio',
             'type' => 'raw',
-            'value'=>'CHtml::link($data->folioinforme, array("informeGasto/view", "id"=>$data->folioinforme))',
+            'value'=>'CHtml::link($data->numeroinforme, array("informeGasto/view", "id"=>$data->folioinforme))',
 		],
 		//'vehiculo_oficina_central',
 		[

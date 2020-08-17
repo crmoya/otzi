@@ -473,7 +473,7 @@ class SiteController extends Controller
 											$gasto_completa->gasto_id = $gasto->id;
 										}
 										$gasto_completa->vehiculo_oficina_central = $extra_gasto->value;
-										$gasto_completa->folio_informe = $gasto->informeGasto->numero;
+
 										if(!$gasto_completa->save()){
 											$errores[] = $gasto_completa->errors;
 										}
