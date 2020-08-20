@@ -85,7 +85,7 @@ $this->breadcrumbs=array(
 					<td><?=$gasto->supplier?></td>
 					<td><?=Tools::backFecha($gasto->issue_date)?></td>
 					<td><?=$gasto->category?></td>
-					<td><?="$ ".number_format($gasto->total,0,",",".")?></td>
+					<td <?=$gasto->status!=1?'style="text-decoration: line-through;"':''?>><?="$ ".number_format($gasto->total,0,",",".")?></td>
 				</tr>
 				<?php endforeach;?>
 				<tr>
@@ -118,6 +118,9 @@ $this->breadcrumbs=array(
 				</tr>
 			</tbody>
 		</table>
+		<div class="row">
+			Nota: <?=$model->nota?>
+		</div>
 	</div>
 </div>
 

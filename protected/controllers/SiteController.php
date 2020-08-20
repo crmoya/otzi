@@ -199,6 +199,7 @@ class SiteController extends Controller
 					$informe->nro_gastos = $report->NbrExpenses;
 					$informe->nro_gastos_aprobados = $report->NbrApprovedExpenses;
 					$informe->nro_gastos_rechazados = $report->NbrRejectedExpenses;
+					$informe->nota = $report->Note;
 					if(!$informe->save()){
 						$errores[] = $informe->errors;
 					}
