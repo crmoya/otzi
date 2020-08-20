@@ -67,6 +67,7 @@ class GastoCompletaController extends Controller
 		if(isset($session['criteria'])){
 			$criteria = $session['criteria'];
 		}
+
 		$data = GastoCompleta::model()->findAll($criteria);
 		
 		$this->toExcel(

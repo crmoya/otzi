@@ -3,13 +3,38 @@
 /* @var $model GastoCompleta */
 
 ?>
+<div class="search-form" style="display:none">
+<?php $this->renderPartial('_search',array(
+	'model'=>$model,
+)); ?>
+</div>
 
 <h1>Registros de gastos de <?=$gastoNombre?></h1>
+<?php echo CHtml::link('Aplicar filtros al informe','#',array('class'=>'search-button')); ?>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <?php echo CHtml::link('Exportar a Excel','exportar?policy='.$model->policy); ?>
+
 <div class="wrapper">
 
 <?php 
 
+Yii::app()->clientScript->registerScript('search', "
+$('.search-button').click(function(){
+	$('.search-form').toggle();
+	return false;
+});
+$('.search-form form').submit(function(){
+	$.fn.yiiGridView.update('gasto-completa-grid', {
+		data: $(this).serialize()
+	});
+	return false;
+});
+");
 
 Yii::app()->clientScript->registerScript('re-install-date-picker', "
 function reinstallDatePicker(id, data) {
@@ -32,7 +57,6 @@ function reinstallDatePicker(id, data) {
     });
 }
 ");
-
 
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'gasto-completa-grid',
@@ -72,7 +96,9 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				true
 			)
 		],
-		['name' => 'neto', 'value' => '"$".number_format($data->net,0,",",".")', 'htmlOptions' => ['style' => 'text-align:right;']],
+		['name' => 'impuesto_especifico', 'value' => '"$".number_format((int)$data->impuesto_especifico,0,",",".")', 'htmlOptions' => ['style' => 'text-align:right;']],
+		['name' => 'iva', 'value' => '"$".number_format((int)$data->iva,0,",",".")', 'htmlOptions' => ['style' => 'text-align:right;']],
+		['name' => 'monto_neto', 'value' => '"$".number_format((int)$data->monto_neto,0,",",".")', 'htmlOptions' => ['style' => 'text-align:right;']],
 		['name' => 'total', 'value' => '"$".number_format($data->tot,0,",",".")', 'htmlOptions' => ['style' => 'text-align:right;']],
 		[
 			'name'=>'categoria', 
@@ -147,7 +173,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	width: 100%;
 	overflow: auto;	
 	margin-left:-60px;
-	padding-right:150px;
+	padding-right:100px;
 }
 .span-19{
 	width: 100%;
