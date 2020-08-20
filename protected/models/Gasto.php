@@ -108,6 +108,25 @@ class Gasto extends CActiveRecord
 		));
 	}
 
+	public function getImagen(){
+		if(isset($this->gastoImagens)){
+			if(count($this->gastoImagens)>0){
+				if(isset($this->gastoImagens[0]->original)){
+					return $this->gastoImagens[0]->original;
+				}
+				else if(isset($this->gastoImagens[0]->large)){
+					return $this->gastoImagens[0]->large;
+				}
+				else if(isset($this->gastoImagens[0]->medium)){
+					return $this->gastoImagens[0]->medium;
+				}
+				else if(isset($this->gastoImagens[0]->small)){
+					return $this->gastoImagens[0]->small;
+				}
+			}
+		}
+	}
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

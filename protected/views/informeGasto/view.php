@@ -82,7 +82,7 @@ $this->breadcrumbs=array(
 				?>
 				<tr>
 					<td width="80px"><div class="<?=$gasto->status==1?"verde":"rojo"?>"><?=$gasto->status==1?"aprobado":"rechazado"?></div></td>
-					<td><?=$gasto->supplier?></td>
+					<td><a style="text-decoration:none;" href="<?=$gasto->imagen?>" target="_blank"><?=$gasto->supplier?></a></td>
 					<td><?=Tools::backFecha($gasto->issue_date)?></td>
 					<td><?=$gasto->category?></td>
 					<td <?=$gasto->status!=1?'style="text-decoration: line-through;"':''?>><?="$ ".number_format($gasto->total,0,",",".")?></td>
