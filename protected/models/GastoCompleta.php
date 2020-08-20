@@ -88,6 +88,7 @@ class GastoCompleta extends CActiveRecord
 		$criteria->compare('vehiculo_equipo',$this->vehiculo_equipo,true);
 		$criteria->compare('vehiculo_oficina_central',$this->vehiculo_oficina_central,true);
 		
+		$criteria->compare('gasto.status',1);
 
 		
 		$session=new CHttpSession;
