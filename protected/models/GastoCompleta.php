@@ -89,19 +89,27 @@ class GastoCompleta extends CActiveRecord
 		
 		$criteria->compare('gasto.status',1);
 
-		if($this->igual == "SIN ERRORES"){
-			$criteria->compare('gasto.total - impuesto_especifico - iva - monto_neto',0);
-		}
-		if($this->igual == "CON ERRORES"){
-			$criteria->condition = "(gasto.total - impuesto_especifico - iva - monto_neto) != 0";
-		}
 
-		if(isset($this->fecha_inicio) && !isset($this->fecha_fin)){
+		if($this->fecha_inicio != "" && $this->fecha_fin == ""){
 			$fechaIni = Tools::fixFecha($this->fecha_inicio);
-			$criteria->addCondition('gasto.issue_date >= :fecha_inicio');
-			//$criteria->params = [':fecha_inicio'=>$fechaIni]; 
+			$condition .= ' and gasto.issue_date >= :fecha_inicio';
+			$criteria->params = [':fecha_inicio'=>$fechaIni]; 
+		}
+		if($this->fecha_inicio == "" && $this->fecha_fin != ""){
+			$fechaFin = Tools::fixFecha($this->fecha_fin);
+			$condition .= ' and gasto.issue_date <= :fecha_fin';
+			$criteria->params = [':fecha_fin'=>$fechaFin]; 
+		}
+		if($this->fecha_inicio != "" && $this->fecha_fin != ""){
+			$fechaIni = Tools::fixFecha($this->fecha_inicio);
+			$fechaFin = Tools::fixFecha($this->fecha_fin);
+			$condition .= ' and gasto.issue_date >= :fecha_inicio and gasto.issue_date <= :fecha_fin';
+			$criteria->params = [':fecha_inicio'=>$fechaIni, ':fecha_fin'=>$fechaFin]; 
 		}
 
+		if($condition != "1 = 1"){
+			$criteria->condition = $condition;
+		}
 
 		
 		$session=new CHttpSession;

@@ -3,20 +3,85 @@
 /* @var $model GastoCompleta */
 
 ?>
-<div class="search-form" style="display:none">
-<?php $this->renderPartial('_search',array(
-	'model'=>$model,
-)); ?>
-</div>
+<h3>Registros de gastos de <?=$gastoNombre?></h3>
 
-<h1>Registros de gastos de <?=$gastoNombre?></h1>
-<?php echo CHtml::link('Aplicar filtros al informe','#',array('class'=>'search-button')); ?>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<?php $form=$this->beginWidget('CActiveForm', array(
+	'action'=>Yii::app()->createUrl($this->route,['policy'=>$model->policy]),
+	'method'=>'get',
+)); 
+
+
+?>
+
+<table>
+ <tr>
+  <td>
+  	<?php echo $form->label($model,'igual'); ?>
+  </td>
+  <td>
+  	<?php echo $form->dropDownList($model,'igual', CHtml::listData(array(array('id'=>'TODOS','nombre'=>'TODOS'),array('id'=>'SIN ERRORES','nombre'=>'SIN ERRORES'),array('id'=>'CON ERRORES','nombre'=>'CON ERRORES')), 'id', 'nombre')); ?>
+  </td>
+  <td>
+  	<?php echo $form->label($model,'fecha_inicio'); ?>
+  </td>
+  <td>
+  	<?php 
+		$this->widget('zii.widgets.jui.CJuiDatePicker',
+			array(
+				'model'=>$model,
+				'language' => 'es',
+				'attribute'=>'fecha_inicio',
+				// additional javascript options for the date picker plugin
+				'options'=>array(
+					'showAnim'=>'fold',
+					'dateFormat'=>'dd/mm/yy',
+					'changeYear'=>true,
+					'changeMonth'=>true,
+				),
+				'htmlOptions'=>array(
+					'style'=>'width:70px;',
+				),
+			)
+		);
+	?>
+	</td>
+	<td>
+  	<?php echo $form->label($model,'fecha_fin'); ?>
+  </td>
+  <td>
+  	<?php 
+		$this->widget('zii.widgets.jui.CJuiDatePicker',
+			array(
+				'model'=>$model,
+				'language' => 'es',
+				'attribute'=>'fecha_fin',
+				// additional javascript options for the date picker plugin
+				'options'=>array(
+					'showAnim'=>'fold',
+					'dateFormat'=>'dd/mm/yy',
+					'changeYear'=>true,
+					'changeMonth'=>true,
+				),
+				'htmlOptions'=>array(
+					'style'=>'width:70px;',
+				),
+			)
+		);
+	?>
+	</td>
+ </tr>
+ <tr>
+  <td colspan="2">
+    <div class="row buttons">
+		<?php echo CHtml::submitButton('Filtrar'); ?>
+	</div>
+  </td>
+ </tr>
+</table>
+<?php $this->endWidget(); ?>
+
+
 <?php echo CHtml::link('Exportar a Excel','exportar?policy='.$model->policy); ?>
 
 <div class="wrapper">
