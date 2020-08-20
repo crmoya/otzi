@@ -240,6 +240,7 @@ class SiteController extends Controller
 
 					$gasto = new Gasto();
 					$gasto->id = $expense->Id;
+					$gasto->status = $expense->Status;
 					$gasto->supplier = $expense->Supplier;
 					$gasto->issue_date = $expense->IssueDate;
 					$gasto->net = $expense->Net;
