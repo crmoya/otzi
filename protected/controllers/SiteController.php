@@ -487,29 +487,29 @@ class SiteController extends Controller
 						//puedo agregar el total_calculado
 
 						$gasto_completa = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
-						if(isset($gasto_completa)){
-							if(isset($gasto_completa->gasto)){
-								//para combustibles
-								if($gasto_completa->gasto->expense_policy_id == GastoCompleta::POLICY_COMBUSTIBLES){
-									//para factura
-									if(trim($gasto_completa->tipo_documento) == 'Factura Combustible'){
-										$gasto_completa->total_calculado = (int)$gasto_completa->impuesto_especifico + (int)$gasto_completa->iva + (int)$gasto_completa->monto_neto;
-										$gasto_completa->save();
-									}
-
-									//para boleta
-									if(trim($gasto_completa->tipo_documento) == 'Boleta'){
-										$gasto_completa->total_calculado = (int)$gasto_completa->monto_neto;
-										$gasto_completa->save();
-									}
-								}
-								else{
-									//para factura afecta
-									if(trim($gasto_completa->tipo_documento) == 'Factura afecta'){
-										$gasto_completa->total_calculado = (int)($gasto_completa->monto_neto * 1.19);
-										$gasto_completa->save();
-									}
-								}
+						if(!isset($gasto_completa)){
+							$gasto_completa = new GastoCompleta();
+							$gasto_completa->gasto_id = $gasto->id;
+							$gasto_completa->save();
+						}
+						//para combustibles
+						if($gasto->expense_policy_id == GastoCompleta::POLICY_COMBUSTIBLES){
+							//para factura
+							if(trim($gasto_completa->tipo_documento) == 'Factura Combustible'){
+								$gasto_completa->total_calculado = (int)$gasto_completa->impuesto_especifico + (int)$gasto_completa->iva + (int)$gasto_completa->monto_neto;
+								$gasto_completa->save();
+							}
+							//para boleta
+							if(trim($gasto_completa->tipo_documento) == 'Boleta'){
+								$gasto_completa->total_calculado = (int)$gasto_completa->monto_neto;
+								$gasto_completa->save();
+							}
+						}
+						else{
+							//para factura afecta
+							if(trim($gasto_completa->tipo_documento) == 'Factura afecta'){
+								$gasto_completa->total_calculado = (int)($gasto_completa->monto_neto * 1.19);
+								$gasto_completa->save();
 							}
 						}
 
