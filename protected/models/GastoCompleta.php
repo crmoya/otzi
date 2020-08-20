@@ -58,6 +58,7 @@ class GastoCompleta extends CActiveRecord
 
 		$criteria->join = "	join gasto on t.gasto_id = gasto.id 
 							join informe_gasto on gasto.report_id = informe_gasto.id";
+
 		$criteria->compare('id',$this->id);
 		$criteria->compare('gasto.expense_policy_id',$this->policy);
 		$criteria->compare('gasto.supplier',$this->proveedor,true);
@@ -89,7 +90,14 @@ class GastoCompleta extends CActiveRecord
 		
 		$criteria->compare('gasto.status',1);
 
+		if($this->igual == "SIN ERRORES"){
+			$criteria->addCondition('gasto.total = total_calculado');
+		}
+		if($this->igual == "CON ERRORES"){
+			$criteria->addCondition('gasto.total <> total_calculado');
+		}
 
+/*
 		if($this->fecha_inicio != "" && $this->fecha_fin == ""){
 			$fechaIni = Tools::fixFecha($this->fecha_inicio);
 			$condition .= ' and gasto.issue_date >= :fecha_inicio';
@@ -111,7 +119,7 @@ class GastoCompleta extends CActiveRecord
 			$criteria->condition = $condition;
 		}
 
-		
+*/		
 		$session=new CHttpSession;
   		$session->open();
 		$session['criteria'] = $criteria;
