@@ -216,7 +216,6 @@ class SiteController extends Controller
 			//AHORA TRAIGO LOS
 			//GASTOS Y SUS DERIVADOS
 
-			$no_aprobados = 0;
 			$limite = 1;
 			$primero = true;
 			for($i = 1; $i <= $limite; $i++){
@@ -228,10 +227,10 @@ class SiteController extends Controller
 				$expenses = $resultado->Expenses;
 				foreach($expenses as $expense){
 					//solo traer gastos aprobados
-					if((int)$expense->Status != 1){
+					/*if((int)$expense->Status != 1){
 						$no_aprobados++;
 						continue;
-					}
+					}*/
 
 					$gasto = Gasto::model()->findByPk($expense->Id);
 					if(isset($gasto)){

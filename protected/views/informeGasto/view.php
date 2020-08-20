@@ -66,22 +66,72 @@ $this->breadcrumbs=array(
 			<tbody>
 				<?php 
 				$gastos = $model->gastos; 
+				$total_aprobado = 0;
+				$total = 0;
+				$aprobados = 0;
+				$rechazados = 0;
 				foreach($gastos as $gasto):
+					if($gasto->status==1){
+						$total_aprobado += $gasto->total;
+						$aprobados++;
+					}
+					else{
+						$rechazados++;
+					}
+					$total += $gasto->total;
 				?>
 				<tr>
-					<td><div class="estado"></div></td>
-					<td>Gasto</td>
-					<td>Fecha</td>
-					<td>Categoría</td>
-					<td>Total</td>
+					<td width="80px"><div class="<?=$gasto->status==1?"verde":"rojo"?>"><?=$gasto->status==1?"aprobado":"rechazado"?></div></td>
+					<td><?=$gasto->supplier?></td>
+					<td><?=Tools::backFecha($gasto->issue_date)?></td>
+					<td><?=$gasto->category?></td>
+					<td><?="$ ".number_format($gasto->total,0,",",".")?></td>
 				</tr>
 				<?php endforeach;?>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>Num. de Gastos</td>
+					<td><?=($aprobados+$rechazados)?></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>Gastos Aprobados</td>
+					<td><?=$aprobados?></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>Gastos Rechazados</td>
+					<td><?=$rechazados?></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td><b>Total</b></td>
+					<td><b style="font-size:12pt"><?="$ ".number_format($total_aprobado,0,",",".")?></b> / <?="$ ".number_format($total,0,",",".")?></td>
+				</tr>
 			</tbody>
 		</table>
 	</div>
 </div>
 
 <style>
+.verde{
+	background:#dff0d8;
+	color: green;
+	padding: 5px;
+}
+.rojo{
+	background:#f8d7da;
+	color: #721c24;
+	padding: 5px;
+}
 .table{
 	padding-top: 20px;
 }
