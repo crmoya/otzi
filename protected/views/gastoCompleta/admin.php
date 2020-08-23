@@ -65,7 +65,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 				true
 			)
 		],
-		['name' => 'neto', 'value' => '"$".number_format($data->net,0,",",".")', 'htmlOptions' => ['style' => 'text-align:right;']],
+		['name' => 'monto_neto', 'value' => '"$".number_format($data->monto_neto,0,",",".")', 'htmlOptions' => ['style' => 'text-align:right;']],
 		['name' => 'total', 'value' => '"$".number_format($data->tot,0,",",".")', 'htmlOptions' => ['style' => 'text-align:right;']],
 		['name'=>'categoria', 'value'=>'$data->category'],
 		['name'=>'grupocategoria', 'value'=>'$data->categorygroup'],
