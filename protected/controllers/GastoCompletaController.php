@@ -192,7 +192,9 @@ class GastoCompletaController extends Controller
 	{
 		$model = new GastoCompleta('search');
 		$model->unsetAttributes();  // clear any default values
+		
 		$model->policy = $policy;
+
 		if (isset($_GET['GastoCompleta']))
 			$model->attributes = $_GET['GastoCompleta'];
 

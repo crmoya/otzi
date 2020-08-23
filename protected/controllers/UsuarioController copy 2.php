@@ -208,10 +208,8 @@ class UsuarioController extends Controller
 		if(isset($_GET['Usuario']))
 			$model->attributes=$_GET['Usuario'];
 
-		$modelos = $model->search()->getModels();
-
 		$this->render('admin',array(
-			'modelos'=>$modelos,
+			'model'=>$model,
 		));
 	}
 

@@ -94,32 +94,28 @@ class GastoCompleta extends CActiveRecord
 			$criteria->addCondition('gasto.total = total_calculado');
 		}
 		if($this->igual == "CON ERRORES"){
-			$criteria->addCondition('gasto.total <> total_calculado');
+			$criteria->addCondition('gasto.total <> total_calculado or total_calculado is null');
 		}
 
 /*
 		if($this->fecha_inicio != "" && $this->fecha_fin == ""){
 			$fechaIni = Tools::fixFecha($this->fecha_inicio);
-			$condition .= ' and gasto.issue_date >= :fecha_inicio';
+			$criteria->addCondition('gasto.issue_date >= :fecha_inicio');
 			$criteria->params = [':fecha_inicio'=>$fechaIni]; 
 		}
 		if($this->fecha_inicio == "" && $this->fecha_fin != ""){
 			$fechaFin = Tools::fixFecha($this->fecha_fin);
-			$condition .= ' and gasto.issue_date <= :fecha_fin';
+			$criteria->addCondition('gasto.issue_date <= :fecha_fin');
 			$criteria->params = [':fecha_fin'=>$fechaFin]; 
 		}
 		if($this->fecha_inicio != "" && $this->fecha_fin != ""){
 			$fechaIni = Tools::fixFecha($this->fecha_inicio);
 			$fechaFin = Tools::fixFecha($this->fecha_fin);
-			$condition .= ' and gasto.issue_date >= :fecha_inicio and gasto.issue_date <= :fecha_fin';
+			$criteria->addCondition('gasto.issue_date >= :fecha_inicio and gasto.issue_date <= :fecha_fin');
 			$criteria->params = [':fecha_inicio'=>$fechaIni, ':fecha_fin'=>$fechaFin]; 
 		}
-
-		if($condition != "1 = 1"){
-			$criteria->condition = $condition;
-		}
-
-*/		
+*/
+		
 		$session=new CHttpSession;
   		$session->open();
 		$session['criteria'] = $criteria;

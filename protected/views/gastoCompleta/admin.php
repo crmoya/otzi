@@ -6,7 +6,6 @@
 
 <h1>Registros de gastos de <?=$gastoNombre?></h1>
 <?php echo CHtml::link('Exportar a Excel','exportar?policy='.$model->policy); ?>
-<div class="wrapper">
 <?php 
 
 
@@ -39,13 +38,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 	'filter'=>$model,
 	'afterAjaxUpdate' => 'reinstallDatePicker',
 	'columns'=>array(
-		[
-			'name'=>'proveedor', 
-			'type'=>'raw',
-			'value'=>'CHtml::link(CHtml::encode($data->supplier),"",["title"=>"$data->supplier", "data-toggle"=>"tooltip","style"=>"text-decoration: none;color:#555;"])', 
-			'header'=>'Comercio',
-			'htmlOptions'=>['style'=>'max-width:120px !important;'],
-		],
+		['name'=>'proveedor', 'value'=>'$data->supplier'],
 		[
 			'name' => 'fecha',
             'value' => array($model, 'gridDataColumn'),
@@ -73,65 +66,28 @@ $this->widget('zii.widgets.grid.CGridView', array(
 			)
 		],
 		['name' => 'neto', 'value' => '"$".number_format($data->net,0,",",".")', 'htmlOptions' => ['style' => 'text-align:right;']],
-		['name' => 'iva', 'value' => '"$".number_format($data->iva,0,",",".")', 'htmlOptions' => ['style' => 'text-align:right;']],
 		['name' => 'total', 'value' => '"$".number_format($data->tot,0,",",".")', 'htmlOptions' => ['style' => 'text-align:right;']],
-		[
-			'name'=>'nota', 
-			'type'=>'raw',
-			'value'=>'CHtml::link(CHtml::encode($data->note),"",["title"=>"$data->note", "data-toggle"=>"tooltip","style"=>"text-decoration: none;color:#555;"])', 
-			'header'=>'Nota',
-			'htmlOptions'=>['style'=>'max-width:60px !important;'],
-		],
-		[
-			'name'=>'categoria', 
-			'type'=>'raw',
-			'value'=>'CHtml::link(CHtml::encode($data->category),"",["title"=>"$data->category", "data-toggle"=>"tooltip","style"=>"text-decoration: none;color:#555;"])', 
-			'htmlOptions'=>['style'=>'max-width:100px !important;'],
-		],
-		//['name'=>'grupocategoria', 'value'=>'$data->categorygroup'],
+		['name'=>'categoria', 'value'=>'$data->category'],
+		['name'=>'grupocategoria', 'value'=>'$data->categorygroup'],
+		['name'=>'nota', 'value'=>'$data->note'],
 		//'retenido',
-		//'cantidad',
-		//'unidad',
-		[
-			'name'=>'centro_costo_faena', 
-			'type'=>'raw',
-			'value'=>'CHtml::link(CHtml::encode($data->centro_costo_faena),"",["title"=>"$data->centro_costo_faena", "data-toggle"=>"tooltip","style"=>"text-decoration: none;color:#555;"])', 
-			'htmlOptions'=>['style'=>'max-width:100px !important;'],
-		],
+		'cantidad',
+		'unidad',
+		'centro_costo_faena',
 		//'departamento',
 		//'faena',
 		//'impuesto_especifico',
+		//'iva',
 		//'km_carguio',
 		//'litros_combustible',
 		//'monto_neto',
 		'nombre_quien_rinde',
-		[
-			'name'=>'tipo_documento', 
-			'type'=>'raw',
-			'value'=>'CHtml::link(CHtml::encode($data->tipo_documento),"",["title"=>"$data->tipo_documento", "data-toggle"=>"tooltip","style"=>"text-decoration: none;color:#555;"])', 
-			'htmlOptions'=>['style'=>'max-width:100px !important;'],
-		],
-		[
-			'name'=>'nro_documento', 
-			'type'=>'raw',
-			'value'=>'CHtml::link(CHtml::encode($data->nro_documento),"",["title"=>"$data->nro_documento", "data-toggle"=>"tooltip","style"=>"text-decoration: none;color:#555;"])', 
-			'htmlOptions'=>['style'=>'max-width:100px !important;'],
-		],
+		'nro_documento',
 		//'periodo_planilla',
-		//'rut_proveedor',
+		'rut_proveedor',
 		//'supervisor_combustible',
-		
-		[
-			'name'=>'vehiculo_equipo', 
-			'type'=>'raw',
-			'value'=>'CHtml::link(CHtml::encode($data->vehiculo_equipo),"",["title"=>"$data->vehiculo_equipo", "data-toggle"=>"tooltip","style"=>"text-decoration: none;color:#555;"])', 
-			'htmlOptions'=>['style'=>'max-width:80px !important;'],
-		],
-		[
-			'name' => 'folio',
-            'type' => 'raw',
-            'value'=>'CHtml::link($data->numeroinforme, array("informeGasto/view", "id"=>$data->folioinforme))',
-		],
+		'tipo_documento',
+		'vehiculo_equipo',
 		//'vehiculo_oficina_central',
 		[
 			'header' => 'Imagen',
@@ -142,20 +98,3 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		],
 	),
 )); ?>
-</div>
-<style>
-.wrapper{
-	width: 100%;
-	overflow: auto;	
-	margin-left:-60px;
-	padding-right:150px;
-}
-.span-19{
-	width: 100%;
-}
-tr td{
-	text-overflow: ellipsis;
-	overflow: hidden;
-	white-space: nowrap;
-}
-</style>

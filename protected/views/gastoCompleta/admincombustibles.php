@@ -70,13 +70,9 @@
 		);
 	?>
 	</td>
- </tr>
- <tr>
-  <td colspan="2">
-    <div class="row buttons">
+	<td>
 		<?php echo CHtml::submitButton('Filtrar'); ?>
-	</div>
-  </td>
+	</td>
  </tr>
 </table>
 <?php $this->endWidget(); ?>
