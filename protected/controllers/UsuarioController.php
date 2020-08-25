@@ -206,12 +206,10 @@ class UsuarioController extends Controller
 		$model=new Usuario('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Usuario']))
-			$model->attributes=$_GET['Usuario'];
-
-		$modelos = $model->search()->getModels();
+		$model->attributes=$_GET['Usuario'];
 
 		$this->render('admin',array(
-			'modelos'=>$modelos,
+			'model'=>$model,
 		));
 	}
 
