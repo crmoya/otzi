@@ -120,7 +120,8 @@ class GastoCompleta extends CActiveRecord
   		$session->open();
 		$session['criteria'] = $criteria;
 		
-
+		return $criteria;
+		/*
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 			'sort' => array(
@@ -139,7 +140,7 @@ class GastoCompleta extends CActiveRecord
 			'pagination'=>[
 				'pageSize'=>10,
 			]
-		));
+		));*/
 	}
 
 	public $policy;

@@ -15,7 +15,7 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/jquery-ui.css" />
 
 
-	<title><?php echo CHtml::encode(Yii::app()->name); ?></title>
+	<title><?php echo CHtml::encode(Yii::app()->getController()->pageTitle); ?></title>
 </head>
 
 <body>

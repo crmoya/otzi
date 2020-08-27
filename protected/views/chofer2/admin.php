@@ -1,6 +1,7 @@
 <?php
-
-Yii::app()->getController()->pageTitle="Gastos de " . $gastoNombre;
+$this->menu=array(
+	array('label'=>'Crear Chofer', 'url'=>array('create')),
+);
 
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
@@ -16,21 +17,20 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h3>Registros de gastos de <?=$gastoNombre?></h3>
+<h1>Administrar Choferes</h1>
 
 <?php echo CHtml::link('Búsqueda Avanzada','#',array('class'=>'search-button')); ?>
 <div class="search-form" style="display:none">
 <?php $this->renderPartial('_search',array(
 	'model'=>$model,
-	'policy'=>$policy,
 )); ?>
 </div><!-- search-form -->
-
 
 <?php echo $this->renderPartial('//tables/_header'); ?>
 
 <?php
-$datos = GastoCompleta::model()->findAll($model->search());
+$datos = Chofer2::model()->findAll($model->search());
 echo $this->renderPartial('//tables/_cuerpo',['datos'=>$datos, 'cabeceras' => $cabeceras, 'extra_datos'=>$extra_datos]);
 ?>
+
 <?php echo $this->renderPartial('//tables/_footer',['extra_datos'=>$extra_datos]); ?>

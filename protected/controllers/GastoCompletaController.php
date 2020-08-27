@@ -190,27 +190,43 @@ class GastoCompletaController extends Controller
 	 */
 	public function actionAdmin($policy)
 	{
-		$model = new GastoCompleta('search');
-		$model->unsetAttributes();  // clear any default values
 		
+		$this->pageTitle = "";
+
+		$model=new GastoCompleta('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['GastoCompleta'])){
+			$model->attributes=$_GET['GastoCompleta'];
+		}
+
 		$model->policy = $policy;
 
-		if (isset($_GET['GastoCompleta']))
-			$model->attributes = $_GET['GastoCompleta'];
-
-		$vista = "admin";
 		$gastoNombre = "DEPARTAMENTO DE MAQUINARIA DIFERENTE DE COMBUSTIBLES";
 		if($policy == GastoCompleta::POLICY_COMBUSTIBLES){
 			$gastoNombre = "COMBUSTIBLES";
-			$vista = "admincombustibles";
 		}
 
-		$this->render($vista, array(
-			'model' => $model,
+		$cabeceras = [
+			'Impuesto Específico',
+			'IVA',
+			'Monto Neto',
+			'Total',
+		];
+
+		$extra_datos = [
+			['campo'=>'impuesto_especifico'],
+			['campo'=>'iva','exportable','dots'],
+			['campo'=>'monto_neto','exportable'],
+			['campo'=>'total','exportable'],
+		];
+
+		$this->render("admin",array(
+			'model'=>$model,
+			'cabeceras' => $cabeceras,
+			'extra_datos' => $extra_datos,
 			'gastoNombre' => $gastoNombre,
 		));
 	}
-
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
