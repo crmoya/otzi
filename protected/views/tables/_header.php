@@ -83,6 +83,3 @@
  </tr>
 </table>
 <?php $this->endWidget(); ?>
-
-
-<?php echo CHtml::link('Exportar a Excel','exportar?policy='.$model->policy); ?>
