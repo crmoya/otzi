@@ -101,7 +101,7 @@ class GastoCompleta extends CActiveRecord
 
 	public function getDate(){
 		if(isset($this->gasto))
-		return $this->gasto->issue_date;
+			return $this->gasto->issue_date;
 	}
 
 	public function getTotal(){
