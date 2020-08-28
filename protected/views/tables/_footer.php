@@ -2,10 +2,10 @@
 $(document).ready( function () {
 
 	// Setup - add a text input to each header cell
-	$('#datos thead th').each(function() {
+	/*$('#datos thead th').each(function() {
 		var title = $('#datos thead th').eq($(this).index()).text();
 		$(this).html('<input type="text" placeholder="' + title + '" >');
-	});
+	});*/
 
 	// DataTable
 	var table = $('#datos').DataTable({
@@ -36,8 +36,10 @@ $(document).ready( function () {
 					],
 					format: {
 						body: function(data, row, column, node) {
-							data = $('<p>' + data + '</p>').text();
-							return $.isNumeric(data.replace('.', '')) ? data.replace('.', '') : data;
+							data = data.replace("$","");
+							data = $.isNumeric(data.replace('.', '')) ? data.replace('.', '') : data;
+							data = $.isNumeric(data.replace(',', '')) ? data.replace(',', '') : data;
+							return data;
 						}
 					},
 					extend: 'csv',
@@ -70,6 +72,36 @@ $(document).ready( function () {
 	$('.dataTables_length').hide();
 	$('.dataTables_filter').hide();
 	$('.buttons-excel').html('<img src="<?php echo Yii::app()->request->baseUrl; ?>/images/xls.png"/>');
+
+	$('#datos td').attr("data-toggle",'tooltip');
+	$('#datos td').attr("data-placement",'top');
+	$('#datos td').mouseenter(function(e){
+		$(this).attr('title',$(this).text());
+	});
+	$('[data-toggle="tooltip"]').tooltip();
+
+	$.datepicker.regional['es'] = {
+		closeText: 'Cerrar',
+		prevText: '<Ant',
+		nextText: 'Sig>',
+		currentText: 'Hoy',
+		monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+		monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+		dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+		dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+		dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+		weekHeader: 'Sm',
+		dateFormat: 'yy-mm-dd',
+		firstDay: 1,
+		isRTL: false,
+		showMonthAfterYear: false,
+		yearSuffix: ''
+	};
+	$.datepicker.setDefaults($.datepicker.regional['es']);
+	$( ".datepicker" ).datepicker({ 
+		"dateFormat": "yy-mm-dd"
+	});
+	$.fn.dataTable.moment( 'YYYY-MM-DD' );
 });
 </script>
 <style>
@@ -77,8 +109,26 @@ $(document).ready( function () {
 	background: transparent !important;
     border: none !important;
 }
-.dots{
-    max-width: 100px !important;
+.dots-lg{
+    max-width: <?=Tools::CELL_SIZES['lg']?>px !important;
+    overflow:hidden; 
+    white-space:nowrap; 
+    text-overflow: ellipsis;
+}
+.dots-md{
+    max-width: <?=Tools::CELL_SIZES['md']?>px !important;
+    overflow:hidden; 
+    white-space:nowrap; 
+    text-overflow: ellipsis;
+}
+.dots-sm{
+    max-width: <?=Tools::CELL_SIZES['sm']?>px !important;
+    overflow:hidden; 
+    white-space:nowrap; 
+    text-overflow: ellipsis;
+}
+.dots-xs{
+    max-width: <?=Tools::CELL_SIZES['xs']?>px !important;
     overflow:hidden; 
     white-space:nowrap; 
     text-overflow: ellipsis;

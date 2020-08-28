@@ -44,7 +44,7 @@ class GastoCompleta extends CActiveRecord
 			array('retenido, cantidad, centro_costo_faena, departamento, faena, impuesto_especifico, iva, km_carguio, litros_combustible, monto_neto, nombre_quien_rinde, nro_documento, periodo_planilla, rut_proveedor, supervisor_combustible, tipo_documento, unidad, vehiculo_equipo, vehiculo_oficina_central', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id,igual,proveedor,fecha_inicio, fecha_fin, fecha,monto_neto,total,categoria,grupocategoria,nota,folio,impuesto_espeficico,iva', 'safe', 'on'=>'search'),
+			array('id, fecha_inicio, fecha_fin, igual', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,133 +54,46 @@ class GastoCompleta extends CActiveRecord
 
 		$criteria=new CDbCriteria();
 
-		//$criteria->join = 'JOIN gasto g ON t.gasto_id = g.id and g.expense_policy_id = '.$this->policy; 
-
 		$criteria->join = "	join gasto on t.gasto_id = gasto.id 
 							join informe_gasto on gasto.report_id = informe_gasto.id";
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('gasto.expense_policy_id',$this->policy);
-		$criteria->compare('gasto.supplier',$this->proveedor,true);
-		$criteria->compare('gasto.issue_date',Tools::fixFecha($this->fecha),true);
-		$criteria->compare('gasto.total',$this->total);
-		$criteria->compare('gasto.category',$this->categoria,true);
-		$criteria->compare('gasto.category_group',$this->grupocategoria,true);
-		$criteria->compare('gasto.note',$this->nota,true);
-		$criteria->compare('informe_gasto.numero',$this->folio);
-		$criteria->compare('retenido',$this->retenido);
-		$criteria->compare('cantidad',$this->cantidad);
-		$criteria->compare('centro_costo_faena',$this->centro_costo_faena,true);
-		$criteria->compare('departamento',$this->departamento,true);
-		$criteria->compare('faena',$this->faena,true);
-		$criteria->compare('impuesto_especifico',$this->impuesto_especifico);
-		$criteria->compare('iva',$this->iva);
-		$criteria->compare('km_carguio',$this->km_carguio);
-		$criteria->compare('litros_combustible',$this->litros_combustible);
-		$criteria->compare('monto_neto',$this->monto_neto);
-		$criteria->compare('nombre_quien_rinde',$this->nombre_quien_rinde,true);
-		$criteria->compare('nro_documento',$this->nro_documento,true);
-		$criteria->compare('periodo_planilla',$this->periodo_planilla,true);
-		$criteria->compare('rut_proveedor',$this->rut_proveedor,true);
-		$criteria->compare('supervisor_combustible',$this->supervisor_combustible,true);
-		$criteria->compare('tipo_documento',$this->tipo_documento,true);
-		$criteria->compare('unidad',$this->unidad,true);
-		$criteria->compare('vehiculo_equipo',$this->vehiculo_equipo,true);
-		$criteria->compare('vehiculo_oficina_central',$this->vehiculo_oficina_central,true);
 		
 		$criteria->compare('gasto.status',1);
+		$criteria->compare('gasto.expense_policy_id',$this->policy);
 
 		if($this->igual == "SIN ERRORES"){
 			$criteria->addCondition('gasto.total = total_calculado');
 		}
 		if($this->igual == "CON ERRORES"){
-			$criteria->addCondition('gasto.total <> total_calculado or total_calculado is null');
+			$criteria->addCondition('(gasto.total <> total_calculado or total_calculado is null)');
 		}
 
-/*
 		if($this->fecha_inicio != "" && $this->fecha_fin == ""){
 			$fechaIni = Tools::fixFecha($this->fecha_inicio);
-			$criteria->addCondition('gasto.issue_date >= :fecha_inicio');
-			$criteria->params = [':fecha_inicio'=>$fechaIni]; 
+			$criteria->addCondition('gasto.issue_date >= :fecha_inicio and :fecha_ini = :fecha_ini');
 		}
 		if($this->fecha_inicio == "" && $this->fecha_fin != ""){
 			$fechaFin = Tools::fixFecha($this->fecha_fin);
-			$criteria->addCondition('gasto.issue_date <= :fecha_fin');
-			$criteria->params = [':fecha_fin'=>$fechaFin]; 
+			$criteria->addCondition('gasto.issue_date <= :fecha_fin and :fecha_fin = :fecha_fin');
 		}
 		if($this->fecha_inicio != "" && $this->fecha_fin != ""){
 			$fechaIni = Tools::fixFecha($this->fecha_inicio);
 			$fechaFin = Tools::fixFecha($this->fecha_fin);
 			$criteria->addCondition('gasto.issue_date >= :fecha_inicio and gasto.issue_date <= :fecha_fin');
-			$criteria->params = [':fecha_inicio'=>$fechaIni, ':fecha_fin'=>$fechaFin]; 
 		}
-*/
-		
-		$session=new CHttpSession;
-  		$session->open();
-		$session['criteria'] = $criteria;
 		
 		return $criteria;
-		/*
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-			'sort' => array(
-				'defaultOrder' => 'gasto.issue_date DESC',
-				'attributes'=>array(
-					'proveedor'=>['asc' => 'gasto.supplier','desc' => 'gasto.supplier DESC',],
-					'fecha'=>['asc' => 'gasto.issue_date','desc' => 'gasto.issue_date DESC',],
-					'total'=>['asc' => 'gasto.total','desc' => 'gasto.total DESC',],
-					'categoria'=>['asc' => 'gasto.category','desc' => 'gasto.category DESC',],
-					'grupocategoria'=>['asc' => 'gasto.category_group','desc' => 'gasto.category_group DESC',],
-					'nota'=>['asc' => 'gasto.note','desc' => 'gasto.note DESC',],
-					'folio'=>['asc' => 'informe_gasto.numero','desc' => 'informe_gasto.numero DESC',],
-					'*',
-				),
-			),
-			'pagination'=>[
-				'pageSize'=>10,
-			]
-		));*/
 	}
 
 	public $policy;
-	public $proveedor;
-	public $fecha;
-
-	public $total;
-	public $categoria;
-	public $grupocategoria;
-	public $nota;
-	public $folio;
-
 	public $igual;
 	public $fecha_inicio;
 	public $fecha_fin;
 
 	const POLICY_COMBUSTIBLES = 44639;
 
-
-	public function getFolioinforme(){
-		if(isset($this->gasto))
-			return $this->gasto->report_id;
-		return "";
-	}
-
-	public function getNumeroinforme(){
-		if(isset($this->gasto))
-			if(isset($this->gasto->informeGasto)){
-				return $this->gasto->informeGasto->numero;
-			}
-		return "";
-	}
-
 	public function getSupplier(){
-		if(isset($this->gasto))
-			return $this->gasto->supplier;
-		return "";
-	}
-
-	public function getCommerce(){
 		if(isset($this->gasto))
 			return $this->gasto->supplier;
 		return "";
@@ -191,32 +104,33 @@ class GastoCompleta extends CActiveRecord
 		return $this->gasto->issue_date;
 	}
 
-	public function getNet(){
-		if(isset($this->gasto))
-		return $this->gasto->net;
-	}
-
-	public function getTot(){
+	public function getTotal(){
 		if(isset($this->gasto))
 		return $this->gasto->total;
 	}
 
-	public function getCategory(){
+	public function getCategoria(){
 		if(isset($this->gasto))
 		return $this->gasto->category;
 	}
 
-	public function getCategorygroup(){
+	public function getGrupocategoria(){
 		if(isset($this->gasto))
 		return $this->gasto->category_group;
 	}
 
-	public function getNote(){
+	public function getNota(){
 		if(isset($this->gasto))
 		return $this->gasto->note;
 	}
 
-	public function getImage(){
+	public function getFolio(){
+		if(isset($this->gasto))
+			return $this->gasto->report_id;
+		return "";
+	}
+
+	public function getImagen(){
 		if(isset($this->gasto)){
 			if(isset($this->gasto->gastoImagens)){
 				if(count($this->gasto->gastoImagens)>0){
@@ -236,10 +150,6 @@ class GastoCompleta extends CActiveRecord
 			}
 		}
 		return "SIN IMAGEN";
-	}
-
-	public function getEquals(){
-		return 1;
 	}
 
 	/**

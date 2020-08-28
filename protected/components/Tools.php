@@ -2,6 +2,14 @@
 class Tools
 {
 
+	public const CELL_SIZES = ['xs'=>20, 'sm'=>50,'md'=>100,'lg'=>150];
+
+	public static function reverseDate($date){
+		$fechaArr = explode("-", $date);
+		if (count($fechaArr) == 3) return $fechaArr[2] . "-" . $fechaArr[1] . "-" . $fechaArr[0];
+		else return "";
+	}
+
 	public static function getExpenses($page)
 	{
 		header('Content-Type: application/json'); // Specify the type of data

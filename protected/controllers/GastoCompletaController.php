@@ -207,17 +207,41 @@ class GastoCompletaController extends Controller
 		}
 
 		$cabeceras = [
-			'Impuesto Específico',
-			'IVA',
-			'Monto Neto',
-			'Total',
+			['name'=>'Proveedor','width'=>'md'],
+			['name'=>'Fecha','width'=>'sm', 'format'=>'date'],
+			['name'=>'Imp. Esp.','width'=>'xs'],
+			['name'=>'IVA','width'=>'xs'],
+			['name'=>'Neto','width'=>'xs'],
+			['name'=>'Total','width'=>'xs'],
+			['name'=>'Categoría','width'=>'md'],
+			['name'=>'Grupo cat.','width'=>'md'],
+			['name'=>'Nota','width'=>'md'],
+			['name'=>'Cantidad (lts.)','width'=>'md'],
+			['name'=>'C. Costo Faena','width'=>'md'],
+			['name'=>'Rendidor','width'=>'md'],
+			['name'=>'Tipo doc.','width'=>'md'],
+			['name'=>'Vehículo Equipo','width'=>'lg'],
+			['name'=>'Folio','width'=>'xs'],
+			['name'=>'Imagen','width'=>'xs'],
 		];
 
 		$extra_datos = [
-			['campo'=>'impuesto_especifico'],
-			['campo'=>'iva','exportable','dots'],
-			['campo'=>'monto_neto','exportable'],
-			['campo'=>'total','exportable'],
+			['campo'=>'supplier','exportable','dots'=>"md"],
+			['campo'=>'date','exportable','dots'=>'sm'],
+			['campo'=>'impuesto_especifico','exportable', 'format'=>'money'],
+			['campo'=>'iva','exportable', 'format'=>'money'],
+			['campo'=>'monto_neto','exportable', 'format'=>'money'],
+			['campo'=>'total','exportable', 'format'=>'money'],
+			['campo'=>'categoria','exportable','dots'=>"md"],
+			['campo'=>'grupocategoria','exportable','dots'=>"md"],
+			['campo'=>'nota','exportable','dots'=>"md"],
+			['campo'=>'cantidad','exportable'],
+			['campo'=>'centro_costo_faena','exportable','dots'=>"md"],
+			['campo'=>'nombre_quien_rinde','exportable','dots'=>"md"],
+			['campo'=>'tipo_documento','exportable','dots'=>"sm"],
+			['campo'=>'vehiculo_equipo','exportable','dots'=>"md"],
+			['campo'=>'folio','exportable'],
+			['campo'=>'imagen','format'=>'imagen','dots'=>'xs'],
 		];
 
 		$this->render("admin",array(
