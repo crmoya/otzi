@@ -68,19 +68,19 @@ class GastoCompleta extends CActiveRecord
 		if($this->igual == "CON ERRORES"){
 			$criteria->addCondition('(gasto.total <> total_calculado or total_calculado is null)');
 		}
-
+		
 		if($this->fecha_inicio != "" && $this->fecha_fin == ""){
-			$fechaIni = Tools::fixFecha($this->fecha_inicio);
-			$criteria->addCondition('gasto.issue_date >= :fecha_inicio and :fecha_ini = :fecha_ini');
+			$criteria->addCondition('gasto.issue_date >= :fecha_inicio');
+			$criteria->params[':fecha_inicio'] = $this->fecha_inicio;
 		}
 		if($this->fecha_inicio == "" && $this->fecha_fin != ""){
-			$fechaFin = Tools::fixFecha($this->fecha_fin);
-			$criteria->addCondition('gasto.issue_date <= :fecha_fin and :fecha_fin = :fecha_fin');
+			$criteria->addCondition('gasto.issue_date <= :fecha_fin');
+			$criteria->params = [':fecha_fin'=>$this->fecha_fin];
 		}
 		if($this->fecha_inicio != "" && $this->fecha_fin != ""){
-			$fechaIni = Tools::fixFecha($this->fecha_inicio);
-			$fechaFin = Tools::fixFecha($this->fecha_fin);
 			$criteria->addCondition('gasto.issue_date >= :fecha_inicio and gasto.issue_date <= :fecha_fin');
+			$criteria->params[':fecha_inicio'] = $this->fecha_inicio;
+			$criteria->params[':fecha_fin'] = $this->fecha_fin;
 		}
 		
 		return $criteria;

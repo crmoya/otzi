@@ -70,7 +70,7 @@
 				// additional javascript options for the date picker plugin
 				'options'=>array(
 					'showAnim'=>'fold',
-					'dateFormat'=>'dd/mm/yy',
+					'dateFormat'=>'yy-mm-dd',
 					'changeYear'=>true,
 					'changeMonth'=>true,
 				),

@@ -1,6 +1,6 @@
 <div class="wrapper">
 	<img class="loading" src="<?php echo Yii::app()->request->baseUrl; ?>/images/gear.gif"/>
-	<table id="datos" class='display nowrap' data-order='[[ 1, "asc" ]]' style="width:100%;height:100%;display:none">
+	<table id="datos" class='display nowrap' data-order='[[ 1, "desc" ]]' style="width:100%;height:100%;display:none">
 		<thead>
 			<tr>
 			<?php
