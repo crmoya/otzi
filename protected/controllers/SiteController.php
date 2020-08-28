@@ -159,6 +159,14 @@ class SiteController extends Controller
 		try
 		{
 
+			//elimino todo lo anterior
+			InformeGasto::model()->deleteAll();
+			GastoImagen::model()->deleteAll();
+			ExtraGasto::model()->deleteAll();
+			GastoCompleta::model()->deleteAll();
+			Gasto::model()->deleteAll();
+
+
 			//LO PRIMERO ES TRAER LOS INFORMES, PUES NO TIENEN DEPENDENCIAS
 
 			
