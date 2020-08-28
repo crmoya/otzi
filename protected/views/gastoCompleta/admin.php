@@ -92,7 +92,10 @@ Yii::app()->getController()->pageTitle="Gastos de " . $gastoNombre;
 	</td>
  </tr>
 </table>
-<?php $this->endWidget(); ?>
+<?php $this->endWidget(); 
+
+
+?>
 
 
 
