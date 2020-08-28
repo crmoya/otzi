@@ -276,10 +276,11 @@ class GastoCompletaController extends Controller
 			];
 		}
 
-		
+		$datos = GastoCompleta::model()->findAll($model->search());
 
 		$this->render("admin",array(
 			'model'=>$model,
+			'datos' => $datos,
 			'cabeceras' => $cabeceras,
 			'extra_datos' => $extra_datos,
 			'gastoNombre' => $gastoNombre,
