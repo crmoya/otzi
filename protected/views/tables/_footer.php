@@ -1,11 +1,7 @@
 <script>
 $(document).ready( function () {
 
-	// Setup - add a text input to each header cell
-	/*$('#datos thead th').each(function() {
-		var title = $('#datos thead th').eq($(this).index()).text();
-		$(this).html('<input type="text" placeholder="' + title + '" >');
-	});*/
+
 
 	// DataTable
 	var table = $('#datos').DataTable({
@@ -51,7 +47,7 @@ $(document).ready( function () {
 		initComplete: function (settings, data) {
 			$('#datos').show();
 			$('.loading').hide();
-		}
+		},
 	});
 
 	// Apply the search
@@ -102,6 +98,12 @@ $(document).ready( function () {
 		"dateFormat": "yy-mm-dd"
 	});
 	$.fn.dataTable.moment( 'YYYY-MM-DD' );
+
+
+	$('.suma').each(function(e){
+		console.log($(this));
+	});
+
 });
 </script>
 <style>

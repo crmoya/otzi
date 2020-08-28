@@ -49,10 +49,12 @@ class InformeGastoController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionView($id)
+	public function actionView($folio,$gasto_id)
 	{
+		$model = InformeGasto::model()->findByAttributes(['numero'=>$folio]);
 		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+			'model' => $model,
+			'gasto_id' => $gasto_id,
 		));
 	}
 

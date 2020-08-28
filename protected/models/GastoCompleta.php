@@ -126,7 +126,9 @@ class GastoCompleta extends CActiveRecord
 
 	public function getFolio(){
 		if(isset($this->gasto))
-			return $this->gasto->report_id;
+			if(isset($this->gasto->informeGasto)){
+				return $this->gasto->informeGasto->numero;
+			}
 		return "";
 	}
 

@@ -80,7 +80,7 @@ $this->breadcrumbs=array(
 					}
 					$total += $gasto->total;
 				?>
-				<tr>
+				<tr <?=($gasto->id==$gasto_id)?'style="background:#FFFF99;"':'';?>>
 					<td width="80px"><div class="<?=$gasto->status==1?"verde":"rojo"?>"><?=$gasto->status==1?"aprobado":"rechazado"?></div></td>
 					<td><a style="text-decoration:none;" href="<?=$gasto->imagen?>" target="_blank"><?=$gasto->supplier?></a></td>
 					<td><?=Tools::backFecha($gasto->issue_date)?></td>

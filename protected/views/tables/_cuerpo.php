@@ -28,14 +28,18 @@
 			</tr>
 		</thead>
 		<tbody>
-		<?php foreach($datos as $fila):?>
+		<?php 
+			$totales = [];
+			foreach($datos as $fila):?>
 			<tr>
-				<?php foreach($extra_datos as $extra_dato): 
+				<?php foreach($extra_datos as $i => $extra_dato): 
 					$campo = $extra_dato['campo'];
 					$estilos = "";
 					$valor = $fila->$campo;
+					$class = "";
 					if(isset($extra_dato['dots'])){
 						$tamaño = $extra_dato['dots'];
+						$class .= "dots-$tamaño ";
 					}
 					if(isset($extra_dato['format'])){
 						if($extra_dato['format'] == "money"){
@@ -45,12 +49,34 @@
 						if($extra_dato['format'] == "imagen"){
 							$valor = '<a target="_blank" href="' . $fila->$campo . '"><img src="' . Yii::app()->request->baseUrl . '/images/search.png"></a>';
 						}
+						if($extra_dato['format'] == "enlace"){
+							$params = "";
+							if(isset($extra_dato['params'])){
+								foreach($extra_dato['params'] as $param){
+									$params .= $param . "=" . $fila->$param . "&";
+								}
+							}
+							$valor = '<a href="' . CController::createUrl($extra_dato['url']) . '?' . $params .'">' . $valor . '</a>';
+						}
+					}
+					if(isset($extra_dato['acumulado'])){
+						$acumulado = $extra_dato['acumulado'];
+						$class .= " $acumulado";
 					}
 					?>
-					<td style='<?=$estilos?>' data-toggle data-placement <?=isset($extra_dato['dots'])?"class='dots-$tamaño'":""?>><?=$valor?></td>
+					<td campo="<?=$campo?>" style='<?=$estilos?>' data-toggle data-placement class="<?=$class?>"><?=$valor?></td>
 				<?php endforeach;?>
 			</tr>
 			<?php endforeach;?>
 		</tbody>
+		<tfoot>
+			<tr>
+				<th>Totales:</th>
+				<?php for($i = 1; $i < count($extra_datos); $i++):?>
+					<th class="footer_<?=$extra_datos[$i]["campo"]?>"></th>
+				<?php endfor;?>
+			</tr>
+		</tfoot>
+		
 	</table>
 </div>
