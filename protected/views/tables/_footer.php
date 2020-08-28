@@ -112,25 +112,25 @@ $(document).ready( function () {
     border: none !important;
 }
 .dots-lg{
-    max-width: <?=Tools::CELL_SIZES['lg']?>px !important;
+    max-width: <?=Tools::$LG_CELL?>px !important;
     overflow:hidden; 
     white-space:nowrap; 
     text-overflow: ellipsis;
 }
 .dots-md{
-    max-width: <?=Tools::CELL_SIZES['md']?>px !important;
+    max-width: <?=Tools::$MD_CELL?>px !important;
     overflow:hidden; 
     white-space:nowrap; 
     text-overflow: ellipsis;
 }
 .dots-sm{
-    max-width: <?=Tools::CELL_SIZES['sm']?>px !important;
+    max-width: <?=Tools::$SM_CELL?>px !important;
     overflow:hidden; 
     white-space:nowrap; 
     text-overflow: ellipsis;
 }
 .dots-xs{
-    max-width: <?=Tools::CELL_SIZES['xs']?>px !important;
+    max-width: <?=Tools::$XS_CELL?>px !important;
     overflow:hidden; 
     white-space:nowrap; 
     text-overflow: ellipsis;

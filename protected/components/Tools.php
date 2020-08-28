@@ -1,8 +1,10 @@
 <?php
 class Tools
 {
-
-	public const CELL_SIZES = ['xs'=>20, 'sm'=>50,'md'=>100,'lg'=>150];
+	public static $XS_CELL = 20;
+	public static $SM_CELL = 50;
+	public static $MD_CELL = 100;
+	public static $LG_CELL = 150;
 
 	public static function reverseDate($date){
 		$fechaArr = explode("-", $date);

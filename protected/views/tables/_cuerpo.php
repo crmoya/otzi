@@ -10,7 +10,22 @@
 					$atributos_input = "";
 					$ancho = 50;
 					if (isset($th['width'])) {
-						$ancho = Tools::CELL_SIZES[$th['width']];
+						switch ($th['width']) {
+							case 'xs':
+								$ancho = Tools::$XS_CELL;
+								break;
+							case 'sm':
+								$ancho = Tools::$SM_CELL;
+								break;
+							case 'md':
+								$ancho = Tools::$MD_CELL;
+								break;
+							case 'lg':
+								$ancho = Tools::$LG_CELL;
+								break;
+							default:
+								break;
+						}
 						$atributos .= "style='width:" . $ancho . "px' ";
 					}
 					if (isset($th['format'])) {
