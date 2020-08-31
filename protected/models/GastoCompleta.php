@@ -64,9 +64,17 @@ class GastoCompleta extends CActiveRecord
 
 		if($this->igual == "SIN ERRORES"){
 			$criteria->addCondition('gasto.total = total_calculado');
+			if($this->policy == GastoCompleta::POLICY_COMBUSTIBLES){
+				$criteria->addCondition("(tipo_documento = 'Factura Combustible' or tipo_documento = 'Boleta')");
+			}
 		}
 		if($this->igual == "CON ERRORES"){
-			$criteria->addCondition('(gasto.total <> total_calculado or total_calculado is null)');
+			if($this->policy == GastoCompleta::POLICY_COMBUSTIBLES){
+				$criteria->addCondition("(tipo_documento <> 'Factura Combustible' and tipo_documento <> 'Boleta') or (gasto.total <> total_calculado)");
+			}
+			else{
+				$criteria->addCondition("(gasto.total <> total_calculado)");
+			}
 		}
 		
 		if($this->fecha_inicio != "" && $this->fecha_fin == ""){

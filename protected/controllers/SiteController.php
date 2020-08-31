@@ -519,6 +519,10 @@ class SiteController extends Controller
 								$gasto_completa->total_calculado = (int)($gasto_completa->monto_neto * 1.19);
 								$gasto_completa->save();
 							}
+							else{
+								$gasto_completa->total_calculado = (int)$gasto_completa->monto_neto;
+								$gasto_completa->save();
+							}
 						}
 
 
