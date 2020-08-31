@@ -504,7 +504,7 @@ class SiteController extends Controller
 						if($gasto->expense_policy_id == GastoCompleta::POLICY_COMBUSTIBLES){
 							//para factura
 							if(trim($gasto_completa->tipo_documento) == 'Factura Combustible'){
-								$gasto_completa->total_calculado = (int)$gasto_completa->impuesto_especifico + (int)$gasto_completa->iva + (int)$gasto_completa->monto_neto;
+								$gasto_completa->total_calculado = (int)$gasto_completa->impuesto_especifico + (int)$gasto_completa->iva + (int)$gasto->monto_neto;
 								$gasto_completa->save();
 							}
 							//para boleta
