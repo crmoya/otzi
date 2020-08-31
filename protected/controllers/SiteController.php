@@ -517,6 +517,7 @@ class SiteController extends Controller
 							//para factura afecta
 							if(trim($gasto_completa->tipo_documento) == 'Factura afecta'){
 								$gasto_completa->total_calculado = (int)($gasto->net * 1.19);
+								$gasto_completa->iva = $gasto_completa->total - $gasto->net;
 								$gasto_completa->save();
 							}
 							else{
