@@ -290,6 +290,7 @@ class GastoCompletaController extends Controller
 				['name'=>'Imagen','width'=>'xs'],
 
 				//no visibles pero exportables
+				['name'=>'Folio','visible'=>'false'],
 				['name'=>'Retenido','visible'=>'false'],
 				['name'=>'Cantidad','visible'=>'false'],
 				['name'=>'Departamento','visible'=>'false'],
@@ -314,10 +315,11 @@ class GastoCompletaController extends Controller
 				['campo'=>'tipo_documento','exportable','dots'=>"sm"],
 				['campo'=>'nro_documento','exportable','dots'=>"sm"],
 				['campo'=>'vehiculo_equipo','exportable','dots'=>"md"],
-				['campo'=>'folio','exportable'],
+				['campo'=>'folio','format'=> 'enlace', 'url'=>"//informeGasto/view", 'params'=>['folio','gasto_id']],
 				['campo'=>'imagen','format'=>'imagen','dots'=>'xs'],
 
 				// no visibles pero exportables
+				['campo'=>'folio','visible'=>'false', 'exportable'],
 				['campo'=>'retenido','visible'=>'false', 'exportable'],
 				['campo'=>'cantidad','visible'=>'false', 'exportable'],
 				['campo'=>'departamento','visible'=>'false', 'exportable'],
