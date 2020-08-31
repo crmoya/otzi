@@ -6,9 +6,9 @@
 			<?php
 			foreach ($cabeceras as $th) {
 				if (gettype($th) == 'array') {
-					$atributos = "";
 					$atributos_input = "";
 					$ancho = 50;
+					$style = "style='";
 					if (isset($th['width'])) {
 						switch ($th['width']) {
 							case 'xs':
@@ -26,15 +26,21 @@
 							default:
 								break;
 						}
-						$atributos .= "style='width:" . $ancho . "px' ";
+						$style .= "width:" . $ancho . "px;";
 					}
 					if (isset($th['format'])) {
 						if ($th['format'] == 'date') {
 							$atributos_input .= "class='datepicker' ";
 						}
 					}
+					if (isset($th['visible'])) {
+						if ($th['visible'] == 'false') {
+							$style .= "display: none;";
+						}
+					}
+					$style .= "'";
 					if (isset($th['name'])) {
-						echo "<th " . $atributos . " title='" . $th['name'] . "'><input style='width:" . $ancho . "px' $atributos_input type='text' placeholder='" . $th['name'] . "' /></th>";
+						echo "<th " . $style . " title='" . $th['name'] . "'><input style='width:" . $ancho . "px' $atributos_input type='text' placeholder='" . $th['name'] . "' /></th>";
 					}
 				}
 			}
@@ -61,6 +67,10 @@
 							$estilos .= "text-align:right;";
 							$valor = "$".number_format((int)$fila->$campo,"0","",".");
 						}
+						if($extra_dato['format'] == "number"){
+							$estilos .= "text-align:right;";
+							$valor = number_format((int)$fila->$campo,"0","",".");
+						}
 						if($extra_dato['format'] == "imagen"){
 							$valor = '<a target="_blank" href="' . $fila->$campo . '"><img src="' . Yii::app()->request->baseUrl . '/images/search.png"></a>';
 						}
@@ -72,6 +82,11 @@
 								}
 							}
 							$valor = '<a href="' . CController::createUrl($extra_dato['url']) . '?' . $params .'">' . $valor . '</a>';
+						}
+					}
+					if(isset($extra_dato['visible'])){
+						if($extra_dato['visible'] == "false"){
+							$estilos .= "display:none;";
 						}
 					}
 					if(isset($extra_dato['acumulado'])){

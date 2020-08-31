@@ -112,6 +112,12 @@ class GastoCompleta extends CActiveRecord
 			return $this->gasto->issue_date;
 	}
 
+	public function getNeto(){
+		if(isset($this->gasto))
+			return $this->gasto->net;
+	}
+
+
 	public function getTotal(){
 		if(isset($this->gasto))
 		return $this->gasto->total;

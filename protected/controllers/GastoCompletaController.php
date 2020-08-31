@@ -222,6 +222,21 @@ class GastoCompletaController extends Controller
 				['name'=>'Vehículo Equipo','width'=>'lg'],
 				['name'=>'Folio','width'=>'xs'],
 				['name'=>'Imagen','width'=>'xs'],
+
+				//no visibles pero exportables
+				['name'=>'Folio','visible'=>'false'],
+				['name'=>'Retenido','visible'=>'false'],
+				['name'=>'Cantidad','visible'=>'false'],
+				['name'=>'Departamento','visible'=>'false'],
+				['name'=>'Faena','visible'=>'false'],
+				['name'=>'KM Carguío','visible'=>'false'],
+				['name'=>'Período Planilla','visible'=>'false'],
+				['name'=>'RUT Proveedor','visible'=>'false'],
+				['name'=>'Supervisor combustible','visible'=>'false'],
+				['name'=>'Unidad','visible'=>'false'],
+				['name'=>'Neto','visible'=>'false'],
+				['name'=>'Grupo Categoría','visible'=>'false'],
+				['name'=>'Vehículo Oficina central','visible'=>'false'],
 			];
 	
 			$extra_datos = [
@@ -233,14 +248,29 @@ class GastoCompletaController extends Controller
 				['campo'=>'total','exportable', 'format'=>'money','acumulado'=>'suma'],
 				['campo'=>'categoria','exportable','dots'=>"md"],
 				['campo'=>'nota','exportable','dots'=>"md"],
-				['campo'=>'litros_combustible','exportable','acumulado'=>'suma'],
+				['campo'=>'litros_combustible','exportable', 'format'=>'number','acumulado'=>'suma'],
 				['campo'=>'centro_costo_faena','exportable','dots'=>"md"],
 				['campo'=>'nombre_quien_rinde','exportable','dots'=>"md"],
 				['campo'=>'nro_documento','exportable','dots'=>"sm"],
 				['campo'=>'tipo_documento','exportable','dots'=>"sm"],
 				['campo'=>'vehiculo_equipo','exportable','dots'=>"md"],
-				['campo'=>'folio','exportable','format'=> 'enlace', 'url'=>"//informeGasto/view", 'params'=>['folio','gasto_id']],
+				['campo'=>'folio','format'=> 'enlace', 'url'=>"//informeGasto/view", 'params'=>['folio','gasto_id']],
 				['campo'=>'imagen','format'=>'imagen','dots'=>'xs'],
+
+				// no visibles pero exportables
+				['campo'=>'folio','visible'=>'false', 'exportable'],
+				['campo'=>'retenido','visible'=>'false', 'exportable'],
+				['campo'=>'cantidad','visible'=>'false', 'exportable'],
+				['campo'=>'departamento','visible'=>'false', 'exportable'],
+				['campo'=>'faena','visible'=>'false', 'exportable'],
+				['campo'=>'km_carguio','visible'=>'false', 'exportable'],
+				['campo'=>'periodo_planilla','visible'=>'false', 'exportable'],
+				['campo'=>'rut_proveedor','visible'=>'false', 'exportable'],
+				['campo'=>'supervisor_combustible','visible'=>'false', 'exportable'],
+				['campo'=>'unidad','visible'=>'false', 'exportable'],
+				['campo'=>'neto','visible'=>'false', 'exportable'],
+				['campo'=>'grupocategoria','visible'=>'false', 'exportable'],
+				['campo'=>'vehiculo_oficina_central','visible'=>'false', 'exportable'],
 			];
 		}
 		else{
@@ -258,12 +288,24 @@ class GastoCompletaController extends Controller
 				['name'=>'Vehículo Equipo','width'=>'lg'],
 				['name'=>'Folio','width'=>'xs'],
 				['name'=>'Imagen','width'=>'xs'],
+
+				//no visibles pero exportables
+				['name'=>'Retenido','visible'=>'false'],
+				['name'=>'Cantidad','visible'=>'false'],
+				['name'=>'Departamento','visible'=>'false'],
+				['name'=>'Faena','visible'=>'false'],
+				['name'=>'Período Planilla','visible'=>'false'],
+				['name'=>'RUT Proveedor','visible'=>'false'],
+				['name'=>'Unidad','visible'=>'false'],
+				['name'=>'Monto Neto','visible'=>'false'],
+				['name'=>'Grupo Categoría','visible'=>'false'],
+				['name'=>'Vehículo Oficina central','visible'=>'false'],
 			];
 	
 			$extra_datos = [
 				['campo'=>'supplier','exportable','dots'=>"md"],
 				['campo'=>'date','exportable','dots'=>'sm'],
-				['campo'=>'monto_neto','exportable', 'format'=>'money','acumulado'=>'suma'],
+				['campo'=>'neto','exportable', 'format'=>'money','acumulado'=>'suma'],
 				['campo'=>'iva','exportable', 'format'=>'money','acumulado'=>'suma'],
 				['campo'=>'total','exportable', 'format'=>'money','acumulado'=>'suma'],
 				['campo'=>'categoria','exportable','dots'=>"md"],
@@ -274,6 +316,18 @@ class GastoCompletaController extends Controller
 				['campo'=>'vehiculo_equipo','exportable','dots'=>"md"],
 				['campo'=>'folio','exportable'],
 				['campo'=>'imagen','format'=>'imagen','dots'=>'xs'],
+
+				// no visibles pero exportables
+				['campo'=>'retenido','visible'=>'false', 'exportable'],
+				['campo'=>'cantidad','visible'=>'false', 'exportable'],
+				['campo'=>'departamento','visible'=>'false', 'exportable'],
+				['campo'=>'faena','visible'=>'false', 'exportable'],
+				['campo'=>'periodo_planilla','visible'=>'false', 'exportable'],
+				['campo'=>'rut_proveedor','visible'=>'false', 'exportable'],
+				['campo'=>'unidad','visible'=>'false', 'exportable'],
+				['campo'=>'monto_neto','visible'=>'false', 'exportable'],
+				['campo'=>'grupocategoria','visible'=>'false', 'exportable'],
+				['campo'=>'vehiculo_oficina_central','visible'=>'false'],
 			];
 		}
 

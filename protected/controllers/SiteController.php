@@ -509,7 +509,7 @@ class SiteController extends Controller
 							}
 							//para boleta
 							if(trim($gasto_completa->tipo_documento) == 'Boleta'){
-								$gasto_completa->total_calculado = (int)$gasto_completa->monto_neto;
+								$gasto_completa->total_calculado = (int)$gasto->net;
 								$gasto_completa->save();
 							}
 						}
@@ -520,7 +520,7 @@ class SiteController extends Controller
 								$gasto_completa->save();
 							}
 							else{
-								$gasto_completa->total_calculado = (int)$gasto_completa->monto_neto;
+								$gasto_completa->total_calculado = (int)$gasto->net;
 								$gasto_completa->save();
 							}
 						}

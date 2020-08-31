@@ -48,6 +48,11 @@ $(document).ready( function () {
 			$('#datos').show();
 			$('.loading').hide();
 		},
+		language: {
+			//"url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
+			"decimal": ",",
+			"thousands": "."
+		}
 	});
 
 	// Apply the search
