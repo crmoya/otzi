@@ -194,7 +194,6 @@ class GastoCompletaController extends Controller
 		$this->pageTitle = "";
 
 		$model=new GastoCompleta('search');
-		$model->fecha_inicio = date("Y-m-01");
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['GastoCompleta'])){
 			$model->attributes=$_GET['GastoCompleta'];
