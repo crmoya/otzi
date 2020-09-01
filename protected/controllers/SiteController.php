@@ -253,6 +253,7 @@ class SiteController extends Controller
 					$gasto->issue_date = $expense->IssueDate;
 					$gasto->net = $expense->Net;
 					$gasto->total = $expense->Total;
+					$gasto->tax = $expense->Tax;
 					$gasto->category = $expense->Category;
 					$gasto->category_group = $expense->CategoryGroup;
 					$gasto->note = $expense->Note;
@@ -335,6 +336,10 @@ class SiteController extends Controller
 											$gasto_completa->gasto_id = $gasto->id;
 										}
 										$gasto_completa->impuesto_especifico = $extra_gasto->value;
+										if($gasto->tax > 0){
+											$gasto_completa->impuesto_especifico = $gasto->tax;
+										}
+
 										if(!$gasto_completa->save()){
 											$errores[] = $gasto_completa->errors;
 										}
@@ -504,7 +509,7 @@ class SiteController extends Controller
 						if($gasto->expense_policy_id == GastoCompleta::POLICY_COMBUSTIBLES){
 							//para factura
 							if(trim($gasto_completa->tipo_documento) == 'Factura Combustible'){
-								$gasto_completa->total_calculado = (int)$gasto_completa->impuesto_especifico + (int)$gasto_completa->iva + (int)$gasto->monto_neto;
+								$gasto_completa->total_calculado = (int)$gasto_completa->impuesto_especifico + (int)$gasto->iva + (int)$gasto->net;
 								$gasto_completa->save();
 							}
 							//para boleta

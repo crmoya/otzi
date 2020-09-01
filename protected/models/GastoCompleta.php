@@ -131,7 +131,6 @@ class GastoCompleta extends CActiveRecord
 			return $this->gasto->net;
 	}
 
-
 	public function getTotal(){
 		if(isset($this->gasto))
 		return $this->gasto->total;
