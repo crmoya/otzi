@@ -49,7 +49,7 @@
 	<?php echo $content; ?>
 
 	<div id="footer">
-		Copyright &copy; 2012 by MVS.<br/>
+		Copyright &copy; <?=date("Y")?> by MVS.<br/>
 		All Rights Reserved.<br/>
 		<?php echo Yii::powered(); ?>
 	</div><!-- footer -->

@@ -127,8 +127,13 @@ class GastoCompleta extends CActiveRecord
 	}
 
 	public function getNeto(){
-		if(isset($this->gasto))
+		if($this->monto_neto > 0){
+			return $this->monto_neto;
+		}
+		if(isset($this->gasto)){
 			return $this->gasto->net;
+		}
+			
 	}
 
 	public function getTotal(){
