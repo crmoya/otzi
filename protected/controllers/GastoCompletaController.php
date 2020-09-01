@@ -242,7 +242,7 @@ class GastoCompletaController extends Controller
 			$extra_datos = [
 				['campo'=>'supplier','exportable','dots'=>"md"],
 				['campo'=>'date','exportable','dots'=>'sm'],
-				['campo'=>'impuesto','exportable', 'format'=>'money','acumulado'=>'suma'],
+				['campo'=>'impuesto_especifico','exportable', 'format'=>'money','acumulado'=>'suma'],
 				['campo'=>'iva','exportable', 'format'=>'money','acumulado'=>'suma'],
 				['campo'=>'neto','exportable', 'format'=>'money','acumulado'=>'suma'],
 				['campo'=>'total','exportable', 'format'=>'money','acumulado'=>'suma'],
