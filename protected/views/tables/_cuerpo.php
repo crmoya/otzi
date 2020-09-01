@@ -89,10 +89,6 @@
 							$estilos .= "display:none;";
 						}
 					}
-					if(isset($extra_dato['acumulado'])){
-						$acumulado = $extra_dato['acumulado'];
-						$class .= " $acumulado";
-					}
 					?>
 					<td campo="<?=$campo?>" style='<?=$estilos?>' data-toggle data-placement class="<?=$class?>"><?=$valor?></td>
 				<?php endforeach;?>
@@ -103,7 +99,7 @@
 			<tr>
 				<th>Totales:</th>
 				<?php for($i = 1; $i < count($extra_datos); $i++):?>
-					<th class="footer_<?=$extra_datos[$i]["campo"]?>"></th>
+					<th style="text-align:right;"></th>
 				<?php endfor;?>
 			</tr>
 		</tfoot>

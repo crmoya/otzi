@@ -2,7 +2,6 @@
 $(document).ready( function () {
 
 
-
 	// DataTable
 	var table = $('#datos').DataTable({
 		dom: 'Bfrtip',
@@ -52,7 +51,54 @@ $(document).ready( function () {
 			//"url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
 			"decimal": ",",
 			"thousands": "."
-		}
+		},
+		"footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+  
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$.]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+
+			var totales = Array();
+
+			<?php
+			for($j=0; $j<count($extra_datos); $j++){
+				$extra_dato = $extra_datos[$j];
+				echo "totales[" . $j . "] = 0;";
+				if(isset($extra_dato['acumulado'])){
+					$operacion = $extra_dato['acumulado'];
+					if($operacion == "suma"){
+						echo "// Total over all pages 
+							 	totales[" . $j . "] = api 
+							 		.column( " . $j . " , { search: 'applied' } ) 
+							 		.data() 
+							 		.reduce( function (a, b) { 
+							 			return intVal(a) + intVal(b); 
+							 		}, 0 );";
+
+						echo "
+								/*// Total over this page
+								var pageTotal = api
+									.column( 2, { page: 'current'} )
+									.data()
+									.reduce( function (a, b) {
+										return intVal(a) + intVal(b);
+									}, 0 );
+								*/ 
+
+								// Update footer
+								$( api.column( " . $j . " ).footer() ).html('$'+new Intl.NumberFormat('es-CL').format(totales[" . $j . "]) );";
+					}
+				}
+			}
+			?>
+  
+			
+        }
 	});
 
 	// Apply the search
@@ -65,7 +111,6 @@ $(document).ready( function () {
 		});
 
 		$('input', table.column(colIdx).header()).on('click', function(e) {
-			console.log("evento");
 			e.stopPropagation();
 		});
 	});
@@ -103,11 +148,6 @@ $(document).ready( function () {
 		"dateFormat": "yy-mm-dd"
 	});
 	$.fn.dataTable.moment( 'YYYY-MM-DD' );
-
-
-	$('.suma').each(function(e){
-		console.log($(this));
-	});
 
 });
 </script>
