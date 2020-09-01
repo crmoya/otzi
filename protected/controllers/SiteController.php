@@ -384,6 +384,9 @@ class SiteController extends Controller
 											$gasto_completa->gasto_id = $gasto->id;
 										}
 										$gasto_completa->monto_neto = $extra_gasto->value;
+										if($gasto->net > 0){
+											$gasto_completa->monto_neto = $gasto->net;
+										}
 										if(!$gasto_completa->save()){
 											$errores[] = $gasto_completa->errors;
 										}
@@ -509,7 +512,7 @@ class SiteController extends Controller
 						if($gasto->expense_policy_id == GastoCompleta::POLICY_COMBUSTIBLES){
 							//para factura
 							if(trim($gasto_completa->tipo_documento) == 'Factura Combustible'){
-								$gasto_completa->total_calculado = (int)$gasto_completa->impuesto_especifico + (int)$gasto->iva + (int)$gasto->net;
+								$gasto_completa->total_calculado = (int)$gasto_completa->impuesto_especifico + (int)$gasto_completa->iva + (int)$gasto_completa->monto_neto;
 								$gasto_completa->save();
 							}
 							//para boleta
