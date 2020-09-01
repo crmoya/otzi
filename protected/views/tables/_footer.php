@@ -71,6 +71,13 @@ $(document).ready( function () {
 				echo "totales[" . $j . "] = 0;";
 				if(isset($extra_dato['acumulado'])){
 					$operacion = $extra_dato['acumulado'];
+					$moneda = "";
+					if(isset($extra_dato['format'])){
+						if($extra_dato['format'] == "money"){
+							$moneda = "'$'+";
+						}
+					}
+
 					if($operacion == "suma"){
 						echo "// Total over all pages 
 							 	totales[" . $j . "] = api 
@@ -91,7 +98,7 @@ $(document).ready( function () {
 								*/ 
 
 								// Update footer
-								$( api.column( " . $j . " ).footer() ).html('$'+new Intl.NumberFormat('es-CL').format(totales[" . $j . "]) );";
+								$( api.column( " . $j . " ).footer() ).html(" . $moneda. "new Intl.NumberFormat('es-CL').format(totales[" . $j . "]) );";
 					}
 				}
 			}
