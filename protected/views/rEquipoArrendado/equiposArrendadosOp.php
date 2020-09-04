@@ -964,7 +964,19 @@ $cs->registerCoreScript('jquery');
 		</div>
 		<div class="table table-hover">
 			<?php
-			$archivos = Tools::dirToArray(Yii::app()->basePath . DIRECTORY_SEPARATOR . 'archivos' . DIRECTORY_SEPARATOR . "equipos_arrendados" . DIRECTORY_SEPARATOR . $model->id);
+			$path = Yii::app()->basePath . DIRECTORY_SEPARATOR . 'archivos';
+			if(!is_dir($path)){
+				mkdir($path);
+			}
+			$path = $path . DIRECTORY_SEPARATOR . "equipos_arrendados";
+			if(!is_dir($path)){
+				mkdir($path);
+			}
+			$path = $path . DIRECTORY_SEPARATOR . $model->id;
+			if(!is_dir($path)){
+				mkdir($path);
+			}
+			$archivos = Tools::dirToArray($path);
 			foreach($archivos as $a => $archivo):?>	
 				<div class="archivo">
 					<input style="display:none;" type="checkbox" name="eliminar[<?=$archivo?>]" class="eliminar" href="#">	
