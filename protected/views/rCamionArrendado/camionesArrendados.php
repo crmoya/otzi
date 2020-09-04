@@ -511,6 +511,7 @@ $cs->registerCoreScript('jquery');
 <div class="form" style="width:900px;">
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'camionesArrendados-form',
+	'htmlOptions'=>array('enctype'=>'multipart/form-data'),
 	'enableClientValidation'=>true,
 	'clientOptions'=>array(
 		'validateOnSubmit'=>true,
@@ -1315,6 +1316,38 @@ $this->endWidget('zii.widgets.jui.CJuiDialog');
 	</table>
 
 
+	<fieldset>
+		<legend>Imágenes y documentos del Report</legend>
+		<div class="row" style="text-align:right;">
+			<a class="btn seleccionar"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/basura.png"/></a>
+		</div>
+		<div class="table table-hover">
+			<?php
+			$archivos = Tools::dirToArray(Yii::app()->basePath . DIRECTORY_SEPARATOR . 'archivos' . DIRECTORY_SEPARATOR . 'camiones_arrendados' . DIRECTORY_SEPARATOR . $model->id);
+			foreach($archivos as $a => $archivo):?>	
+				<div class="archivo">
+					<input style="display:none;" type="checkbox" name="eliminar[<?=$archivo?>]" class="eliminar" href="#">	
+					<a target="_blank" href="<?=CController::createUrl("//admin/download",['file'=>$archivo,'id'=>$model->id]);?>"><?=$archivo?></a>
+				</div>
+			<?php endforeach;?>
+		</div>
+		<br/>
+		<div class="row">
+			<?php echo $form->labelEx($model,'archivos'); ?>   
+			<?php
+			$this->widget('CMultiFileUpload', array(
+				'model'=>$model,
+				'name' => 'archivos',
+				'max'=>5,
+				'accept' =>'pdf|doc|docx|xls|xlsx|png|jpg|jpeg|txt|ppt|pptx',
+				'duplicate' => 'Archivo ya existe', 
+				'denied' => 'Error: Extensión de archivo no permitida',
+			));  
+			echo $form->error($model,'archivos'); 
+			?>  
+		</div>
+	</fieldset>
+
 	<div class="row buttons">
 	<?php echo CHtml::submitButton('Guardar',array('id'=>'guardar','disabled'=>$model->validado==2?'disabled':'',)); ?>
 	</div>
@@ -1325,4 +1358,44 @@ $this->endWidget('zii.widgets.jui.CJuiDialog');
 </div>
 <!-- form -->
 
+
+
+<style>
+.btn{
+}
+.btn:hover{
+	cursor: pointer;
+}
+.archivo{
+	display:inline-block;
+	width:150px;
+	height:30px;
+	border: 1px solid silver;
+	border-radius: 5px;
+	padding: 10px;
+	margin: 10px;
+	max-width: 200px !important;
+    overflow:hidden; 
+    white-space:nowrap; 
+    text-overflow: ellipsis;
+}
+.eliminar{
+	position: relative;
+	top: 5px;
+	left: 0px;
+}
+</style>
+<script>
+	var mostrando = false;
+	$('.seleccionar').click(function(e){
+		$(".eliminar").prop('checked', false);
+		if(!mostrando){
+			$('.eliminar').show();
+		}
+		else{
+			$('.eliminar').hide();
+		}
+		mostrando = !mostrando;
+	});
+</script>
 

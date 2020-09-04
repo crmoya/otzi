@@ -244,6 +244,40 @@ class RCamionPropioController extends Controller
 
 			if ($model->validate()) {
 				if ($model->save()) {
+
+
+					//archivos del report
+					$path = Yii::app()->basePath . DIRECTORY_SEPARATOR . 'archivos' . DIRECTORY_SEPARATOR . "camiones_propios";
+					if(!is_dir($path)){
+						mkdir($path);
+					}
+					$path = $path . DIRECTORY_SEPARATOR . $model->id;
+					if(!is_dir($path)){
+						mkdir($path);
+					}
+
+					$archivos=CUploadedFile::getInstancesByName('archivos');
+					if(isset($archivos)){
+						if(count($archivos) > 0){
+							foreach($archivos as $archivo)
+							{                                                       
+								$archivo->saveAs($path . DIRECTORY_SEPARATOR . $archivo->name);                                              
+							}  
+						}
+					}
+					if(isset($_POST['eliminar'])){
+						$eliminables = $_POST['eliminar'];
+						if(isset($eliminables)){
+							foreach($eliminables as $archivo => $status){
+								if($status == 'on'){
+									unlink($path . DIRECTORY_SEPARATOR . $archivo);
+								}
+							}
+						}
+					}
+
+					//end archivos del report
+
 					$valid = true;
 					if ($model->validado == 0) {
 						foreach ($viajes as $viaje) {

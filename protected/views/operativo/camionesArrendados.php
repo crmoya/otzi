@@ -501,6 +501,7 @@ $cs->registerCoreScript('jquery');
 	<div class="form" style="width:900px;">
 		<?php $form = $this->beginWidget('CActiveForm', array(
 			'id' => 'camionesArrendados-form',
+			'htmlOptions'=>array('enctype'=>'multipart/form-data'),
 			'enableClientValidation' => true,
 			'clientOptions' => array(
 				'validateOnSubmit' => true,
@@ -690,108 +691,108 @@ $cs->registerCoreScript('jquery');
 													<td width="100px">
 														<?php $combustible = new CargaCombCamionArrendado(); ?>
 														<table style="border:solid 1px silver;padding:10px;">
-                                                                                                                    <tr>
-                                                                                                                      <td><?php echo $form->labelEx($combustible, "faena_id", array('style' => 'width:80px;')); ?></td>
-                                                                                                                      <td><?php echo $form->dropDownList($combustible, '[{0}]faena_id', CHtml::listData(Faena::model()->listar(), 'id', 'nombre'), array('id' => 'faenaC_id{0}')); ?></td>
-                                                                                                                      <td><div id="errorFaenaC_id{0}" style="color:red;width:100px;"></div></td>
-                                                                                                                      <td></td>	
-                                                                                                                      <td></td>	
-                                                                                                                      <td></td>	
-                                                                                                                      <td>
-                                                                                                                            <input type="hidden" class="rowIndex" value="{0}" />
-                                                                                                                            <div class="remove" tipo="combustible" id="removeCombustible{0}" validate="true">Eliminar</div>
-                                                                                                                      </td>															  
-                                                                                                                    </tr>
+															<tr>
+																<td><?php echo $form->labelEx($combustible, "faena_id", array('style' => 'width:80px;')); ?></td>
+																<td><?php echo $form->dropDownList($combustible, '[{0}]faena_id', CHtml::listData(Faena::model()->listar(), 'id', 'nombre'), array('id' => 'faenaC_id{0}')); ?></td>
+																<td><div id="errorFaenaC_id{0}" style="color:red;width:100px;"></div></td>
+																<td></td>	
+																<td></td>	
+																<td></td>	
+																<td>
+																	<input type="hidden" class="rowIndex" value="{0}" />
+																	<div class="remove" tipo="combustible" id="removeCombustible{0}" validate="true">Eliminar</div>
+																</td>															  
+															</tr>
 
-                                                                                                                    <tr>
-                                                                                                                     <td><?php echo $form->labelEx($combustible, "tipo_documento", array('style' => 'width:80px;')); ?></td>
-                                                                                                                     <td><?php echo $form->dropDownList($combustible, '[{0}]tipo_documento', CHtml::listData(Tools::listarTiposDocumentosComb(), 'id', 'nombre')); ?></td>
-                                                                                                                     <td></td>
+															<tr>
+																<td><?php echo $form->labelEx($combustible, "tipo_documento", array('style' => 'width:80px;')); ?></td>
+																<td><?php echo $form->dropDownList($combustible, '[{0}]tipo_documento', CHtml::listData(Tools::listarTiposDocumentosComb(), 'id', 'nombre')); ?></td>
+																<td></td>
 
-                                                                                                                     <td><?php echo $form->labelEx($combustible, "factura", array('style' => 'width:80px;')); ?></td>
-                                                                                                                     <td><?php echo $form->textField($combustible, "[{0}]factura", array('id' => "factura{0}", 'class' => "factura", 'i' => '{0}')); ?></td>
-                                                                                                                     <td><div id="errorFactura{0}" style="color:red;width:100px;"></div></td>
-                                                                                                                     <td></td>
-                                                                                                                    </tr>
+																<td><?php echo $form->labelEx($combustible, "factura", array('style' => 'width:80px;')); ?></td>
+																<td><?php echo $form->textField($combustible, "[{0}]factura", array('id' => "factura{0}", 'class' => "factura", 'i' => '{0}')); ?></td>
+																<td><div id="errorFactura{0}" style="color:red;width:100px;"></div></td>
+																<td></td>
+															</tr>
 
-                                                                                                                    <tr>
-                                                                                                                     <td><?php echo $form->labelEx($combustible, "rut_proveedor", array('style' => 'width:80px;')); ?></td>
-                                                                                                                     <td><?php echo $form->textField($combustible, "[{0}]rut_proveedor", array('id' => "rut_proveedor{0}", 'class' => 'rut_proveedor', 'i' => '{0}')); ?></td>
-                                                                                                                     <td><div id="errorRutProveedor{0}" style="color:red;width:100px;"></div></td>
+															<tr>
+																<td><?php echo $form->labelEx($combustible, "rut_proveedor", array('style' => 'width:80px;')); ?></td>
+																<td><?php echo $form->textField($combustible, "[{0}]rut_proveedor", array('id' => "rut_proveedor{0}", 'class' => 'rut_proveedor', 'i' => '{0}')); ?></td>
+																<td><div id="errorRutProveedor{0}" style="color:red;width:100px;"></div></td>
 
-                                                                                                                     <td><?php echo $form->labelEx($combustible, "nombre_proveedor", array('style' => 'width:80px;')); ?></td>
-                                                                                                                     <td><?php echo $form->textField($combustible, "[{0}]nombre_proveedor", array('id' => "nombre_proveedor{0}", 'class' => 'nombre_proveedor', 'i' => '{0}')); ?></td>
-                                                                                                                     <td><div id="errorNombreProveedor{0}" style="color:red;width:100px;"></div></td>
-                                                                                                                     <td></td>
-                                                                                                                    </tr>
+																<td><?php echo $form->labelEx($combustible, "nombre_proveedor", array('style' => 'width:80px;')); ?></td>
+																<td><?php echo $form->textField($combustible, "[{0}]nombre_proveedor", array('id' => "nombre_proveedor{0}", 'class' => 'nombre_proveedor', 'i' => '{0}')); ?></td>
+																<td><div id="errorNombreProveedor{0}" style="color:red;width:100px;"></div></td>
+																<td></td>
+															</tr>
 
-                                                                                                                    <tr>
-                                                                                                                     <td><?php echo $form->labelEx($combustible, "petroleoLts", array('style' => 'width:80px;')); ?></td>
-                                                                                                                     <td><?php echo $form->textField($combustible, "[{0}]petroleoLts", array('id' => "petroleoLts{0}", 'class' => 'fixedPetroleoLts')); ?></td>
-                                                                                                                     <td><div id="errorPetroleoLts{0}" style="color:red;width:100px;"></div></td>
+															<tr>
+																<td><?php echo $form->labelEx($combustible, "petroleoLts", array('style' => 'width:80px;')); ?></td>
+																<td><?php echo $form->textField($combustible, "[{0}]petroleoLts", array('id' => "petroleoLts{0}", 'class' => 'fixedPetroleoLts')); ?></td>
+																<td><div id="errorPetroleoLts{0}" style="color:red;width:100px;"></div></td>
 
-                                                                                                                     <td><?php echo $form->labelEx($combustible, "kmCarguio", array('style' => 'width:80px;')); ?></td>
-                                                                                                                     <td><?php echo $form->textField($combustible, "[{0}]kmCarguio", array('id' => "kmCarguio{0}", 'class' => 'fixed')); ?></td>
-                                                                                                                     <td><div id="errorKmCarguio{0}" style="color:red;width:100px;"></div></td>
+																<td><?php echo $form->labelEx($combustible, "kmCarguio", array('style' => 'width:80px;')); ?></td>
+																<td><?php echo $form->textField($combustible, "[{0}]kmCarguio", array('id' => "kmCarguio{0}", 'class' => 'fixed')); ?></td>
+																<td><div id="errorKmCarguio{0}" style="color:red;width:100px;"></div></td>
 
-                                                                                                                     <td></td>
-                                                                                                                    </tr>
+																<td></td>
+															</tr>
 
-                                                                                                                    <tr>
-                                                                                                                     <td><?php echo $form->labelEx($combustible, "precioUnitario", array('style' => 'width:80px;')); ?></td>
-                                                                                                                     <td><?php echo $form->textField($combustible, "[{0}]precioUnitario", array('id' => "precioUnitario{0}", 'class' => 'fixedPrecio')); ?></td>
-                                                                                                                     <td><div id="errorPrecioUnitario{0}" style="color:red;width:100px;"></div></td>
+															<tr>
+																<td><?php echo $form->labelEx($combustible, "precioUnitario", array('style' => 'width:80px;')); ?></td>
+																<td><?php echo $form->textField($combustible, "[{0}]precioUnitario", array('id' => "precioUnitario{0}", 'class' => 'fixedPrecio')); ?></td>
+																<td><div id="errorPrecioUnitario{0}" style="color:red;width:100px;"></div></td>
 
-                                                                                                                     <td><?php echo $form->labelEx($combustible, "valorTotal", array('style' => 'width:80px;')); ?></td>
-                                                                                                                     <td><?php echo $form->textField($combustible, "[{0}]valorTotal", array('id' => "valorTotal{0}", 'class' => 'fixedValor')); ?></td>
-                                                                                                                     <td><div id="errorValorTotal{0}" style="color:red;width:100px;"></div></td>
+																<td><?php echo $form->labelEx($combustible, "valorTotal", array('style' => 'width:80px;')); ?></td>
+																<td><?php echo $form->textField($combustible, "[{0}]valorTotal", array('id' => "valorTotal{0}", 'class' => 'fixedValor')); ?></td>
+																<td><div id="errorValorTotal{0}" style="color:red;width:100px;"></div></td>
 
-                                                                                                                     <td></td>
-                                                                                                                    </tr>
+																<td></td>
+															</tr>
 
-                                                                                                                    <tr>
-                                                                                                                      <td><?php echo $form->labelEx($combustible, "tipoCombustible_id", array('style' => 'width:80px;')); ?></td>
-                                                                                                                      <td><?php echo $form->dropDownList($combustible, '[{0}]tipoCombustible_id', CHtml::listData(TipoCombustible::model()->findAll(), 'id', 'nombre'), array('id' => 'tipoCombustible{0}')); ?></td>
-                                                                                                                      <td><div id="errorTipoCombustible{0}" style="color:red;width:100px;"></div></td>
+															<tr>
+																<td><?php echo $form->labelEx($combustible, "tipoCombustible_id", array('style' => 'width:80px;')); ?></td>
+																<td><?php echo $form->dropDownList($combustible, '[{0}]tipoCombustible_id', CHtml::listData(TipoCombustible::model()->findAll(), 'id', 'nombre'), array('id' => 'tipoCombustible{0}')); ?></td>
+																<td><div id="errorTipoCombustible{0}" style="color:red;width:100px;"></div></td>
 
-                                                                                                                      <td><?php echo $form->labelEx($combustible, "supervisorCombustible_id", array('style' => 'width:80px;')); ?></td>
-                                                                                                                      <td><?php echo $form->dropDownList($combustible, '[{0}]supervisorCombustible_id', CHtml::listData(SupervisorCombustible::model()->listar(), 'id', 'nombre'), array('id' => 'supervisor{0}')); ?></td>
-                                                                                                                      <td><div id="errorSupervisor{0}" style="color:red;width:100px;"></div></td>	
-                                                                                                                      <td>
-                                                                                                                      </td>															  
-                                                                                                                    </tr>
+																<td><?php echo $form->labelEx($combustible, "supervisorCombustible_id", array('style' => 'width:80px;')); ?></td>
+																<td><?php echo $form->dropDownList($combustible, '[{0}]supervisorCombustible_id', CHtml::listData(SupervisorCombustible::model()->listar(), 'id', 'nombre'), array('id' => 'supervisor{0}')); ?></td>
+																<td><div id="errorSupervisor{0}" style="color:red;width:100px;"></div></td>	
+																<td>
+																</td>															  
+															</tr>
 
-                                                                                                                    <tr>
-                                                                                                                     <td><?php echo $form->labelEx($combustible, "numero", array('style' => 'width:80px;')); ?></td>
-                                                                                                                     <td><?php echo $form->textField($combustible, "[{0}]numero", array('i' => '{0}', 'class' => 'nroRendicion', 'id' => "numero{0}")); ?><div id="errorNumero{0}" class="errorMessage errorNumero"></div></td>
-                                                                                                                     <td></td>
+															<tr>
+																<td><?php echo $form->labelEx($combustible, "numero", array('style' => 'width:80px;')); ?></td>
+																<td><?php echo $form->textField($combustible, "[{0}]numero", array('i' => '{0}', 'class' => 'nroRendicion', 'id' => "numero{0}")); ?><div id="errorNumero{0}" class="errorMessage errorNumero"></div></td>
+																<td></td>
 
-                                                                                                                     <td><?php echo $form->labelEx($combustible, "rut_rinde"); ?></td>
-                                                                                                                     <td><?php echo $form->textField($combustible, '[{0}]rut_rinde', array('style' => 'width:80px;', 'class' => 'rut_rinde', 'id' => 'rut_rinde{0}', 'i' => '{0}')); ?> </td>
-                                                                                                                     <td></td>
-                                                                                                                    </tr>
+																<td><?php echo $form->labelEx($combustible, "rut_rinde"); ?></td>
+																<td><?php echo $form->textField($combustible, '[{0}]rut_rinde', array('style' => 'width:80px;', 'class' => 'rut_rinde', 'id' => 'rut_rinde{0}', 'i' => '{0}')); ?> </td>
+																<td></td>
+															</tr>
 
-                                                                                                                    <tr>
-                                                                                                                     <td><?php echo $form->labelEx($combustible, "fechaRendicion", array('style' => 'width:80px;')); ?></td>
-                                                                                                                     <td><?php echo $form->textField($combustible, "[{0}]fechaRendicion", array('id' => "fechaRendicion{0}", 'class' => 'fecha', 'readonly' => 'readonly')); ?></td>
-                                                                                                                     <td></td>
+															<tr>
+																<td><?php echo $form->labelEx($combustible, "fechaRendicion", array('style' => 'width:80px;')); ?></td>
+																<td><?php echo $form->textField($combustible, "[{0}]fechaRendicion", array('id' => "fechaRendicion{0}", 'class' => 'fecha', 'readonly' => 'readonly')); ?></td>
+																<td></td>
 
-                                                                                                                     <td><?php echo $form->labelEx($combustible, "nombre", array('style' => 'width:80px;')); ?></td>
-                                                                                                                     <td><?php echo $form->textField($combustible, '[{0}]nombre', array('i' => '{0}', 'class' => 'nombre', 'id' => 'nombre{0}')); ?> </td>
-                                                                                                                     <td></td>
-                                                                                                                     <td></td>
-                                                                                                                    </tr>
+																<td><?php echo $form->labelEx($combustible, "nombre", array('style' => 'width:80px;')); ?></td>
+																<td><?php echo $form->textField($combustible, '[{0}]nombre', array('i' => '{0}', 'class' => 'nombre', 'id' => 'nombre{0}')); ?> </td>
+																<td></td>
+																<td></td>
+															</tr>
 
-                                                                                                                    <tr>
-                                                                                                                     <td><?php echo $form->labelEx($combustible, "observaciones", array('style' => 'width:80px;')); ?></td>
-                                                                                                                     <td><?php echo $form->textField($combustible, "[{0}]observaciones", array('id' => "observaciones{0}")); ?><div id="errorObservaciones{0}" style="color:red;width:100px;"></div></td>
-                                                                                                                     <td></td>
+															<tr>
+																<td><?php echo $form->labelEx($combustible, "observaciones", array('style' => 'width:80px;')); ?></td>
+																<td><?php echo $form->textField($combustible, "[{0}]observaciones", array('id' => "observaciones{0}")); ?><div id="errorObservaciones{0}" style="color:red;width:100px;"></div></td>
+																<td></td>
 
-                                                                                                                     <td><?php echo $form->labelEx($combustible, "guia", array('style' => 'width:80px;')); ?></td>
-                                                                                                                     <td><?php echo $form->textField($combustible, "[{0}]guia", array('id' => "guia{0}")); ?><div id="errorGuia{0}" style="color:red;width:100px;"></div></td>
-                                                                                                                     <td></td>
-                                                                                                                     <td></td>
-                                                                                                                    </tr>
+																<td><?php echo $form->labelEx($combustible, "guia", array('style' => 'width:80px;')); ?></td>
+																<td><?php echo $form->textField($combustible, "[{0}]guia", array('id' => "guia{0}")); ?><div id="errorGuia{0}" style="color:red;width:100px;"></div></td>
+																<td></td>
+																<td></td>
+															</tr>
 
 															
 														</table>	
@@ -975,6 +976,25 @@ $cs->registerCoreScript('jquery');
 					<?php echo $form->error($model, 'observaciones_obra'); ?></td>
 			</tr>
 		</table>
+
+		<fieldset>
+			<legend>Imágenes y documentos del Report</legend>
+			<br/>
+			<div class="row">
+				<?php echo $form->labelEx($model,'archivos'); ?>   
+				<?php
+				$this->widget('CMultiFileUpload', array(
+					'model'=>$model,
+					'name' => 'archivos',
+					'max'=>5,
+					'accept' =>'pdf|doc|docx|xls|xlsx|png|jpg|jpeg|txt|ppt|pptx',
+					'duplicate' => 'Archivo ya existe', 
+					'denied' => 'Error: Extensión de archivo no permitida',
+				));  
+				echo $form->error($model,'archivos'); 
+				?>  
+			</div>
+		</fieldset>
 
 		<div class="row buttons">
 			<?php echo CHtml::submitButton('Guardar', array('id' => 'guardar')); ?>

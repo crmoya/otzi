@@ -369,6 +369,7 @@ $cs->registerCoreScript('jquery');
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'equiposArrendados-form',
 	'enableClientValidation'=>true,
+	'htmlOptions'=>array('enctype'=>'multipart/form-data'),
 	'clientOptions'=>array(
 		'validateOnSubmit'=>true,
 ),
@@ -757,6 +758,25 @@ $cs->registerCoreScript('jquery');
 		</tr>
 	</table>
 
+
+	<fieldset>
+		<legend>Imágenes y documentos del Report</legend>
+		<br/>
+		<div class="row">
+			<?php echo $form->labelEx($model,'archivos'); ?>   
+			<?php
+			$this->widget('CMultiFileUpload', array(
+				'model'=>$model,
+				'name' => 'archivos',
+				'max'=>5,
+				'accept' =>'pdf|doc|docx|xls|xlsx|png|jpg|jpeg|txt|ppt|pptx',
+				'duplicate' => 'Archivo ya existe', 
+				'denied' => 'Error: Extensión de archivo no permitida',
+			));  
+			echo $form->error($model,'archivos'); 
+			?>  
+		</div>
+	</fieldset>
 
 	<div class="row buttons">
 	<?php echo CHtml::submitButton('Guardar',array('id'=>'guardar')); ?>

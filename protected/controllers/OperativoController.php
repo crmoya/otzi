@@ -167,6 +167,7 @@ class OperativoController extends Controller
 			$model->iniPanne = $_POST['RCamionPropio']['iniPanne'];
 			$model->finPanne = $_POST['RCamionPropio']['finPanne'];
 			$model->panne = $_POST['RCamionPropio']['panne'];
+			
 
 			if ($model->panne == 1) {
 				$iniPanne = str_replace(":", "", $_POST['RCamionPropio']['iniPanne']);
@@ -179,7 +180,38 @@ class OperativoController extends Controller
 				$model->minPanne = 0;
 			}
 
+
+
 			if ($model->save()){
+
+				
+				//archivos del report
+				$path = Yii::app()->basePath . DIRECTORY_SEPARATOR . 'archivos';
+				if(!is_dir($path)){
+					mkdir($path);
+				}
+				$path = $path . DIRECTORY_SEPARATOR . 'camiones_propios' ;
+				if(!is_dir($path)){
+					mkdir($path);
+				}
+				$path = $path . DIRECTORY_SEPARATOR . $model->id;
+				if(!is_dir($path)){
+					mkdir($path);
+				}
+
+				$archivos=CUploadedFile::getInstancesByName('archivos');
+				if(isset($archivos)){
+					if(count($archivos) > 0){
+						foreach($archivos as $archivo)
+						{                                                       
+							$archivo->saveAs($path . DIRECTORY_SEPARATOR . $archivo->name);                                              
+						}  
+					}
+				}
+
+				//end archivos del report
+
+
 				if (isset($_POST['ViajeCamionPropio'])) {
 					foreach ($_POST['ViajeCamionPropio'] as $i => $viajeArr) {
 						$viaje = new ViajeCamionPropio();
@@ -311,6 +343,34 @@ class OperativoController extends Controller
 			}
 
 			if ($model->save()) {
+
+
+				//archivos del report
+				$path = Yii::app()->basePath . DIRECTORY_SEPARATOR . 'archivos';
+				if(!is_dir($path)){
+					mkdir($path);
+				}
+				$path = $path . DIRECTORY_SEPARATOR . 'equipos_propios' ;
+				if(!is_dir($path)){
+					mkdir($path);
+				}
+				$path = $path . DIRECTORY_SEPARATOR . $model->id;
+				if(!is_dir($path)){
+					mkdir($path);
+				}
+
+				$archivos=CUploadedFile::getInstancesByName('archivos');
+				if(isset($archivos)){
+					if(count($archivos) > 0){
+						foreach($archivos as $archivo)
+						{                                                       
+							$archivo->saveAs($path . DIRECTORY_SEPARATOR . $archivo->name);                                              
+						}  
+					}
+				}
+
+				//end archivos del report
+
 				if (isset($_POST['CargaCombEquipoPropio'])) {
 					foreach ($_POST['CargaCombEquipoPropio'] as $i => $cargaArr) {
 						$carga = new CargaCombEquipoPropio();
@@ -420,6 +480,33 @@ class OperativoController extends Controller
 			
 
 			if ($model->save()) {
+
+				//archivos del report
+				$path = Yii::app()->basePath . DIRECTORY_SEPARATOR . 'archivos';
+				if(!is_dir($path)){
+					mkdir($path);
+				}
+				$path = $path . DIRECTORY_SEPARATOR . 'equipos_arrendados' ;
+				if(!is_dir($path)){
+					mkdir($path);
+				}
+				$path = $path . DIRECTORY_SEPARATOR . $model->id;
+				if(!is_dir($path)){
+					mkdir($path);
+				}
+
+				$archivos=CUploadedFile::getInstancesByName('archivos');
+				if(isset($archivos)){
+					if(count($archivos) > 0){
+						foreach($archivos as $archivo)
+						{                                                       
+							$archivo->saveAs($path . DIRECTORY_SEPARATOR . $archivo->name);                                              
+						}  
+					}
+				}
+
+				//end archivos del report
+
 				if (isset($_POST['CargaCombEquipoArrendado'])) {
 					foreach ($_POST['CargaCombEquipoArrendado'] as $i => $cargaArr) {
 						$carga = new CargaCombEquipoArrendado();
@@ -528,6 +615,33 @@ class OperativoController extends Controller
 			}
 
 			if ($model->save()) {
+
+				//archivos del report
+				$path = Yii::app()->basePath . DIRECTORY_SEPARATOR . 'archivos';
+				if(!is_dir($path)){
+					mkdir($path);
+				}
+				$path = $path . DIRECTORY_SEPARATOR . 'camiones_arrendados' ;
+				if(!is_dir($path)){
+					mkdir($path);
+				}
+				$path = $path . DIRECTORY_SEPARATOR . $model->id;
+				if(!is_dir($path)){
+					mkdir($path);
+				}
+
+				$archivos=CUploadedFile::getInstancesByName('archivos');
+				if(isset($archivos)){
+					if(count($archivos) > 0){
+						foreach($archivos as $archivo)
+						{                                                       
+							$archivo->saveAs($path . DIRECTORY_SEPARATOR . $archivo->name);                                              
+						}  
+					}
+				}
+
+				//end archivos del report
+
 				if (isset($_POST['ViajeCamionArrendado'])) {
 					foreach ($_POST['ViajeCamionArrendado'] as $i => $viajeArr) {
 						$viaje = new ViajeCamionArrendado();

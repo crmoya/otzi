@@ -6,6 +6,33 @@ class Tools
 	public static $MD_CELL = 100;
 	public static $LG_CELL = 150;
 
+	public static function removerApostrofes($text){
+		$text = htmlspecialchars($text);
+		$text = str_replace("'","",$text);
+		return str_replace('"',"",$text);
+	}
+
+	public static function dirToArray($dir) {
+		$result = array();
+		$cdir = scandir($dir);
+		foreach ($cdir as $key => $value)
+		{
+		   if (!in_array($value,array(".","..")))
+		   {
+			  if (is_dir($dir . DIRECTORY_SEPARATOR . $value))
+			  {
+				 $result[$value] = Tools::dirToArray($dir . DIRECTORY_SEPARATOR . $value);
+			  }
+			  else
+			  {
+				 $result[] = $value;
+			  }
+		   }
+		}
+		return $result;
+	 }
+
+
 	public static function reverseDate($date){
 		$fechaArr = explode("-", $date);
 		if (count($fechaArr) == 3) return $fechaArr[2] . "-" . $fechaArr[1] . "-" . $fechaArr[0];
