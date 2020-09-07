@@ -50,10 +50,10 @@ class AdminController extends Controller
         }
 
 
-        public function actionDownload($id,$file)
+        public function actionDownload($id, $file, $tipo)
         {
                 $file = Tools::removerApostrofes($file);
-		$path=Yii::getPathOfAlias('webroot.protected.archivos') . '/' . DIRECTORY_SEPARATOR . $id . DIRECTORY_SEPARATOR . $file;
+		$path=Yii::getPathOfAlias('webroot.protected.archivos') . DIRECTORY_SEPARATOR . $tipo  . DIRECTORY_SEPARATOR . $id . DIRECTORY_SEPARATOR . $file;
 		if (file_exists($path))
 		{
                         $extension = strtolower(pathinfo($path)['extension']);

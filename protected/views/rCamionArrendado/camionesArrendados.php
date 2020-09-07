@@ -1339,7 +1339,7 @@ $this->endWidget('zii.widgets.jui.CJuiDialog');
 			foreach($archivos as $a => $archivo):?>	
 				<div class="archivo">
 					<input style="display:none;" type="checkbox" name="eliminar[<?=$archivo?>]" class="eliminar" href="#">	
-					<a target="_blank" href="<?=CController::createUrl("//admin/download",['file'=>$archivo,'id'=>$model->id]);?>"><?=$archivo?></a>
+					<a target="_blank" href="<?=CController::createUrl("//admin/download",['file'=>$archivo,'id'=>$model->id, 'tipo'=>'camiones_arrendados']);?>"><?=$archivo?></a>
 				</div>
 			<?php endforeach;?>
 		</div>
