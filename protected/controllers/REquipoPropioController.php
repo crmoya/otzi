@@ -261,18 +261,19 @@ class REquipoPropioController extends Controller
 								$archivo->saveAs($path . DIRECTORY_SEPARATOR . $archivo->name);                                              
 							}  
 						}
-					}
-					if(isset($_POST['eliminar'])){
-						$eliminables = $_POST['eliminar'];
-						if(isset($eliminables)){
-							foreach($eliminables as $archivo => $status){
-								if($status == 'on'){
-									unlink($path . DIRECTORY_SEPARATOR . $archivo);
-								}
-							}
-						}
-					}
-
+                    }
+                    if($model->validado == 0){
+                        if(isset($_POST['eliminar'])){
+                            $eliminables = $_POST['eliminar'];
+                            if(isset($eliminables)){
+                                foreach($eliminables as $archivo => $status){
+                                    if($status == 'on'){
+                                        unlink($path . DIRECTORY_SEPARATOR . $archivo);
+                                    }
+                                }
+                            }
+                        }
+                    }
 					//end archivos del report
 
 

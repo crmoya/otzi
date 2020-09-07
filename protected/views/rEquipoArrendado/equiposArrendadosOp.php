@@ -959,9 +959,11 @@ $cs->registerCoreScript('jquery');
 	
 	<fieldset>
 		<legend>Imágenes y documentos del Report</legend>
+		<?php if($model->validado == 0):?>
 		<div class="row" style="text-align:right;">
 			<a class="btn seleccionar"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/basura.png"/></a>
 		</div>
+		<?php endif;?>
 		<div class="table table-hover">
 			<?php
 			$path = Yii::app()->basePath . DIRECTORY_SEPARATOR . 'archivos';
