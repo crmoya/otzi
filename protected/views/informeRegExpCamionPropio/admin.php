@@ -37,6 +37,8 @@ $('.search-form form').submit(function(){
     )); ?>
 </div><!-- search-form -->
 
+<div class="wrapper">
+
 <?php $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'informe-reg-exp-camion-propio-grid',
     'dataProvider' => $model->search(),
@@ -100,7 +102,7 @@ $('.search-form form').submit(function(){
         array(
             'class' => 'CButtonColumn',
             'template' => '{view}',
-            'header' => 'Modificaciones',
+            'header' => 'Modif.',
             'buttons' => array(
                 'view' => array(
                     'label' => 'Ver Historial de modificaciones',
@@ -108,13 +110,30 @@ $('.search-form form').submit(function(){
                 ),
             ),
         ),
+        
+        array(
+            'class'=>'CLinkColumn',
+            'header'=>'Adjuntos',
+            'imageUrl'=>Yii::app()->request->baseUrl .'/images/search.png',
+            'urlExpression'=>'array("admin/preview","id"=>$data->id_reg,"tipo"=>"camiones_propios")',
+        ),
     ),
 ));
 
 ?>
+</div>
 <style>
     #check_all:hover {
         cursor: pointer;
+    }
+    .wrapper{
+        width:110%;
+	    overflow-x: auto;
+        position: relative;
+        left: -50px;
+    }
+    .span-19{
+        width:100%;
     }
 </style>
 <script>

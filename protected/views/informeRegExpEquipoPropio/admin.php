@@ -102,6 +102,13 @@ $('.search-form form').submit(function(){
                 ),
             ),
         ),
+        
+        array(
+            'class'=>'CLinkColumn',
+            'header'=>'Adjuntos',
+            'imageUrl'=>Yii::app()->request->baseUrl .'/images/search.png',
+            'urlExpression'=>'array("admin/preview","id"=>$data->id_reg,"tipo"=>"equipos_propios")',
+        ),
     ),
 ));
 

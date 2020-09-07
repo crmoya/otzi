@@ -43,11 +43,36 @@ class AdminController extends Controller
                                 'roles' => array('administrador','gerencia','operativo'),
                         ),
                         array(
+                                'allow', // allow admin user to perform 'admin' and 'delete' actions
+                                'actions' => array('preview',),
+                                'roles' => array('gerencia'),
+                        ),
+                        array(
                                 'deny',  // deny all users
                                 'users' => array('*'),
                         ),
                 );
         }
+
+        public function actionPreview($id,$tipo)
+        {
+                $report = null;
+                if($tipo == "camiones_arrendados"){
+                        $report = RCamionArrendado::model()->findByPk($id);
+                }
+                if($tipo == "camiones_propios"){
+                        $report = RCamionPropio::model()->findByPk($id);
+                }
+                if($tipo == "equipos_arrendados"){
+                        $report = REquipoArrendado::model()->findByPk($id);
+                }
+                if($tipo == "equipos_propios"){
+                        $report = REquipoPropio::model()->findByPk($id);
+                }
+                
+                $this->render('preview', array('report' => $report,'tipo'=>$tipo));
+        }
+
 
 
         public function actionDownload($id, $file, $tipo)

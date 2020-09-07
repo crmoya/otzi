@@ -14,6 +14,7 @@ class Tools
 
 	public static function dirToArray($dir) {
 		$result = array();
+		if(!is_dir($dir)) return array();
 		$cdir = scandir($dir);
 		foreach ($cdir as $key => $value)
 		{
