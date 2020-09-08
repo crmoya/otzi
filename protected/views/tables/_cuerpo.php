@@ -97,7 +97,7 @@
 		</tbody>
 		<tfoot>
 			<tr>
-				<th>Totales:</th>
+				<th>Total página:<br/>Total general:</th>
 				<?php for($i = 1; $i < count($extra_datos); $i++):?>
 					<th style="text-align:right;"></th>
 				<?php endfor;?>

@@ -64,11 +64,13 @@ $(document).ready( function () {
             };
 
 			var totales = Array();
+			var totalesParciales = Array();
 
 			<?php
 			for($j=0; $j<count($extra_datos); $j++){
 				$extra_dato = $extra_datos[$j];
 				echo "totales[" . $j . "] = 0;";
+				echo "totalesParciales[" . $j . "] = 0;";
 				if(isset($extra_dato['acumulado'])){
 					$operacion = $extra_dato['acumulado'];
 					$moneda = "";
@@ -87,18 +89,19 @@ $(document).ready( function () {
 							 			return intVal(a) + intVal(b); 
 							 		}, 0 );";
 
-						echo "
-								/*// Total over this page
-								var pageTotal = api
-									.column( 2, { page: 'current'} )
+						echo "// Total over this page
+								totalesParciales[" . $j . "] = api
+									.column(  " . $j . " , { page: 'current'} )
 									.data()
 									.reduce( function (a, b) {
 										return intVal(a) + intVal(b);
 									}, 0 );
-								*/ 
 
 								// Update footer
-								$( api.column( " . $j . " ).footer() ).html(" . $moneda. "new Intl.NumberFormat('es-CL').format(totales[" . $j . "]) );";
+								var total = " . $moneda. "new Intl.NumberFormat('es-CL').format(totales[" . $j . "]);
+								var totalParcial = " . $moneda. "new Intl.NumberFormat('es-CL').format(totalesParciales[" . $j . "]);
+								var html = totalParcial + '<br/>' + total;
+								$( api.column( " . $j . " ).footer() ).html(html);";
 					}
 				}
 			}
