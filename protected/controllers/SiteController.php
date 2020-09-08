@@ -143,6 +143,7 @@ class SiteController extends Controller
 
 	public function actionCarga()
 	{
+		ini_set("memory_limit", "-1");
 		set_time_limit(0);
 		try {
 
