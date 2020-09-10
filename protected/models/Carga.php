@@ -2,7 +2,6 @@
 
 class Carga{
 
-
 	public function gastos()
 	{
 		$errores = [];
@@ -288,20 +287,17 @@ class Carga{
 
 						//ya agregué los campos extra, pero debo ver si hay que rectificar el impuesto específico y el IVA 
 						if (isset($gasto_completa)) {
-							//para combustibles
-							if ($gasto->expense_policy_id == GastoCompleta::POLICY_COMBUSTIBLES) {
-								if ($gasto->tax > 0) {
-									$gasto_completa->iva = $gasto->tax;
-								}
-								if ($gasto->other_taxes > 0) {
-									$gasto_completa->impuesto_especifico = $gasto->other_taxes;
-								}
-								$gasto_completa->save();
-							}
-							if ($gasto->net > 0) {
+							if ($gasto->net > 0 && ($gasto_completa->monto_neto == '' || $gasto_completa->monto_neto == null)) {
 								$gasto_completa->monto_neto = $gasto->net;
 								$gasto_completa->save();
 							}
+							if ($gasto->tax > 0 && ($gasto_completa->iva == '' || $gasto_completa->iva == null)) {
+								$gasto_completa->iva = $gasto->tax;
+							}
+							if ($gasto->other_taxes > 0) {
+								$gasto_completa->impuesto_especifico = $gasto->other_taxes;
+							}
+							$gasto_completa->save();	
 						}
 
 						//ahora que ya agregué todos los campos extras a gasto_completa,

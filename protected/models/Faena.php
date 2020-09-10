@@ -110,7 +110,32 @@ class Faena extends CActiveRecord
 		$command=$connection->createCommand("
 			select		id,nombre
 			from		faena
-			where		vigente = 'SÍ'
+			where		vigente = 'SÍ' and por_horas = 0
+			order by	nombre
+			"
+		);
+		$dataReader=$command->query();
+		$rows=$dataReader->readAll();
+		$connection->active=false;
+		$command = null;
+		$data[0]=array('nombre'=>"Seleccione un faena",'id'=>'');
+		$i=1;
+		foreach($rows as $row){
+			$data[$i]=array('id'=>$row['id'],'nombre'=>$row['nombre']);
+			$i++;
+		}
+		return $data;
+	}
+
+	public function listarPorhoras(){
+
+		$data = array();
+		$connection=Yii::app()->db;
+		$connection->active=true;
+		$command=$connection->createCommand("
+			select		id,nombre
+			from		faena
+			where		vigente = 'SÍ' and por_horas = 1
 			order by	nombre
 			"
 		);

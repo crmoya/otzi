@@ -6,6 +6,14 @@ class Tools
 	public static $MD_CELL = 100;
 	public static $LG_CELL = 150;
 
+	public static $UNIDADES_TIEMPO = [
+		['id'=>1, 'nombre'=>'HORAS',],
+		['id'=>2, 'nombre'=>'DÍAS',],
+		['id'=>3, 'nombre'=>'SEMANAS',],
+		['id'=>4, 'nombre'=>'MINUTOS',],
+		['id'=>5, 'nombre'=>'MESES',],
+	];
+
 	public static function removerApostrofes($text){
 		$text = htmlspecialchars($text);
 		$text = str_replace("'","",$text);
