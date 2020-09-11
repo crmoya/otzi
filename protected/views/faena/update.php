@@ -1,9 +1,21 @@
 <?php
-$this->menu=array(
-	array('label'=>'Crear Faena', 'url'=>array('create')),
-	array('label'=>'Ver Faena', 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>'Administrar Faenas', 'url'=>array('admin')),
-);
+
+if($model->por_horas == 1){
+	$this->menu=array(
+		array('label'=>'Crear Faena (medida por tiempo)', 'url'=>array('createt')),
+		array('label'=>'Ver Faena (medida por tiempo)', 'url'=>array('view', 'id'=>$model->id)),
+		array('label'=>'Administrar Faenas (medidas por tiempo)', 'url'=>array('admint')),
+	);
+}
+else{
+	$this->menu=array(
+		array('label'=>'Crear Faena (medida por volumen)', 'url'=>array('createv')),
+		array('label'=>'Ver Faena (medida por volumen)', 'url'=>array('view', 'id'=>$model->id)),
+		array('label'=>'Administrar Faenas (medidas por volumen)', 'url'=>array('adminv')),
+	);
+}
+
+
 ?>
 
 
@@ -12,6 +24,6 @@ $this->menu=array(
 	<?php echo Yii::app()->user->getFlash('errorGrabarFaena'); ?>
 </div>
 <?php endif;?>
-<h1>Editar Faena <?php echo $model->id; ?></h1>
+<h1>Editar Faena <?php echo $model->id; ?> <?=$model->por_horas==1?"(medida por tiempo)":"(medida por volumen)"?></h1>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model,'ods'=>$ods)); ?>
+<?=($model->por_horas==1)?$this->renderPartial('_formt', array('model'=>$model,'ods'=>$ods)):$this->renderPartial('_formv', array('model'=>$model,'ods'=>$ods)); ?>

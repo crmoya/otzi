@@ -22,8 +22,24 @@ class FaenaController extends Controller {
 		$ods = Faena::model()->listarODs($id);
 		$faena=$this->loadModel($id);
 		
-		// Add some data
-		$objPHPExcel->setActiveSheetIndex(0)
+		if($faena->por_horas == 1){
+			// Add some data
+			$objPHPExcel->setActiveSheetIndex(0)
+			->setCellValue('A1', 'Faena #'.$id)
+			->setCellValue('A3', 'ID')
+			->setCellValue('A4', $id)
+			->setCellValue('B3', 'Nombre')
+			->setCellValue('B4', $faena->nombre)
+			->setCellValue('C3', 'Vigente')
+			->setCellValue('C4', $faena->vigente)
+			->setCellValue('A6','Unidades de la Faena:')
+
+			->setCellValue('A7', 'Unidad')
+			->setCellValue('B7','PU');
+		}
+		else{
+			// Add some data
+			$objPHPExcel->setActiveSheetIndex(0)
 			->setCellValue('A1', 'Faena #'.$id)
 			->setCellValue('A3', 'ID')
 			->setCellValue('A4', $id)
@@ -32,19 +48,29 @@ class FaenaController extends Controller {
 			->setCellValue('C3', 'Vigente')
 			->setCellValue('C4', $faena->vigente)
 			->setCellValue('A6','Orígenes-Destinos de la Faena:')
-			
+
 			->setCellValue('A7', 'Origen')
 			->setCellValue('B7','Destino')
 			->setCellValue('C7', 'PU')
 			->setCellValue('D7','KMs');
+		}
+		
 		
 		$i = 8;
 		foreach($ods as $fila){
-			$objPHPExcel->setActiveSheetIndex(0)
-				->setCellValue('A'.$i, $fila->origen->nombre)
-				->setCellValue('B'.$i, $fila->destino->nombre)
-				->setCellValue('C'.$i, $fila->pu)
-				->setCellValue('D'.$i, $fila->kmRecorridos);
+			if($faena->por_horas == 1){
+				$unidad = Tools::getUnidadTiempo($fila->origen_id);
+				$objPHPExcel->setActiveSheetIndex(0)
+					->setCellValue('A'.$i, $unidad)
+					->setCellValue('B'.$i, $fila->pu);
+			}
+			else{
+				$objPHPExcel->setActiveSheetIndex(0)
+					->setCellValue('A'.$i, $fila->origen->nombre)
+					->setCellValue('B'.$i, $fila->destino->nombre)
+					->setCellValue('C'.$i, $fila->pu)
+					->setCellValue('D'.$i, $fila->kmRecorridos);
+			}
 			$i++;
 		}
 		
@@ -125,7 +151,7 @@ class FaenaController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('index', 'view', 'create', 'update', 'admin', 'delete','exportar','export'),
+                'actions' => array('index', 'admin', 'view', 'createv', 'createt', 'update', 'admint', 'adminv', 'delete','exportar','export'),
                 'roles' => array('administrador'),
             ),
             array('allow',
@@ -154,45 +180,102 @@ class FaenaController extends Controller {
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
-    public function actionCreate() {
+    public function actionCreatev() {
         $model = new Faena();
     	if (isset($_POST['Faena'])) {
     		$model->attributes = $_POST['Faena'];
     		$model->vigente = $_POST['Faena']['vigente'];
 			$valid = true;
-    		for($j=0;$j<count($_POST['OrigendestinoFaena']);$j++){
-            	$od = new OrigendestinoFaena();
-            	$od->origen_id = $_POST['OrigendestinoFaena'][$j]['origen'];
-            	$od->destino_id = $_POST['OrigendestinoFaena'][$j]['destino'];
-            	$od->faena_id = 1;
-            	$od->pu = $_POST['OrigendestinoFaena'][$j]['pu'];
-            	$od->kmRecorridos = $_POST['OrigendestinoFaena'][$j]['kmRecorridos'];
-            	$valid = $od->validate() && $valid;
-            }            
+			if(isset($_POST['OrigendestinoFaena'])){
+				for($j=0;$j<count($_POST['OrigendestinoFaena']);$j++){
+					$od = new OrigendestinoFaena();
+					$od->origen_id = $_POST['OrigendestinoFaena'][$j]['origen'];
+					$od->destino_id = $_POST['OrigendestinoFaena'][$j]['destino'];
+					$od->faena_id = 1;
+					$od->pu = $_POST['OrigendestinoFaena'][$j]['pu'];
+					$od->kmRecorridos = $_POST['OrigendestinoFaena'][$j]['kmRecorridos'];
+					$valid = $od->validate() && $valid;
+				}  
+			}
+    		          
             if(!$valid){
             	Yii::app()->user->setFlash('errorGrabarFaena',"Error en el formulario. Por favor revise los datos.");
             	$this->refresh();
             }
     		if ($valid && $model->validate()) {  
 	    		if ($model->save()) {
-	    			for($j=0;$j<count($_POST['OrigendestinoFaena']);$j++){
-		            	$od = new OrigendestinoFaena();
-		            	$od->origen_id = $_POST['OrigendestinoFaena'][$j]['origen'];
-		            	$od->destino_id = $_POST['OrigendestinoFaena'][$j]['destino'];
-		            	$od->faena_id = $model->id;
-		            	$od->pu = $_POST['OrigendestinoFaena'][$j]['pu'];
-		            	$od->kmRecorridos = $_POST['OrigendestinoFaena'][$j]['kmRecorridos'];
-		            	$od->save();
-		            } 
+					if(isset($_POST['OrigendestinoFaena'])){
+						for($j=0;$j<count($_POST['OrigendestinoFaena']);$j++){
+							$od = new OrigendestinoFaena();
+							$od->origen_id = $_POST['OrigendestinoFaena'][$j]['origen'];
+							$od->destino_id = $_POST['OrigendestinoFaena'][$j]['destino'];
+							$od->faena_id = $model->id;
+							$od->pu = $_POST['OrigendestinoFaena'][$j]['pu'];
+							$od->kmRecorridos = $_POST['OrigendestinoFaena'][$j]['kmRecorridos'];
+							$od->save();
+						} 
+					}
 	                $this->redirect(array('view', 'id' => $model->id));
 	            }
     		}
            
         }
-        $this->render('create', array(
+        $this->render('createv', array(
             'model' => $model,
         ));
-    }
+	}
+	
+	public function actionCreatet() {
+        $model = new Faena();
+    	if (isset($_POST['Faena'])) {
+    		$model->attributes = $_POST['Faena'];
+			$model->vigente = $_POST['Faena']['vigente'];
+			$model->por_horas = 1;
+			$valid = true;
+
+
+			if(isset($_POST['OrigendestinoFaena'])){
+				for($j=0;$j<count($_POST['OrigendestinoFaena']);$j++){
+					$od = new OrigendestinoFaena();
+					$od->origen_id = $_POST['OrigendestinoFaena'][$j]['origen'];
+					$od->destino_id = 1;
+					$od->faena_id = 1;
+					$od->pu = $_POST['OrigendestinoFaena'][$j]['pu'];
+					$od->kmRecorridos = 0;
+					$valid = $od->validate() && $valid;
+				}    
+			}  
+            if(!$valid){
+            	Yii::app()->user->setFlash('errorGrabarFaena',"Error en el formulario. Por favor revise los datos.");
+            	$this->refresh();
+            }
+    		if ($valid && $model->validate()) {  
+	    		if ($model->save()) {
+					if(isset($_POST['OrigendestinoFaena'])){
+						for($j=0;$j<count($_POST['OrigendestinoFaena']);$j++){
+							$od = new OrigendestinoFaena();
+							$od->origen_id = $_POST['OrigendestinoFaena'][$j]['origen'];
+							$od->destino_id = 1;
+							$od->faena_id = $model->id;
+							$od->pu = $_POST['OrigendestinoFaena'][$j]['pu'];
+							$od->kmRecorridos = 0;
+							$od->save();
+						} 
+					}
+	                $this->redirect(array('view', 'id' => $model->id));
+	            }
+    		}
+           
+        }
+        $this->render('createt', array(
+            'model' => $model,
+        ));
+	}
+	
+
+	public function actionAdmin(){
+		$this->redirect(CController::createUrl("//site/index"));
+	}
 
     /**
      * Updates a particular model.
@@ -210,7 +293,7 @@ class FaenaController extends Controller {
         if (isset($_POST['Faena'])) {
 
             $model->attributes = $_POST['Faena'];
-            $model->vigente = $_POST['Faena']['vigente'];
+			$model->vigente = $_POST['Faena']['vigente'];
             
             if ($model->validate()) {
             	try{
@@ -225,37 +308,47 @@ class FaenaController extends Controller {
             		foreach($odes as $od){
             			array_push($ids,$od->id);
             		}
+					
+					if(isset($_POST['OrigendestinoFaena'])){
+						$final = count($_POST['OrigendestinoFaena']);
+						for($j=0;$j<$final;$j++){
+							if(!isset($_POST['OrigendestinoFaena'][$j])){
+								$final++;
+								continue;
+							}
+							$od = null;
+							if(isset($_POST['OrigendestinoFaena'][$j]['id'])){
+								$odId = $_POST['OrigendestinoFaena'][$j]['id'];
+								if(in_array($odId,$ids)){
+									$key = array_search($odId,$ids);
+									unset($ids[$key]);
+									$ids = array_values($ids);
+								}
+								
+								$od=OrigendestinoFaena::model()->findByPk($odId);
+							}            		
+							
+							if($od == null){
+								$od = new OrigendestinoFaena();
+							}
+							$od->origen_id = $_POST['OrigendestinoFaena'][$j]['origen'];
+							if($model->por_horas == 1){
+								$od->destino_id = 1;
+								$od->kmRecorridos = 0;
+							}
+							else{
+								$od->destino_id = $_POST['OrigendestinoFaena'][$j]['destino'];
+								$od->kmRecorridos = $_POST['OrigendestinoFaena'][$j]['kmRecorridos'];
+							}
+							$od->faena_id = $id;
+							$od->pu = $_POST['OrigendestinoFaena'][$j]['pu'];
+							
+							if($od->validate()){
+								$od->save();
+							}
+						}
+					}
             		
-            		$final = count($_POST['OrigendestinoFaena']);
-            		for($j=0;$j<$final;$j++){
-            			if(!isset($_POST['OrigendestinoFaena'][$j])){
-            				$final++;
-	            			continue;
-            			}
-						$od = null;
-	            		if(isset($_POST['OrigendestinoFaena'][$j]['id'])){
-	            			$odId = $_POST['OrigendestinoFaena'][$j]['id'];
-	            			if(in_array($odId,$ids)){
-	            				$key = array_search($odId,$ids);
-							    unset($ids[$key]);
-							    $ids = array_values($ids);
-	            			}
-	            			
-	            			$od=OrigendestinoFaena::model()->findByPk($odId);
-	            		}            		
-	            		
-	            		if($od == null){
-		            		$od = new OrigendestinoFaena();
-	            		}
-		            	$od->origen_id = $_POST['OrigendestinoFaena'][$j]['origen'];
-		            	$od->destino_id = $_POST['OrigendestinoFaena'][$j]['destino'];
-		            	$od->faena_id = $id;
-		            	$od->pu = $_POST['OrigendestinoFaena'][$j]['pu'];
-		            	$od->kmRecorridos = $_POST['OrigendestinoFaena'][$j]['kmRecorridos'];
-		            	if($od->validate()){
-		            		$od->save();
-		            	}
-		            }
 		            foreach($ids as $oId){
 		            	OrigendestinoFaena::model()->deleteByPk($oId);
 		            }
@@ -311,13 +404,25 @@ class FaenaController extends Controller {
     /**
      * Manages all models.
      */
-    public function actionAdmin() {
+    public function actionAdminv() {
         $model = new Faena('search');
-        $model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();  // clear any default values
         if (isset($_GET['Faena']))
             $model->attributes = $_GET['Faena'];
 
-        $this->render('admin', array(
+        $this->render('adminv', array(
+            'model' => $model,
+        ));
+    }
+
+
+	public function actionAdmint() {
+        $model = new Faena('search');
+		$model->unsetAttributes();  // clear any default values
+        if (isset($_GET['Faena']))
+            $model->attributes = $_GET['Faena'];
+
+        $this->render('admint', array(
             'model' => $model,
         ));
     }

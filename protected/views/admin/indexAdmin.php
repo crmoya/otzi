@@ -11,7 +11,8 @@ Bienvenido <?php echo CHtml::encode($nombre);?>, por favor seleccione una de las
  <li><?php echo CHtml::link("Administrar choferes",CController::createUrl('//chofer/admin')); ?></li>
  <li><?php echo CHtml::link("Administrar destinos",CController::createUrl('//destino/admin')); ?></li>
  <li><?php echo CHtml::link("Administrar orígenes",CController::createUrl('//origen/admin')); ?></li>
- <li><?php echo CHtml::link("Administrar faenas",CController::createUrl('//faena/admin')); ?></li>
+ <li><?php echo CHtml::link("Administrar faenas por volumen",CController::createUrl('//faena/adminv')); ?></li>
+ <li><?php echo CHtml::link("Administrar faenas por tiempo",CController::createUrl('//faena/admint')); ?></li>
  <li><?php echo CHtml::link("Administrar supervisores de combustible",CController::createUrl('//supervisorCombustible/admin')); ?></li>
  <li><?php echo CHtml::link("Administrar tipos de combustible",CController::createUrl('//tipoCombustible/admin')); ?></li>
  <li><?php echo CHtml::link("Administrar supervisores de rendición de repuestos y combustible",CController::createUrl('//rendidor/admin')); ?></li>

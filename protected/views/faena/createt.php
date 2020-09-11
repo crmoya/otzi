@@ -1,7 +1,7 @@
 <?php
 
 $this->menu=array(
-	array('label'=>'Administrar Faenas', 'url'=>array('admin')),
+	array('label'=>'Administrar Faenas (medidas por tiempo)', 'url'=>array('admint')),
 );
 ?>
 
@@ -10,6 +10,6 @@ $this->menu=array(
 	<?php echo Yii::app()->user->getFlash('errorGrabarFaena'); ?>
 </div>
 <?php endif;?>
-<h1>Crear Faena</h1>
+<h1>Crear Faena (medida por tiempo)</h1>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php echo $this->renderPartial('_formt', array('model'=>$model)); ?>
