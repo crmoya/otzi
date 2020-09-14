@@ -22,55 +22,30 @@ class FaenaController extends Controller {
 		$ods = Faena::model()->listarODs($id);
 		$faena=$this->loadModel($id);
 		
-		if($faena->por_horas == 1){
-			// Add some data
-			$objPHPExcel->setActiveSheetIndex(0)
-			->setCellValue('A1', 'Faena #'.$id)
-			->setCellValue('A3', 'ID')
-			->setCellValue('A4', $id)
-			->setCellValue('B3', 'Nombre')
-			->setCellValue('B4', $faena->nombre)
-			->setCellValue('C3', 'Vigente')
-			->setCellValue('C4', $faena->vigente)
-			->setCellValue('A6','Unidades de la Faena:')
+		// Add some data
+		$objPHPExcel->setActiveSheetIndex(0)
+		->setCellValue('A1', 'Faena #'.$id)
+		->setCellValue('A3', 'ID')
+		->setCellValue('A4', $id)
+		->setCellValue('B3', 'Nombre')
+		->setCellValue('B4', $faena->nombre)
+		->setCellValue('C3', 'Vigente')
+		->setCellValue('C4', $faena->vigente)
+		->setCellValue('A6','Orígenes-Destinos de la Faena:')
 
-			->setCellValue('A7', 'Unidad')
-			->setCellValue('B7','PU');
-		}
-		else{
-			// Add some data
-			$objPHPExcel->setActiveSheetIndex(0)
-			->setCellValue('A1', 'Faena #'.$id)
-			->setCellValue('A3', 'ID')
-			->setCellValue('A4', $id)
-			->setCellValue('B3', 'Nombre')
-			->setCellValue('B4', $faena->nombre)
-			->setCellValue('C3', 'Vigente')
-			->setCellValue('C4', $faena->vigente)
-			->setCellValue('A6','Orígenes-Destinos de la Faena:')
-
-			->setCellValue('A7', 'Origen')
-			->setCellValue('B7','Destino')
-			->setCellValue('C7', 'PU')
-			->setCellValue('D7','KMs');
-		}
+		->setCellValue('A7', 'Origen')
+		->setCellValue('B7','Destino')
+		->setCellValue('C7', 'PU')
+		->setCellValue('D7','KMs');
 		
 		
 		$i = 8;
 		foreach($ods as $fila){
-			if($faena->por_horas == 1){
-				$unidad = Tools::getUnidadTiempo($fila->origen_id);
-				$objPHPExcel->setActiveSheetIndex(0)
-					->setCellValue('A'.$i, $unidad)
-					->setCellValue('B'.$i, $fila->pu);
-			}
-			else{
-				$objPHPExcel->setActiveSheetIndex(0)
+			$objPHPExcel->setActiveSheetIndex(0)
 					->setCellValue('A'.$i, $fila->origen->nombre)
 					->setCellValue('B'.$i, $fila->destino->nombre)
 					->setCellValue('C'.$i, $fila->pu)
 					->setCellValue('D'.$i, $fila->kmRecorridos);
-			}
 			$i++;
 		}
 		
@@ -230,7 +205,6 @@ class FaenaController extends Controller {
     	if (isset($_POST['Faena'])) {
     		$model->attributes = $_POST['Faena'];
 			$model->vigente = $_POST['Faena']['vigente'];
-			$model->por_horas = 1;
 			$valid = true;
 
 
@@ -332,14 +306,8 @@ class FaenaController extends Controller {
 								$od = new OrigendestinoFaena();
 							}
 							$od->origen_id = $_POST['OrigendestinoFaena'][$j]['origen'];
-							if($model->por_horas == 1){
-								$od->destino_id = 1;
-								$od->kmRecorridos = 0;
-							}
-							else{
-								$od->destino_id = $_POST['OrigendestinoFaena'][$j]['destino'];
-								$od->kmRecorridos = $_POST['OrigendestinoFaena'][$j]['kmRecorridos'];
-							}
+							$od->destino_id = $_POST['OrigendestinoFaena'][$j]['destino'];
+							$od->kmRecorridos = $_POST['OrigendestinoFaena'][$j]['kmRecorridos'];
 							$od->faena_id = $id;
 							$od->pu = $_POST['OrigendestinoFaena'][$j]['pu'];
 							

@@ -127,31 +127,6 @@ class Faena extends CActiveRecord
 		return $data;
 	}
 
-	public function listarPorhoras(){
-
-		$data = array();
-		$connection=Yii::app()->db;
-		$connection->active=true;
-		$command=$connection->createCommand("
-			select		id,nombre
-			from		faena
-			where		vigente = 'SÍ' and por_horas = 1
-			order by	nombre
-			"
-		);
-		$dataReader=$command->query();
-		$rows=$dataReader->readAll();
-		$connection->active=false;
-		$command = null;
-		$data[0]=array('nombre'=>"Seleccione un faena",'id'=>'');
-		$i=1;
-		foreach($rows as $row){
-			$data[$i]=array('id'=>$row['id'],'nombre'=>$row['nombre']);
-			$i++;
-		}
-		return $data;
-	}
-	
 	public function listarODs($id){
 
 		$ods = OrigendestinoFaena::model()->findAllByAttributes(array('faena_id'=>$id));
@@ -162,7 +137,7 @@ class Faena extends CActiveRecord
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
 	 */
-	public function search($porHoras = 0)
+	public function search()
 	{
 		// Warning: Please modify the following code to remove attributes that
 		// should not be searched.
@@ -172,7 +147,6 @@ class Faena extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('nombre',$this->nombre,true);
 		$criteria->compare('vigente',$this->vigente);
-		$criteria->compare('por_horas',$porHoras);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

@@ -207,8 +207,7 @@ class RCamionPropioController extends Controller
 	{
 		$model = $this->loadModel($id);
 
-		$viajes = ViajeCamionPropio::model()->findAllByAttributes(array('rCamionPropio_id' => $id,'por_horas' => 0));
-		$viajesHoras = ViajeCamionPropio::model()->findAllByAttributes(array('rCamionPropio_id' => $id,'por_horas' => 1));
+		$viajes = ViajeCamionPropio::model()->findAllByAttributes(array('rCamionPropio_id' => $id));
 		$cargas = CargaCombCamionPropio::model()->findAllByAttributes(array('rCamionPropio_id' => $id));
 		$compras = CompraRepuestoCamionPropio::model()->findAllByAttributes(array('rCamionPropio_id' => $id));
 
@@ -309,7 +308,6 @@ class RCamionPropioController extends Controller
 								$viaje->total = $viajeArr['total'];
 								$viaje->totalTransportado = $viajeArr['totalTransportado'];
 								$viaje->coeficiente = $viajeArr['coeficiente'];
-								$viaje->por_horas = $viajeArr['por_horas'];
 
 								$valid = $valid && $viaje->validate();
 								if ($valid) {
