@@ -418,7 +418,6 @@ class RCamionPropioController extends Controller
 			$this->render('camionesPropios', array(
 				'model' => $model,
 				'viajes' => $viajes,
-				'viajesHoras' => $viajesHoras,
 				'cargas' => $cargas,
 				'compras' => $compras,
 				'capacidad' => $capacidad,
@@ -429,7 +428,6 @@ class RCamionPropioController extends Controller
 			$this->render('camionesPropiosOp', array(
 				'model' => $model,
 				'viajes' => $viajes,
-				'viajesHoras' => $viajesHoras,
 				'cargas' => $cargas,
 				'compras' => $compras,
 				'capacidad' => $capacidad,
