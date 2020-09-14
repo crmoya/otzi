@@ -707,7 +707,7 @@ $cs->registerCoreScript('jquery');
 			</table>
 		</fieldset>
 		<fieldset>
-			<legend>Expediciones por Volumen</legend>
+			<legend>Expediciones</legend>
 			<div class="complex">
 				<table>
 					<tr>

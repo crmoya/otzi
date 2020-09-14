@@ -2,10 +2,10 @@
 
 
 $this->menu=array(
-	array('label'=>'Crear Faena (medida por volumen)', 'url'=>array('createv')),
-	array('label'=>'Editar Faena (medida por volumen)', 'url'=>array('update', 'id'=>$model->id)),
-	array('label'=>'Eliminar Faena (medida por volumen)', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Administrar Faenas (medidas por volumen)', 'url'=>array('adminv')),
+	array('label'=>'Crear Faena', 'url'=>array('createv')),
+	array('label'=>'Editar Faena', 'url'=>array('update', 'id'=>$model->id)),
+	array('label'=>'Eliminar Faena', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
+	array('label'=>'Administrar Faenas', 'url'=>array('adminv')),
 );
 
 ?>

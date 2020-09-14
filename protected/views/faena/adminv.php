@@ -1,7 +1,7 @@
 <?php
 
 $this->menu=array(
-	array('label'=>'Crear Faena (medidas por volumen)', 'url'=>array('createv')),
+	array('label'=>'Crear Faena', 'url'=>array('createv')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -18,7 +18,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Administrar Faenas (medidas por volumen)</h1>
+<h1>Administrar Faenas</h1>
 <?php echo CHtml::link('Búsqueda Avanzada','#',array('class'=>'search-button')); ?>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

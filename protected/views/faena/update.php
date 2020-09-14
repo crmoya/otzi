@@ -1,9 +1,9 @@
 <?php
 
 $this->menu=array(
-	array('label'=>'Crear Faena (medida por volumen)', 'url'=>array('createv')),
-	array('label'=>'Ver Faena (medida por volumen)', 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>'Administrar Faenas (medidas por volumen)', 'url'=>array('adminv')),
+	array('label'=>'Crear Faena', 'url'=>array('createv')),
+	array('label'=>'Ver Faena', 'url'=>array('view', 'id'=>$model->id)),
+	array('label'=>'Administrar Faenas', 'url'=>array('adminv')),
 );
 
 
