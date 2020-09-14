@@ -110,7 +110,7 @@ class Faena extends CActiveRecord
 		$command=$connection->createCommand("
 			select		id,nombre
 			from		faena
-			where		vigente = 'SÍ' and por_horas = 0
+			where		vigente = 'SÍ'
 			order by	nombre
 			"
 		);
