@@ -316,8 +316,8 @@ class Carga{
 								$gasto_completa->total_calculado = (int)$gasto_completa->impuesto_especifico + (int)$gasto_completa->iva + (int)$gasto_completa->monto_neto;
 								$gasto_completa->save();
 							}
-							//para boleta
-							if (trim($gasto_completa->tipo_documento) == 'Boleta') {
+							//para boleta o vale
+							if (trim($gasto_completa->tipo_documento) == 'Boleta' || trim($gasto_completa->tipo_documento) == 'Vale') {
 								$gasto_completa->total_calculado = (int)$gasto->total;
 								$gasto_completa->save();
 							}

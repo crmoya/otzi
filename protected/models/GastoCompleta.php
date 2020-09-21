@@ -66,7 +66,7 @@ class GastoCompleta extends CActiveRecord
 			$criteria->addCondition('gasto.total = total_calculado');
 			if($this->policy == GastoCompleta::POLICY_COMBUSTIBLES){
 				$criteria->addCondition("
-					(tipo_documento = 'Factura Combustible' and monto_neto > 0 and impuesto_especifico > 0 and iva > 0) or tipo_documento = 'Boleta' or tipo_documento = 'Factura afecta'
+					(tipo_documento = 'Factura Combustible' and monto_neto > 0 and impuesto_especifico > 0 and iva > 0) or tipo_documento = 'Boleta' or tipo_documento = 'Factura afecta' or tipo_documento = 'Vale'
 				");
 			}
 			else{
@@ -78,7 +78,7 @@ class GastoCompleta extends CActiveRecord
 		if($this->igual == "CON ERRORES"){
 			if($this->policy == GastoCompleta::POLICY_COMBUSTIBLES){
 				$criteria->addCondition("
-					(tipo_documento <> 'Factura Combustible' and tipo_documento <> 'Boleta' and tipo_documento <> 'Factura afecta') or 
+					(tipo_documento <> 'Factura Combustible' and tipo_documento <> 'Boleta' and tipo_documento <> 'Factura afecta' and tipo_documento <> 'Vale') or 
 					(tipo_documento = 'Factura Combustible' and (iva = 0 or impuesto_especifico = 0 or monto_neto = 0)) or
 					gasto.total <> total_calculado
 				");
