@@ -17,4 +17,4 @@ $this->menu=array(
 <?php endif;?>
 <h1>Editar Faena <?php echo $model->id; ?></h1>
 
-<?=$this->renderPartial('_formv', array('model'=>$model,'ods'=>$ods)); ?>
+<?=$this->renderPartial('_formv', array('model'=>$model,'ods'=>$ods, 'unidades' => $unidades)); ?>

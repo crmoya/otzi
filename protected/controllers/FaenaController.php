@@ -20,6 +20,7 @@ class FaenaController extends Controller {
 			->setCategory("Test result file");
 		
 		$ods = Faena::model()->listarODs($id);
+		$us = Unidadfaena::model()->findAllByAttributes(['faena_id'=>$id]);
 		$faena=$this->loadModel($id);
 		
 		// Add some data
@@ -37,8 +38,7 @@ class FaenaController extends Controller {
 		->setCellValue('B7','Destino')
 		->setCellValue('C7', 'PU')
 		->setCellValue('D7','KMs');
-		
-		
+
 		$i = 8;
 		foreach($ods as $fila){
 			$objPHPExcel->setActiveSheetIndex(0)
@@ -48,6 +48,22 @@ class FaenaController extends Controller {
 					->setCellValue('D'.$i, $fila->kmRecorridos);
 			$i++;
 		}
+
+		$i++;
+		$iTitulos = $i;
+
+		$i++;
+		foreach($us as $u){
+			$objPHPExcel->setActiveSheetIndex(0)
+					->setCellValue('A'.$i, $u->cantidad)
+					->setCellValue('B'.$i, Unidadfaena::getUnidad($u->unidad))
+					->setCellValue('C'.$i, $u->pu);
+			$i++;
+		}
+		$objPHPExcel->setActiveSheetIndex(0)
+		->setCellValue('A'.$iTitulos, 'Cantidad')
+		->setCellValue('B'.$iTitulos,'Unidad')
+		->setCellValue('C'.$iTitulos, 'PU');
 		
 		$sheet = $objPHPExcel->getActiveSheet();
 		$styleArray = array('font' => array('bold' => true));
@@ -60,6 +76,9 @@ class FaenaController extends Controller {
 		$sheet->getStyle('B3')->applyFromArray($styleArray);
 		$sheet->getStyle('C3')->applyFromArray($styleArray);
 		$sheet->getStyle('A6')->applyFromArray($styleArray);
+		$sheet->getStyle('A'.$iTitulos)->applyFromArray($styleArray);
+		$sheet->getStyle('B'.$iTitulos)->applyFromArray($styleArray);
+		$sheet->getStyle('C'.$iTitulos)->applyFromArray($styleArray);
 		
 		// Rename sheet
 		$objPHPExcel->getActiveSheet()->setTitle('Informe');
@@ -144,10 +163,12 @@ class FaenaController extends Controller {
      * @param integer $id the ID of the model to be displayed
      */
     public function actionView($id) {
-        $ods = Faena::model()->listarODs($id);
+		$ods = Faena::model()->listarODs($id);
+		$us = Unidadfaena::model()->findAllByAttributes(['faena_id'=>$id]);
         $this->render('view', array(
             'model' => $this->loadModel($id),
-            'ods' => $ods,
+			'ods' => $ods,
+			'us' => $us,
         ));
     }
 
@@ -172,6 +193,17 @@ class FaenaController extends Controller {
 					$valid = $od->validate() && $valid;
 				}  
 			}
+
+			if(isset($_POST['Unidadfaena'])){
+				for($j=0;$j<count($_POST['Unidadfaena']);$j++){
+					$od = new Unidadfaena();
+					$od->unidad = $_POST['Unidadfaena'][$j]['unidad'];
+					$od->cantidad = $_POST['Unidadfaena'][$j]['cantidad'];
+					$od->faena_id = 1;
+					$od->pu = $_POST['Unidadfaena'][$j]['pu'];
+					$valid = $od->validate() && $valid;
+				}  
+			}
     		          
             if(!$valid){
             	Yii::app()->user->setFlash('errorGrabarFaena',"Error en el formulario. Por favor revise los datos.");
@@ -189,6 +221,16 @@ class FaenaController extends Controller {
 							$od->kmRecorridos = $_POST['OrigendestinoFaena'][$j]['kmRecorridos'];
 							$od->save();
 						} 
+					}
+					if(isset($_POST['Unidadfaena'])){
+						for($j=0;$j<count($_POST['Unidadfaena']);$j++){
+							$od = new Unidadfaena();
+							$od->unidad = $_POST['Unidadfaena'][$j]['unidad'];
+							$od->cantidad = $_POST['Unidadfaena'][$j]['cantidad'];
+							$od->faena_id = $model->id;
+							$od->pu = $_POST['Unidadfaena'][$j]['pu'];
+							$od->save();
+						}  
 					}
 	                $this->redirect(array('view', 'id' => $model->id));
 	            }
@@ -214,7 +256,8 @@ class FaenaController extends Controller {
     public function actionUpdate($id) {
 
         $model = $this->loadModel($id);
-        $ods = Faena::model()->listarODs($id);
+		$ods = Faena::model()->listarODs($id);
+		$unidades = Unidadfaena::model()->findAllByAttributes(['faena_id'=>$id]);
         
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
@@ -239,32 +282,25 @@ class FaenaController extends Controller {
             		}
 					
 					if(isset($_POST['OrigendestinoFaena'])){
-						$final = count($_POST['OrigendestinoFaena']);
-						for($j=0;$j<$final;$j++){
-							if(!isset($_POST['OrigendestinoFaena'][$j])){
-								$final++;
-								continue;
-							}
+						foreach($_POST['OrigendestinoFaena'] as $odp){
 							$od = null;
-							if(isset($_POST['OrigendestinoFaena'][$j]['id'])){
-								$odId = $_POST['OrigendestinoFaena'][$j]['id'];
-								if(in_array($odId,$ids)){
-									$key = array_search($odId,$ids);
+							if(isset($odp['id'])){
+								if(in_array($odp['id'],$ids)){
+									$key = array_search($odp['id'],$ids);
 									unset($ids[$key]);
 									$ids = array_values($ids);
 								}
-								
-								$od=OrigendestinoFaena::model()->findByPk($odId);
-							}            		
+								$od=OrigendestinoFaena::model()->findByPk($odp['id']);  
+							}							          		
 							
 							if($od == null){
 								$od = new OrigendestinoFaena();
 							}
-							$od->origen_id = $_POST['OrigendestinoFaena'][$j]['origen'];
-							$od->destino_id = $_POST['OrigendestinoFaena'][$j]['destino'];
-							$od->kmRecorridos = $_POST['OrigendestinoFaena'][$j]['kmRecorridos'];
+							$od->origen_id = $odp['origen'];
+							$od->destino_id = $odp['destino'];
+							$od->kmRecorridos = $odp['kmRecorridos'];
 							$od->faena_id = $id;
-							$od->pu = $_POST['OrigendestinoFaena'][$j]['pu'];
+							$od->pu = $odp['pu'];
 							
 							if($od->validate()){
 								$od->save();
@@ -274,7 +310,49 @@ class FaenaController extends Controller {
             		
 		            foreach($ids as $oId){
 		            	OrigendestinoFaena::model()->deleteByPk($oId);
-		            }
+					}
+
+					
+					//Borrar los ods que no están en la lista
+	            	
+            		//hacer una lista de los id's que estén en la BD
+            		//ir borrando de la lista los que estén en el update
+            		//hacer delete de los que queden en la lista
+            		$ues=Unidadfaena::model()->findAllByAttributes(array('faena_id'=>$id));
+            		$ids = array();
+            		foreach($ues as $u){
+            			array_push($ids,$u->id);
+					}
+					if(isset($_POST['Unidadfaena'])){
+						foreach($_POST['Unidadfaena'] as $up){
+							$u = null;
+							if(isset($up['id'])){
+								if(in_array($up['id'],$ids)){
+									$key = array_search($up['id'],$ids);
+									unset($ids[$key]);
+									$ids = array_values($ids);
+								}
+								$u = Unidadfaena::model()->findByPk($up['id']);      
+							} 		
+							
+							if($u == null){
+								$u = new Unidadfaena();
+							}
+							$u->cantidad = $up['cantidad'];
+							$u->unidad = $up['unidad'];
+							$u->faena_id = $id;
+							$u->pu = $up['pu'];
+							
+							if($u->validate()){
+								$u->save();
+							}
+						}
+					}
+
+		            foreach($ids as $uId){
+		            	Unidadfaena::model()->deleteByPk($uId);
+					}
+
 		         	if($model->validate()){
 		         		$model->save();
 		         	}            
@@ -289,7 +367,8 @@ class FaenaController extends Controller {
 
         $this->render('update', array(
             'model' => $model,
-            'ods' => $ods,
+			'ods' => $ods,
+			'unidades' => $unidades,
         ));
     }
 
