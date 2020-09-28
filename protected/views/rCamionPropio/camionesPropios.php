@@ -707,7 +707,7 @@ $cs->registerCoreScript('jquery');
 			</table>
 		</fieldset>
 		<fieldset>
-			<legend>Expediciones</legend>
+			<legend>Expediciones con PU por distancia</legend>
 			<div class="complex">
 				<table>
 					<tr>
@@ -717,6 +717,161 @@ $cs->registerCoreScript('jquery');
 									<tbody class="templateTarget">
 										<?php for ($i=0;$i<count($viajes);$i++) : 
 											$expedicion = $viajes[$i];?>
+											<tr class="templateContent">
+												<td width="100px">
+													<table style="border:solid 1px silver;padding:10px;">
+														<tr>
+															<td><?php echo $form->labelEx($expedicion, "faena_id", array('style' => 'width:80px;',)); ?></td>
+															<td><?php echo $form->dropDownList($expedicion, "[$i]faena_id", CHtml::listData(Faena::model()->listar(), 'id', 'nombre'), array('id' => "faena_id$i", 'class' => 'faena', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
+															<td>
+																<div id="errorFaena_id<?php echo $i; ?>" style="color:red;width:100px;"></div>
+															</td>
+															<td><?php echo $form->labelEx($expedicion, "origenDestino", array('style' => 'width:80px;')); ?></td>
+															<td><select name="ViajeCamionPropio[<?php echo $i; ?>][origendestino_faena_id]" <?php echo $model->validado == 1 || $model->validado == 2 ? 'disabled' : ''; ?> class="origenDestino" id="origenDestino<?php echo $i; ?>"></select></td>
+															<td id="pu<?php echo $i; ?>" pu=""></td>
+															<td>
+																<input type="hidden" class="rowIndex" value="<?php echo $i; ?>" />
+																<?php if ($model->validado == 0) : ?>
+																	<div class="remove" tipo="expedicion" id="removeExpedicion<?php echo $i; ?>" validate="true">Eliminar</div>
+																<?php else : ?>
+																	<div tipo="expedicion" id="removeExpedicion<?php echo $i; ?>" validate="true"></div>
+																<?php endif; ?>
+															</td>
+														</tr>
+														<tr>
+
+															<td><?php echo $form->labelEx($expedicion, "nVueltas", array('style' => 'width:80px;',)); ?></td>
+															<td><?php echo $form->textField($expedicion, "[$i]nVueltas", array('id' => "nVueltas$i", 'class' => 'nVueltas', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
+															<td>
+																<div id="errorNVueltas<?php echo $i; ?>" style="color:red;width:100px;"></div>
+															</td>
+															<td><?php echo $form->labelEx($expedicion, "kmRecorridos", array('style' => 'width:80px;')); ?></td>
+															<td><?php echo $form->textField($expedicion, "[$i]kmRecorridos", array('id' => "kmRecorridos$i", 'class' => 'fixed', 'readonly' => 'readonly', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
+															<td>
+																<div id="errorKmRecorridos<?php echo $i; ?>" style="color:red;width:100px;"></div>
+															</td>
+
+															<td></td>
+														</tr>
+
+														<tr>
+															<td><?php echo $form->labelEx($expedicion, "coeficiente", array('style' => 'width:80px;')); ?></td>
+															<td><?php echo $form->textField($expedicion, "[$i]coeficiente", array('id' => "coeficiente$i", 'class' => 'fixedCoeficiente', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
+															<td>
+																<div id="errorCoeficiente<?php echo $i; ?>" style="color:red;width:100px;"></div>
+															</td>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td></td>
+														</tr>
+
+														<tr>
+															<td><?php echo $form->labelEx($expedicion, "totalTransportado", array('style' => 'width:80px;')); ?></td>
+															<td><?php echo $form->textField($expedicion, "[$i]totalTransportado", array('id' => "totalTransportado$i", 'class' => 'fixedTotalTransportado', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
+															<td>
+																<div id="errorTotalTransportado<?php echo $i; ?>" style="color:red;width:100px;"></div>
+															</td>
+
+															<td><?php echo $form->labelEx($expedicion, "total", array('style' => 'width:80px;')); ?></td>
+															<td><?php echo $form->textField($expedicion, "[$i]total", array('id' => "total$i", 'class' => 'fixed', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
+															<td>
+																<div id="errorTotal<?php echo $i; ?>" style="color:red;width:100px;"></div>
+															</td>
+															<td></td>
+														</tr>
+
+													</table>
+												</td>
+											</tr>
+										<?php endfor; ?>
+									</tbody>
+									<tfoot>
+										<tr>
+											<td>
+												<?php if ($model->validado == 0) : ?>
+													<div class="add" tipo="expedicion">Agregar</div>
+												<?php endif; ?>
+												<textarea class="template" rows="0" cols="0">
+												<tr class="templateContent">
+													<td width="100px">
+														<?php $expedicion = new ViajeCamionPropio(); ?>
+														<table style="border:solid 1px silver;padding:10px;">
+															<tr>
+															  <td><?php echo $form->labelEx($expedicion, "faena_id", array('style' => 'width:80px;')); ?></td>
+															  <td><?php echo $form->dropDownList($expedicion, '[{0}]faena_id', CHtml::listData(Faena::model()->listar(), 'id', 'nombre'), array('id' => 'faena_id{0}', 'class' => 'faena')); ?></td>
+															  <td><div id="errorFaena_id{0}" style="color:red;width:100px;"></div></td>
+															  <td><?php echo $form->labelEx($expedicion, "origenDestino", array('style' => 'width:80px;')); ?></td>	
+															  <td><select name="ViajeCamionPropio[{0}][origendestino_faena_id]" class="origenDestino" id="origenDestino{0}"></select></td>	
+															  <td id="pu{0}" pu=""></td>	
+															  <td>
+															   	<input type="hidden" class="rowIndex" value="{0}" />
+                                                                                                                                <?php if ($model->validado == 0) : ?>
+															   	<div class="remove" tipo="expedicion" id="removeExpedicion{0}" validate="true">Eliminar</div>
+                                                                                                                                <?php endif; ?>
+															  </td>															  
+															</tr>
+															<tr>
+															 <td><?php echo $form->labelEx($expedicion, "nVueltas", array('style' => 'width:80px;')); ?></td>
+															 <td><?php echo $form->textField($expedicion, "[{0}]nVueltas", array('id' => "nVueltas{0}", 'class' => 'nVueltas')); ?></td>
+															 <td><div id="errorNVueltas{0}" style="color:red;width:100px;"></div></td>
+															 <td><?php echo $form->labelEx($expedicion, "kmRecorridos", array('style' => 'width:80px;')); ?></td>
+															 <td><?php echo $form->textField($expedicion, "[{0}]kmRecorridos", array('id' => "kmRecorridos{0}", 'class' => 'fixed', 'readonly' => 'readonly')); ?></td>
+															 <td><div id="errorKmRecorridos{0}" style="color:red;width:100px;"></div></td>
+															 <td></td>
+															</tr>
+															
+															
+															<tr>
+															 <td><?php echo $form->labelEx($expedicion, "coeficiente", array('style' => 'width:80px;')); ?></td>
+															 <td><?php echo $form->textField($expedicion, "[{0}]coeficiente", array('id' => "coeficiente{0}", 'class' => 'fixedCoeficiente')); ?></td>
+															 <td><div id="errorCoeficiente{0}" style="color:red;width:100px;"></div></td>
+															 <td></td>
+															 <td></td>
+															 <td></td>
+															 <td></td>
+															</tr>
+																		
+															<tr>
+															 <td><?php echo $form->labelEx($expedicion, "totalTransportado", array('style' => 'width:80px;')); ?></td>
+															 <td><?php echo $form->textField($expedicion, "[{0}]totalTransportado", array('id' => "totalTransportado{0}", 'class' => 'fixedTotalTransportado')); ?></td>
+															 <td><div id="errorTotalTransportado{0}" style="color:red;width:100px;"></div></td>
+															 
+															 <td><?php echo $form->labelEx($expedicion, "total", array('style' => 'width:80px;')); ?></td>
+															 <td><?php echo $form->textField($expedicion, "[{0}]total", array('id' => "total{0}", 'class' => 'fixed')); ?></td>
+															 <td><div id="errorTotal{0}" style="color:red;width:100px;"></div></td>
+															 <td></td>
+															</tr>
+															
+														</table>	
+													</td>
+												</tr>
+											</textarea>
+											</td>
+										</tr>
+									</tfoot>
+								</table>
+							</div>
+							<!--panel-->
+						</td>
+					</tr>
+				</table>
+			</div>
+			<!--complex-->
+		</fieldset>
+
+
+		<fieldset>
+			<legend>Expediciones con PU por tiempo</legend>
+			<div class="complex">
+				<table>
+					<tr>
+						<td style="vertical-align:top;">
+							<div>
+								<table class="templateFrame grid" cellspacing="0">
+									<tbody class="templateTarget">
+										<?php for ($i=0;$i<count($viajesT);$i++) : 
+											$expedicion = $viajesT[$i];?>
 											<tr class="templateContent">
 												<td width="100px">
 													<table style="border:solid 1px silver;padding:10px;">

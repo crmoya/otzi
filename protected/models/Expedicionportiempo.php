@@ -1,50 +1,27 @@
 <?php
 
 /**
- * This is the model class for table "unidadfaena".
+ * This is the model class for table "expedicionportiempo".
  *
- * The followings are the available columns in table 'unidadfaena':
+ * The followings are the available columns in table 'expedicionportiempo':
  * @property integer $id
- * @property integer $unidad
- * @property string $pu
- * @property integer $faena_id
+ * @property string $cantidad
+ * @property string $total
+ * @property integer $rcamionpropio_id
+ * @property integer $unidadfaena_id
  *
  * The followings are the available model relations:
- * @property Faena $faena
+ * @property Rcamionpropio $rcamionpropio
+ * @property Unidadfaena $unidadfaena
  */
-class Unidadfaena extends CActiveRecord
+class Expedicionportiempo extends CActiveRecord
 {
-
-	public static function listar(){
-		return [
-			['id' =>1, 'nombre'=>'MINUTOS'], 
-			['id' =>2, 'nombre'=>'HORAS'], 
-			['id' =>3, 'nombre'=>'DÍAS'], 
-			['id' =>4, 'nombre'=>'SEMANAS'], 
-			['id' =>5, 'nombre'=>'MESES'], 
-		];
-	}
-
-	public static function getUnidad($unidad){
-		$unidades = [
-			1=>'MINUTOS', 
-			2=>'HORAS', 
-			3=>'DÍAS', 
-			4=>'SEMANAS', 
-			5=>'MESES', 
-		];
-		if(isset($unidades[$unidad])){
-			return $unidades[$unidad];
-		}
-		return "";
-	}
-
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'unidadfaena';
+		return 'expedicionportiempo';
 	}
 
 	/**
@@ -55,32 +32,13 @@ class Unidadfaena extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('unidad, pu, faena_id', 'required'),
-			array('unidad, faena_id', 'numerical', 'integerOnly'=>true),
-			array('pu', 'length', 'max'=>12),
-			array('pu', 'length', 'max'=>10),
-			array('pu','esDecimal'),
+			array('cantidad, total, rcamionpropio_id, unidadfaena_id', 'required'),
+			array('rcamionpropio_id, unidadfaena_id', 'numerical', 'integerOnly'=>true),
+			array('cantidad, total', 'length', 'max'=>12),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, unidad, pu, faena_id', 'safe', 'on'=>'search'),
+			array('id, cantidad, total, rcamionpropio_id, unidadfaena_id', 'safe', 'on'=>'search'),
 		);
-	}
-
-	
-	public function esDecimal($attribute,$params)
-	{
-		if($this->$attribute=="")return;
-		$numero = str_replace(",", ".", $this->$attribute);
-		if(!is_numeric($numero))
-			$this->addError($attribute, 'Debe ser número');
-		if(strlen($numero."") > 11 )
-			$this->addError($attribute, 'Número muy largo');
-		if($numero<0){
-			$this->addError($attribute, 'Debe ser mayor que 0');
-		}
-		if(strpos($numero."",".")<strlen($numero."")-3 && strpos($numero."",".")>0)
-			$this->addError($attribute, 'No debe tener más de 2 decimales');
-		
 	}
 
 	/**
@@ -91,7 +49,8 @@ class Unidadfaena extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'faena' => array(self::BELONGS_TO, 'Faena', 'faena_id'),
+			'rcamionpropio' => array(self::BELONGS_TO, 'Rcamionpropio', 'rcamionpropio_id'),
+			'unidadfaena' => array(self::BELONGS_TO, 'Unidadfaena', 'unidadfaena_id'),
 		);
 	}
 
@@ -102,9 +61,10 @@ class Unidadfaena extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'unidad' => 'Unidad',
-			'pu' => 'Pu',
-			'faena_id' => 'Faena',
+			'cantidad' => 'Cantidad',
+			'total' => 'Total',
+			'rcamionpropio_id' => 'Rcamionpropio',
+			'unidadfaena_id' => 'Unidadfaena',
 		);
 	}
 
@@ -127,9 +87,10 @@ class Unidadfaena extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('unidad',$this->unidad);
-		$criteria->compare('pu',$this->pu,true);
-		$criteria->compare('faena_id',$this->faena_id);
+		$criteria->compare('cantidad',$this->cantidad,true);
+		$criteria->compare('total',$this->total,true);
+		$criteria->compare('rcamionpropio_id',$this->rcamionpropio_id);
+		$criteria->compare('unidadfaena_id',$this->unidadfaena_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -140,7 +101,7 @@ class Unidadfaena extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Unidadfaena the static model class
+	 * @return Expedicionportiempo the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

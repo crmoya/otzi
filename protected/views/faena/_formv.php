@@ -82,7 +82,7 @@ $cs->registerCoreScript('jquery');
 							<tfoot>
 								<tr>
 									<td>
-										<div class="add">Agregar PU por distancia</div>
+										<div class="add">Agregar PU por volumen</div>
 										<textarea class="template" rows="0" cols="0">
 											<tr class="templateContent">
 												<td width="100px">	
@@ -122,7 +122,6 @@ $cs->registerCoreScript('jquery');
 						<table class="templateFrame grid" cellspacing="0">
 							<tbody class="templateTarget">
 								<tr>
-									<td>Cantidad</td>
 									<td>Unidad</td>
 									<td>PU</td>
 									<td>&nbsp</td>
@@ -131,11 +130,6 @@ $cs->registerCoreScript('jquery');
 							if(isset($unidades)){	
 								foreach($unidades as $i=>$u): ?>
 								<tr class="templateContent">
-									<td>
-										<?php 
-										echo $form->textField($u,"[$i]cantidad",array('style'=>'width:100px','class'=>'fixed0')); 
-										?>
-									</td>
 									<td>
 										<?php 
 										echo $form->dropDownList($u,"[$i]unidad",CHtml::listData(Unidadfaena::listar(), 'id', 'nombre'),array('style'=>'width:100px'));  
@@ -162,9 +156,6 @@ $cs->registerCoreScript('jquery');
 										<div class="add">Agregar PU por tiempo</div>
 										<textarea class="template" rows="0" cols="0">
 											<tr class="templateContent">
-												<td width="100px">
-												<?php echo CHtml::textField('Unidadfaena[{0}][cantidad]','',array('style'=>'width:100px','class'=>'fixed0')); ?>
-												</td>
 												<td width="100px">	
 													<?php echo CHtml::dropDownList('Unidadfaena[{0}][unidad]','',CHtml::listData(Unidadfaena::listar(), 'id', 'nombre'),array('style'=>'width:100px')); ?>
 												</td>

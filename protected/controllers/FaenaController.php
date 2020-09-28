@@ -55,15 +55,13 @@ class FaenaController extends Controller {
 		$i++;
 		foreach($us as $u){
 			$objPHPExcel->setActiveSheetIndex(0)
-					->setCellValue('A'.$i, $u->cantidad)
-					->setCellValue('B'.$i, Unidadfaena::getUnidad($u->unidad))
-					->setCellValue('C'.$i, $u->pu);
+					->setCellValue('A'.$i, Unidadfaena::getUnidad($u->unidad))
+					->setCellValue('B'.$i, $u->pu);
 			$i++;
 		}
 		$objPHPExcel->setActiveSheetIndex(0)
-		->setCellValue('A'.$iTitulos, 'Cantidad')
-		->setCellValue('B'.$iTitulos,'Unidad')
-		->setCellValue('C'.$iTitulos, 'PU');
+		->setCellValue('A'.$iTitulos,'Unidad')
+		->setCellValue('B'.$iTitulos, 'PU');
 		
 		$sheet = $objPHPExcel->getActiveSheet();
 		$styleArray = array('font' => array('bold' => true));
@@ -198,7 +196,6 @@ class FaenaController extends Controller {
 				for($j=0;$j<count($_POST['Unidadfaena']);$j++){
 					$od = new Unidadfaena();
 					$od->unidad = $_POST['Unidadfaena'][$j]['unidad'];
-					$od->cantidad = $_POST['Unidadfaena'][$j]['cantidad'];
 					$od->faena_id = 1;
 					$od->pu = $_POST['Unidadfaena'][$j]['pu'];
 					$valid = $od->validate() && $valid;
@@ -226,7 +223,6 @@ class FaenaController extends Controller {
 						for($j=0;$j<count($_POST['Unidadfaena']);$j++){
 							$od = new Unidadfaena();
 							$od->unidad = $_POST['Unidadfaena'][$j]['unidad'];
-							$od->cantidad = $_POST['Unidadfaena'][$j]['cantidad'];
 							$od->faena_id = $model->id;
 							$od->pu = $_POST['Unidadfaena'][$j]['pu'];
 							$od->save();
@@ -338,7 +334,6 @@ class FaenaController extends Controller {
 							if($u == null){
 								$u = new Unidadfaena();
 							}
-							$u->cantidad = $up['cantidad'];
 							$u->unidad = $up['unidad'];
 							$u->faena_id = $id;
 							$u->pu = $up['pu'];

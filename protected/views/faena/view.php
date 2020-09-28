@@ -27,7 +27,7 @@ $this->menu=array(
 	),
 )); ?>
 <br/>
-<h3>PU's por distancia de la Faena:</h3>
+<h3>PU's por volumen de la Faena:</h3>
 <table>
 	<thead>
 		<tr>
@@ -69,9 +69,6 @@ $this->menu=array(
 	<thead>
 		<tr>
 			<th style='background:#e5f1f4;border:white 1px solid;'>
-				Cantidad
-			</th>
-			<th style='background:#e5f1f4;border:white 1px solid;'>
 				Unidad
 			</th>
 			<th style='background:#e5f1f4;border:white 1px solid;'>
@@ -83,10 +80,8 @@ $this->menu=array(
 	<?php 
         foreach ($us as $u) {                
 			$unidad = Unidadfaena::getUnidad($u->unidad);
-			$cantidad = $u->cantidad;
 			echo "
 				<tr>
-					<td style='background:#f8f8f8;border:white 1px solid;'>".$cantidad."</td>
 					<td style='background:#f8f8f8;border:white 1px solid;'>".$unidad."</td>
 					<td style='background:#f8f8f8;border:white 1px solid;'>".$u['pu']."</td>
 				</tr>";
