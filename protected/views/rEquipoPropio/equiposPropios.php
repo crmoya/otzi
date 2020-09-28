@@ -1076,12 +1076,13 @@ $this->endWidget('zii.widgets.jui.CJuiDialog');
 			}
 			$archivos = Tools::dirToArray($path);
 			if(count($archivos)>0):
-			foreach($archivos as $a => $archivo):?>	
-				<div class="archivo">
-					<input style="display:none;" type="checkbox" name="eliminar[<?=$archivo?>]" class="eliminar" href="#">	
-					<a target="_blank" href="<?=CController::createUrl("//admin/download",['file'=>$archivo,'id'=>$model->id,,'tipo'=>'equipos_propios']);?>"><?=$archivo?></a>
-				</div>
-			<?php endforeach;endif;?>
+			foreach($archivos as $a => $archivo){	
+				echo '<div class="archivo">'.
+					'<input style="display:none;" type="checkbox" name="eliminar['.$archivo.']" class="eliminar" href="#">	'.
+					'<a target="_blank" href="'.CController::createUrl("//admin/download",["file"=>$archivo,"id"=>$model->id,"tipo"=>"equipos_propios"]).'">'.$archivo.'</a>'.
+				'</div>';
+			}
+			endif;?>
 		</div>
 		<br/>
 		<div class="row">

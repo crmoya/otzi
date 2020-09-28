@@ -1,28 +1,29 @@
 <?php
 
 /**
- * This is the model class for table "expedicionportiempo".
+ * This is the model class for table "expedicionportiempoarr".
  *
- * The followings are the available columns in table 'expedicionportiempo':
+ * The followings are the available columns in table 'expedicionportiempoarr':
  * @property integer $id
  * @property string $cantidad
  * @property string $total
- * @property integer $rcamionpropio_id
  * @property integer $unidadfaena_id
+ * @property integer $faena_id
+ * @property integer $rcamionarrendado_id
  *
  * The followings are the available model relations:
- * @property Rcamionpropio $rcamionpropio
+ * @property Faena $faena
  * @property Unidadfaena $unidadfaena
+ * @property Rcamionarrendado $rcamionarrendado
  */
-class Expedicionportiempo extends CActiveRecord
+class Expedicionportiempoarr extends CActiveRecord
 {
-
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'expedicionportiempo';
+		return 'expedicionportiempoarr';
 	}
 
 	/**
@@ -33,12 +34,12 @@ class Expedicionportiempo extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('cantidad, total, rcamionpropio_id, faena_id, unidadfaena_id', 'required'),
-			array('rcamionpropio_id, unidadfaena_id, faena_id', 'numerical', 'integerOnly'=>true),
+			array('cantidad, total, unidadfaena_id, faena_id, rcamionarrendado_id', 'required'),
+			array('unidadfaena_id, faena_id, rcamionarrendado_id', 'numerical', 'integerOnly'=>true),
 			array('cantidad, total', 'length', 'max'=>12),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, cantidad, total, rcamionpropio_id, unidadfaena_id, faena_id', 'safe', 'on'=>'search'),
+			array('id, cantidad, total, unidadfaena_id, faena_id, rcamionarrendado_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -50,8 +51,9 @@ class Expedicionportiempo extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'rcamionpropio' => array(self::BELONGS_TO, 'Rcamionpropio', 'rcamionpropio_id'),
+			'faena' => array(self::BELONGS_TO, 'Faena', 'faena_id'),
 			'unidadfaena' => array(self::BELONGS_TO, 'Unidadfaena', 'unidadfaena_id'),
+			'rcamionarrendado' => array(self::BELONGS_TO, 'Rcamionarrendado', 'rcamionarrendado_id'),
 		);
 	}
 
@@ -64,9 +66,9 @@ class Expedicionportiempo extends CActiveRecord
 			'id' => 'ID',
 			'cantidad' => 'Cantidad',
 			'total' => 'Total',
-			'rcamionpropio_id' => 'Rcamionpropio',
-			'unidadfaena_id' => 'Unidad',
+			'unidadfaena_id' => 'Unidadfaena',
 			'faena_id' => 'Faena',
+			'rcamionarrendado_id' => 'Rcamionarrendado',
 		);
 	}
 
@@ -91,8 +93,9 @@ class Expedicionportiempo extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('cantidad',$this->cantidad,true);
 		$criteria->compare('total',$this->total,true);
-		$criteria->compare('rcamionpropio_id',$this->rcamionpropio_id);
 		$criteria->compare('unidadfaena_id',$this->unidadfaena_id);
+		$criteria->compare('faena_id',$this->faena_id);
+		$criteria->compare('rcamionarrendado_id',$this->rcamionarrendado_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -103,7 +106,7 @@ class Expedicionportiempo extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Expedicionportiempo the static model class
+	 * @return Expedicionportiempoarr the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

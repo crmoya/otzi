@@ -346,6 +346,9 @@ $cs->registerCoreScript('jquery');
 		foreach ($viajes as $viaje) {
 			echo "nExpediciones++;";
 		}
+		foreach ($viajesT as $viajeT) {
+			echo "nExpedicionesT++;";
+		}
 		foreach ($cargas as $carga) {
 			echo "nCombustibles++;";
 		}
@@ -586,26 +589,6 @@ $cs->registerCoreScript('jquery');
 			return filtradas;
 		}
 
-		var filtradasT;
-		function filtrarT(id) {
-			filtradasT = Array();
-			var j = 0;
-			for (i = 0; i < faenas.length; i++) {
-				var faena = faenas[i];
-				var faena_id = faena[0];
-				if (faena_id == id) {
-					var reg = Array();
-					reg[0] = faena[1];
-					reg[1] = faena[2];
-					reg[2] = faena[3];
-					reg[3] = faena[4];
-					filtradas[j] = reg;
-					j++;
-				}
-			}
-			return filtradas;
-		}
-
 		$("#guardar").click(function() {
 			var valid = true;
 			valid = valid && checkNVueltas();
@@ -636,7 +619,48 @@ $cs->registerCoreScript('jquery');
 			valid = valid && checkExpediciones();
 			valid = valid && checkNumero();
 
+			valid = valid && checkUnidades();
+
 			return valid;
+		});
+
+		
+		function checkUnidades() {
+			var ok = true;
+			$('.unidadfaena').each(function(e){
+				var valor = $(this).val();
+				var id = $(this).attr('id');
+				var i = id.substring(id.length - 1);
+				if(valor == null || valor == ""){
+					$(this).css('background', 'pink');
+					ok = false;
+				}
+				else{
+					$(this).css('background', 'white');
+				}
+			});
+			return ok;
+		}
+
+
+		$(document).ready(function(e){
+			$('.faenaT').each(function(e){
+				var faenaId = $(this).val();
+				var id = $(this).attr('id');
+				var i = id.substring(id.length - 1);
+				$.ajax({
+					type: 'POST',
+					cache: false,
+					url: '<?=CController::createUrl('//faena/listunits')?>',
+					data: {faena_id: faenaId},
+					success: function(msg){
+						$('#unidadfaena'+i).html(msg);
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						
+					}
+				});
+			});
 		});
 
 	});
@@ -1001,7 +1025,7 @@ $cs->registerCoreScript('jquery');
 															<td>
 																<input type="hidden" class="rowIndex" value="<?php echo $i; ?>" />
 																<?php if ($model->validado == 0) : ?>
-																	<div class="remove" tipo="expedicion" id="removeExpedicion<?php echo $i; ?>" validate="true">Eliminar</div>
+																	<div class="remove" tipo="expedicionT" id="removeExpedicion<?php echo $i; ?>" validate="true">Eliminar</div>
 																<?php else : ?>
 																	<div tipo="expedicion" id="removeExpedicion<?php echo $i; ?>" validate="true"></div>
 																<?php endif; ?>
@@ -1049,7 +1073,7 @@ $cs->registerCoreScript('jquery');
 															  <td>
 															   	<input type="hidden" class="rowIndex" value="{0}" />
                                                                                                                                 <?php if ($model->validado == 0) : ?>
-															   	<div class="remove" tipo="expedicion" id="removeExpedicion{0}" validate="true">Eliminar</div>
+															   	<div class="remove" tipo="expedicionT" id="removeExpedicion{0}" validate="true">Eliminar</div>
                                                                                                                                 <?php endif; ?>
 															  </td>															  
 															</tr>

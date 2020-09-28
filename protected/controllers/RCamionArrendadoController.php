@@ -180,9 +180,9 @@ class RCamionArrendadoController extends Controller
 
 
 		$viajes = ViajeCamionArrendado::model()->findAllByAttributes(array('rCamionArrendado_id' => $id));
+		$viajesT = Expedicionportiempoarr::model()->findAllByAttributes(array('rcamionarrendado_id' => $id));
 		$cargas = CargaCombCamionArrendado::model()->findAllByAttributes(array('rCamionArrendado_id' => $id));
 		$compras = CompraRepuestoCamionArrendado::model()->findAllByAttributes(array('rCamionArrendado_id' => $id));
-
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -259,6 +259,10 @@ class RCamionArrendadoController extends Controller
 							$valid = $viaje->validate() && $valid;
 							$viaje->delete();
 						}
+						foreach ($viajesT as $viajeT) {
+							$valid = $viajeT->validate() && $valid;
+							$viajeT->delete();
+						}
 					}
 					if (Yii::app()->user->rol == "administrador") {
 						foreach ($cargas as $carga) {
@@ -287,6 +291,24 @@ class RCamionArrendadoController extends Controller
 								if ($valid) {
 									$viaje->save();
 								}
+							}
+						}
+
+						if (isset($_POST['Expedicionportiempoarr']) && $model->validado == 0) {
+
+							
+							foreach ($_POST['Expedicionportiempoarr'] as $i => $viajeTArr) {								
+								$viajeT = new Expedicionportiempoarr();
+								$viajeT->unidadfaena_id = $viajeTArr['unidadfaena_id'];
+								$viajeT->faena_id = $viajeTArr['faena_id'];
+								$viajeT->rcamionarrendado_id = $model->id;
+								$viajeT->total = $viajeTArr['total'];
+								$viajeT->cantidad = $viajeTArr['cantidad'];
+								$valid = $valid && $viajeT->validate();
+								if ($valid) {
+									$viajeT->save();
+								}
+								
 							}
 						}
 
@@ -384,6 +406,7 @@ class RCamionArrendadoController extends Controller
 			$this->render('camionesArrendados', array(
 				'model' => $model,
 				'viajes' => $viajes,
+				'viajesT' => $viajesT,
 				'cargas' => $cargas,
 				'compras' => $compras,
 				'capacidad' => $capacidad,
@@ -393,6 +416,7 @@ class RCamionArrendadoController extends Controller
 			$this->render('camionesArrendadosOp', array(
 				'model' => $model,
 				'viajes' => $viajes,
+				'viajesT' => $viajesT,
 				'cargas' => $cargas,
 				'compras' => $compras,
 				'capacidad' => $capacidad,

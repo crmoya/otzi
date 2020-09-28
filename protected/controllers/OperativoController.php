@@ -229,6 +229,22 @@ class OperativoController extends Controller
 						}
 					}
 				}
+
+				if (isset($_POST['Expedicionportiempo']) && $model->validado == 0) {
+					foreach ($_POST['Expedicionportiempo'] as $i => $viajeTArr) {								
+						$viajeT = new Expedicionportiempo();
+						$viajeT->unidadfaena_id = $viajeTArr['unidadfaena_id'];
+						$viajeT->faena_id = $viajeTArr['faena_id'];
+						$viajeT->rcamionpropio_id = $model->id;
+						$viajeT->total = $viajeTArr['total'];
+						$viajeT->cantidad = $viajeTArr['cantidad'];
+						$valid = $viajeT->validate();
+						if ($valid) {
+							$viajeT->save();
+						}
+					}
+				}
+
 				if (isset($_POST['CargaCombCamionPropio'])) {
 					foreach ($_POST['CargaCombCamionPropio'] as $i => $cargaArr) {
 						$carga = new CargaCombCamionPropio();
@@ -659,6 +675,24 @@ class OperativoController extends Controller
 						}
 					}
 				}
+
+
+				if (isset($_POST['Expedicionportiempo']) && $model->validado == 0) {
+					foreach ($_POST['Expedicionportiempo'] as $i => $viajeTArr) {								
+						$viajeT = new Expedicionportiempoarr();
+						$viajeT->unidadfaena_id = $viajeTArr['unidadfaena_id'];
+						$viajeT->faena_id = $viajeTArr['faena_id'];
+						$viajeT->rcamionarrendado_id = $model->id;
+						$viajeT->total = $viajeTArr['total'];
+						$viajeT->cantidad = $viajeTArr['cantidad'];
+						$valid = $viajeT->validate();
+						if ($valid) {
+							$viajeT->save();
+						}
+					}
+				}
+
+
 				if (isset($_POST['CargaCombCamionArrendado'])) {
 					foreach ($_POST['CargaCombCamionArrendado'] as $i => $cargaArr) {
 						$carga = new CargaCombCamionArrendado();

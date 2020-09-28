@@ -101,6 +101,9 @@ jQuery(document).ready(function () {
 		if ($(this).attr("tipo") == "expedicion") {
 			nExpediciones++;
 		}
+		if ($(this).attr("tipo") == "expedicionT") {
+			nExpedicionesT++;
+		}
 		if ($(this).attr("tipo") == "combustible") {
 			nCombustibles++;
 		}
@@ -108,6 +111,22 @@ jQuery(document).ready(function () {
 			nRepuestos++;
 		}
 	});
+
+	$(document.body).on('click', '.remove', function (e) {
+		if ($(this).attr("tipo") == "expedicion") {
+			nExpediciones--;
+		}
+		if ($(this).attr("tipo") == "expedicionT") {
+			nExpedicionesT--;
+		}
+		if ($(this).attr("tipo") == "combustible") {
+			nCombustibles--;
+		}
+		if ($(this).attr("tipo") == "repuesto") {
+			nRepuestos--;
+		}
+	});
+
 	$(document.body).on('click', '.remove', function (e) {
 		$(this).parents(".templateContent:first").remove();
 		hideEmptyHeaders();
@@ -512,6 +531,7 @@ function checkCompareFechas() {
 }
 
 var nExpediciones = 0;
+var nExpedicionesT = 0;
 var nCombustibles = 0;
 var nRepuestos = 0;
 
@@ -602,7 +622,7 @@ function checkExpediciones() {
 			expReales++;
 		}
 	}
-	if (expReales == 0) {
+	if (expReales == 0 && nExpedicionesT == 0) {
 		alert('Por favor ingrese al menos una expedición.');
 		return false;
 	} else {

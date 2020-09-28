@@ -286,6 +286,10 @@ class RCamionPropioController extends Controller
 							$valid = $viaje->validate() && $valid;
 							$viaje->delete();
 						}
+						foreach ($viajesT as $viajeT) {
+							$valid = $viajeT->validate() && $valid;
+							$viajeT->delete();
+						}
 					}
 					if (Yii::app()->user->rol == "administrador") {
 						foreach ($cargas as $carga) {
@@ -313,6 +317,21 @@ class RCamionPropioController extends Controller
 								$valid = $valid && $viaje->validate();
 								if ($valid) {
 									$viaje->save();
+								}
+							}
+						}
+
+						if (isset($_POST['Expedicionportiempo']) && $model->validado == 0) {
+							foreach ($_POST['Expedicionportiempo'] as $i => $viajeTArr) {								
+								$viajeT = new Expedicionportiempo();
+								$viajeT->unidadfaena_id = $viajeTArr['unidadfaena_id'];
+								$viajeT->faena_id = $viajeTArr['faena_id'];
+								$viajeT->rcamionpropio_id = $model->id;
+								$viajeT->total = $viajeTArr['total'];
+								$viajeT->cantidad = $viajeTArr['cantidad'];
+								$valid = $valid && $viajeT->validate();
+								if ($valid) {
+									$viajeT->save();
 								}
 							}
 						}
@@ -430,6 +449,7 @@ class RCamionPropioController extends Controller
 			$this->render('camionesPropiosOp', array(
 				'model' => $model,
 				'viajes' => $viajes,
+				'viajesT' => $viajesT,
 				'cargas' => $cargas,
 				'compras' => $compras,
 				'capacidad' => $capacidad,
