@@ -16,6 +16,8 @@
  */
 class Expedicionportiempo extends CActiveRecord
 {
+
+	public $faena_id;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -64,7 +66,8 @@ class Expedicionportiempo extends CActiveRecord
 			'cantidad' => 'Cantidad',
 			'total' => 'Total',
 			'rcamionpropio_id' => 'Rcamionpropio',
-			'unidadfaena_id' => 'Unidadfaena',
+			'unidadfaena_id' => 'Unidad',
+			'faena_id' => 'Faena',
 		);
 	}
 

@@ -143,8 +143,12 @@ class FaenaController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('index', 'admin', 'view', 'createv', 'update', 'adminv', 'delete','exportar','export'),
+                'actions' => array('index', 'admin', 'view', 'createv', 'update', 'adminv', 'delete','exportar','export','listunits','getunit'),
                 'roles' => array('administrador'),
+			),
+			array('allow', // allow admin user to perform 'admin' and 'delete' actions
+                'actions' => array('listunits','getunit'),
+                'roles' => array('operativo'),
             ),
             array('allow',
             	'actions'=> array('getOrigenesDestinos'),
@@ -387,6 +391,29 @@ class FaenaController extends Controller {
         else
             throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
     }
+
+	public function actionListunits() {
+		$faena_id = (int)$_POST['faena_id'];
+		$unidades = Unidadfaena::model()->findAllByAttributes(['faena_id'=>$faena_id]);
+		$dev = "";
+		foreach($unidades as $unidad){
+			$dev .= "<option value='" . $unidad->id . "'>" . Unidadfaena::getUnidad($unidad->unidad) . "</option>";
+		}
+		echo $dev;
+	}
+	
+	public function actionGetunit() {
+		if(!isset($_POST['unidad_id'])){
+			echo "ERROR";
+		}
+		else{
+			$unidad_id = (int)$_POST['unidad_id'];
+			$unidad = Unidadfaena::model()->findByPk($unidad_id);
+			echo $unidad->pu;
+		}
+		
+    }
+
 
     /**
      * Lists all models.
