@@ -69,6 +69,9 @@ $this->menu=array(
 	<thead>
 		<tr>
 			<th style='background:#e5f1f4;border:white 1px solid;'>
+				Camión o Camioneta
+			</th>
+			<th style='background:#e5f1f4;border:white 1px solid;'>
 				Unidad
 			</th>
 			<th style='background:#e5f1f4;border:white 1px solid;'>
@@ -80,8 +83,18 @@ $this->menu=array(
 	<?php 
         foreach ($us as $u) {                
 			$unidad = Unidadfaena::getUnidad($u->unidad);
+			$camion_propio = CamionPropio::model()->findByPk($u->camionpropio_id);
+			$camion_arrendado = CamionArrendado::model()->findByPk($u->camionarrendado_id);
+			$camion = "";
+			if(isset($camion_propio)){
+				$camion = $camion_propio->nombre." (Propio)";
+			}
+			if(isset($camion_arrendado)){
+				$camion = $camion_arrendado->nombre." (Arrendado)";
+			}
 			echo "
 				<tr>
+					<td style='background:#f8f8f8;border:white 1px solid;'>".$camion."</td>
 					<td style='background:#f8f8f8;border:white 1px solid;'>".$unidad."</td>
 					<td style='background:#f8f8f8;border:white 1px solid;'>".$u['pu']."</td>
 				</tr>";

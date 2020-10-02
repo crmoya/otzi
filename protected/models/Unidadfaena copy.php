@@ -8,25 +8,12 @@
  * @property integer $unidad
  * @property string $pu
  * @property integer $faena_id
- * @property integer $camionpropio_id
- * @property integer $camionarrendado_id
  *
  * The followings are the available model relations:
- * @property Expedicionportiempo[] $expedicionportiempos
- * @property Expedicionportiempoarr[] $expedicionportiempoarrs
- * @property Camionarrendado $camionarrendado
- * @property Camionpropio $camionpropio
  * @property Faena $faena
  */
 class Unidadfaena extends CActiveRecord
 {
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'unidadfaena';
-	}
 
 	public $tipo_camion;
 
@@ -54,6 +41,33 @@ class Unidadfaena extends CActiveRecord
 		return "";
 	}
 
+	/**
+	 * @return string the associated database table name
+	 */
+	public function tableName()
+	{
+		return 'unidadfaena';
+	}
+
+	/**
+	 * @return array validation rules for model attributes.
+	 */
+	public function rules()
+	{
+		// NOTE: you should only define rules for those attributes that
+		// will receive user inputs.
+		return array(
+			array('unidad, pu, faena_id', 'required'),
+			array('unidad, faena_id', 'numerical', 'integerOnly'=>true),
+			array('pu', 'length', 'max'=>12),
+			array('pu', 'length', 'max'=>10),
+			array('pu','esDecimal'),
+			// The following rule is used by search().
+			// @todo Please remove those attributes that should not be searched.
+			array('id, unidad, pu, faena_id,camionpropio_id,camionarrendado_id', 'safe', 'on'=>'search'),
+		);
+	}
+
 	
 	public function esDecimal($attribute,$params)
 	{
@@ -71,26 +85,6 @@ class Unidadfaena extends CActiveRecord
 		
 	}
 
-
-
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('unidad, pu, faena_id', 'required'),
-			array('unidad, faena_id, camionpropio_id, camionarrendado_id', 'numerical', 'integerOnly'=>true),
-			array('pu', 'length', 'max'=>12),
-			array('pu','esDecimal'),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('id, unidad, pu, faena_id, camionpropio_id, camionarrendado_id', 'safe', 'on'=>'search'),
-		);
-	}
-
 	/**
 	 * @return array relational rules.
 	 */
@@ -99,10 +93,6 @@ class Unidadfaena extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'expedicionportiempos' => array(self::HAS_MANY, 'Expedicionportiempo', 'unidadfaena_id'),
-			'expedicionportiempoarrs' => array(self::HAS_MANY, 'Expedicionportiempoarr', 'unidadfaena_id'),
-			'camionarrendado' => array(self::BELONGS_TO, 'Camionarrendado', 'camionarrendado_id'),
-			'camionpropio' => array(self::BELONGS_TO, 'Camionpropio', 'camionpropio_id'),
 			'faena' => array(self::BELONGS_TO, 'Faena', 'faena_id'),
 		);
 	}
@@ -117,8 +107,6 @@ class Unidadfaena extends CActiveRecord
 			'unidad' => 'Unidad',
 			'pu' => 'Pu',
 			'faena_id' => 'Faena',
-			'camionpropio_id' => 'Camionpropio',
-			'camionarrendado_id' => 'Camionarrendado',
 		);
 	}
 
@@ -144,8 +132,6 @@ class Unidadfaena extends CActiveRecord
 		$criteria->compare('unidad',$this->unidad);
 		$criteria->compare('pu',$this->pu,true);
 		$criteria->compare('faena_id',$this->faena_id);
-		$criteria->compare('camionpropio_id',$this->camionpropio_id);
-		$criteria->compare('camionarrendado_id',$this->camionarrendado_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

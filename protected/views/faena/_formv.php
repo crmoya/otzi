@@ -113,6 +113,7 @@ $cs->registerCoreScript('jquery');
 		</table>
 	</div><!--complex-->
 
+	<h4>Precios unitarios de la faena para Camiones y Camionetas Propios o Arrendados</h4>
 
 	<div class="complex">
 		<table>
@@ -122,14 +123,43 @@ $cs->registerCoreScript('jquery');
 						<table class="templateFrame grid" cellspacing="0">
 							<tbody class="templateTarget">
 								<tr>
-									<td>Unidad</td>
+									<td>Camión o camioneta</td>
 									<td>PU</td>
+									<td>Unidad</td>
 									<td>&nbsp</td>
 								</tr>
 							<?php 
 							if(isset($unidades)){	
 								foreach($unidades as $i=>$u): ?>
 								<tr class="templateContent">
+									<td>
+									<table>
+										<tr>
+											<td>
+												<?php
+													$tipo = "";
+													if((int)$u->camionpropio_id > 0){
+														$tipo = "propio";
+													}
+													if((int)$u->camionarrendado_id > 0){
+														$tipo = "arrendado";
+													}
+													var_dump($tipo);
+												?>
+												<input i="<?=$i?>" type="radio" class="tipo_camion" name="Unidadfaena[<?=$i?>]tipo_camion" value="propios" <?=($tipo=="propio")?"checked='checked'":'';?>> Propios</br>
+												<input i="<?=$i?>" type="radio" class="tipo_camion" name="Unidadfaena[<?=$i?>]tipo_camion" value="arrendados" <?=($tipo=="arrendado")?"checked='checked'":'';?>> Arrendados
+											</td>
+											<td>
+												<?php 
+												echo CHtml::dropDownList("Unidadfaena[".$i."][camionpropio_id]",'',CHtml::listData(CamionPropio::model()->findAll(), 'id', 'nombre'),array('style'=>'width:150px;'.($tipo=="arrendado")?"display:none;":'','empty'=>'Seleccione Camión Propio','class'=>'camiones_propios'.$i));  
+												?>
+												<?php 
+												echo CHtml::dropDownList("Unidadfaena[".$i."][camionarrendado_id]",'',CHtml::listData(CamionArrendado::model()->findAll(), 'id', 'nombre'),array('style'=>'width:150px;'.$tipo=="propio"?"display:none;":'','empty'=>'Seleccione Camión Arrendado','class'=>'camiones_arrendados'.$i));  
+												?>
+											</td>
+										</tr>
+									</table>
+									</td>
 									<td>
 										<?php 
 										echo $form->dropDownList($u,"[$i]unidad",CHtml::listData(Unidadfaena::listar(), 'id', 'nombre'),array('style'=>'width:100px'));  
@@ -156,11 +186,30 @@ $cs->registerCoreScript('jquery');
 										<div class="add">Agregar PU por tiempo</div>
 										<textarea class="template" rows="0" cols="0">
 											<tr class="templateContent">
+												<td>
+													<table>
+														<tr>
+															<td>
+																<input i="{0}" type="radio" class="tipo_camion" name="Unidadfaena[{0}]tipo_camion" value="propios"> Propios</br>
+																<input i="{0}" type="radio" class="tipo_camion" name="Unidadfaena[{0}]tipo_camion" value="arrendados"> Arrendados
+															</td>
+															<td>
+																<?php 
+																echo CHtml::dropDownList("Unidadfaena[{0}][camionpropio_id]",'',CHtml::listData(CamionPropio::model()->findAll(), 'id', 'nombre'),array('style'=>'width:150px;display:none;','empty'=>'Seleccione Camión Propio','class'=>'camiones_propios{0}'));  
+																?>
+																<?php 
+																echo CHtml::dropDownList("Unidadfaena[{0}][camionarrendado_id]",'',CHtml::listData(CamionArrendado::model()->findAll(), 'id', 'nombre'),array('style'=>'width:150px;display:none;','empty'=>'Seleccione Camión Arrendado','class'=>'camiones_arrendados{0}'));  
+																?>
+															</td>
+														</tr>
+													</table>
+													
+												</td>
 												<td width="100px">	
 													<?php echo CHtml::dropDownList('Unidadfaena[{0}][unidad]','',CHtml::listData(Unidadfaena::listar(), 'id', 'nombre'),array('style'=>'width:100px')); ?>
 												</td>
 												<td width="100px">
-													<?php echo CHtml::textField('Unidadfaena[{0}][pu]','',array('style'=>'width:100px','class'=>'fixed')); ?>
+													<?php echo CHtml::textField('Unidadfaena[{0}][pu]','',array('style'=>'width:100px','class'=>'fixed unidad')); ?>
 												</td>
 												<td>
 													<input type="hidden" class="rowIndex" value="{0}" />
@@ -179,9 +228,40 @@ $cs->registerCoreScript('jquery');
 	</div><!--complex-->
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Crear' : 'Guardar'); ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? 'Crear' : 'Guardar',['id'=>'guardar']); ?>
 	</div>
 
 <?php $this->endWidget(); ?>
 
 </div><!-- form -->
+
+<script>
+$(document).ready(function(e){
+	$(document).on('click','.tipo_camion',function(e){
+		var i = $(this).attr('i');
+		$('.camiones_propios'+i).val("");
+		$('.camiones_arrendados'+i).val("");
+		var tipo = $(this).val();
+		if(tipo == "propios"){
+			$('.camiones_propios'+i).show();
+			$('.camiones_arrendados'+i).hide();
+		}
+		else{
+			$('.camiones_propios'+i).hide();
+			$('.camiones_arrendados'+i).show();
+		}
+	});
+
+	$('#guardar').click(function(e){
+		var ok = true;
+		$('.unidad').each(function(e){
+			$(this).css('background','white');
+			if($(this).val() == ""){
+				$(this).css('background','pink');
+				ok = false;
+			}
+		});
+		return ok;
+	});
+});
+</script>

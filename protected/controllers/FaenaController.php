@@ -323,6 +323,10 @@ class FaenaController extends Controller {
             		foreach($ues as $u){
             			array_push($ids,$u->id);
 					}
+
+
+					echo "<pre>";
+
 					if(isset($_POST['Unidadfaena'])){
 						foreach($_POST['Unidadfaena'] as $up){
 							$u = null;
@@ -338,10 +342,16 @@ class FaenaController extends Controller {
 							if($u == null){
 								$u = new Unidadfaena();
 							}
+
 							$u->unidad = $up['unidad'];
 							$u->faena_id = $id;
+							if($up['camionpropio_id'] != ""){
+								$u->camionpropio_id = $up['camionpropio_id'];
+							}
+							if($up['camionarrendado_id'] != ""){
+								$u->camionarrendado_id = $up['camionarrendado_id'];
+							}
 							$u->pu = $up['pu'];
-							
 							if($u->validate()){
 								$u->save();
 							}

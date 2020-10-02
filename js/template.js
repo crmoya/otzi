@@ -432,11 +432,11 @@ jQuery(document).ready(function () {
 	$(document.body).on('focus', '.fecha', function (e) {
 		$('.fecha').datepicker($.datepicker.regional["es"]);
 	});
-
+/*
 	$(document.body).on('click', '.add', function (e) {
 		$('.fecha').datepicker($.datepicker.regional["es"]);
 	});
-
+*/
 	$(document.body).on('change', '.fixedInt', function (e) {
 		var text = $(this).val();
 		text = text.replace(',', '.');
