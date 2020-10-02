@@ -144,7 +144,6 @@ $cs->registerCoreScript('jquery');
 													if((int)$u->camionarrendado_id > 0){
 														$tipo = "arrendado";
 													}
-													var_dump($tipo);
 												?>
 												<input i="<?=$i?>" type="radio" class="tipo_camion" name="Unidadfaena[<?=$i?>]tipo_camion" value="propios" <?=($tipo=="propio")?"checked='checked'":'';?>> Propios</br>
 												<input i="<?=$i?>" type="radio" class="tipo_camion" name="Unidadfaena[<?=$i?>]tipo_camion" value="arrendados" <?=($tipo=="arrendado")?"checked='checked'":'';?>> Arrendados
