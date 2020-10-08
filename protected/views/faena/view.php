@@ -104,3 +104,43 @@ $this->menu=array(
 	</tbody>
 
 </table>
+
+<table>
+	<thead>
+		<tr>
+			<th style='background:#e5f1f4;border:white 1px solid;'>
+				Equipo
+			</th>
+			<th style='background:#e5f1f4;border:white 1px solid;'>
+				Unidad
+			</th>
+			<th style='background:#e5f1f4;border:white 1px solid;'>
+				PU
+			</th>
+		</tr>
+	</thead>	
+	<tbody>
+	<?php 
+        foreach ($use as $u) {                
+			$unidad = UnidadfaenaEquipo::getUnidad($u->unidad);
+			$equipo_propio = EquipoPropio::model()->findByPk($u->equipopropio_id);
+			$equipo_arrendado = EquipoArrendado::model()->findByPk($u->equipoarrendado_id);
+			$equipo = "";
+			if(isset($equipo_propio)){
+				$equipo = $equipo_propio->nombre." (Propio)";
+			}
+			if(isset($equipo_arrendado)){
+				$equipo = $equipo_arrendado->nombre." (Arrendado)";
+			}
+			echo "
+				<tr>
+					<td style='background:#f8f8f8;border:white 1px solid;'>".$equipo."</td>
+					<td style='background:#f8f8f8;border:white 1px solid;'>".$unidad."</td>
+					<td style='background:#f8f8f8;border:white 1px solid;'>".$u['pu']."</td>
+				</tr>";
+                
+	}
+	?>
+	</tbody>
+
+</table>

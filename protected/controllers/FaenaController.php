@@ -21,6 +21,7 @@ class FaenaController extends Controller {
 		
 		$ods = Faena::model()->listarODs($id);
 		$us = Unidadfaena::model()->findAllByAttributes(['faena_id'=>$id]);
+		$use = UnidadfaenaEquipo::model()->findAllByAttributes(['faena_id'=>$id]);
 		$faena=$this->loadModel($id);
 		
 		// Add some data
@@ -55,14 +56,31 @@ class FaenaController extends Controller {
 		$i++;
 		foreach($us as $u){
 			$objPHPExcel->setActiveSheetIndex(0)
-					->setCellValue('A'.$i, Unidadfaena::getUnidad($u->unidad))
-					->setCellValue('B'.$i, $u->pu);
+					->setCellValue('A'.$i, isset($u->camionpropio)?$u->camionpropio->nombre." (propio)":$u->camionarrendado->nombre." (arrendado)")
+					->setCellValue('B'.$i, Unidadfaena::getUnidad($u->unidad))
+					->setCellValue('C'.$i, $u->pu);
 			$i++;
 		}
 		$objPHPExcel->setActiveSheetIndex(0)
-		->setCellValue('A'.$iTitulos,'Unidad')
-		->setCellValue('B'.$iTitulos, 'PU');
-		
+		->setCellValue('A'.$iTitulos,'Camión')
+		->setCellValue('B'.$iTitulos,'Unidad')
+		->setCellValue('C'.$iTitulos, 'PU');
+		$i++;
+		$iTitulos2 = $i;
+		$i++;
+
+		foreach($use as $u){
+			$objPHPExcel->setActiveSheetIndex(0)
+					->setCellValue('A'.$i, isset($u->equipopropio)?$u->equipopropio->nombre." (propio)":$u->equipoarrendado->nombre." (arrendado)")
+					->setCellValue('B'.$i, Unidadfaena::getUnidad($u->unidad))
+					->setCellValue('C'.$i, $u->pu);
+			$i++;
+		}
+		$objPHPExcel->setActiveSheetIndex(0)
+		->setCellValue('A'.$iTitulos2,'Equipo')
+		->setCellValue('B'.$iTitulos2,'Unidad')
+		->setCellValue('C'.$iTitulos2, 'PU');
+
 		$sheet = $objPHPExcel->getActiveSheet();
 		$styleArray = array('font' => array('bold' => true));
 		$sheet->getStyle('A7')->applyFromArray($styleArray);
@@ -77,6 +95,9 @@ class FaenaController extends Controller {
 		$sheet->getStyle('A'.$iTitulos)->applyFromArray($styleArray);
 		$sheet->getStyle('B'.$iTitulos)->applyFromArray($styleArray);
 		$sheet->getStyle('C'.$iTitulos)->applyFromArray($styleArray);
+		$sheet->getStyle('A'.$iTitulos2)->applyFromArray($styleArray);
+		$sheet->getStyle('B'.$iTitulos2)->applyFromArray($styleArray);
+		$sheet->getStyle('C'.$iTitulos2)->applyFromArray($styleArray);
 		
 		// Rename sheet
 		$objPHPExcel->getActiveSheet()->setTitle('Informe');
@@ -167,10 +188,12 @@ class FaenaController extends Controller {
     public function actionView($id) {
 		$ods = Faena::model()->listarODs($id);
 		$us = Unidadfaena::model()->findAllByAttributes(['faena_id'=>$id]);
+		$use = UnidadfaenaEquipo::model()->findAllByAttributes(['faena_id'=>$id]);
         $this->render('view', array(
             'model' => $this->loadModel($id),
 			'ods' => $ods,
 			'us' => $us,
+			'use' => $use,
         ));
     }
 
@@ -205,6 +228,16 @@ class FaenaController extends Controller {
 					$valid = $od->validate() && $valid;
 				}  
 			}
+
+			if(isset($_POST['UnidadfaenaEquipo'])){
+				for($j=0;$j<count($_POST['UnidadfaenaEquipo']);$j++){
+					$od = new UnidadfaenaEquipo();
+					$od->unidad = $_POST['UnidadfaenaEquipo'][$j]['unidad'];
+					$od->faena_id = 1;
+					$od->pu = $_POST['UnidadfaenaEquipo'][$j]['pu'];
+					$valid = $od->validate() && $valid;
+				}  
+			}
     		          
             if(!$valid){
             	Yii::app()->user->setFlash('errorGrabarFaena',"Error en el formulario. Por favor revise los datos.");
@@ -228,7 +261,28 @@ class FaenaController extends Controller {
 							$od = new Unidadfaena();
 							$od->unidad = $_POST['Unidadfaena'][$j]['unidad'];
 							$od->faena_id = $model->id;
+							if((int)$_POST['Unidadfaena'][$j]['camionpropio_id']>0){
+								$od->camionpropio_id = (int)$_POST['Unidadfaena'][$j]['camionpropio_id'];
+							}
+							if((int)$_POST['Unidadfaena'][$j]['camionarrendado_id']>0){
+								$od->camionarrendado_id = (int)$_POST['Unidadfaena'][$j]['camionarrendado_id'];
+							}
 							$od->pu = $_POST['Unidadfaena'][$j]['pu'];
+							$od->save();
+						}  
+					}
+					if(isset($_POST['UnidadfaenaEquipo'])){
+						for($j=0;$j<count($_POST['UnidadfaenaEquipo']);$j++){
+							$od = new UnidadfaenaEquipo();
+							$od->unidad = $_POST['UnidadfaenaEquipo'][$j]['unidad'];
+							$od->faena_id = $model->id;
+							if((int)$_POST['UnidadfaenaEquipo'][$j]['equipopropio_id']>0){
+								$od->equipopropio_id = (int)$_POST['UnidadfaenaEquipo'][$j]['equipopropio_id'];
+							}
+							if((int)$_POST['UnidadfaenaEquipo'][$j]['equipoarrendado_id']>0){
+								$od->equipoarrendado_id = (int)$_POST['UnidadfaenaEquipo'][$j]['equipoarrendado_id'];
+							}
+							$od->pu = $_POST['UnidadfaenaEquipo'][$j]['pu'];
 							$od->save();
 						}  
 					}
@@ -258,6 +312,7 @@ class FaenaController extends Controller {
         $model = $this->loadModel($id);
 		$ods = Faena::model()->listarODs($id);
 		$unidades = Unidadfaena::model()->findAllByAttributes(['faena_id'=>$id]);
+		$unidadesE = UnidadfaenaEquipo::model()->findAllByAttributes(['faena_id'=>$id]);
         
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
@@ -324,8 +379,11 @@ class FaenaController extends Controller {
             			array_push($ids,$u->id);
 					}
 
-
-					echo "<pre>";
+					$uese=UnidadfaenaEquipo::model()->findAllByAttributes(array('faena_id'=>$id));
+            		$idse = array();
+            		foreach($uese as $ue){
+            			array_push($idse,$ue->id);
+					}
 
 					if(isset($_POST['Unidadfaena'])){
 						foreach($_POST['Unidadfaena'] as $up){
@@ -345,11 +403,13 @@ class FaenaController extends Controller {
 
 							$u->unidad = $up['unidad'];
 							$u->faena_id = $id;
-							if($up['camionpropio_id'] != ""){
+							if($up['tipo_camion'] == "propios"){
 								$u->camionpropio_id = $up['camionpropio_id'];
+								$u->camionarrendado_id = null;
 							}
-							if($up['camionarrendado_id'] != ""){
+							if($up['tipo_camion'] == "arrendados"){
 								$u->camionarrendado_id = $up['camionarrendado_id'];
+								$u->camionpropio_id = null;
 							}
 							$u->pu = $up['pu'];
 							if($u->validate()){
@@ -358,8 +418,45 @@ class FaenaController extends Controller {
 						}
 					}
 
+					if(isset($_POST['UnidadfaenaEquipo'])){
+						foreach($_POST['UnidadfaenaEquipo'] as $upe){
+							$ue = null;
+							if(isset($upe['id'])){
+								if(in_array($upe['id'],$idse)){
+									$key = array_search($upe['id'],$idse);
+									unset($idse[$key]);
+									$idse = array_values($idse);
+								}
+								$ue = UnidadfaenaEquipo::model()->findByPk($upe['id']);      
+							} 		
+							
+							if($ue == null){
+								$ue = new UnidadfaenaEquipo();
+							}
+
+							$ue->unidad = $upe['unidad'];
+							$ue->faena_id = $id;
+							if($upe['tipo_equipo'] == "propios"){
+								$ue->equipopropio_id = $upe['equipopropio_id'];
+								$ue->equipoarrendado_id = null;
+							}
+							if($upe['tipo_equipo'] == "arrendados"){
+								$ue->equipoarrendado_id = $upe['equipoarrendado_id'];
+								$ue->equipopropio_id = null;
+							}
+							$ue->pu = $upe['pu'];
+							if($ue->validate()){
+								$ue->save();
+							}
+						}
+					}
+
 		            foreach($ids as $uId){
 		            	Unidadfaena::model()->deleteByPk($uId);
+					}
+
+					foreach($idse as $uIde){
+		            	UnidadfaenaEquipo::model()->deleteByPk($uIde);
 					}
 
 		         	if($model->validate()){
@@ -378,6 +475,7 @@ class FaenaController extends Controller {
             'model' => $model,
 			'ods' => $ods,
 			'unidades' => $unidades,
+			'unidadesE' => $unidadesE,
         ));
     }
 
@@ -404,7 +502,8 @@ class FaenaController extends Controller {
 
 	public function actionListunits() {
 		$faena_id = (int)$_POST['faena_id'];
-		$unidades = Unidadfaena::model()->findAllByAttributes(['faena_id'=>$faena_id]);
+		$camion_id = (int)$_POST['camion_id'];
+		$unidades = Unidadfaena::model()->findAllByAttributes(['faena_id'=>$faena_id,'camion_id'=>$camion_id]);
 		$dev = "";
 		foreach($unidades as $unidad){
 			$dev .= "<option value='" . $unidad->id . "'>" . Unidadfaena::getUnidad($unidad->unidad) . "</option>";

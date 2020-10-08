@@ -452,12 +452,13 @@ $cs->registerCoreScript('jquery');
 			var id = $(this).attr("id");
 			var i = id.substring(id.length - 1);
 			var faena_id = $(this).val();
+			var camion_id = $("#RCamionPropio_camionPropio_id").val();
 			$("#errorFaenaT_id" + i).html("");
 			$.ajax({
 				type: 'POST',
 				cache: false,
 				url: '<?=CController::createUrl('//faena/listunits')?>',
-				data: {faena_id: faena_id},
+				data: {faena_id: faena_id, camion_id: camion_id},
 				success: function(msg){
 					if(msg == ""){
 						$("#errorFaenaT_id" + i).html('ERROR: La faena no tiene unidades de tiempo disponibles');
