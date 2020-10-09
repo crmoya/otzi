@@ -14,7 +14,7 @@ class CamionArrendadoController extends Controller
 	function actionExportar()
 	{
 		// generate a resultset
-		$data = CamionArrendado::model()->findAll();
+		$data = CamionArrendado::model()->findAll(['order'=>'nombre']);
 		
 		$this->toExcel($data,
 			array('nombre','capacidad','consumoPromedio','coeficienteDeTrato','produccionMinima','horasMin','pesoOVolumen','vigente'),

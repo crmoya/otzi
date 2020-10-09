@@ -4,7 +4,6 @@ $cs=Yii::app()->clientScript;
 $cs->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.calculation.min.js', CClientScript::POS_HEAD);
 $cs->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.format.js', CClientScript::POS_HEAD);
 $cs->registerScriptFile(Yii::app()->baseUrl.'/js/template.js', CClientScript::POS_HEAD);
-$cs->registerScriptFile(Yii::app()->baseUrl.'/js/jquery-1.7.2.min.js', CClientScript::POS_HEAD);
 $cs->registerCoreScript('jquery'); 
 
 ?>
@@ -17,12 +16,13 @@ $cs->registerCoreScript('jquery');
 			var id = $(this).attr("id");
 			var i = id.substring(id.length - 1);
 			var faena_id = $(this).val();
+			var camion_id = $("#RCamionArrendado_camionArrendado_id").val();
 			$("#errorFaenaT_id" + i).html("");
 			$.ajax({
 				type: 'POST',
 				cache: false,
 				url: '<?=CController::createUrl('//faena/listunits')?>',
-				data: {faena_id: faena_id},
+				data: { faena_id: faena_id, camion_id: camion_id, arrendado: "true" },
 				success: function(msg){
 					if(msg == ""){
 						$("#errorFaenaT_id" + i).html('ERROR: La faena no tiene unidades de tiempo disponibles');
@@ -39,6 +39,13 @@ $cs->registerCoreScript('jquery');
 				}
 			});
 			
+		});
+
+		$('.camion').change(function(e){
+			$('.unidadfaena').empty();
+			$('.faenaT').val("");
+			$('.cantidad').val(0);
+			$('.totalT').val(0);
 		});
 
 		$(document.body).on('change', '.unidadfaena', function(e) {
@@ -90,7 +97,7 @@ $cs->registerCoreScript('jquery');
 						pu = $('#puT'+i).attr('pu');
 						var cantidad = $('#cantidad'+i).val();
 						var total = cantidad*pu;
-						console.log(pu + " " + cantidad);
+						
 						$('#totalT'+i).val(total.toFixed(2));
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -596,13 +603,15 @@ $cs->registerCoreScript('jquery');
 		$(document).ready(function(e){
 			$('.faenaT').each(function(e){
 				var faenaId = $(this).val();
+				var camion_id = $("#RCamionArrendado_camionArrendado_id").val();
 				var id = $(this).attr('id');
+				var selunidad = $(this).attr('selunidad');
 				var i = id.substring(id.length - 1);
 				$.ajax({
 					type: 'POST',
 					cache: false,
 					url: '<?=CController::createUrl('//faena/listunits')?>',
-					data: {faena_id: faenaId},
+					data: {faena_id: faenaId, camion_id: camion_id, selunidad: selunidad, arrendado: "true"},
 					success: function(msg){
 						$('#unidadfaena'+i).html(msg);
 					},
@@ -877,7 +886,7 @@ $cs->registerCoreScript('jquery');
 													<table style="border:solid 1px silver;padding:10px;">
 														<tr>
 															<td><?php echo $form->labelEx($expedicion, "faena_id", array('style' => 'width:80px;',)); ?></td>
-															<td><?php echo $form->dropDownList($expedicion, "[$i]faena_id", CHtml::listData(Faena::model()->listarPorTiempo(), 'id', 'nombre'), array('id' => "faenaT_id$i", 'class' => 'faenaT', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
+															<td><?php echo $form->dropDownList($expedicion, "[$i]faena_id", CHtml::listData(Faena::model()->listarPorTiempo(), 'id', 'nombre'), array('id' => "faenaT_id$i", 'class' => 'faenaT', 'selUnidad'=> $expedicion->unidadfaena->id, 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
 															<td>
 																<div id="errorFaenaT_id<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
@@ -901,7 +910,7 @@ $cs->registerCoreScript('jquery');
 																<div id="errorCantidad<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
 															<td><?php echo $form->labelEx($expedicion, "total", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->textField($expedicion, "[$i]total", array('id' => "totalT$i", 'class' => 'fixed', 'readonly' => 'readonly', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
+															<td><?php echo $form->textField($expedicion, "[$i]total", array('id' => "totalT$i", 'class' => 'fixed totalT', 'readonly' => 'readonly', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
 															<td>
 																<div id="errorTotal<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
@@ -944,7 +953,7 @@ $cs->registerCoreScript('jquery');
 															 <td><?php echo $form->textField($expedicion, "[{0}]cantidad", array('id' => "cantidad{0}", 'class' => 'cantidad fixed')); ?></td>
 															 <td><div id="errorCantidad{0}" style="color:red;width:100px;"></div></td>
 															 <td><?php echo $form->labelEx($expedicion, "total", array('style' => 'width:80px;')); ?></td>
-															 <td><?php echo $form->textField($expedicion, "[{0}]total", array('id' => "totalT{0}", 'class' => 'fixed', 'readonly' => 'readonly')); ?></td>
+															 <td><?php echo $form->textField($expedicion, "[{0}]total", array('id' => "totalT{0}", 'class' => 'fixed totalT', 'readonly' => 'readonly')); ?></td>
 															 <td><div id="errorTotalT{0}" style="color:red;width:100px;"></div></td>
 															 <td></td>
 															</tr>

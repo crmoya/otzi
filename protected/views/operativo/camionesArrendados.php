@@ -448,12 +448,13 @@ $cs->registerCoreScript('jquery');
 			var id = $(this).attr("id");
 			var i = id.substring(id.length - 1);
 			var faena_id = $(this).val();
+			var camion_id = $("#RCamionArrendado_camionArrendado_id").val();
 			$("#errorFaenaT_id" + i).html("");
 			$.ajax({
 				type: 'POST',
 				cache: false,
 				url: '<?=CController::createUrl('//faena/listunits')?>',
-				data: {faena_id: faena_id},
+				data: { faena_id: faena_id, camion_id: camion_id, arrendado: "true" },
 				success: function(msg){
 					if(msg == ""){
 						$("#errorFaenaT_id" + i).html('ERROR: La faena no tiene unidades de tiempo disponibles');
@@ -470,6 +471,14 @@ $cs->registerCoreScript('jquery');
 				}
 			});
 			
+		});
+
+		
+		$('.camion').change(function(e){
+			$('.unidadfaena').empty();
+			$('.faenaT').val("");
+			$('.cantidad').val(0);
+			$('.totalT').val(0);
 		});
 
 		$(document.body).on('change', '.unidadfaena', function(e) {
@@ -852,7 +861,7 @@ $cs->registerCoreScript('jquery');
 															 <td><?php echo $form->textField($expedicion, "[{0}]cantidad", array('id' => "cantidad{0}", 'class' => 'cantidad fixed')); ?></td>
 															 <td><div id="errorCantidad{0}" style="color:red;width:100px;"></div></td>
 															 <td><?php echo $form->labelEx($expedicion, "total", array('style' => 'width:80px;')); ?></td>
-															 <td><?php echo $form->textField($expedicion, "[{0}]total", array('id' => "totalT{0}", 'class' => 'fixed', 'readonly' => 'readonly')); ?></td>
+															 <td><?php echo $form->textField($expedicion, "[{0}]total", array('id' => "totalT{0}", 'class' => 'fixed totalT', 'readonly' => 'readonly')); ?></td>
 															 <td><div id="errorTotalT{0}" style="color:red;width:100px;"></div></td>
 															 <td></td>
 															</tr>

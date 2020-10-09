@@ -503,10 +503,25 @@ class FaenaController extends Controller {
 	public function actionListunits() {
 		$faena_id = (int)$_POST['faena_id'];
 		$camion_id = (int)$_POST['camion_id'];
-		$unidades = Unidadfaena::model()->findAllByAttributes(['faena_id'=>$faena_id,'camion_id'=>$camion_id]);
+		$selunidad = "";
+		$arrendado = false;
+		if(isset($_POST['selunidad'])){
+			$selunidad = $_POST['selunidad'];
+		}
+		if(isset($_POST['arrendado'])){
+			$arrendado = true;
+		}
+		$unidades = Unidadfaena::model()->findAllByAttributes(['faena_id'=>$faena_id,'camionpropio_id'=>$camion_id]);
+		if($arrendado){
+			$unidades = Unidadfaena::model()->findAllByAttributes(['faena_id'=>$faena_id,'camionarrendado_id'=>$camion_id]);
+		}
 		$dev = "";
 		foreach($unidades as $unidad){
-			$dev .= "<option value='" . $unidad->id . "'>" . Unidadfaena::getUnidad($unidad->unidad) . "</option>";
+			$selected = "";
+			if($selunidad == $unidad->id){
+				$selected = "selected";
+			}
+			$dev .= "<option $selected value='" . $unidad->id . "'>" . Unidadfaena::getUnidad($unidad->unidad) . "</option>";
 		}
 		echo $dev;
 	}

@@ -14,7 +14,7 @@ class CamionPropioController extends Controller
 	function actionExportar()
 	{
 		// generate a resultset
-		$data = CamionPropio::model()->findAll();
+		$data = CamionPropio::model()->findAll(['order'=>'nombre']);
 		
 		$this->toExcel($data,
 			array('nombre','codigo','capacidad','consumoPromedio','coeficienteDeTrato','produccionMinima','horasMin','pesoOVolumen','vigente'),

@@ -150,10 +150,10 @@ $cs->registerCoreScript('jquery');
 											</td>
 											<td>
 												<?php 
-												echo CHtml::dropDownList("Unidadfaena[".$i."][camionpropio_id]",'',CHtml::listData(CamionPropio::model()->findAll(), 'id', 'nombre'),array('style'=>'width:150px;','empty'=>'Seleccione Camión Propio','class'=>'camiones_propios'.$i, 'options'=>[$u->camionpropio_id=>['selected'=>true]]));  
+												echo CHtml::dropDownList("Unidadfaena[".$i."][camionpropio_id]",'',CHtml::listData(CamionPropio::model()->findAll(['order'=>'nombre']), 'id', 'nombre'),array('style'=>'width:150px;','empty'=>'Seleccione Camión Propio','class'=>'camiones_propios'.$i, 'options'=>[$u->camionpropio_id=>['selected'=>true]]));  
 												?>
 												<?php 
-												echo CHtml::dropDownList("Unidadfaena[".$i."][camionarrendado_id]",'',CHtml::listData(CamionArrendado::model()->findAll(), 'id', 'nombre'),array('style'=>'width:150px;','empty'=>'Seleccione Camión Arrendado','class'=>'camiones_arrendados'.$i, 'options'=>[$u->camionarrendado_id=>['selected'=>true]]));  
+												echo CHtml::dropDownList("Unidadfaena[".$i."][camionarrendado_id]",'',CHtml::listData(CamionArrendado::model()->findAll(['order'=>'nombre']), 'id', 'nombre'),array('style'=>'width:150px;','empty'=>'Seleccione Camión Arrendado','class'=>'camiones_arrendados'.$i, 'options'=>[$u->camionarrendado_id=>['selected'=>true]]));  
 												?>
 											</td>
 										</tr>
@@ -194,10 +194,10 @@ $cs->registerCoreScript('jquery');
 															</td>
 															<td>
 																<?php 
-																echo CHtml::dropDownList("Unidadfaena[{0}][camionpropio_id]",'',CHtml::listData(CamionPropio::model()->findAll(), 'id', 'nombre'),array('style'=>'width:150px;display:none;','empty'=>'Seleccione Camión Propio','class'=>'camiones_propios{0}'));  
+																echo CHtml::dropDownList("Unidadfaena[{0}][camionpropio_id]",'',CHtml::listData(CamionPropio::model()->findAll(['order'=>'nombre']), 'id', 'nombre'),array('style'=>'width:150px;display:none;','empty'=>'Seleccione Camión Propio','class'=>'camiones_propios{0}'));  
 																?>
 																<?php 
-																echo CHtml::dropDownList("Unidadfaena[{0}][camionarrendado_id]",'',CHtml::listData(CamionArrendado::model()->findAll(), 'id', 'nombre'),array('style'=>'width:150px;display:none;','empty'=>'Seleccione Camión Arrendado','class'=>'camiones_arrendados{0}'));  
+																echo CHtml::dropDownList("Unidadfaena[{0}][camionarrendado_id]",'',CHtml::listData(CamionArrendado::model()->findAll(['order'=>'nombre']), 'id', 'nombre'),array('style'=>'width:150px;display:none;','empty'=>'Seleccione Camión Arrendado','class'=>'camiones_arrendados{0}'));  
 																?>
 															</td>
 														</tr>
