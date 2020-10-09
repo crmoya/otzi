@@ -26,12 +26,16 @@ $cs->registerCoreScript('jquery');
 					if(msg == ""){
 						$("#errorFaenaT_id" + i).html('ERROR: La faena no tiene unidades de tiempo disponibles');
 						$('#unidadfaena'+i).empty();
+						$("#puT" + i).attr("pu", 0);
+						$("#labelPUt" + i).val(0);
 					}else{
-						$('#unidadfaena'+i).html(msg);
+						var msgArr = msg.split("-||-");
+						$('#unidadfaena'+i).html(msgArr[0]);
+						$("#puT" + i).attr("pu", msgArr[1]);
+						$("#labelPUt" + i).val(msgArr[1]);
 					}
 					$('#cantidad'+i).val(0);
 					$('#totalT'+i).val(0);
-					$("#puT" + i).attr("pu", 0);
 				},
 				error: function(XMLHttpRequest, textStatus, errorThrown) {
 					

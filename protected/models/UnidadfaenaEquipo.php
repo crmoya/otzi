@@ -30,21 +30,17 @@ class UnidadfaenaEquipo extends CActiveRecord
 
 	public static function listar(){
 		return [
-			['id' =>1, 'nombre'=>'MINUTOS'], 
-			['id' =>2, 'nombre'=>'HORAS'], 
-			['id' =>3, 'nombre'=>'DÍAS'], 
-			['id' =>4, 'nombre'=>'SEMANAS'], 
-			['id' =>5, 'nombre'=>'MESES'], 
+			['id' =>1, 'nombre'=>'HORAS'], 
+			['id' =>2, 'nombre'=>'DÍAS'], 
+			['id' =>3, 'nombre'=>'MESES'], 
 		];
 	}
 
 	public static function getUnidad($unidad){
 		$unidades = [
-			1=>'MINUTOS', 
-			2=>'HORAS', 
-			3=>'DÍAS', 
-			4=>'SEMANAS', 
-			5=>'MESES', 
+			1=>'HORAS', 
+			2=>'DÍAS', 
+			3=>'MESES', 
 		];
 		if(isset($unidades[$unidad])){
 			return $unidades[$unidad];

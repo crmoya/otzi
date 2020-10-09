@@ -525,14 +525,20 @@ class FaenaController extends Controller {
 			$unidades = Unidadfaena::model()->findAllByAttributes(['faena_id'=>$faena_id,'camionarrendado_id'=>$camion_id]);
 		}
 		$dev = "";
+		$pu = 0;
+		$primero = true;
 		foreach($unidades as $unidad){
 			$selected = "";
 			if($selunidad == $unidad->id){
 				$selected = "selected";
 			}
+			if($primero){
+				$primero = false;
+				$pu = $unidad->pu;
+			}
 			$dev .= "<option $selected value='" . $unidad->id . "'>" . Unidadfaena::getUnidad($unidad->unidad) . "</option>";
 		}
-		echo $dev;
+		echo $dev."-||-".$pu;
 	}
 	
 	public function actionGetunit() {
