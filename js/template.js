@@ -219,7 +219,8 @@ jQuery(document).ready(function () {
 		var valorFinal = $(".fixedFinal").val();
 		var valor = valorFinal - valorInicial;
 		valor = new Number(valor);
-		$("#kmRecorridos").text(valor.toFixed(2));
+		//$("#kmRecorridos").text(valor.toFixed(2));
+		$("#kmRecorridos").val(valor.toFixed(2));
 	});
 
 	$(document.body).on('change', '.fixedFinal', function (e) {
@@ -237,7 +238,8 @@ jQuery(document).ready(function () {
 		var valorInicial = $(".fixedInicial").val();
 		var valor = valorFinal - valorInicial;
 		valor = new Number(valor);
-		$("#kmRecorridos").text(valor.toFixed(2));
+		//$("#kmRecorridos").text(valor.toFixed(2));
+		$("#kmRecorridos").val(valor.toFixed(2));
 	});
 
 	$(document.body).on('change', '.fixedHInicial', function (e) {
@@ -1243,8 +1245,8 @@ function checkCantidad() {
 
 function checkHorasArrendado() {
 	var valor = $("#REquipoArrendado_horas").val();
-	if (valor < 0) {
-		$("#REquipoArrendado_horas_em_").html("Debe ser mayor que 0");
+	if (valor <= 0 || valor > 24) {
+		$("#REquipoArrendado_horas_em_").html("Debe ser mayor que 0 y menor o igual a 24");
 		$("#REquipoArrendado_horas_em_").show();
 		return false;
 	}
@@ -1255,10 +1257,30 @@ function checkHorasArrendado() {
 
 	return true;
 }
+
+function checkKMs() {
+	var valor = $("#kmRecorridos").val();
+	if (valor < 0 || valor > 1000) {
+		$("#RCamionPropio_kms_em_").html("Debe ser mayor o igual a 0 y menor o igual a 1000");
+		$("#RCamionPropio_kms_em_").show();
+		$("#RCamionArrendado_kms_em_").html("Debe ser mayor o igual a 0 y menor o igual a 1000");
+		$("#RCamionArrendado_kms_em_").show();
+		return false;
+	}
+	else {
+		$("#RCamionPropio_kms_em_").html("");
+		$("#RCamionPropio_kms_em_").show();
+		$("#RCamionArrendado_kms_em_").html("");
+		$("#RCamionArrendado_kms_em_").show();
+	}
+
+	return true;
+}
+
 function checkHorasPropio() {
 	var valor = $("#REquipoPropio_horas").val();
-	if (valor < 0) {
-		$("#REquipoPropio_horas_em_").html("Debe ser mayor que 0");
+	if (valor <= 0 || valor > 24) {
+		$("#REquipoPropio_horas_em_").html("Debe ser mayor que 0 y menor o igual a 24");
 		$("#REquipoPropio_horas_em_").show();
 		return false;
 	}
@@ -1269,6 +1291,7 @@ function checkHorasPropio() {
 
 	return true;
 }
+
 
 function hideEmptyHeaders() {
 	$('.templateTarget').filter(function () { return $.trim($(this).text()) === '' }).siblings('.templateHead').hide();

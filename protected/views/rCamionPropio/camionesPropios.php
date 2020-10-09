@@ -611,6 +611,7 @@ $cs->registerCoreScript('jquery');
 
 		$("#guardar").click(function() {
 			var valid = true;
+			valid = valid && checkKMs();
 			valid = valid && checkNVueltas();
 			valid = valid && checkChofer();
 			valid = valid && checkFaena();
@@ -663,6 +664,11 @@ $cs->registerCoreScript('jquery');
 		}
 
 		$(document).ready(function(e){
+
+			var kms = ($('#RCamionPropio_kmFinal').val() - $('#RCamionPropio_kmInicial').val()).toFixed(2);
+			$('#kmRecorridos').val(kms);
+
+			
 			$('.faenaT').each(function(e){
 				var faenaId = $(this).val();
 				var camion_id = $("#RCamionPropio_camionPropio_id").val();
@@ -860,8 +866,8 @@ $cs->registerCoreScript('jquery');
 				<tr>
 					<td><?php echo $form->labelEx($model, "kmGps"); ?></td>
 					<td><?php echo $form->textField($model, "kmGps", array('class' => 'fixed', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?> <?php echo $form->error($model, 'kmGps'); ?></td>
-					<td style='font-size:0.9em;'><b>Km Recorridos:</b></td>
-					<td id="kmRecorridos"></td>
+					<td><?php echo $form->labelEx($model, "kms"); ?></td>
+					<td><?php echo $form->textField($model, "kms", array('class' => 'fixed','disabled'=>'disabled', 'readonly'=>'readonly', 'id' => "kmRecorridos")); ?> <?php echo $form->error($model, 'kms'); ?></td>
 				</tr>
 			</table>
 		</fieldset>

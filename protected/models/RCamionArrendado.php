@@ -16,7 +16,7 @@
  */
 class RCamionArrendado extends CActiveRecord
 {
-    
+    public $kms;
     public $administrador_1;
     public $administrador_2;
     public $clave_admin_1;
@@ -113,7 +113,8 @@ class RCamionArrendado extends CActiveRecord
 			'kmFinal' => 'Km Final',
 			'kmGps' => 'Km Gps',
 			'total' => 'Total en $',
-                    'validador_nm'=>'Validado Por',
+			'validador_nm'=>'Validado Por',
+			'kms' => 'KMs Recorridos',
 		);
 	}
 

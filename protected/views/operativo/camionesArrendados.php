@@ -558,6 +558,7 @@ $cs->registerCoreScript('jquery');
 		$("#guardar").click(function() {
 			var valid = true;
 			valid = valid && checkReporte;
+			valid = valid && checkKMs();
 			valid = valid && checkNVueltas();
 			valid = valid && checkChofer();
 			valid = valid && checkFaena();
@@ -738,8 +739,8 @@ $cs->registerCoreScript('jquery');
 				<tr>
 					<td><?php echo $form->labelEx($model, "kmGps"); ?></td>
 					<td><?php echo $form->textField($model, "kmGps", array('class' => 'fixed')); ?> <?php echo $form->error($model, 'kmGps'); ?></td>
-					<td style='font-size:0.9em;'><b>Km Recorridos:</b></td>
-					<td id="kmRecorridos"></td>
+					<td><?php echo $form->labelEx($model, "kms"); ?></td>
+					<td><?php echo $form->textField($model, "kms", array('class' => 'fixed','disabled'=>'disabled', 'readonly'=>'readonly', 'id' => "kmRecorridos")); ?> <?php echo $form->error($model, 'kms'); ?></td>
 				</tr>
 			</table>
 		</fieldset>
