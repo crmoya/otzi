@@ -210,7 +210,7 @@ $cs->registerCoreScript('jquery');
 														<tr>
 															<td colspan="2">
 																Observaciones:
-																<input type="text" style="width:100%;" name="Unidadfaena[<?=$i?>][observaciones]">
+																<input type="text" style="width:100%;" name="Unidadfaena[{0}][observaciones]">
 															</td>
 														</tr>
 													</table>													
