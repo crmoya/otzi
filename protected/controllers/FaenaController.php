@@ -513,6 +513,7 @@ class FaenaController extends Controller {
 		$faena_id = (int)$_POST['faena_id'];
 		$camion_id = (int)$_POST['camion_id'];
 		$selunidad = "";
+		$equipo = false;
 		$arrendado = false;
 		if(isset($_POST['selunidad'])){
 			$selunidad = $_POST['selunidad'];
@@ -520,9 +521,21 @@ class FaenaController extends Controller {
 		if(isset($_POST['arrendado'])){
 			$arrendado = true;
 		}
-		$unidades = Unidadfaena::model()->findAllByAttributes(['faena_id'=>$faena_id,'camionpropio_id'=>$camion_id]);
-		if($arrendado){
-			$unidades = Unidadfaena::model()->findAllByAttributes(['faena_id'=>$faena_id,'camionarrendado_id'=>$camion_id]);
+		if(isset($_POST['equipo'])){
+			$equipo = true;
+		}
+		$unidades = [];
+		if($equipo){
+			$unidades = UnidadfaenaEquipo::model()->findAllByAttributes(['faena_id'=>$faena_id,'equipopropio_id'=>$camion_id]);
+			if($arrendado){
+				$unidades = UnidadfaenaEquipo::model()->findAllByAttributes(['faena_id'=>$faena_id,'equipoarrendado_id'=>$camion_id]);
+			}
+		}
+		else{
+			$unidades = Unidadfaena::model()->findAllByAttributes(['faena_id'=>$faena_id,'camionpropio_id'=>$camion_id]);
+			if($arrendado){
+				$unidades = Unidadfaena::model()->findAllByAttributes(['faena_id'=>$faena_id,'camionarrendado_id'=>$camion_id]);
+			}
 		}
 		$dev = "";
 		$pu = 0;
@@ -547,7 +560,12 @@ class FaenaController extends Controller {
 		}
 		else{
 			$unidad_id = (int)$_POST['unidad_id'];
-			$unidad = Unidadfaena::model()->findByPk($unidad_id);
+			if(isset($_POST['equipo'])){
+				$unidad = UnidadfaenaEquipo::model()->findByPk($unidad_id);
+			}
+			else{
+				$unidad = Unidadfaena::model()->findByPk($unidad_id);
+			}
 			echo $unidad->pu;
 		}
 		

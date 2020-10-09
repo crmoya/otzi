@@ -15,7 +15,7 @@ class EquipoPropioController extends Controller
 	function actionExportar()
 	{
 		// generate a resultset
-		$data = EquipoPropio::model()->findAll();
+		$data = EquipoPropio::model()->findAll(['order'=>'nombre']);
 		
 		$this->toExcel($data,
 			array('nombre','codigo','horasMin','precioUnitario','consumoEsperado','coeficienteDeTrato','valorHora','vigente'),

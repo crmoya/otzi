@@ -204,6 +204,7 @@ class REquipoPropioController extends Controller
     {
         $model = $this->loadModel($id);
 
+        $viajesT = Expedicionequipopropio::model()->findAllByAttributes(array('requipopropio_id' => $id));
         $cargas = CargaCombEquipoPropio::model()->findAllByAttributes(array('rEquipoPropio_id' => $id));
         $compras = CompraRepuestoEquipoPropio::model()->findAllByAttributes(array('rEquipoPropio_id' => $id));
 
@@ -241,8 +242,6 @@ class REquipoPropioController extends Controller
             if ($model->validate()) {
                 if ($model->save()) {
 
-                    
-
 					//archivos del report
 					$path = Yii::app()->basePath . DIRECTORY_SEPARATOR . 'archivos' . DIRECTORY_SEPARATOR . "equipos_propios";
 					if(!is_dir($path)){
@@ -262,6 +261,8 @@ class REquipoPropioController extends Controller
 							}  
 						}
                     }
+                    $valid = true;
+
                     if($model->validado == 0){
                         if(isset($_POST['eliminar'])){
                             $eliminables = $_POST['eliminar'];
@@ -273,12 +274,13 @@ class REquipoPropioController extends Controller
                                 }
                             }
                         }
+                        foreach ($viajesT as $viajeT) {
+							$valid = $viajeT->validate() && $valid;
+							$viajeT->delete();
+						}
                     }
 					//end archivos del report
 
-
-
-                    $valid = true;
                     if (Yii::app()->user->rol == "administrador") {
                         foreach ($cargas as $carga) {
                             $valid = $carga->validate() && $valid;
@@ -290,6 +292,23 @@ class REquipoPropioController extends Controller
                         }
                     }
                     if ($valid) {
+
+
+                        if (isset($_POST['Expedicionequipopropio']) && $model->validado == 0) {
+							foreach ($_POST['Expedicionequipopropio'] as $i => $viajeTArr) {								
+								$viajeT = new Expedicionequipopropio();
+								$viajeT->unidadfaena_equipo_id = $viajeTArr['unidadfaena_equipo_id'];
+								$viajeT->faena_id = $viajeTArr['faena_id'];
+								$viajeT->requipopropio_id = $model->id;
+								$viajeT->total = $viajeTArr['total'];
+								$viajeT->cantidad = $viajeTArr['cantidad'];
+								$valid = $valid && $viajeT->validate();
+								if ($valid) {
+									$viajeT->save();
+								}
+							}
+						}
+
                         if (isset($_POST['CargaCombEquipoPropio'])) {
                             foreach ($_POST['CargaCombEquipoPropio'] as $i => $cargaArr) {
                                 $carga = null;
@@ -398,6 +417,7 @@ class REquipoPropioController extends Controller
                 'cargas' => $cargas,
                 'compras' => $compras,
                 'codigo' => $codigo,
+                'viajesT' => $viajesT,
             ));
         }
         if (Yii::app()->user->rol == "operativo") {
@@ -406,6 +426,7 @@ class REquipoPropioController extends Controller
                 'cargas' => $cargas,
                 'compras' => $compras,
                 'codigo' => $codigo,
+                'viajesT' => $viajesT,
             ));
         }
     }

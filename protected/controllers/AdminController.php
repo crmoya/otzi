@@ -312,7 +312,7 @@ class AdminController extends Controller
                         ->setKeywords("")
                         ->setCategory("Equipos Propios");
 
-                $equiposPropios = EquipoPropio::model()->findAll();
+                $equiposPropios = EquipoPropio::model()->findAll(['order'=>'nombre']);
                 $i = 1;
                 $objPHPExcel->setActiveSheetIndex(0)
                         ->setCellValue('A' . $i, "Nombre")
@@ -354,7 +354,7 @@ class AdminController extends Controller
                         ->setKeywords("")
                         ->setCategory("Equipos Arrendados");
 
-                $equiposArrendados = EquipoArrendado::model()->findAll();
+                $equiposArrendados = EquipoArrendado::model()->findAll(['order'=>'nombre']);
                 $i = 1;
                 $objPHPExcel->setActiveSheetIndex(0)
                         ->setCellValue('A' . $i, "Nombre")

@@ -14,7 +14,7 @@ class EquipoArrendadoController extends Controller
 	function actionExportar()
 	{
 		// generate a resultset
-		$data = EquipoArrendado::model()->findAll();
+		$data = EquipoArrendado::model()->findAll(['order'=>'nombre']);
 		
 		$this->toExcel($data,
 			array('nombre','horasMin','precioUnitario','consumoEsperado','coeficienteDeTrato','propietario_id','valorHora','vigente'),

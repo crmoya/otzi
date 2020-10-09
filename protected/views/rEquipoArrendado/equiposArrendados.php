@@ -9,7 +9,135 @@ $cs->registerCoreScript('jquery');
 ?>
 <script language="javascript" type="text/javascript">
 	$(function() {
-            
+		$('.equipo').change(function(e){
+			$('.unidadfaena').empty();
+			$('.faenaT').val("");
+			$('.cantidad').val(0);
+			$('.totalT').val(0);
+			$('.labelPUt').val(0);
+		});
+
+		$(document.body).on('change', '.faenaT', function(e) {
+			$('#unidadfaena'+i).empty();
+			var id = $(this).attr("id");
+			var i = id.substring(id.length - 1);
+			var faena_id = $(this).val();
+			var camion_id = $("#REquipoArrendado_equipoArrendado_id").val();
+			$("#errorFaenaT_id" + i).html("");
+			$.ajax({
+				type: 'POST',
+				cache: false,
+				url: '<?=CController::createUrl('//faena/listunits')?>',
+				data: { faena_id: faena_id, camion_id: camion_id, equipo: "equipo", arrendado: "arrendado" },
+				success: function(msg){
+					if(msg == ""){
+						$("#errorFaenaT_id" + i).html('ERROR: La faena no tiene unidades de tiempo disponibles');
+						$('#unidadfaena'+i).empty();
+						$("#puT" + i).attr("pu", 0);
+						$("#labelPUt" + i).val(0);
+					}else{
+						var msgArr = msg.split("-||-");
+						$('#unidadfaena'+i).html(msgArr[0]);
+						$("#puT" + i).attr("pu", msgArr[1]);
+						$("#labelPUt" + i).val(msgArr[1]);
+					}
+					$('#cantidad'+i).val(0);
+					$('#totalT'+i).val(0);
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					
+				}
+			});
+			
+		});
+
+		$(document.body).on('change', '.unidadfaena', function(e) {
+			var id = $(this).attr("id");
+			var i = id.substring(id.length - 1);
+			$("#puT" + i).attr("pu", 0);
+			$("#labelPUt" + i).val(0);
+			var unidad_id = $(this).val();
+			$.ajax({
+				type: 'POST',
+				cache: false,
+				url: '<?=CController::createUrl('//faena/getunit')?>',
+				data: {unidad_id: unidad_id, equipo: "equipo"},
+				success: function(msg){
+					if(msg == "ERROR"){
+						$("#errorFaenaT_id" + i).html('ERROR: La faena no tiene unidades de tiempo disponibles');
+					}else{
+						$('#puT'+i).attr('pu',msg);
+						$("#labelPUt" + i).val(msg);
+					}
+					var pu = $('#puT'+i).attr('pu');
+					var cantidad = $('#cantidad'+i).val();
+					var total = cantidad*pu;
+					$('#totalT'+i).val(total.toFixed(2));
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					
+				}
+			});
+			
+		});
+
+		$(document.body).on('change', '.cantidad', function(e) {
+			var id = $(this).attr("id");
+			var i = id.substring(id.length - 1);
+			var pu = $('#puT'+i).attr('pu');
+			if(pu == 0){
+				$.ajax({
+					type: 'POST',
+					cache: false,
+					url: '<?=CController::createUrl('//faena/getunit')?>',
+					data: {unidad_id:  $('#unidadfaena'+i).val()},
+					success: function(msg){
+						if(msg == "ERROR"){
+							$("#errorFaenaT_id" + i).html('ERROR: La faena no tiene unidades de tiempo disponibles');
+						}else{
+							$('#puT'+i).attr('pu',msg);
+							$("#labelPUt" + i).val(msg);
+						}
+						pu = $('#puT'+i).attr('pu');
+						var cantidad = $('#cantidad'+i).val();
+						var total = cantidad*pu;
+						console.log(pu + " " + cantidad);
+						$('#totalT'+i).val(total.toFixed(2));
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						
+					}
+				});
+			}
+			else{
+				var cantidad = $('#cantidad'+i).val();
+				var total = cantidad*pu;
+				$('#totalT'+i).val(total.toFixed(2));
+			}
+			
+		});
+
+		$('.faenaT').each(function(e){
+			var faenaId = $(this).val();
+			var camion_id = $("#REquipoArrendado_equipoArrendado_id").val();
+			var id = $(this).attr('id');
+			var selunidad = $(this).attr('selunidad');
+			var i = id.substring(id.length - 1);
+			$.ajax({
+				type: 'POST',
+				cache: false,
+				url: '<?=CController::createUrl('//faena/listunits')?>',
+				data: {faena_id: faenaId, camion_id: camion_id, selunidad: selunidad, equipo: "equipo", arrendado: "arrendado"},
+				success: function(msg){
+					$('#unidadfaena'+i).html(msg);
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					
+				}
+			});
+		});
+
+
             var proveedores = Array();
                 proveedores = [<?php
                     $resp = "";
@@ -531,6 +659,125 @@ $this->endWidget('zii.widgets.jui.CJuiDialog');
 			</tr>
 		 </table>
 	</fieldset>
+
+	<fieldset>
+		<legend>Expediciones con PU por tiempo</legend>
+		<div class="complex">
+			<table>
+				<tr>
+					<td style="vertical-align:top;">
+						<div>
+							<table class="templateFrame grid" cellspacing="0">
+								<tbody class="templateTarget">
+									<?php for ($i=0;$i<count($viajesT);$i++) : 
+										$expedicion = $viajesT[$i];?>
+										<tr class="templateContent">
+											<td width="100px">
+												<table style="border:solid 1px silver;padding:10px;">
+													<tr>
+														<td><?php echo $form->labelEx($expedicion, "faena_id", array('style' => 'width:80px;',)); ?></td>
+														<td><?php echo $form->dropDownList($expedicion, "[$i]faena_id", CHtml::listData(Faena::model()->listarPorTiempo(), 'id', 'nombre'), array('id' => "faenaT_id$i", 'class' => 'faenaT', 'selUnidad'=> $expedicion->unidadfaenaEquipo->id, 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
+														<td>
+															<div id="errorFaenaT_id<?php echo $i; ?>" style="color:red;width:100px;"></div>
+														</td>
+														<td><?php echo $form->labelEx($expedicion, "unidadfaena_equipo_id", array('style' => 'width:80px;')); ?></td>
+														<td><select name="Expedicionequipoarrendado[<?php echo $i; ?>][unidadfaena_equipo_id]" <?php echo $model->validado == 1 || $model->validado == 2 ? 'disabled' : ''; ?> class="unidadfaena" id="unidadfaena<?php echo $i; ?>"><option>Seleccione unidad de tiempo</option></select></td>
+														<td id="puT<?php echo $i; ?>" pu=""></td>
+														<td>
+															<input type="hidden" class="rowIndex" value="<?php echo $i; ?>" />
+															<?php if ($model->validado == 0) : ?>
+																<div class="remove" tipo="expedicionT" id="removeExpedicion<?php echo $i; ?>" validate="true">Eliminar</div>
+															<?php else : ?>
+																<div tipo="expedicion" id="removeExpedicion<?php echo $i; ?>" validate="true"></div>
+															<?php endif; ?>
+														</td>
+													</tr>
+													<tr>
+
+														<td><?php echo $form->labelEx($expedicion, "cantidad", array('style' => 'width:80px;',)); ?></td>
+														<td><?php echo $form->textField($expedicion, "[$i]cantidad", array('id' => "cantidad$i", 'class' => 'fixed cantidad', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
+														<td>
+															<div id="errorCantidad<?php echo $i; ?>" style="color:red;width:100px;"></div>
+														</td>
+														
+														<td><label><b>PU</b></label></td>
+														<td><input class="labelPUt" id="labelPUt<?=$i?>" type="text" value="<?=$expedicion->unidadfaenaEquipo->pu?>" readonly="readonly" enabled="disabled"/></td>
+														<td></td>
+														<td></td>
+													</tr>
+													<tr>
+														<td><?php echo $form->labelEx($expedicion, "total", array('style' => 'width:80px;')); ?></td>
+														<td><?php echo $form->textField($expedicion, "[$i]total", array('id' => "totalT$i", 'class' => 'fixed totalT', 'readonly' => 'readonly', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
+														<td>
+															<div id="errorTotal<?php echo $i; ?>" style="color:red;width:100px;"></div>
+														</td>
+
+														<td></td>
+													</tr>
+
+												</table>
+											</td>
+										</tr>
+									<?php endfor; ?>
+								</tbody>
+								<tfoot>
+									<tr>
+										<td>
+											<?php if ($model->validado == 0) : ?>
+												<div class="add" tipo="expedicionT">Agregar</div>
+											<?php endif; ?>
+											<textarea class="template" rows="0" cols="0">
+											<tr class="templateContent">
+												<td width="100px">
+													<?php $expedicion = new Expedicionequipoarrendado(); ?>
+													<table style="border:solid 1px silver;padding:10px;">
+														<tr>
+															<td><?php echo $form->labelEx($expedicion, "faena_id", array('style' => 'width:80px;')); ?></td>
+															<td><?php echo $form->dropDownList($expedicion, '[{0}]faena_id', CHtml::listData(Faena::model()->listarPorTiempo(), 'id', 'nombre'), array('id' => 'faena_idT{0}', 'class' => 'faenaT')); ?></td>
+															<td><div id="errorFaena_id{0}" style="color:red;width:100px;"></div></td>
+															<td><?php echo $form->labelEx($expedicion, "unidadfaena_equipo_id", array('style' => 'width:80px;')); ?></td>	
+															<td><select name="Expedicionequipoarrendado[{0}][unidadfaena_equipo_id]" class="unidadfaena" id="unidadfaena{0}"></select></td>	
+															<td id="puT{0}" pu=""></td>	
+															<td>
+															<input type="hidden" class="rowIndex" value="{0}" />
+																															<?php if ($model->validado == 0) : ?>
+															<div class="remove" tipo="expedicionT" id="removeExpedicion{0}" validate="true">Eliminar</div>
+																															<?php endif; ?>
+															</td>															  
+														</tr>
+														<tr>
+															<td><?php echo $form->labelEx($expedicion, "cantidad", array('style' => 'width:80px;')); ?></td>
+															<td><?php echo $form->textField($expedicion, "[{0}]cantidad", array('id' => "cantidad{0}", 'class' => 'cantidad fixed')); ?></td>
+															<td><div id="errorCantidad{0}" style="color:red;width:100px;"></div></td>
+															<td><label><b>PU</b></label></td>
+															<td><input class="labelPUt" id="labelPUt{0}" type="text" value="0.00" readonly="readonly" enabled="disabled"/></td>
+															<td></td>
+														</tr>
+														<tr>
+															<td><?php echo $form->labelEx($expedicion, "total", array('style' => 'width:80px;')); ?></td>
+															<td><?php echo $form->textField($expedicion, "[{0}]total", array('id' => "totalT{0}", 'class' => 'fixed totalT', 'readonly' => 'readonly')); ?></td>
+															<td><div id="errorTotalT{0}" style="color:red;width:100px;"></div></td>
+															<td></td>
+														</tr>
+
+													</table>	
+												</td>
+											</tr>
+										</textarea>
+										</td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+						<!--panel-->
+					</td>
+				</tr>
+			</table>
+		</div>
+		<!--complex-->
+	</fieldset>
+
+
 	<fieldset id="cargaComb">
 		<legend>Datos de carga de combustible</legend>
 		<div class="complex">
