@@ -58,13 +58,15 @@ class FaenaController extends Controller {
 			$objPHPExcel->setActiveSheetIndex(0)
 					->setCellValue('A'.$i, isset($u->camionpropio)?$u->camionpropio->nombre." (propio)":$u->camionarrendado->nombre." (arrendado)")
 					->setCellValue('B'.$i, Unidadfaena::getUnidad($u->unidad))
-					->setCellValue('C'.$i, $u->pu);
+					->setCellValue('C'.$i, $u->pu)
+					->setCellValue('D'.$i, $u->observaciones);
 			$i++;
 		}
 		$objPHPExcel->setActiveSheetIndex(0)
 		->setCellValue('A'.$iTitulos,'Camión')
 		->setCellValue('B'.$iTitulos,'Unidad')
-		->setCellValue('C'.$iTitulos, 'PU');
+		->setCellValue('C'.$iTitulos, 'PU')
+		->setCellValue('D'.$iTitulos, 'Observaciones');
 		$i++;
 		$iTitulos2 = $i;
 		$i++;
@@ -73,13 +75,15 @@ class FaenaController extends Controller {
 			$objPHPExcel->setActiveSheetIndex(0)
 					->setCellValue('A'.$i, isset($u->equipopropio)?$u->equipopropio->nombre." (propio)":$u->equipoarrendado->nombre." (arrendado)")
 					->setCellValue('B'.$i, Unidadfaena::getUnidad($u->unidad))
-					->setCellValue('C'.$i, $u->pu);
+					->setCellValue('C'.$i, $u->pu)
+					->setCellValue('D'.$i, $u->observaciones);
 			$i++;
 		}
 		$objPHPExcel->setActiveSheetIndex(0)
 		->setCellValue('A'.$iTitulos2,'Equipo')
 		->setCellValue('B'.$iTitulos2,'Unidad')
-		->setCellValue('C'.$iTitulos2, 'PU');
+		->setCellValue('C'.$iTitulos2, 'PU')
+		->setCellValue('D'.$iTitulos2, 'Observaciones');
 
 		$sheet = $objPHPExcel->getActiveSheet();
 		$styleArray = array('font' => array('bold' => true));
@@ -95,9 +99,11 @@ class FaenaController extends Controller {
 		$sheet->getStyle('A'.$iTitulos)->applyFromArray($styleArray);
 		$sheet->getStyle('B'.$iTitulos)->applyFromArray($styleArray);
 		$sheet->getStyle('C'.$iTitulos)->applyFromArray($styleArray);
+		$sheet->getStyle('D'.$iTitulos)->applyFromArray($styleArray);
 		$sheet->getStyle('A'.$iTitulos2)->applyFromArray($styleArray);
 		$sheet->getStyle('B'.$iTitulos2)->applyFromArray($styleArray);
 		$sheet->getStyle('C'.$iTitulos2)->applyFromArray($styleArray);
+		$sheet->getStyle('D'.$iTitulos2)->applyFromArray($styleArray);
 		
 		// Rename sheet
 		$objPHPExcel->getActiveSheet()->setTitle('Informe');
@@ -412,6 +418,8 @@ class FaenaController extends Controller {
 								$u->camionpropio_id = null;
 							}
 							$u->pu = $up['pu'];
+							
+							$u->observaciones = $up['observaciones'];
 							if($u->validate()){
 								$u->save();
 							}
@@ -445,6 +453,7 @@ class FaenaController extends Controller {
 								$ue->equipopropio_id = null;
 							}
 							$ue->pu = $upe['pu'];
+							$ue->observaciones = $upe['observaciones'];
 							if($ue->validate()){
 								$ue->save();
 							}

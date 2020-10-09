@@ -157,6 +157,12 @@ $cs->registerCoreScript('jquery');
 												?>
 											</td>
 										</tr>
+										<tr>
+											<td colspan="2">
+												Observaciones:
+												<input type="text" style="width:100%;" name="Unidadfaena[<?=$i?>][observaciones]">
+											</td>
+										</tr>
 									</table>
 									</td>
 									<td>
@@ -201,8 +207,13 @@ $cs->registerCoreScript('jquery');
 																?>
 															</td>
 														</tr>
-													</table>
-													
+														<tr>
+															<td colspan="2">
+																Observaciones:
+																<input type="text" style="width:100%;" name="Unidadfaena[<?=$i?>][observaciones]">
+															</td>
+														</tr>
+													</table>													
 												</td>
 												<td width="100px">	
 													<?php echo CHtml::dropDownList('Unidadfaena[{0}][unidad]','',CHtml::listData(Unidadfaena::listar(), 'id', 'nombre'),array('style'=>'width:100px')); ?>
@@ -270,6 +281,12 @@ $cs->registerCoreScript('jquery');
 												?>
 											</td>
 										</tr>
+										<tr>
+											<td colspan="2">
+												Observaciones:
+												<input type="text" style="width:100%;" name="UnidadfaenaEquipo[<?=$i?>][observaciones]">
+											</td>
+										</tr>
 									</table>
 									</td>
 									<td>
@@ -312,6 +329,12 @@ $cs->registerCoreScript('jquery');
 																<?php 
 																echo CHtml::dropDownList("UnidadfaenaEquipo[{0}][equipoarrendado_id]",'',CHtml::listData(EquipoArrendado::model()->findAll(), 'id', 'nombre'),array('style'=>'width:150px;display:none;','empty'=>'Seleccione Equipo Arrendado','class'=>'equipos_arrendados{0}'));  
 																?>
+															</td>
+														</tr>
+														<tr>
+															<td colspan="2">
+																Observaciones:
+																<input type="text" style="width:100%;" name="UnidadfaenaEquipo[{0}][observaciones]">
 															</td>
 														</tr>
 													</table>

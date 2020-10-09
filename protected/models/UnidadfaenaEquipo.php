@@ -83,7 +83,7 @@ class UnidadfaenaEquipo extends CActiveRecord
 			array('pu','esDecimal'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, unidad, pu, faena_id, equipoarrendado_id, equipopropio_id', 'safe', 'on'=>'search'),
+			array('id, unidad, pu, faena_id, equipoarrendado_id, equipopropio_id,observaciones', 'safe', 'on'=>'search'),
 		);
 	}
 
