@@ -50,13 +50,14 @@ $cs->registerCoreScript('jquery');
 			$('.faenaT').val("");
 			$('.cantidad').val(0);
 			$('.totalT').val(0);
+			$('.labelPUt').val(0);
 		});
 
 		$(document.body).on('change', '.unidadfaena', function(e) {
 			var id = $(this).attr("id");
 			var i = id.substring(id.length - 1);
 			$("#puT" + i).attr("pu", 0);
-
+			$("#labelPUt" + i).val(0);
 			var unidad_id = $(this).val();
 
 			$.ajax({
@@ -69,6 +70,7 @@ $cs->registerCoreScript('jquery');
 						$("#errorFaenaT_id" + i).html('ERROR: La faena no tiene unidades de tiempo disponibles');
 					}else{
 						$('#puT'+i).attr('pu',msg);
+						$("#labelPUt" + i).val(msg);
 					}
 					var pu = $('#puT'+i).attr('pu');
 					var cantidad = $('#cantidad'+i).val();
@@ -509,6 +511,7 @@ $cs->registerCoreScript('jquery');
 				var km = reg[3];
 				if (id == ods[k]) {
 					$("#pu" + k).attr("pu", pu);
+					$('#labelPU'+k).val(pu);
 					$("#kmRecorridos" + k).val(km);
 					var valor = $("#totalTransportado" + k).val();
 					var total = valor * pu * km;
@@ -538,6 +541,7 @@ $cs->registerCoreScript('jquery');
 				if (primero) {
 					primero = false;
 					$("#pu" + i).attr("pu", pu);
+					$('#labelPU'+i).val(pu);
 					$("#kmRecorridos" + i).val(km);
 					var valor = $("#totalTransportado" + i).val();
 					var total = valor * pu * km;
@@ -548,6 +552,7 @@ $cs->registerCoreScript('jquery');
 			}
 			if (filtradas.length == 0) {
 				$("#pu" + i).attr("pu", 0);
+				$('#labelPU'+i).val(0);
 				$("#kmRecorridos" + i).val(0);
 				$("#total" + i).val(0);
 				$("#errorFaena_id" + i).html('ERROR: La faena no tiene orígenes-destinos disponibles');
@@ -562,6 +567,7 @@ $cs->registerCoreScript('jquery');
 			var pu = arr[1];
 			var km = arr[0];
 			$("#pu" + i).attr("pu", pu);
+			$('#labelPU'+i).val(pu);
 			$("#kmRecorridos" + i).val(km);
 			var valor = $("#totalTransportado" + i).val();
 			var total = valor * pu * km;
@@ -913,9 +919,8 @@ $cs->registerCoreScript('jquery');
 															<td>
 																<div id="errorCoeficiente<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
-															<td></td>
-															<td></td>
-															<td></td>
+															<td><label><b>PU</b></label></td>
+															<td><input id="labelPU<?=$i?>" type="text" value="0.00" readonly="readonly" enabled="disabled"/></td>
 															<td></td>
 														</tr>
 
@@ -978,10 +983,9 @@ $cs->registerCoreScript('jquery');
 															 <td><?php echo $form->labelEx($expedicion, "coeficiente", array('style' => 'width:80px;')); ?></td>
 															 <td><?php echo $form->textField($expedicion, "[{0}]coeficiente", array('id' => "coeficiente{0}", 'class' => 'fixedCoeficiente')); ?></td>
 															 <td><div id="errorCoeficiente{0}" style="color:red;width:100px;"></div></td>
-															 <td></td>
-															 <td></td>
-															 <td></td>
-															 <td></td>
+															 <td><label><b>PU</b></label></td>
+															<td><input id="labelPU{0}" type="text" value="0.00" readonly="readonly" enabled="disabled"/></td>
+															<td></td>
 															</tr>
 																		
 															<tr>
@@ -1052,6 +1056,12 @@ $cs->registerCoreScript('jquery');
 															<td>
 																<div id="errorCantidad<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
+															<td><label><b>PU</b></label></td>
+															<td><input class="labelPUt" id="labelPUt<?=$i?>" type="text" value="<?=$expedicion->unidadfaena->pu?>" readonly="readonly" enabled="disabled"/></td>
+															<td></td>
+															<td></td>
+														</tr>
+														<tr>
 															<td><?php echo $form->labelEx($expedicion, "total", array('style' => 'width:80px;')); ?></td>
 															<td><?php echo $form->textField($expedicion, "[$i]total", array('id' => "totalT$i", 'class' => 'fixed totalT', 'readonly' => 'readonly', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
 															<td>
@@ -1095,6 +1105,12 @@ $cs->registerCoreScript('jquery');
 															 <td><?php echo $form->labelEx($expedicion, "cantidad", array('style' => 'width:80px;')); ?></td>
 															 <td><?php echo $form->textField($expedicion, "[{0}]cantidad", array('id' => "cantidad{0}", 'class' => 'cantidad fixed')); ?></td>
 															 <td><div id="errorCantidad{0}" style="color:red;width:100px;"></div></td>
+															 <td><label><b>PU</b></label></td>
+															 <td><input class="labelPUt" id="labelPUt{0}" type="text" readonly="readonly" enabled="disabled"/></td>
+															 <td></td>
+															 <td></td>
+															</tr>
+															<tr>
 															 <td><?php echo $form->labelEx($expedicion, "total", array('style' => 'width:80px;')); ?></td>
 															 <td><?php echo $form->textField($expedicion, "[{0}]total", array('id' => "totalT{0}", 'class' => 'fixed totalT', 'readonly' => 'readonly')); ?></td>
 															 <td><div id="errorTotalT{0}" style="color:red;width:100px;"></div></td>

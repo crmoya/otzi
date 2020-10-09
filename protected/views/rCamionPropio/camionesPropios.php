@@ -456,6 +456,7 @@ $cs->registerCoreScript('jquery');
 			$('.faenaT').val("");
 			$('.cantidad').val(0);
 			$('.totalT').val(0);
+			$('.labelPUt').val(0);
 		});
 
 		$(document.body).on('change', '.faenaT', function(e) {
@@ -919,9 +920,8 @@ $cs->registerCoreScript('jquery');
 																<div id="errorCoeficiente<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
 															<td><label><b>PU</b></label></td>
-															 <td><input id="labelPU<?=$i?>" type="text" value="0.00" readonly="readonly" enabled="disabled"/></td>
-															 <td></td>
-															 <td></td>
+															<td><input id="labelPU<?=$i?>" type="text" value="0.00" readonly="readonly" enabled="disabled"/></td>
+															<td></td>
 														</tr>
 
 														<tr>
@@ -1060,7 +1060,7 @@ $cs->registerCoreScript('jquery');
 															</td>
 															
 															<td><label><b>PU</b></label></td>
-															<td><input id="labelPUt<?=$i?>" type="text" value="<?=$expedicion->unidadfaena->pu?>" readonly="readonly" enabled="disabled"/></td>
+															<td><input class="labelPUt" id="labelPUt<?=$i?>" type="text" value="<?=$expedicion->unidadfaena->pu?>" readonly="readonly" enabled="disabled"/></td>
 															<td></td>
 															<td></td>
 														</tr>
@@ -1109,7 +1109,7 @@ $cs->registerCoreScript('jquery');
 															 <td><?php echo $form->textField($expedicion, "[{0}]cantidad", array('id' => "cantidad{0}", 'class' => 'cantidad fixed')); ?></td>
 															 <td><div id="errorCantidad{0}" style="color:red;width:100px;"></div></td>
 															 <td><label><b>PU</b></label></td>
-															 <td><input id="labelPUt{0}" type="text" value="0.00" readonly="readonly" enabled="disabled"/></td>
+															 <td><input class="labelPUt" id="labelPUt{0}" type="text" value="0.00" readonly="readonly" enabled="disabled"/></td>
 															 <td></td>
 															</tr>
 															<tr>
