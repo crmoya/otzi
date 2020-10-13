@@ -387,7 +387,7 @@ class OperativoController extends Controller
 
 				//end archivos del report
 
-
+				$valid = true;
 				if (isset($_POST['Expedicionequipopropio'])) {
 					foreach ($_POST['Expedicionequipopropio'] as $i => $viajeTArr) {								
 						$viajeT = new Expedicionequipopropio();
@@ -539,13 +539,13 @@ class OperativoController extends Controller
 
 				//end archivos del report
 
-
+				$valid = true;
 				if (isset($_POST['Expedicionequipoarrendado'])) {
 					foreach ($_POST['Expedicionequipoarrendado'] as $i => $viajeTArr) {								
 						$viajeT = new Expedicionequipoarrendado();
 						$viajeT->unidadfaena_equipo_id = $viajeTArr['unidadfaena_equipo_id'];
 						$viajeT->faena_id = $viajeTArr['faena_id'];
-						$viajeT->requipopropio_id = $model->id;
+						$viajeT->requipoarrendado_id = $model->id;
 						$viajeT->total = $viajeTArr['total'];
 						$viajeT->cantidad = $viajeTArr['cantidad'];
 						$valid = $valid && $viajeT->validate();

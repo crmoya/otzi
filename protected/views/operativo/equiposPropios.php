@@ -566,6 +566,36 @@ $cs->registerCoreScript('jquery');
 	</fieldset>
 
 
+	
+
+
+	<fieldset>
+		<legend>Datos de la Expedición</legend>
+		<table>
+			<tr> 
+			  <td width="30"><?php echo $form->labelEx($model,'reporte'); ?></td><td><?php echo $form->textField($model,'reporte'); ?><?php echo $form->error($model,'reporte'); ?></td>
+			  <td width="30"><?php echo $form->labelEx($model,'operador_id'); ?></td>
+			  <td>
+			    <?php echo $form->dropDownList($model,'operador_id', CHtml::listData(Operador::model()->listar(), 'id', 'nombre')); ?>
+			  	<?php echo $form->error($model,'operador_id'); ?>
+			  </td>
+			 </tr>
+			 <tr>
+			  <td width="30"><?php echo $form->labelEx($model,'hInicial'); ?></td><td><?php echo $form->textField($model,'hInicial',array('id'=>"hInicial",'class'=>'fixedHInicial')); ?><?php echo $form->error($model,'hInicial'); ?></td>
+			  <td width="30"><?php echo $form->labelEx($model,'hFinal'); ?></td><td><?php echo $form->textField($model,'hFinal',array('id'=>"hFinal",'class'=>'fixedHFinal')); ?><?php echo $form->error($model,'hFinal'); ?></td>
+			  <td width="30"><?php echo $form->labelEx($model,'horas'); ?></td><td><?php echo $form->textField($model,'horas',array('class'=>'fixed','style'=>'border:none;background:white;','readonly'=>'readonly')); ?><?php echo $form->error($model,'horas'); ?></td>
+		 	</tr>	
+		 	<tr>
+		 	  <td width="30"><?php echo $form->labelEx($model,'horasGps'); ?></td><td><?php echo $form->textField($model,'horasGps',array('class'=>'fixed')); ?><?php echo $form->error($model,'horas'); ?></td>
+			  <td width="30"><?php echo $form->labelEx($model,'faena_id'); ?></td>
+			  <td colspan="3">
+			   <?php echo $form->dropDownList($model,'faena_id', CHtml::listData(Faena::model()->listar(), 'id', 'nombre')); ?>
+			   <?php echo $form->error($model,'faena_id'); ?>
+			  </td>
+			</tr>
+		 </table>
+	</fieldset>
+
 	<fieldset>
 		<legend>Expediciones con PU por tiempo</legend>
 		<div class="complex">
@@ -590,7 +620,7 @@ $cs->registerCoreScript('jquery');
 													<table style="border:solid 1px silver;padding:10px;">
 														<tr>
 															<td><?php echo $form->labelEx($expedicion, "faena_id", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->dropDownList($expedicion, '[{0}]faena_id', CHtml::listData(Faena::model()->listarPorTiempo(), 'id', 'nombre'), array('id' => 'faena_idT{0}', 'class' => 'faenaT')); ?></td>
+															<td><?php echo $form->dropDownList($expedicion, '[{0}]faena_id', CHtml::listData(Faena::model()->listarPorTiempoE(), 'id', 'nombre'), array('id' => 'faena_idT{0}', 'class' => 'faenaT')); ?></td>
 															<td><div id="errorFaena_id{0}" style="color:red;width:100px;"></div></td>
 															<td><?php echo $form->labelEx($expedicion, "unidadfaena_equipo_id", array('style' => 'width:80px;')); ?></td>	
 															<td><select name="Expedicionequipopropio[{0}][unidadfaena_equipo_id]" class="unidadfaena" id="unidadfaena{0}"></select></td>	
@@ -634,33 +664,6 @@ $cs->registerCoreScript('jquery');
 		<!--complex-->
 	</fieldset>
 
-
-	<fieldset>
-		<legend>Datos de la Expedición</legend>
-		<table>
-			<tr> 
-			  <td width="30"><?php echo $form->labelEx($model,'reporte'); ?></td><td><?php echo $form->textField($model,'reporte'); ?><?php echo $form->error($model,'reporte'); ?></td>
-			  <td width="30"><?php echo $form->labelEx($model,'operador_id'); ?></td>
-			  <td>
-			    <?php echo $form->dropDownList($model,'operador_id', CHtml::listData(Operador::model()->listar(), 'id', 'nombre')); ?>
-			  	<?php echo $form->error($model,'operador_id'); ?>
-			  </td>
-			 </tr>
-			 <tr>
-			  <td width="30"><?php echo $form->labelEx($model,'hInicial'); ?></td><td><?php echo $form->textField($model,'hInicial',array('id'=>"hInicial",'class'=>'fixedHInicial')); ?><?php echo $form->error($model,'hInicial'); ?></td>
-			  <td width="30"><?php echo $form->labelEx($model,'hFinal'); ?></td><td><?php echo $form->textField($model,'hFinal',array('id'=>"hFinal",'class'=>'fixedHFinal')); ?><?php echo $form->error($model,'hFinal'); ?></td>
-			  <td width="30"><?php echo $form->labelEx($model,'horas'); ?></td><td><?php echo $form->textField($model,'horas',array('class'=>'fixed','style'=>'border:none;background:white;','readonly'=>'readonly')); ?><?php echo $form->error($model,'horas'); ?></td>
-		 	</tr>	
-		 	<tr>
-		 	  <td width="30"><?php echo $form->labelEx($model,'horasGps'); ?></td><td><?php echo $form->textField($model,'horasGps',array('class'=>'fixed')); ?><?php echo $form->error($model,'horas'); ?></td>
-			  <td width="30"><?php echo $form->labelEx($model,'faena_id'); ?></td>
-			  <td colspan="3">
-			   <?php echo $form->dropDownList($model,'faena_id', CHtml::listData(Faena::model()->listar(), 'id', 'nombre')); ?>
-			   <?php echo $form->error($model,'faena_id'); ?>
-			  </td>
-			</tr>
-		 </table>
-	</fieldset>
 	<fieldset id="cargaComb">
 		<legend>Datos de carga de combustible</legend>
 		<div class="complex">
@@ -798,6 +801,8 @@ $cs->registerCoreScript('jquery');
 			</table>
 		</div><!--complex-->
 	</fieldset>
+
+	
 	
 	<fieldset id="cargaRep">
 		<legend>Datos de compra de repuesto</legend>
