@@ -1039,7 +1039,7 @@ $cs->registerCoreScript('jquery');
 													<table style="border:solid 1px silver;padding:10px;">
 														<tr>
 															<td><?php echo $form->labelEx($expedicion, "faena_id", array('style' => 'width:80px;',)); ?></td>
-															<td><?php echo $form->dropDownList($expedicion, "[$i]faena_id", CHtml::listData(Faena::model()->listarPorTiempo(), 'id', 'nombre'), array('id' => "faenaT_id$i", 'class' => 'faenaT', 'selUnidad'=> $expedicion->unidadfaena->id, 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
+															<td><?php echo $form->dropDownList($expedicion, "[$i]faena_id", CHtml::listData(Faena::model()->listarPorTiempo(), 'id', 'nombre'), array('id' => "faenaT_id$i", 'class' => 'faenaT', 'selUnidad'=> isset($expedicion->unidadfaena)?$expedicion->unidadfaena->id:"", 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
 															<td>
 																<div id="errorFaenaT_id<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
@@ -1063,7 +1063,7 @@ $cs->registerCoreScript('jquery');
 																<div id="errorCantidad<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
 															<td><label><b>PU</b></label></td>
-															<td><input class="labelPUt" id="labelPUt<?=$i?>" type="text" value="<?=$expedicion->unidadfaena->pu?>" readonly="readonly" enabled="disabled"/></td>
+															<td><input class="labelPUt" id="labelPUt<?=$i?>" type="text" value="<?=isset($expedicion->unidadfaena)?$expedicion->unidadfaena->pu:""?>" readonly="readonly" enabled="disabled"/></td>
 															<td></td>
 															<td></td>
 														</tr>
