@@ -112,28 +112,28 @@ class VehiculoRindegastos extends CActiveRecord
 		$novinculados = [];
 		$criteria = new CDbCriteria;
 		$criteria->select = 'id,nombre';
-		$criteria->condition = "not exists (select * from vehiculo_rindegasto where camionpropio_id = t.id)";
+		//$criteria->condition = "not exists (select * from vehiculo_rindegasto where camionpropio_id = t.id)";
 		$camionesPropios = CamionPropio::model()->findAll($criteria);
 		foreach($camionesPropios as $camionPropio){
 			$novinculados[] = ['id'=>$camionPropio['id']."-cp",'nombre'=>$camionPropio['nombre']];
 		}
 		$criteria = new CDbCriteria;
 		$criteria->select = 'id,nombre';
-		$criteria->condition = "not exists (select * from vehiculo_rindegasto where camionarrendado_id = t.id)";
+		//$criteria->condition = "not exists (select * from vehiculo_rindegasto where camionarrendado_id = t.id)";
 		$camionesArrendados = CamionArrendado::model()->findAll($criteria);
 		foreach($camionesArrendados as $camionArrendado){
 			$novinculados[] = ['id'=>$camionArrendado['id']."-ca",'nombre'=>$camionArrendado['nombre']];
 		}
 		$criteria = new CDbCriteria;
 		$criteria->select = 'id,nombre';
-		$criteria->condition = "not exists (select * from vehiculo_rindegasto where equipopropio_id = t.id)";
+		//$criteria->condition = "not exists (select * from vehiculo_rindegasto where equipopropio_id = t.id)";
 		$equiposPropios = EquipoPropio::model()->findAll($criteria);
 		foreach($equiposPropios as $equipoPropio){
 			$novinculados[] = ['id'=>$equipoPropio['id']."-ep",'nombre'=>$equipoPropio['nombre']];
 		}
 		$criteria = new CDbCriteria;
 		$criteria->select = 'id,nombre';
-		$criteria->condition = "not exists (select * from vehiculo_rindegasto where equipoarrendado_id = t.id)";
+		//$criteria->condition = "not exists (select * from vehiculo_rindegasto where equipoarrendado_id = t.id)";
 		$equiposArrendados = EquipoArrendado::model()->findAll($criteria);
 		foreach($equiposArrendados as $equipoArrendado){
 			$novinculados[] = ['id'=>$equipoArrendado['id']."-ea",'nombre'=>$equipoArrendado['nombre']];
