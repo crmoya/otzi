@@ -313,7 +313,7 @@ class InformeProduccionCamiones extends CActiveRecord
 			from		
 				(						
 				select  $inicioAgrupacionPropios
-						sum(v.totalTransportado) + sum(ifnull(e.total,0))as totalTransportado,
+						sum(v.totalTransportado) as totalTransportado,
 						GREATEST((1 - (r.minPanne/60)/c.horasMin)*c.produccionMinima,0) as produccionMinima,
 						sum(v.total) as produccionReal,
 						fecha,
@@ -323,7 +323,6 @@ class InformeProduccionCamiones extends CActiveRecord
 				join	camionPropio as c on r.camionPropio_id = c.id
 				join	chofer as ch on ch.id = r.chofer_id
 				join	faena as f on f.id = v.faena_id
-				left join expedicionportiempo e on e.rcamionpropio_id = r.id
 				where	1 = 1 $filtroFecha
 				$finAgrupacion,fecha,r.id
 				
@@ -346,7 +345,23 @@ class InformeProduccionCamiones extends CActiveRecord
 							 from	viajeCamionPropio as v
 							 where	v.rCamionPropio_id = r.id)
 				$finAgrupacion,fecha,r.id
-							
+
+				union
+
+				select  $inicioAgrupacionPropios
+						0 as totalTransportado,
+						0 as produccionMinima,
+						sum(e.total) as produccionReal,
+						fecha,
+						r.id
+				from 	rCamionPropio as r
+				join	expedicionportiempo as e on e.rcamionpropio_id = r.id
+				join	camionPropio as c on r.camionPropio_id = c.id
+				join	chofer as ch on ch.id = r.chofer_id
+				join	faena as f on f.id = e.faena_id
+				where	1 = 1 $filtroFecha
+				$finAgrupacion,fecha,r.id
+
 				) as tPropios
 			$finAgrupacion
 			";
@@ -401,6 +416,23 @@ class InformeProduccionCamiones extends CActiveRecord
 							 from	viajeCamionArrendado as v
 							 where	v.rCamionArrendado_id = r.id)
 				$finAgrupacion,fecha,r.id
+
+				union
+
+				select  $inicioAgrupacionArrendados
+						0 as totalTransportado,
+						0 as produccionMinima,
+						sum(e.total) as produccionReal,
+						fecha,
+						r.id
+				from 	rCamionArrendado as r
+				join	expedicionportiempoarr as e on e.rcamionarrendado_id = r.id
+				join	camionArrendado as c on r.camionArrendado_id = c.id
+				join	chofer as ch on ch.id = r.chofer_id
+				join	faena as f on f.id = e.faena_id
+				where	1 = 1 $filtroFecha
+				$finAgrupacion,fecha,r.id
+
 				) as tArrendados
 			$finAgrupacion
 			";
@@ -464,6 +496,22 @@ class InformeProduccionCamiones extends CActiveRecord
 									 from	viajeCamionPropio as v
 									 where	v.rCamionPropio_id = r.id)
 						$finAgrupacion,fecha,r.id
+
+						union
+
+						select  $inicioAgrupacionPropios
+								0 as totalTransportado,
+								0 as produccionMinima,
+								sum(e.total) as produccionReal,
+								fecha,
+								r.id
+						from 	rCamionPropio as r
+						join	expedicionportiempo as e on e.rcamionpropio_id = r.id
+						join	camionPropio as c on r.camionPropio_id = c.id
+						join	chofer as ch on ch.id = r.chofer_id
+						join	faena as f on f.id = e.faena_id
+						where	1 = 1 $filtroFecha
+						$finAgrupacion,fecha,r.id
 									
 						) as tPropios
 					$finAgrupacion
@@ -517,6 +565,23 @@ class InformeProduccionCamiones extends CActiveRecord
 									 from	viajeCamionArrendado as v
 									 where	v.rCamionArrendado_id = r.id)
 						$finAgrupacion,fecha,r.id
+
+						union
+
+						select  $inicioAgrupacionArrendados
+								0 as totalTransportado,
+								0 as produccionMinima,
+								sum(e.total) as produccionReal,
+								fecha,
+								r.id
+						from 	rCamionArrendado as r
+						join	expedicionportiempoarr as e on e.rcamionarrendado_id = r.id
+						join	camionArrendado as c on r.camionArrendado_id = c.id
+						join	chofer as ch on ch.id = r.chofer_id
+						join	faena as f on f.id = e.faena_id
+						where	1 = 1 $filtroFecha
+						$finAgrupacion,fecha,r.id
+
 									
 						) as tArrendados
 					$finAgrupacion
