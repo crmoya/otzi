@@ -53,7 +53,7 @@ class CamionPropio extends CActiveRecord
 			array('nombre', 'length', 'max'=>100),
 			array('codigo', 'length', 'max'=>45),
 			array('horasMin,capacidad,consumoPromedio,produccionMinima,coeficienteDeTrato', 'length', 'max'=>10),
-			array('capacidad,consumoPromedio','esDecimal'),
+			array('capacidad,horasMin,produccionMinima,consumoPromedio','esDecimal'),
 			array('pesoOVolumen', 'length', 'max'=>1),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.

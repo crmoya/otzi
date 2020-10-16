@@ -313,21 +313,18 @@ class InformeProduccionCamiones extends CActiveRecord
 			from		
 				(						
 				select  $inicioAgrupacionPropios
-						sum(v.totalTransportado) as totalTransportado,
+						sum(v.totalTransportado) + sum(ifnull(e.total,0))as totalTransportado,
 						GREATEST((1 - (r.minPanne/60)/c.horasMin)*c.produccionMinima,0) as produccionMinima,
 						sum(v.total) as produccionReal,
 						fecha,
 						r.id
-				from 	rCamionPropio as r,
-						viajeCamionPropio as v,
-						camionPropio as c,
-						chofer as ch,
-						faena as f
-				where	v.rCamionPropio_id = r.id and
-						r.camionPropio_id = c.id and
-						ch.id = r.chofer_id and
-						f.id = v.faena_id 
-						$filtroFecha
+				from 	rCamionPropio as r
+				join	viajeCamionPropio as v on v.rCamionPropio_id = r.id
+				join	camionPropio as c on r.camionPropio_id = c.id
+				join	chofer as ch on ch.id = r.chofer_id
+				join	faena as f on f.id = v.faena_id
+				left join expedicionportiempo e on e.rcamionpropio_id = r.id
+				where	1 = 1 $filtroFecha
 				$finAgrupacion,fecha,r.id
 				
 				union

@@ -92,6 +92,18 @@ class CamionPropioController extends Controller
 			$model->capacidad = str_replace(",",".", $model->capacidad);
 			$model->consumoPromedio = str_replace(",",".", $model->consumoPromedio);
 			$model->vigente = $_POST['CamionPropio']['vigente'];
+			if($model->horasMin == ""){
+				$model->horasMin = 0;
+			}
+			if($model->produccionMinima == ""){
+				$model->produccionMinima = 0;
+			}
+			if($model->coeficienteDeTrato == ""){
+				$model->coeficienteDeTrato = 0;
+			}
+			if($model->horasMin == 0){
+				$model->horasMin = 0.01;
+			}
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -119,6 +131,18 @@ class CamionPropioController extends Controller
 			$model->capacidad = str_replace(",",".", $model->capacidad);
 			$model->consumoPromedio = str_replace(",",".", $model->consumoPromedio);
 			$model->vigente = $_POST['CamionPropio']['vigente'];
+			if($model->horasMin == ""){
+				$model->horasMin = 0;
+			}
+			if($model->produccionMinima == ""){
+				$model->produccionMinima = 0;
+			}
+			if($model->coeficienteDeTrato == ""){
+				$model->coeficienteDeTrato = 0;
+			}
+			if($model->horasMin == 0){
+				$model->horasMin = 0.01;
+			}
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}

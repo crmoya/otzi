@@ -40,7 +40,7 @@ class CamionArrendado extends CActiveRecord
 		array('nombre', 'length', 'max'=>100),
 		array('horasMin,capacidad,consumoPromedio,produccionMinima,coeficienteDeTrato', 'length', 'max'=>10),
 		array('pesoOVolumen', 'length', 'max'=>1),
-		array('capacidad,consumoPromedio','esDecimal'),
+		array('capacidad,horasMin,produccionMinima,consumoPromedio','esDecimal'),
 		// The following rule is used by search().
 		// Please remove those attributes that should not be searched.
 		array('id, nombre, capacidad, pesoOVolumen,consumoPromedio,vigente', 'safe', 'on'=>'search'),
