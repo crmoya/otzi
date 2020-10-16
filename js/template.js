@@ -1245,8 +1245,8 @@ function checkCantidad() {
 
 function checkHorasArrendado() {
 	var valor = $("#REquipoArrendado_horas").val();
-	if (valor <= 0 || valor > 24) {
-		$("#REquipoArrendado_horas_em_").html("Debe ser mayor que 0 y menor o igual a 24");
+	if (valor < 0 || valor > 24) {
+		$("#REquipoArrendado_horas_em_").html("Debe ser mayor o igual que 0 y menor o igual a 24");
 		$("#REquipoArrendado_horas_em_").show();
 		return false;
 	}
@@ -1279,7 +1279,7 @@ function checkKMs() {
 
 function checkHorasPropio() {
 	var valor = $("#REquipoPropio_horas").val();
-	if (valor <= 0 || valor > 24) {
+	if (valor < 0 || valor > 24) {
 		$("#REquipoPropio_horas_em_").html("Debe ser mayor que 0 y menor o igual a 24");
 		$("#REquipoPropio_horas_em_").show();
 		return false;
