@@ -113,7 +113,8 @@ class GastoCompletaController extends Controller
                 'class'=>'ext.eexcelview.EExcelBehavior',
             ),
         );
-    }
+	}
+	
 
 	/**
 	 * Creates a new model.

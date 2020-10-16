@@ -25,6 +25,9 @@ Bienvenido <?php echo CHtml::encode($nombre);?>, por favor seleccione una de las
  <li><?php echo CHtml::link("Modificar o Eliminar registro de camiones, camionetas, autos Arrendados",CController::createUrl('//rCamionArrendado/admin')); ?></li>
  <li><?php echo CHtml::link("Modificar o Eliminar registro de Equipos Propios",CController::createUrl('//rEquipoPropio/admin')); ?></li>
  <li><?php echo CHtml::link("Modificar o Eliminar registro de Equipos Arrendados",CController::createUrl('//rEquipoArrendado/admin')); ?></li>
+ <li>&nbsp;</li>
+ <li><?php echo CHtml::link("Asociar registros no vinculados de Rinde Gastos",CController::createUrl('//vehiculoRindegastos/vincular')); ?></li>
+ <li>&nbsp;</li>
  <li><?php echo CHtml::link("Cambiar mi clave",CController::createUrl('//site/cambiarClave')); ?></li>
 
 </ul>
