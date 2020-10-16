@@ -13,7 +13,7 @@ class VehiculoRindegastosForm extends CFormModel
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('vehiculo,id', 'required'),
+			array('vehiculo,vehiculosam', 'required'),
 			array('vehiculo','ext.MyValidators.NoBlanco'),
 			array('id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
