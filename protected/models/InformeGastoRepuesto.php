@@ -229,26 +229,63 @@ class InformeGastoRepuesto extends CActiveRecord
 		
 		if($this->propiosOArrendados == 'CAMIONESPROPIOS'){
 			$sql = "
-			select 	$inicioAgrupacionPropios
-					sum(c.montoNeto) as consumoPesos,
+
+			select 	$inicioAgrupacionTodos
+					sum(consumoPesos) as consumoPesos,
 					:fInicio,
 					:fFin,
 					:propOArr,
-					m.id as maquina_id,
-					o.id as operador_id,
-					'CP' as tipo,
-					cg.id as centroGestion_id,
-					'CP' as tipo_maquina
-			from 	compraRepuestoCamionPropio as c,
-					rCamionPropio as r,
-					camionPropio as m,
-					chofer as o,
-					faena as cg
-			where	r.id = c.rCamionPropio_id and
-					m.id = r.camionPropio_id and
-					o.id = r.chofer_id and
-					cg.id = c.faena_id
-					$filtroFecha
+					maquina_id,
+					operador_id,
+					tipo,
+					centroGestion_id,
+					tipo_maquina
+
+				from (
+				
+					select 	$inicioAgrupacionPropios
+							sum(c.montoNeto) as consumoPesos,
+							:fInicio,
+							:fFin,
+							:propOArr,
+							m.id as maquina_id,
+							o.id as operador_id,
+							'CP' as tipo,
+							cg.id as centroGestion_id,
+							'CP' as tipo_maquina
+					from 	compraRepuestoCamionPropio as c,
+							rCamionPropio as r,
+							camionPropio as m,
+							chofer as o,
+							faena as cg
+					where	r.id = c.rCamionPropio_id and
+							m.id = r.camionPropio_id and
+							o.id = r.chofer_id and
+							cg.id = c.faena_id
+							$filtroFecha
+
+					union all
+
+					select  concat(m.codigo,' / ',m.nombre) as maquina,
+							'' as operador,
+							cg.nombre as centroGestion,
+							sum(consumoPesos) as consumoPesos,
+							:fInicio,
+							:fFin,
+							:propOArr,
+							m.id as maquina_id,
+							0 as operador_id,
+							'CP' as tipo,
+							cg.id as centroGestion_id,
+							'CP' as tipo_maquina
+					from 	camionPropio as m 
+					join	nocombustible_rindegasto as cr on cr.camionpropio_id = m.id
+					left join faena as cg on cg.id = cr.faena_id
+					where	cr.fecha <= :fF and
+							cr.fecha >= :fI
+					$finAgrupacion
+				) as t1
+				$finAgrupacion
 			$finAgrupacion
 			";
 		}
