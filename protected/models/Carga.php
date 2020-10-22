@@ -2,6 +2,94 @@
 
 class Carga{
 
+
+	public function rindeGastos()
+	{
+		$errores = [];
+		ini_set("memory_limit", "-1");
+		set_time_limit(0);
+		try {
+
+			//elimino todo lo anterior
+			CombustibleRindegasto::model()->deleteAll();
+			NocombustibleRindegasto::model()->deleteAll();
+
+			//INGRESO LOS GASTOS DE COMBUSTIBLE DE ACUERDO A LA TABLA GASTO_COMPLETA
+			$gastos = Gasto::model()->findAllByAttributes(['expense_policy_id'=>GastoCompleta::POLICY_COMBUSTIBLES]);
+			foreach($gastos as $gasto){
+				$gastoCompleta = GastoCompleta::findByAttributes(['gasto_id'=>$gasto->id]);
+				if(isset($gastoCompleta)){
+					$combustible = new CombustibleRindegasto();
+					$combustible->fecha = $gasto->issue_date;
+					$combustible->litros = floatval($gastoCompleta->litros_combustible);
+					$combustible->total = intval($gasto->total);
+					$combustible->gasto_completa_id = intval($gastoCompleta->id);
+					$vehiculoRG = VehiculoRindegastos::model()->findByAttributes(['vehiculo'=>$gastoCompleta->vehiculo_equipo]);
+					if(isset($vehiculoRG)){
+						if($vehiculoRG->camionpropio_id != null){
+							$combustible->camionpropio_id = $vehiculoRG->camionpropio_id;
+						}
+						if($vehiculoRG->camionarrendado_id != null){
+							$combustible->camionarrendado_id = $vehiculoRG->camionarrendado_id;
+						}
+						if($vehiculoRG->equipopropio_id != null){
+							$combustible->equipopropio_id = $vehiculoRG->equipopropio_id;
+						}
+						if($vehiculoRG->equipoarrendado_id != null){
+							$combustible->equipoarrendado_id = $vehiculoRG->equipoarrendado_id;
+						}
+					}
+					if(!$combustible->save()){
+						$errores[] = $combustible->errors;
+					}
+				}
+			}
+
+			//INGRESO LOS GASTOS DIFERENTES DE COMBUSTIBLE DE ACUERDO A LA TABLA GASTO_COMPLETA
+			$criteria=new CDbCriteria;
+			$criteria->condition = "expense_policy_id <> :policy";
+			$criteria->params = [':policy' => GastoCompleta::POLICY_COMBUSTIBLES];
+			$gastos = Gasto::model()->findAll($criteria);
+			foreach($gastos as $gasto){
+				$gastoCompleta = GastoCompleta::findByAttributes(['gasto_id'=>$gasto->id]);
+				if(isset($gastoCompleta)){
+					$nocombustible = new NocombustibleRindegasto();
+					$nocombustible->fecha = $gasto->issue_date;
+					$nocombustible->total = intval($gasto->total);
+					$nocombustible->gasto_completa_id = intval($gastoCompleta->id);
+					$vehiculoRG = VehiculoRindegastos::model()->findByAttributes(['vehiculo'=>$gastoCompleta->vehiculo_equipo]);
+					if(isset($vehiculoRG)){
+						if($vehiculoRG->camionpropio_id != null){
+							$nocombustible->camionpropio_id = $vehiculoRG->camionpropio_id;
+						}
+						if($vehiculoRG->camionarrendado_id != null){
+							$nocombustible->camionarrendado_id = $vehiculoRG->camionarrendado_id;
+						}
+						if($vehiculoRG->equipopropio_id != null){
+							$nocombustible->equipopropio_id = $vehiculoRG->equipopropio_id;
+						}
+						if($vehiculoRG->equipoarrendado_id != null){
+							$nocombustible->equipoarrendado_id = $vehiculoRG->equipoarrendado_id;
+						}
+					}
+					if(!$nocombustible->save()){
+						$errores[] = $nocombustible->errors;
+					}
+				}
+			}
+
+
+			if (count($errores) > 0) {
+				echo "<pre>";
+				print_r($errores);
+				echo "</pre>";
+			}
+		} catch (Exception $e) {
+			echo "Excepción: " . $e;
+		}
+
+	}
+
 	public function gastos()
 	{
 		$errores = [];
