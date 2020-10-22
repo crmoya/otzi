@@ -1,13 +1,23 @@
 <?php 
 $this->pageTitle=Yii::app()->name; 
-$noVinculados = [];
+$noVinculadosV = [];
 $criteria = new CDbCriteria;
 $criteria->select = 'DISTINCT vehiculo_equipo';
 $criteria->condition = "not exists (select * from vehiculo_rindegasto where vehiculo = t.vehiculo_equipo) and vehiculo_equipo != ''";
 $vehiculos = GastoCompleta::model()->findAll($criteria);
 foreach($vehiculos as $vehiculo){
-    $noVinculados[] = ['vehiculo'=>$vehiculo['vehiculo_equipo']];
+    $noVinculadosV[] = ['vehiculo'=>$vehiculo['vehiculo_equipo']];
 }
+
+$noVinculadosF = [];
+$criteria = new CDbCriteria;
+$criteria->select = 'DISTINCT faena';
+$criteria->condition = "not exists (select * from faena_rindegasto where faena = t.centro_costo_faena) and vehiculo_equipo != ''";
+$faenas = GastoCompleta::model()->findAll($criteria);
+foreach($faenas as $faena){
+    $noVinculadosF[] = ['faena'=>$faena['faena']];
+}
+
 ?>
 Bienvenido <?php echo CHtml::encode($nombre);?>, por favor seleccione una de las siguientes operaciones para comenzar:<br/><br/>
 <ul>
@@ -36,7 +46,8 @@ Bienvenido <?php echo CHtml::encode($nombre);?>, por favor seleccione una de las
  <li><?php echo CHtml::link("Modificar o Eliminar registro de Equipos Propios",CController::createUrl('//rEquipoPropio/admin')); ?></li>
  <li><?php echo CHtml::link("Modificar o Eliminar registro de Equipos Arrendados",CController::createUrl('//rEquipoArrendado/admin')); ?></li>
  <li>&nbsp;</li>
- <li><?php echo CHtml::link("Asociar registros no vinculados de Rinde Gastos (" . count($noVinculados) . " sin vincular)",CController::createUrl('//vehiculoRindegastos/vincular')); ?></li>
+ <li><?php echo CHtml::link("Asociar vehículos no vinculados de Rinde Gastos (" . count($noVinculadosV) . " sin vincular)",CController::createUrl('//vehiculoRindegastos/vincular')); ?></li>
+ <li><?php echo CHtml::link("Asociar faenas no vinculadas de Rinde Gastos (" . count($noVinculadosF) . " sin vincular)",CController::createUrl('//faenaRindegastos/vincular')); ?></li>
  <li>&nbsp;</li>
  <li><?php echo CHtml::link("Cambiar mi clave",CController::createUrl('//site/cambiarClave')); ?></li>
 

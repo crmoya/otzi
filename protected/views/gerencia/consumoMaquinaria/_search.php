@@ -14,7 +14,7 @@
    </div>
    <div class="row">
 		<?php echo $form->labelEx($model,'agruparPor'); ?>
-	    <?php echo $form->dropDownList($model,'agruparPor', CHtml::listData(array(array('id'=>'NINGUNO','nombre'=>'Sin agrupación'),array('id'=>'MAQUINA','nombre'=>'Equipo'),array('id'=>'OPERADOR','nombre'=>'Operador')), 'id', 'nombre')); ?>
+	    <?php echo $form->dropDownList($model,'agruparPor', CHtml::listData(array(array('id'=>'NINGUNO','nombre'=>'Sin agrupación'),array('id'=>'MAQUINA','nombre'=>'Máquina'),array('id'=>'OPERADOR','nombre'=>'Operador')), 'id', 'nombre')); ?>
    </div>
    <div class="row">
    		<?php echo $form->labelEx($model,"tipoCombustible_id",array('style'=>'width:80px;'));?>

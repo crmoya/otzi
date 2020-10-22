@@ -242,8 +242,8 @@ class InformeGastoCombustible extends CActiveRecord
 		if(isset($this->fechaInicio) && isset($this->fechaFin)){
 			if($this->fechaInicio != "" && $this->fechaFin != ""){
 				$filtroFecha = "
-				and		fecha >= :fechaInicio
-				and		fecha <= :fechaFin
+				and		r.fecha >= :fechaInicio
+				and		r.fecha <= :fechaFin
 				";
 			}
 		}
@@ -275,7 +275,30 @@ class InformeGastoCombustible extends CActiveRecord
 			join	cargaCombCamionPropio as c on c.rCamionPropio_id = r.id
 			join	faena as cg on cg.id = c.faena_id 
 			join	chofer as o on o.id = r.chofer_id
-			where	1 = 1
+			where	1 = 1 
+			$filtroFecha
+			$filtroCombustible
+			$finAgrupacion
+
+			union all
+
+			select 	$inicioAgrupacionPropios
+			sum(c.petroleoLts) as consumoLts,
+			sum(c.valorTotal) as consumoPesos,
+			:fI,
+			:fF,
+			m.id as maquina_id,
+			o.id as operador_id,
+			cg.id as centroGestion_id,
+			'CP' as tipo,
+			:tipoComb,
+			'CP' as tipo_maquina
+			from 	camionPropio as m 
+			join 	rCamionPropio as r on r.camionPropio_id = m.id
+			join	cargaCombCamionPropio as c on c.rCamionPropio_id = r.id
+			join	faena as cg on cg.id = c.faena_id 
+			join	chofer as o on o.id = r.chofer_id
+			where	1 = 1 
 			$filtroFecha
 			$filtroCombustible
 			$finAgrupacion

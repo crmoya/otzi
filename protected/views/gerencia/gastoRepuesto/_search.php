@@ -14,7 +14,7 @@
    </div>
    <div class="row">
 		<?php echo $form->labelEx($model,'agruparPor'); ?>
-	    <?php echo $form->dropDownList($model,'agruparPor', CHtml::listData(array(array('id'=>'NINGUNO','nombre'=>'Sin agrupación'),array('id'=>'MAQUINA','nombre'=>'Equipo'),array('id'=>'OPERADOR','nombre'=>'Operador'),array('id'=>'CENTRO','nombre'=>'Centro de Gestión'),array('id'=>'OPERADORMAQUINA','nombre'=>'Operador y Máquina'),array('id'=>'CENTROOPERADOR','nombre'=>'Centro de Gestión y Operador'),array('id'=>'CENTROMAQUINA','nombre'=>'Centro de Gestión y Máquina')), 'id', 'nombre')); ?>
+	    <?php echo $form->dropDownList($model,'agruparPor', CHtml::listData(array(array('id'=>'NINGUNO','nombre'=>'Sin agrupación'),array('id'=>'MAQUINA','nombre'=>'Máquina'),array('id'=>'OPERADOR','nombre'=>'Operador'),array('id'=>'CENTRO','nombre'=>'Centro de Gestión'),array('id'=>'OPERADORMAQUINA','nombre'=>'Operador y Máquina'),array('id'=>'CENTROOPERADOR','nombre'=>'Centro de Gestión y Operador'),array('id'=>'CENTROMAQUINA','nombre'=>'Centro de Gestión y Máquina')), 'id', 'nombre')); ?>
    </div>
   </td>
   <td>
