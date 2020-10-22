@@ -27,9 +27,6 @@ class SiteController extends Controller
 	public function actionConfigureRoles()
 	{
 
-		$carga = new Carga();
-		$carga->rindeGastos();
-
 		/*
 		$record=Authassignment::model()->deleteAll();
 		$record=Authitem::model()->deleteAll();
@@ -73,6 +70,11 @@ class SiteController extends Controller
 		}
 	}
 
+	public function actionRinde(){
+		$carga = new Carga();
+		$carga->rindeGastos();
+	}
+	/*
 	public function actionCargagastos(){
 		set_time_limit(0);
 		$carga = new Carga();
@@ -84,6 +86,7 @@ class SiteController extends Controller
 		$carga = new Carga();
 		$carga->informes();
 	}
+	*/
 
 	/**
 	 * This is the action to handle external exceptions.
@@ -202,7 +205,7 @@ class SiteController extends Controller
 		return array(
 			array(
 				'allow',
-				'actions' => array('login', 'logout', 'error', 'index', 'cargainformes','cargagastos'),
+				'actions' => array('login', 'logout', 'error', 'index', 'rinde'),
 				'users' => array('*'),
 			),
 			array(
