@@ -27,6 +27,8 @@ class SiteController extends Controller
 	public function actionConfigureRoles()
 	{
 
+		$carga = new Carga();
+		$carga->rindeGastos();
 
 		/*
 		$record=Authassignment::model()->deleteAll();
