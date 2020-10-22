@@ -75,13 +75,13 @@ class SiteController extends Controller
 		$carga->rindeGastos();
 	}
 	
-	public function actionCargagastos(){
+	public function actionGastos(){
 		set_time_limit(0);
 		$carga = new Carga();
 		$carga->gastos();
 	}
 
-	public function actionCargainformes(){
+	public function actionInformes(){
 		set_time_limit(0);
 		$carga = new Carga();
 		$carga->informes();
