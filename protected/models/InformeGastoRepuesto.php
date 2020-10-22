@@ -263,54 +263,93 @@ class InformeGastoRepuesto extends CActiveRecord
 							o.id = r.chofer_id and
 							cg.id = c.faena_id
 							$filtroFecha
-
+					$finAgrupacion
+					
 					union all
 
 					select  concat(m.codigo,' / ',m.nombre) as maquina,
 							'' as operador,
-							cg.nombre as centroGestion,
-							sum(consumoPesos) as consumoPesos,
+							ifnull('',cg.nombre) as centroGestion,
+							sum(cr.total) as consumoPesos,
 							:fInicio,
 							:fFin,
 							:propOArr,
 							m.id as maquina_id,
 							0 as operador_id,
 							'CP' as tipo,
-							cg.id as centroGestion_id,
+							ifnull('',cg.id) as centroGestion_id,
 							'CP' as tipo_maquina
 					from 	camionPropio as m 
 					join	nocombustible_rindegasto as cr on cr.camionpropio_id = m.id
 					left join faena as cg on cg.id = cr.faena_id
-					where	cr.fecha <= :fF and
-							cr.fecha >= :fI
+					where	cr.fecha <= :fFin and
+							cr.fecha >= :fInicio
 					$finAgrupacion
 				) as t1
-				$finAgrupacion
+
 			$finAgrupacion
 			";
 		}
 		elseif($this->propiosOArrendados == 'CAMIONESARRENDADOS'){
 			$sql = "
-			select 	$inicioAgrupacionArrendados
-					sum(c.montoNeto) as consumoPesos,
+
+			select 	$inicioAgrupacionTodos
+					sum(consumoPesos) as consumoPesos,
 					:fInicio,
 					:fFin,
 					:propOArr,
-					m.id as maquina_id,
-					o.id as operador_id,
-					'CA' as tipo,
-					cg.id as centroGestion_id,
-					'CA' as tipo_maquina
-			from 	compraRepuestoCamionArrendado as c,
-					rCamionArrendado as r,
-					camionArrendado as m,
-					chofer as o,
-					faena as cg
-			where	r.id = c.rCamionArrendado_id and
-					m.id = r.camionArrendado_id and
-					o.id = r.chofer_id and
-					cg.id = c.faena_id 
-					$filtroFecha
+					maquina_id,
+					operador_id,
+					tipo,
+					centroGestion_id,
+					tipo_maquina
+
+				from (
+
+					select 	$inicioAgrupacionArrendados
+							sum(c.montoNeto) as consumoPesos,
+							:fInicio,
+							:fFin,
+							:propOArr,
+							m.id as maquina_id,
+							o.id as operador_id,
+							'CA' as tipo,
+							cg.id as centroGestion_id,
+							'CA' as tipo_maquina
+					from 	compraRepuestoCamionArrendado as c,
+							rCamionArrendado as r,
+							camionArrendado as m,
+							chofer as o,
+							faena as cg
+					where	r.id = c.rCamionArrendado_id and
+							m.id = r.camionArrendado_id and
+							o.id = r.chofer_id and
+							cg.id = c.faena_id 
+							$filtroFecha
+					$finAgrupacion
+
+					union all
+
+					select  m.nombre as maquina,
+							'' as operador,
+							ifnull('',cg.nombre) as centroGestion,
+							sum(cr.total) as consumoPesos,
+							:fInicio,
+							:fFin,
+							:propOArr,
+							m.id as maquina_id,
+							0 as operador_id,
+							'CA' as tipo,
+							ifnull('',cg.id) as centroGestion_id,
+							'CA' as tipo_maquina
+					from 	camionArrendado as m 
+					join	nocombustible_rindegasto as cr on cr.camionarrendado_id = m.id
+					left join faena as cg on cg.id = cr.faena_id
+					where	cr.fecha <= :fFin and
+							cr.fecha >= :fInicio
+					$finAgrupacion
+			) as t1
+				
 			$finAgrupacion
 			";
 		}
@@ -328,102 +367,218 @@ class InformeGastoRepuesto extends CActiveRecord
 					tipo_maquina
 			from (
 			
-			select 	$inicioAgrupacionArrendados
-					sum(c.montoNeto) as consumoPesos,
-					:fInicio,
-					:fFin,
-					:propOArr,
-					m.id as maquina_id,
-					o.id as operador_id,
-					'CT' as tipo,
-					cg.id as centroGestion_id,
-					'CA' as tipo_maquina
-			from 	compraRepuestoCamionArrendado as c,
-					rCamionArrendado as r,
-					camionArrendado as m,
-					chofer as o,
-					faena as cg
-			where	r.id = c.rCamionArrendado_id and
-					m.id = r.camionArrendado_id and
-					o.id = r.chofer_id and
-					cg.id = c.faena_id 
-					$filtroFecha
-			$finAgrupacion
-			
-			union all
+				select 	$inicioAgrupacionPropios
+							sum(c.montoNeto) as consumoPesos,
+							:fInicio,
+							:fFin,
+							:propOArr,
+							m.id as maquina_id,
+							o.id as operador_id,
+							'CP' as tipo,
+							cg.id as centroGestion_id,
+							'CP' as tipo_maquina
+					from 	compraRepuestoCamionPropio as c,
+							rCamionPropio as r,
+							camionPropio as m,
+							chofer as o,
+							faena as cg
+					where	r.id = c.rCamionPropio_id and
+							m.id = r.camionPropio_id and
+							o.id = r.chofer_id and
+							cg.id = c.faena_id
+							$filtroFecha
+					$finAgrupacion
+					
+					union all
 
-			select 	$inicioAgrupacionPropios
-					sum(c.montoNeto) as consumoPesos,
-					:fInicio,
-					:fFin,
-					:propOArr,
-					m.id as maquina_id,
-					o.id as operador_id,
-					'CT' as tipo,
-					cg.id as centroGestion_id,
-					'CP' as tipo_maquina
-			from 	compraRepuestoCamionPropio as c,
-					rCamionPropio as r,
-					camionPropio as m,
-					chofer as o,
-					faena as cg
-			where	r.id = c.rCamionPropio_id and
-					m.id = r.camionPropio_id and
-					o.id = r.chofer_id and
-					cg.id = c.faena_id
-					$filtroFecha
-			$finAgrupacion
+					select  concat(m.codigo,' / ',m.nombre) as maquina,
+							'' as operador,
+							ifnull('',cg.nombre) as centroGestion,
+							sum(cr.total) as consumoPesos,
+							:fInicio,
+							:fFin,
+							:propOArr,
+							m.id as maquina_id,
+							0 as operador_id,
+							'CP' as tipo,
+							ifnull('',cg.id) as centroGestion_id,
+							'CP' as tipo_maquina
+					from 	camionPropio as m 
+					join	nocombustible_rindegasto as cr on cr.camionpropio_id = m.id
+					left join faena as cg on cg.id = cr.faena_id
+					where	cr.fecha <= :fFin and
+							cr.fecha >= :fInicio
+					$finAgrupacion
+
+					union all
+
+					select 	$inicioAgrupacionArrendados
+							sum(c.montoNeto) as consumoPesos,
+							:fInicio,
+							:fFin,
+							:propOArr,
+							m.id as maquina_id,
+							o.id as operador_id,
+							'CA' as tipo,
+							cg.id as centroGestion_id,
+							'CA' as tipo_maquina
+					from 	compraRepuestoCamionArrendado as c,
+							rCamionArrendado as r,
+							camionArrendado as m,
+							chofer as o,
+							faena as cg
+					where	r.id = c.rCamionArrendado_id and
+							m.id = r.camionArrendado_id and
+							o.id = r.chofer_id and
+							cg.id = c.faena_id 
+							$filtroFecha
+					$finAgrupacion
+
+					union all
+
+					select  m.nombre as maquina,
+							'' as operador,
+							ifnull('',cg.nombre) as centroGestion,
+							sum(cr.total) as consumoPesos,
+							:fInicio,
+							:fFin,
+							:propOArr,
+							m.id as maquina_id,
+							0 as operador_id,
+							'CA' as tipo,
+							ifnull('',cg.id) as centroGestion_id,
+							'CA' as tipo_maquina
+					from 	camionArrendado as m 
+					join	nocombustible_rindegasto as cr on cr.camionarrendado_id = m.id
+					left join faena as cg on cg.id = cr.faena_id
+					where	cr.fecha <= :fFin and
+							cr.fecha >= :fInicio
+					$finAgrupacion
 			) as t1
 			$finAgrupacion
 			";
 		}
 		elseif($this->propiosOArrendados == 'MAQUINASPROPIAS'){
 			$sql = "
-			select 	$inicioAgrupacionPropios
-					sum(c.montoNeto) as consumoPesos,
+			select 	$inicioAgrupacionTodos
+					sum(consumoPesos) as consumoPesos,
 					:fInicio,
 					:fFin,
 					:propOArr,
-					m.id as maquina_id,
-					o.id as operador_id,
-					'MP' as tipo,
-					cg.id as centroGestion_id,
-					'MP' as tipo_maquina
-			from 	compraRepuestoEquipoPropio as c,
-					rEquipoPropio as r,
-					equipoPropio as m,
-					operador as o,
-					faena as cg
-			where	r.id = c.rEquipoPropio_id and
-					m.id = r.equipoPropio_id and
-					o.id = r.operador_id and
-					cg.id = c.faena_id
-					$filtroFecha
+					maquina_id,
+					operador_id,
+					tipo,
+					centroGestion_id,
+					tipo_maquina
+
+				from (
+				
+					select 	$inicioAgrupacionPropios
+							sum(c.montoNeto) as consumoPesos,
+							:fInicio,
+							:fFin,
+							:propOArr,
+							m.id as maquina_id,
+							o.id as operador_id,
+							'MP' as tipo,
+							cg.id as centroGestion_id,
+							'MP' as tipo_maquina
+					from 	compraRepuestoEquipoPropio as c,
+							rEquipoPropio as r,
+							equipoPropio as m,
+							operador as o,
+							faena as cg
+					where	r.id = c.rEquipoPropio_id and
+							m.id = r.equipoPropio_id and
+							o.id = r.operador_id and
+							cg.id = c.faena_id
+							$filtroFecha
+					$finAgrupacion
+					
+					union all
+
+					select  concat(m.codigo,' / ',m.nombre) as maquina,
+							'' as operador,
+							ifnull('',cg.nombre) as centroGestion,
+							sum(cr.total) as consumoPesos,
+							:fInicio,
+							:fFin,
+							:propOArr,
+							m.id as maquina_id,
+							0 as operador_id,
+							'MP' as tipo,
+							ifnull('',cg.id) as centroGestion_id,
+							'MP' as tipo_maquina
+					from 	equipoPropio as m 
+					join	nocombustible_rindegasto as cr on cr.equipopropio_id = m.id
+					left join faena as cg on cg.id = cr.faena_id
+					where	cr.fecha <= :fFin and
+							cr.fecha >= :fInicio
+					$finAgrupacion
+				) as t1
+
 			$finAgrupacion
 			";
 		}
 		elseif($this->propiosOArrendados == 'MAQUINASARRENDADAS'){
 			$sql = "
-			select 	$inicioAgrupacionArrendados
-					sum(c.montoNeto) as consumoPesos,
+			select 	$inicioAgrupacionTodos
+					sum(consumoPesos) as consumoPesos,
 					:fInicio,
 					:fFin,
 					:propOArr,
-					m.id as maquina_id,
-					o.id as operador_id,
-					'MA' as tipo,
-					cg.id as centroGestion_id,
-					'MA' as tipo_maquina
-			from 	compraRepuestoEquipoArrendado as c,
-					rEquipoArrendado as r,
-					equipoArrendado as m,
-					operador as o,
-					faena as cg
-			where	r.id = c.rEquipoArrendado_id and
-					m.id = r.equipoArrendado_id and
-					o.id = r.operador_id and
-					cg.id = c.faena_id 
-					$filtroFecha
+					maquina_id,
+					operador_id,
+					tipo,
+					centroGestion_id,
+					tipo_maquina
+
+				from (
+				
+					select 	$inicioAgrupacionArrendados
+							sum(c.montoNeto) as consumoPesos,
+							:fInicio,
+							:fFin,
+							:propOArr,
+							m.id as maquina_id,
+							o.id as operador_id,
+							'MA' as tipo,
+							cg.id as centroGestion_id,
+							'MA' as tipo_maquina
+					from 	compraRepuestoEquipoArrendado as c,
+							rEquipoArrendado as r,
+							equipoArrendado as m,
+							operador as o,
+							faena as cg
+					where	r.id = c.rEquipoArrendado_id and
+							m.id = r.equipoArrendado_id and
+							o.id = r.operador_id and
+							cg.id = c.faena_id
+							$filtroFecha
+					$finAgrupacion
+					
+					union all
+
+					select  m.nombre as maquina,
+							'' as operador,
+							ifnull('',cg.nombre) as centroGestion,
+							sum(cr.total) as consumoPesos,
+							:fInicio,
+							:fFin,
+							:propOArr,
+							m.id as maquina_id,
+							0 as operador_id,
+							'MA' as tipo,
+							ifnull('',cg.id) as centroGestion_id,
+							'MA' as tipo_maquina
+					from 	equipoArrendado as m 
+					join	nocombustible_rindegasto as cr on cr.equipoarrendado_id = m.id
+					left join faena as cg on cg.id = cr.faena_id
+					where	cr.fecha <= :fFin and
+							cr.fecha >= :fInicio
+					$finAgrupacion
+				) as t1
+
 			$finAgrupacion
 			";
 		}
@@ -441,51 +596,94 @@ class InformeGastoRepuesto extends CActiveRecord
 					tipo_maquina
 			from (
 			
-			select 	$inicioAgrupacionPropios
-					sum(c.montoNeto) as consumoPesos,
-					:fInicio,
-					:fFin,
-					:propOArr,
-					m.id as maquina_id,
-					o.id as operador_id,
-					'MT' as tipo,
-					cg.id as centroGestion_id,
-					'MP' as tipo_maquina
-			from 	compraRepuestoEquipoPropio as c,
-					rEquipoPropio as r,
-					equipoPropio as m,
-					operador as o,
-					faena as cg
-			where	r.id = c.rEquipoPropio_id and
-					m.id = r.equipoPropio_id and
-					o.id = r.operador_id and
-					cg.id = c.faena_id 
-					$filtroFecha
-			$finAgrupacion
+					select 	$inicioAgrupacionPropios
+							sum(c.montoNeto) as consumoPesos,
+							:fInicio,
+							:fFin,
+							:propOArr,
+							m.id as maquina_id,
+							o.id as operador_id,
+							'MP' as tipo,
+							cg.id as centroGestion_id,
+							'MP' as tipo_maquina
+					from 	compraRepuestoEquipoPropio as c,
+							rEquipoPropio as r,
+							equipoPropio as m,
+							operador as o,
+							faena as cg
+					where	r.id = c.rEquipoPropio_id and
+							m.id = r.equipoPropio_id and
+							o.id = r.operador_id and
+							cg.id = c.faena_id
+							$filtroFecha
+					$finAgrupacion
+					
+					union all
+
+					select  concat(m.codigo,' / ',m.nombre) as maquina,
+							'' as operador,
+							ifnull('',cg.nombre) as centroGestion,
+							sum(cr.total) as consumoPesos,
+							:fInicio,
+							:fFin,
+							:propOArr,
+							m.id as maquina_id,
+							0 as operador_id,
+							'MP' as tipo,
+							ifnull('',cg.id) as centroGestion_id,
+							'MP' as tipo_maquina
+					from 	equipoPropio as m 
+					join	nocombustible_rindegasto as cr on cr.equipopropio_id = m.id
+					left join faena as cg on cg.id = cr.faena_id
+					where	cr.fecha <= :fFin and
+							cr.fecha >= :fInicio
+					$finAgrupacion
+
+				union all
+
+					select 	$inicioAgrupacionArrendados
+							sum(c.montoNeto) as consumoPesos,
+							:fInicio,
+							:fFin,
+							:propOArr,
+							m.id as maquina_id,
+							o.id as operador_id,
+							'MA' as tipo,
+							cg.id as centroGestion_id,
+							'MA' as tipo_maquina
+					from 	compraRepuestoEquipoArrendado as c,
+							rEquipoArrendado as r,
+							equipoArrendado as m,
+							operador as o,
+							faena as cg
+					where	r.id = c.rEquipoArrendado_id and
+							m.id = r.equipoArrendado_id and
+							o.id = r.operador_id and
+							cg.id = c.faena_id
+							$filtroFecha
+					$finAgrupacion
+					
+					union all
+
+					select  m.nombre as maquina,
+							'' as operador,
+							ifnull('',cg.nombre) as centroGestion,
+							sum(cr.total) as consumoPesos,
+							:fInicio,
+							:fFin,
+							:propOArr,
+							m.id as maquina_id,
+							0 as operador_id,
+							'MA' as tipo,
+							ifnull('',cg.id) as centroGestion_id,
+							'MA' as tipo_maquina
+					from 	equipoArrendado as m 
+					join	nocombustible_rindegasto as cr on cr.equipoarrendado_id = m.id
+					left join faena as cg on cg.id = cr.faena_id
+					where	cr.fecha <= :fFin and
+							cr.fecha >= :fInicio
+					$finAgrupacion
 			
-			union all
-			
-			select 	$inicioAgrupacionArrendados
-					sum(c.montoNeto) as consumoPesos,
-					:fInicio,
-					:fFin,
-					:propOArr,
-					m.id as maquina_id,
-					o.id as operador_id,
-					'MT' as tipo,
-					cg.id as centroGestion_id,
-					'MA' as tipo_maquina
-			from 	compraRepuestoEquipoArrendado as c,
-					rEquipoArrendado as r,
-					equipoArrendado as m,
-					operador as o,
-					faena as cg
-			where	r.id = c.rEquipoArrendado_id and
-					m.id = r.equipoArrendado_id and
-					o.id = r.operador_id and
-					cg.id = c.faena_id 
-					$filtroFecha
-			$finAgrupacion
 			) as t1
 			
 			$finAgrupacion
@@ -505,99 +703,184 @@ class InformeGastoRepuesto extends CActiveRecord
 					tipo_maquina
 			from (
 			
-			select 	$inicioAgrupacionPropios
-					sum(c.montoNeto) as consumoPesos,
-					:fInicio,
-					:fFin,
-					:propOArr,
-					m.id as maquina_id,
-					o.id as operador_id,
-					'TT' as tipo,
-					cg.id as centroGestion_id,
-					'MP' as tipo_maquina
-			from 	compraRepuestoEquipoPropio as c,
-					rEquipoPropio as r,
-					equipoPropio as m,
-					operador as o,
-					faena as cg
-			where	r.id = c.rEquipoPropio_id and
-					m.id = r.equipoPropio_id and
-					o.id = r.operador_id and
-					cg.id = c.faena_id 
-					$filtroFecha
-			$finAgrupacion
-			
-			union all
-			
-			select 	$inicioAgrupacionArrendados
-					sum(c.montoNeto) as consumoPesos,
-					:fInicio,
-					:fFin,
-					:propOArr,
-					m.id as maquina_id,
-					o.id as operador_id,
-					'TT' as tipo,
-					cg.id as centroGestion_id,
-					'MA' as tipo_maquina
-			from 	compraRepuestoEquipoArrendado as c,
-					rEquipoArrendado as r,
-					equipoArrendado as m,
-					operador as o,
-					faena as cg
-			where	r.id = c.rEquipoArrendado_id and
-					m.id = r.equipoArrendado_id and
-					o.id = r.operador_id and
-					cg.id = c.faena_id 
-					$filtroFecha
-			$finAgrupacion
-			
-			union all 
-			
-			select 	$inicioAgrupacionArrendados
-					sum(c.montoNeto) as consumoPesos,
-					:fInicio,
-					:fFin,
-					:propOArr,
-					m.id as maquina_id,
-					o.id as operador_id,
-					'TT' as tipo,
-					cg.id as centroGestion_id,
-					'CA' as tipo_maquina
-			from 	compraRepuestoCamionArrendado as c,
-					rCamionArrendado as r,
-					camionArrendado as m,
-					chofer as o,
-					faena as cg
-			where	r.id = c.rCamionArrendado_id and
-					m.id = r.camionArrendado_id and
-					o.id = r.chofer_id and
-					cg.id = c.faena_id 
-					$filtroFecha
-			$finAgrupacion
-			
-			union all
+				select 	$inicioAgrupacionPropios
+						sum(c.montoNeto) as consumoPesos,
+						:fInicio,
+						:fFin,
+						:propOArr,
+						m.id as maquina_id,
+						o.id as operador_id,
+						'CP' as tipo,
+						cg.id as centroGestion_id,
+						'CP' as tipo_maquina
+				from 	compraRepuestoCamionPropio as c,
+						rCamionPropio as r,
+						camionPropio as m,
+						chofer as o,
+						faena as cg
+				where	r.id = c.rCamionPropio_id and
+						m.id = r.camionPropio_id and
+						o.id = r.chofer_id and
+						cg.id = c.faena_id
+						$filtroFecha
+				$finAgrupacion
+				
+				union all
 
-			select 	$inicioAgrupacionPropios
-					sum(c.montoNeto) as consumoPesos,
-					:fInicio,
-					:fFin,
-					:propOArr,
-					m.id as maquina_id,
-					o.id as operador_id,
-					'TT' as tipo,
-					cg.id as centroGestion_id,
-					'CP' as tipo_maquina
-			from 	compraRepuestoCamionPropio as c,
-					rCamionPropio as r,
-					camionPropio as m,
-					chofer as o,
-					faena as cg
-			where	r.id = c.rCamionPropio_id and
-					m.id = r.camionPropio_id and
-					o.id = r.chofer_id and
-					cg.id = c.faena_id 
-					$filtroFecha
-			$finAgrupacion
+				select  concat(m.codigo,' / ',m.nombre) as maquina,
+						'' as operador,
+						ifnull('',cg.nombre) as centroGestion,
+						sum(cr.total) as consumoPesos,
+						:fInicio,
+						:fFin,
+						:propOArr,
+						m.id as maquina_id,
+						0 as operador_id,
+						'CP' as tipo,
+						ifnull('',cg.id) as centroGestion_id,
+						'CP' as tipo_maquina
+				from 	camionPropio as m 
+				join	nocombustible_rindegasto as cr on cr.camionpropio_id = m.id
+				left join faena as cg on cg.id = cr.faena_id
+				where	cr.fecha <= :fFin and
+						cr.fecha >= :fInicio
+				$finAgrupacion
+
+				union all
+
+				select 	$inicioAgrupacionArrendados
+						sum(c.montoNeto) as consumoPesos,
+						:fInicio,
+						:fFin,
+						:propOArr,
+						m.id as maquina_id,
+						o.id as operador_id,
+						'CA' as tipo,
+						cg.id as centroGestion_id,
+						'CA' as tipo_maquina
+				from 	compraRepuestoCamionArrendado as c,
+						rCamionArrendado as r,
+						camionArrendado as m,
+						chofer as o,
+						faena as cg
+				where	r.id = c.rCamionArrendado_id and
+						m.id = r.camionArrendado_id and
+						o.id = r.chofer_id and
+						cg.id = c.faena_id 
+						$filtroFecha
+				$finAgrupacion
+
+				union all
+
+				select  m.nombre as maquina,
+						'' as operador,
+						ifnull('',cg.nombre) as centroGestion,
+						sum(cr.total) as consumoPesos,
+						:fInicio,
+						:fFin,
+						:propOArr,
+						m.id as maquina_id,
+						0 as operador_id,
+						'CA' as tipo,
+						ifnull('',cg.id) as centroGestion_id,
+						'CA' as tipo_maquina
+				from 	camionArrendado as m 
+				join	nocombustible_rindegasto as cr on cr.camionarrendado_id = m.id
+				left join faena as cg on cg.id = cr.faena_id
+				where	cr.fecha <= :fFin and
+						cr.fecha >= :fInicio
+				$finAgrupacion
+
+				union all
+
+				select 	$inicioAgrupacionPropios
+						sum(c.montoNeto) as consumoPesos,
+						:fInicio,
+						:fFin,
+						:propOArr,
+						m.id as maquina_id,
+						o.id as operador_id,
+						'MP' as tipo,
+						cg.id as centroGestion_id,
+						'MP' as tipo_maquina
+				from 	compraRepuestoEquipoPropio as c,
+						rEquipoPropio as r,
+						equipoPropio as m,
+						operador as o,
+						faena as cg
+				where	r.id = c.rEquipoPropio_id and
+						m.id = r.equipoPropio_id and
+						o.id = r.operador_id and
+						cg.id = c.faena_id
+						$filtroFecha
+				$finAgrupacion
+				
+				union all
+
+				select  concat(m.codigo,' / ',m.nombre) as maquina,
+						'' as operador,
+						ifnull('',cg.nombre) as centroGestion,
+						sum(cr.total) as consumoPesos,
+						:fInicio,
+						:fFin,
+						:propOArr,
+						m.id as maquina_id,
+						0 as operador_id,
+						'MP' as tipo,
+						ifnull('',cg.id) as centroGestion_id,
+						'MP' as tipo_maquina
+				from 	equipoPropio as m 
+				join	nocombustible_rindegasto as cr on cr.equipopropio_id = m.id
+				left join faena as cg on cg.id = cr.faena_id
+				where	cr.fecha <= :fFin and
+						cr.fecha >= :fInicio
+				$finAgrupacion
+
+				union all
+
+				select 	$inicioAgrupacionArrendados
+						sum(c.montoNeto) as consumoPesos,
+						:fInicio,
+						:fFin,
+						:propOArr,
+						m.id as maquina_id,
+						o.id as operador_id,
+						'MA' as tipo,
+						cg.id as centroGestion_id,
+						'MA' as tipo_maquina
+				from 	compraRepuestoEquipoArrendado as c,
+						rEquipoArrendado as r,
+						equipoArrendado as m,
+						operador as o,
+						faena as cg
+				where	r.id = c.rEquipoArrendado_id and
+						m.id = r.equipoArrendado_id and
+						o.id = r.operador_id and
+						cg.id = c.faena_id
+						$filtroFecha
+				$finAgrupacion
+				
+				union all
+
+				select  m.nombre as maquina,
+						'' as operador,
+						ifnull('',cg.nombre) as centroGestion,
+						sum(cr.total) as consumoPesos,
+						:fInicio,
+						:fFin,
+						:propOArr,
+						m.id as maquina_id,
+						0 as operador_id,
+						'MA' as tipo,
+						ifnull('',cg.id) as centroGestion_id,
+						'MA' as tipo_maquina
+				from 	equipoArrendado as m 
+				join	nocombustible_rindegasto as cr on cr.equipoarrendado_id = m.id
+				left join faena as cg on cg.id = cr.faena_id
+				where	cr.fecha <= :fFin and
+						cr.fecha >= :fInicio
+				$finAgrupacion
+			
 			) as t1
 			$finAgrupacion
 			";
