@@ -39,6 +39,10 @@ class Carga{
 							$combustible->equipoarrendado_id = $vehiculoRG->equipoarrendado_id;
 						}
 					}
+					$faenaRG = FaenaRindegasto::model()->findByAttributes(['faena'=>$gastoCompleta->centro_costo_faena]);
+					if(isset($faenaRG)){
+						$combustible->faena_id = $faenaRG->faena_id;
+					}
 					if(!$combustible->save()){
 						$errores[] = $combustible->errors;
 					}

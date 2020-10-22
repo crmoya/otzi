@@ -259,75 +259,129 @@ class InformeGastoCombustible extends CActiveRecord
 
 		if($this->propiosOArrendados == 'CAMIONESPROPIOS'){
 			$sql = "
-			select 	$inicioAgrupacionPropios
-			sum(c.petroleoLts) as consumoLts,
-			sum(c.valorTotal) as consumoPesos,
+			select $inicioAgrupacionTodos
+			sum(consumoLts) as consumoLts,
+			sum(consumoPesos) as consumoPesos,
 			:fI,
 			:fF,
-			m.id as maquina_id,
-			o.id as operador_id,
-			cg.id as centroGestion_id,
-			'CP' as tipo,
+			maquina_id,
+			operador_id,
+			centroGestion_id,
+			tipo,
 			:tipoComb,
-			'CP' as tipo_maquina
-			from 	camionPropio as m 
-			join 	rCamionPropio as r on r.camionPropio_id = m.id
-			join	cargaCombCamionPropio as c on c.rCamionPropio_id = r.id
-			join	faena as cg on cg.id = c.faena_id 
-			join	chofer as o on o.id = r.chofer_id
-			where	1 = 1 
-			$filtroFecha
-			$filtroCombustible
-			$finAgrupacion
+			tipo_maquina
+			from (
+			
+				select 	$inicioAgrupacionPropios
+				sum(c.petroleoLts) as consumoLts,
+				sum(c.valorTotal) as consumoPesos,
+				:fI,
+				:fF,
+				m.id as maquina_id,
+				o.id as operador_id,
+				cg.id as centroGestion_id,
+				'CP' as tipo,
+				:tipoComb,
+				'CP' as tipo_maquina
+				from 	camionPropio as m 
+				join 	rCamionPropio as r on r.camionPropio_id = m.id
+				join	cargaCombCamionPropio as c on c.rCamionPropio_id = r.id
+				join	faena as cg on cg.id = c.faena_id 
+				join	chofer as o on o.id = r.chofer_id
+				where	1 = 1 
+				$filtroFecha
+				$filtroCombustible
+				$finAgrupacion
 
-			union all
+				union all
 
-			select 	$inicioAgrupacionPropios
-			sum(c.petroleoLts) as consumoLts,
-			sum(c.valorTotal) as consumoPesos,
-			:fI,
-			:fF,
-			m.id as maquina_id,
-			o.id as operador_id,
-			cg.id as centroGestion_id,
-			'CP' as tipo,
-			:tipoComb,
-			'CP' as tipo_maquina
-			from 	camionPropio as m 
-			join 	rCamionPropio as r on r.camionPropio_id = m.id
-			join	cargaCombCamionPropio as c on c.rCamionPropio_id = r.id
-			join	faena as cg on cg.id = c.faena_id 
-			join	chofer as o on o.id = r.chofer_id
-			where	1 = 1 
-			$filtroFecha
-			$filtroCombustible
+				select 	
+				concat(m.codigo,' / ',m.nombre) as maquina,
+				'' as operador,
+				ifnull(cg.nombre,'') as centroGestion,
+				sum(cr.litros) as consumoLts,
+				sum(cr.total) as consumoPesos,
+				:fI,
+				:fF,
+				m.id as maquina_id,
+				0 as operador_id,
+				ifnull(cg.id,'') as centroGestion_id,
+				'CP' as tipo,
+				:tipoComb,
+				'CP' as tipo_maquina
+				from 	camionPropio as m 
+				join	combustible_rindegasto as cr on cr.camionpropio_id = m.id
+				left join faena as cg on cg.id = cr.faena_id
+				where	cr.fecha <= :fF and
+						cr.fecha >= :fI
+				$finAgrupacion
+			) as t1
 			$finAgrupacion
 			";
 		}
 		elseif($this->propiosOArrendados == 'CAMIONESARRENDADOS'){
 			$sql = "
-			select 	$inicioAgrupacionArrendados
-			sum(c.petroleoLts) as consumoLts,
-			sum(c.valorTotal) as consumoPesos,
+
+			select $inicioAgrupacionTodos
+			sum(consumoLts) as consumoLts,
+			sum(consumoPesos) as consumoPesos,
 			:fI,
 			:fF,
-			m.id as maquina_id,
-			o.id as operador_id,
-			cg.id as centroGestion_id,
-			'CA' as tipo,
+			maquina_id,
+			operador_id,
+			centroGestion_id,
+			tipo,
 			:tipoComb,
-			'CA' as tipo_maquina
-			from 	cargaCombCamionArrendado as c,
-			rCamionArrendado as r,
-			faena as cg,
-			camionArrendado as m,
-			chofer as o
-			where	r.id = c.rCamionArrendado_id and
-			cg.id = c.faena_id and
-			m.id = r.camionArrendado_id and
-			o.id = r.chofer_id
-			$filtroFecha
-			$filtroCombustible
+			tipo_maquina
+			from (
+
+				select 	$inicioAgrupacionArrendados
+				sum(c.petroleoLts) as consumoLts,
+				sum(c.valorTotal) as consumoPesos,
+				:fI,
+				:fF,
+				m.id as maquina_id,
+				o.id as operador_id,
+				cg.id as centroGestion_id,
+				'CA' as tipo,
+				:tipoComb,
+				'CA' as tipo_maquina
+				from 	cargaCombCamionArrendado as c,
+				rCamionArrendado as r,
+				faena as cg,
+				camionArrendado as m,
+				chofer as o
+				where	r.id = c.rCamionArrendado_id and
+				cg.id = c.faena_id and
+				m.id = r.camionArrendado_id and
+				o.id = r.chofer_id
+				$filtroFecha
+				$filtroCombustible
+				$finAgrupacion
+			
+				union all
+				
+				select 	
+				m.nombre as maquina,
+				'' as operador,
+				ifnull(cg.nombre,'') as centroGestion,
+				sum(cr.litros) as consumoLts,
+				sum(cr.total) as consumoPesos,
+				:fI,
+				:fF,
+				m.id as maquina_id,
+				0 as operador_id,
+				ifnull(cg.id,'') as centroGestion_id,
+				'CA' as tipo,
+				:tipoComb,
+				'CA' as tipo_maquina
+				from 	camionArrendado as m 
+				join	combustible_rindegasto as cr on cr.camionarrendado_id = m.id
+				left join faena as cg on cg.id = cr.faena_id
+				where	cr.fecha <= :fF and
+						cr.fecha >= :fI
+				$finAgrupacion
+			) as t1
 			$finAgrupacion
 			";
 		}
@@ -346,49 +400,99 @@ class InformeGastoCombustible extends CActiveRecord
 			tipo_maquina
 			from (
 
-			select 	$inicioAgrupacionArrendados
-			sum(c.petroleoLts) as consumoLts,
-			sum(c.valorTotal) as consumoPesos,
-			m.id as maquina_id,
-			o.id as operador_id,
-			cg.id as centroGestion_id,
-			'CT' as tipo,
-			'CA' as tipo_maquina
-			from 	cargaCombCamionArrendado as c,
-			rCamionArrendado as r,
-			faena as cg,
-			camionArrendado as m,
-			chofer as o
-			where	r.id = c.rCamionArrendado_id and
-			cg.id = c.faena_id and
-			m.id = r.camionArrendado_id and
-			o.id = r.chofer_id
-			$filtroFecha
-			$filtroCombustible
-			$finAgrupacion
+				select 	$inicioAgrupacionPropios
+				sum(c.petroleoLts) as consumoLts,
+				sum(c.valorTotal) as consumoPesos,
+				:fI,
+				:fF,
+				m.id as maquina_id,
+				o.id as operador_id,
+				cg.id as centroGestion_id,
+				'CP' as tipo,
+				:tipoComb,
+				'CP' as tipo_maquina
+				from 	camionPropio as m 
+				join 	rCamionPropio as r on r.camionPropio_id = m.id
+				join	cargaCombCamionPropio as c on c.rCamionPropio_id = r.id
+				join	faena as cg on cg.id = c.faena_id 
+				join	chofer as o on o.id = r.chofer_id
+				where	1 = 1 
+				$filtroFecha
+				$filtroCombustible
+				$finAgrupacion
 
-			union all
+				union all
 
-			select 	$inicioAgrupacionPropios
-			sum(c.petroleoLts) as consumoLts,
-			sum(c.valorTotal) as consumoPesos,
-			m.id as maquina_id,
-			o.id as operador_id,
-			cg.id as centroGestion_id,
-			'CT' as tipo,
-			'CP' as tipo_maquina
-			from 	cargaCombCamionPropio as c,
-			rCamionPropio as r,
-			faena as cg,
-			camionPropio as m,
-			chofer as o
-			where	r.id = c.rCamionPropio_id and
-			cg.id = c.faena_id and
-			m.id = r.camionPropio_id and
-			o.id = r.chofer_id
-			$filtroFecha
-			$filtroCombustible
-			$finAgrupacion
+				select 	
+				concat(m.codigo,' / ',m.nombre) as maquina,
+				'' as operador,
+				ifnull(cg.nombre,'') as centroGestion,
+				sum(cr.litros) as consumoLts,
+				sum(cr.total) as consumoPesos,
+				:fI,
+				:fF,
+				m.id as maquina_id,
+				0 as operador_id,
+				ifnull(cg.id,'') as centroGestion_id,
+				'CP' as tipo,
+				:tipoComb,
+				'CP' as tipo_maquina
+				from 	camionPropio as m 
+				join	combustible_rindegasto as cr on cr.camionpropio_id = m.id
+				left join faena as cg on cg.id = cr.faena_id
+				where	cr.fecha <= :fF and
+						cr.fecha >= :fI
+				$finAgrupacion
+
+				union all
+
+				select 	$inicioAgrupacionArrendados
+				sum(c.petroleoLts) as consumoLts,
+				sum(c.valorTotal) as consumoPesos,
+				:fI,
+				:fF,
+				m.id as maquina_id,
+				o.id as operador_id,
+				cg.id as centroGestion_id,
+				'CA' as tipo,
+				:tipoComb,
+				'CA' as tipo_maquina
+				from 	cargaCombCamionArrendado as c,
+				rCamionArrendado as r,
+				faena as cg,
+				camionArrendado as m,
+				chofer as o
+				where	r.id = c.rCamionArrendado_id and
+				cg.id = c.faena_id and
+				m.id = r.camionArrendado_id and
+				o.id = r.chofer_id
+				$filtroFecha
+				$filtroCombustible
+				$finAgrupacion
+			
+				union all
+				
+				select 	
+				m.nombre as maquina,
+				'' as operador,
+				ifnull(cg.nombre,'') as centroGestion,
+				sum(cr.litros) as consumoLts,
+				sum(cr.total) as consumoPesos,
+				:fI,
+				:fF,
+				m.id as maquina_id,
+				0 as operador_id,
+				ifnull(cg.id,'') as centroGestion_id,
+				'CA' as tipo,
+				:tipoComb,
+				'CA' as tipo_maquina
+				from 	camionArrendado as m 
+				join	combustible_rindegasto as cr on cr.camionarrendado_id = m.id
+				left join faena as cg on cg.id = cr.faena_id
+				where	cr.fecha <= :fF and
+						cr.fecha >= :fI
+				$finAgrupacion
+
 			) as t1
 
 			$finAgrupacion
@@ -396,55 +500,136 @@ class InformeGastoCombustible extends CActiveRecord
 		}
 		elseif($this->propiosOArrendados == 'MAQUINASPROPIAS'){
 			$sql = "
-			select 	$inicioAgrupacionPropios
-			sum(c.petroleoLts) as consumoLts,
-			sum(c.valorTotal) as consumoPesos,
+
+			select $inicioAgrupacionTodos
+			sum(consumoLts) as consumoLts,
+			sum(consumoPesos) as consumoPesos,
 			:fI,
 			:fF,
-			m.id as maquina_id,
-			o.id as operador_id,
-			cg.id as centroGestion_id,
-			'MP' as tipo,
+			maquina_id,
+			operador_id,
+			centroGestion_id,
+			tipo,
 			:tipoComb,
-			'MP' as tipo_maquina
-			from 	cargaCombEquipoPropio as c,
-			rEquipoPropio as r,
-			faena as cg,
-			equipoPropio as m,
-			operador as o
-			where	r.id = c.rEquipoPropio_id and
-			cg.id = c.faena_id and
-			m.id = r.equipoPropio_id and
-			o.id = r.operador_id
-			$filtroFecha
-			$filtroCombustible
+			tipo_maquina
+			from (
+			
+				select 	$inicioAgrupacionPropios
+				sum(c.petroleoLts) as consumoLts,
+				sum(c.valorTotal) as consumoPesos,
+				:fI,
+				:fF,
+				m.id as maquina_id,
+				o.id as operador_id,
+				cg.id as centroGestion_id,
+				'MP' as tipo,
+				:tipoComb,
+				'MP' as tipo_maquina
+				from 	cargaCombEquipoPropio as c,
+				rEquipoPropio as r,
+				faena as cg,
+				equipoPropio as m,
+				operador as o
+				where	r.id = c.rEquipoPropio_id and
+				cg.id = c.faena_id and
+				m.id = r.equipoPropio_id and
+				o.id = r.operador_id
+				$filtroFecha
+				$filtroCombustible
+				$finAgrupacion
+
+				union all
+
+				select 	
+				concat(m.codigo,' / ',m.nombre) as maquina,
+				'' as operador,
+				ifnull(cg.nombre,'') as centroGestion,
+				sum(cr.litros) as consumoLts,
+				sum(cr.total) as consumoPesos,
+				:fI,
+				:fF,
+				m.id as maquina_id,
+				0 as operador_id,
+				ifnull(cg.id,'') as centroGestion_id,
+				'MP' as tipo,
+				:tipoComb,
+				'MP' as tipo_maquina
+				from 	equipoPropio as m 
+				join	combustible_rindegasto as cr on cr.equipopropio_id = m.id
+				left join faena as cg on cg.id = cr.faena_id
+				where	cr.fecha <= :fF and
+						cr.fecha >= :fI
+				$finAgrupacion
+			) as t1
 			$finAgrupacion
+
+			
 			";
 		}
 		elseif($this->propiosOArrendados == 'MAQUINASARRENDADAS'){
 			$sql = "
-			select 	$inicioAgrupacionArrendados
-			sum(c.petroleoLts) as consumoLts,
-			sum(c.valorTotal) as consumoPesos,
+
+			select $inicioAgrupacionTodos
+			sum(consumoLts) as consumoLts,
+			sum(consumoPesos) as consumoPesos,
 			:fI,
 			:fF,
-			m.id as maquina_id,
-			o.id as operador_id,
-			cg.id as centroGestion_id,
-			'MA' as tipo,
+			maquina_id,
+			operador_id,
+			centroGestion_id,
+			tipo,
 			:tipoComb,
-			'MA' as tipo_maquina
-			from 	cargaCombEquipoArrendado as c,
-			rEquipoArrendado as r,
-			faena as cg,
-			equipoArrendado as m,
-			operador as o
-			where	r.id = c.rEquipoArrendado_id and
-			cg.id = c.faena_id and
-			m.id = r.equipoArrendado_id and
-			o.id = r.operador_id
-			$filtroFecha
-			$filtroCombustible
+			tipo_maquina
+			from (
+			
+				select 	$inicioAgrupacionArrendados
+				sum(c.petroleoLts) as consumoLts,
+				sum(c.valorTotal) as consumoPesos,
+				:fI,
+				:fF,
+				m.id as maquina_id,
+				o.id as operador_id,
+				cg.id as centroGestion_id,
+				'MA' as tipo,
+				:tipoComb,
+				'MA' as tipo_maquina
+				from 	cargaCombEquipoArrendado as c,
+				rEquipoArrendado as r,
+				faena as cg,
+				equipoArrendado as m,
+				operador as o
+				where	r.id = c.rEquipoArrendado_id and
+				cg.id = c.faena_id and
+				m.id = r.equipoArrendado_id and
+				o.id = r.operador_id
+				$filtroFecha
+				$filtroCombustible
+				$finAgrupacion
+
+				union all
+
+				select 	
+				m.nombre as maquina,
+				'' as operador,
+				ifnull(cg.nombre,'') as centroGestion,
+				sum(cr.litros) as consumoLts,
+				sum(cr.total) as consumoPesos,
+				:fI,
+				:fF,
+				m.id as maquina_id,
+				0 as operador_id,
+				ifnull(cg.id,'') as centroGestion_id,
+				'MA' as tipo,
+				:tipoComb,
+				'MA' as tipo_maquina
+				from 	equipoArrendado as m 
+				join	combustible_rindegasto as cr on cr.equipoarrendado_id = m.id
+				left join faena as cg on cg.id = cr.faena_id
+				where	cr.fecha <= :fF and
+						cr.fecha >= :fI
+				$finAgrupacion
+
+			) as t1
 			$finAgrupacion
 			";
 		}
@@ -463,49 +648,102 @@ class InformeGastoCombustible extends CActiveRecord
 			tipo_maquina
 			from (
 				
-			select 	$inicioAgrupacionPropios
-			sum(c.petroleoLts) as consumoLts,
-			sum(c.valorTotal) as consumoPesos,
-			m.id as maquina_id,
-			o.id as operador_id,
-			cg.id as centroGestion_id,
-			'MT' as tipo,
-			'MP' as tipo_maquina
-			from 	cargaCombEquipoPropio as c,
-			rEquipoPropio as r,
-			faena as cg,
-			equipoPropio as m,
-			operador as o
-			where	r.id = c.rEquipoPropio_id and
-			cg.id = c.faena_id and
-			m.id = r.equipoPropio_id and
-			o.id = r.operador_id
-			$filtroFecha
-			$filtroCombustible
-			$finAgrupacion
-				
-			union all
-				
-			select 	$inicioAgrupacionArrendados
-			sum(c.petroleoLts) as consumoLts,
-			sum(c.valorTotal) as consumoPesos,
-			m.id as maquina_id,
-			o.id as operador_id,
-			cg.id as centroGestion_id,
-			'MT' as tipo,
-			'MA' as tipo_maquina
-			from 	cargaCombEquipoArrendado as c,
-			rEquipoArrendado as r,
-			faena as cg,
-			equipoArrendado as m,
-			operador as o
-			where	r.id = c.rEquipoArrendado_id and
-			cg.id = c.faena_id and
-			m.id = r.equipoArrendado_id and
-			o.id = r.operador_id
-			$filtroFecha
-			$filtroCombustible
-			$finAgrupacion
+				select 	$inicioAgrupacionPropios
+				sum(c.petroleoLts) as consumoLts,
+				sum(c.valorTotal) as consumoPesos,
+				:fI,
+				:fF,
+				m.id as maquina_id,
+				o.id as operador_id,
+				cg.id as centroGestion_id,
+				'MP' as tipo,
+				:tipoComb,
+				'MP' as tipo_maquina
+				from 	cargaCombEquipoPropio as c,
+				rEquipoPropio as r,
+				faena as cg,
+				equipoPropio as m,
+				operador as o
+				where	r.id = c.rEquipoPropio_id and
+				cg.id = c.faena_id and
+				m.id = r.equipoPropio_id and
+				o.id = r.operador_id
+				$filtroFecha
+				$filtroCombustible
+				$finAgrupacion
+
+				union all
+
+				select 	
+				concat(m.codigo,' / ',m.nombre) as maquina,
+				'' as operador,
+				ifnull(cg.nombre,'') as centroGestion,
+				sum(cr.litros) as consumoLts,
+				sum(cr.total) as consumoPesos,
+				:fI,
+				:fF,
+				m.id as maquina_id,
+				0 as operador_id,
+				ifnull(cg.id,'') as centroGestion_id,
+				'MP' as tipo,
+				:tipoComb,
+				'MP' as tipo_maquina
+				from 	equipoPropio as m 
+				join	combustible_rindegasto as cr on cr.equipopropio_id = m.id
+				left join faena as cg on cg.id = cr.faena_id
+				where	cr.fecha <= :fF and
+						cr.fecha >= :fI
+				$finAgrupacion
+
+				union all
+
+				select 	$inicioAgrupacionArrendados
+				sum(c.petroleoLts) as consumoLts,
+				sum(c.valorTotal) as consumoPesos,
+				:fI,
+				:fF,
+				m.id as maquina_id,
+				o.id as operador_id,
+				cg.id as centroGestion_id,
+				'MA' as tipo,
+				:tipoComb,
+				'MA' as tipo_maquina
+				from 	cargaCombEquipoArrendado as c,
+				rEquipoArrendado as r,
+				faena as cg,
+				equipoArrendado as m,
+				operador as o
+				where	r.id = c.rEquipoArrendado_id and
+				cg.id = c.faena_id and
+				m.id = r.equipoArrendado_id and
+				o.id = r.operador_id
+				$filtroFecha
+				$filtroCombustible
+				$finAgrupacion
+
+				union all
+
+				select 	
+				m.nombre as maquina,
+				'' as operador,
+				ifnull(cg.nombre,'') as centroGestion,
+				sum(cr.litros) as consumoLts,
+				sum(cr.total) as consumoPesos,
+				:fI,
+				:fF,
+				m.id as maquina_id,
+				0 as operador_id,
+				ifnull(cg.id,'') as centroGestion_id,
+				'MA' as tipo,
+				:tipoComb,
+				'MA' as tipo_maquina
+				from 	equipoArrendado as m 
+				join	combustible_rindegasto as cr on cr.equipoarrendado_id = m.id
+				left join faena as cg on cg.id = cr.faena_id
+				where	cr.fecha <= :fF and
+						cr.fecha >= :fI
+				$finAgrupacion
+
 			) as t1
 			$finAgrupacion
 			";
