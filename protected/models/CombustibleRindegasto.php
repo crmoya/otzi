@@ -10,7 +10,7 @@
  * @property integer $equipoarrendado_id
  * @property integer $equipopropio_id
  * @property string $fecha
- * @property integer $litros
+ * @property double $litros
  * @property integer $total
  * @property integer $gasto_completa_id
  *
@@ -40,7 +40,8 @@ class CombustibleRindegasto extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('fecha, litros, total, gasto_completa_id', 'required'),
-			array('camionpropio_id, camionarrendado_id, equipoarrendado_id, equipopropio_id, litros, total, gasto_completa_id', 'numerical', 'integerOnly'=>true),
+			array('camionpropio_id, camionarrendado_id, equipoarrendado_id, equipopropio_id, total, gasto_completa_id', 'numerical', 'integerOnly'=>true),
+			array('litros', 'numerical'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, camionpropio_id, camionarrendado_id, equipoarrendado_id, equipopropio_id, fecha, litros, total, gasto_completa_id', 'safe', 'on'=>'search'),
