@@ -74,7 +74,7 @@ class SiteController extends Controller
 		$carga = new Carga();
 		$carga->rindeGastos();
 	}
-	/*
+	
 	public function actionCargagastos(){
 		set_time_limit(0);
 		$carga = new Carga();
@@ -86,7 +86,7 @@ class SiteController extends Controller
 		$carga = new Carga();
 		$carga->informes();
 	}
-	*/
+	
 
 	/**
 	 * This is the action to handle external exceptions.
@@ -205,7 +205,7 @@ class SiteController extends Controller
 		return array(
 			array(
 				'allow',
-				'actions' => array('login', 'logout', 'error', 'index', 'rinde'),
+				'actions' => array('login', 'logout', 'error', 'index', 'gastos', 'informes', 'rinde'),
 				'users' => array('*'),
 			),
 			array(
