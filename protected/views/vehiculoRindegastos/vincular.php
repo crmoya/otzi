@@ -4,16 +4,17 @@
 
 ?>
 
-<h2>Asociar registros no vinculados de RindeGastos</h2>
-
-
-<h4>Vehículos actualmente vinculados</h4>
+<h3>Vehículos actualmente vinculados</h3>
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'faena-grid',
 	'dataProvider'=>$model->search(0),
 	'filter'=>$model,
 	'columns'=>array(
 		'vehiculo',
+		['name'=>"camionpropio_id",'value'=>'isset($data->camionPropio)?$data->camionPropio->nombre." (".$data->camionPropio->codigo.")":""'],
+		['name'=>"camionarrendado_id",'value'=>'isset($data->camionArrendado)?$data->camionArrendado->nombre:""'],
+		['name'=>"equipopropio_id",'value'=>'isset($data->equipoPropio)?$data->equipoPropio->nombre." (".$data->equipoPropio->codigo.")":""'],
+		['name'=>"equipoarrendado_id",'value'=>'isset($data->equipoArrendado)?$data->equipoArrendado->nombre:""'],
 		array(
 			'class'=>'CButtonColumn',
 			'template' => '{delete}',
@@ -21,7 +22,7 @@
 	),
 )); ?>
 
-<h4>Vehículos no vinculados</h4>
+<h3>Vehículos no vinculados</h3>
 <div class="form" style="width:1000px;">
 
 <?php $form=$this->beginWidget('CActiveForm', array(

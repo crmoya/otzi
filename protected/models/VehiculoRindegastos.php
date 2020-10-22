@@ -72,7 +72,11 @@ class VehiculoRindegastos extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'vehiculo' => 'Vehículo Rindegastos',
-			'vehiculosam' => 'Camion / Equipo - Propio / Arrendado'
+			'vehiculosam' => 'Camion / Equipo - Propio / Arrendado',
+			'camionpropio_id' => 'Camión Propio',
+			'camionarrendado_id' => 'Camión Arrendado',
+			'equipopropio_id' => 'Equipo Propio',
+			'equipoarrendado_id' => 'Equipo Arrendado',
 		);
 	}
 

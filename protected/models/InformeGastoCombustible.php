@@ -270,15 +270,12 @@ class InformeGastoCombustible extends CActiveRecord
 			'CP' as tipo,
 			:tipoComb,
 			'CP' as tipo_maquina
-			from 	cargaCombCamionPropio as c,
-			rCamionPropio as r,
-			faena as cg,
-			camionPropio as m,
-			chofer as o
-			where	r.id = c.rCamionPropio_id and
-			cg.id = c.faena_id and
-			m.id = r.camionPropio_id and
-			o.id = r.chofer_id
+			from 	camionPropio as m 
+			join 	rCamionPropio as r on r.camionPropio_id = m.id
+			join	cargaCombCamionPropio as c on c.rCamionPropio_id = r.id
+			join	faena as cg on cg.id = c.faena_id 
+			join	chofer as o on o.id = r.chofer_id
+			where	1 = 1
 			$filtroFecha
 			$filtroCombustible
 			$finAgrupacion

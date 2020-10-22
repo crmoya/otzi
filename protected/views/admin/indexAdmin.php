@@ -1,4 +1,14 @@
-<?php $this->pageTitle=Yii::app()->name; ?>
+<?php 
+$this->pageTitle=Yii::app()->name; 
+$noVinculados = [];
+$criteria = new CDbCriteria;
+$criteria->select = 'DISTINCT vehiculo_equipo';
+$criteria->condition = "not exists (select * from vehiculo_rindegasto where vehiculo = t.vehiculo_equipo) and vehiculo_equipo != ''";
+$vehiculos = GastoCompleta::model()->findAll($criteria);
+foreach($vehiculos as $vehiculo){
+    $noVinculados[] = ['vehiculo'=>$vehiculo['vehiculo_equipo']];
+}
+?>
 Bienvenido <?php echo CHtml::encode($nombre);?>, por favor seleccione una de las siguientes operaciones para comenzar:<br/><br/>
 <ul>
  <li><?php echo CHtml::link("Administrar usuarios",CController::createUrl('//usuario/admin')); ?></li>
@@ -26,7 +36,7 @@ Bienvenido <?php echo CHtml::encode($nombre);?>, por favor seleccione una de las
  <li><?php echo CHtml::link("Modificar o Eliminar registro de Equipos Propios",CController::createUrl('//rEquipoPropio/admin')); ?></li>
  <li><?php echo CHtml::link("Modificar o Eliminar registro de Equipos Arrendados",CController::createUrl('//rEquipoArrendado/admin')); ?></li>
  <li>&nbsp;</li>
- <li><?php echo CHtml::link("Asociar registros no vinculados de Rinde Gastos",CController::createUrl('//vehiculoRindegastos/vincular')); ?></li>
+ <li><?php echo CHtml::link("Asociar registros no vinculados de Rinde Gastos (" . count($noVinculados) . " sin vincular)",CController::createUrl('//vehiculoRindegastos/vincular')); ?></li>
  <li>&nbsp;</li>
  <li><?php echo CHtml::link("Cambiar mi clave",CController::createUrl('//site/cambiarClave')); ?></li>
 
