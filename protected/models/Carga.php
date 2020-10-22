@@ -17,7 +17,7 @@ class Carga{
 			//INGRESO LOS GASTOS DE COMBUSTIBLE DE ACUERDO A LA TABLA GASTO_COMPLETA
 			$gastos = Gasto::model()->findAllByAttributes(['expense_policy_id'=>GastoCompleta::POLICY_COMBUSTIBLES]);
 			foreach($gastos as $gasto){
-				$gastoCompleta = GastoCompleta::findByAttributes(['gasto_id'=>$gasto->id]);
+				$gastoCompleta = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
 				if(isset($gastoCompleta)){
 					$combustible = new CombustibleRindegasto();
 					$combustible->fecha = $gasto->issue_date;
@@ -51,7 +51,7 @@ class Carga{
 			$criteria->params = [':policy' => GastoCompleta::POLICY_COMBUSTIBLES];
 			$gastos = Gasto::model()->findAll($criteria);
 			foreach($gastos as $gasto){
-				$gastoCompleta = GastoCompleta::findByAttributes(['gasto_id'=>$gasto->id]);
+				$gastoCompleta = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
 				if(isset($gastoCompleta)){
 					$nocombustible = new NocombustibleRindegasto();
 					$nocombustible->fecha = $gasto->issue_date;
