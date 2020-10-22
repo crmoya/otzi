@@ -11,8 +11,8 @@ foreach($vehiculos as $vehiculo){
 
 $noVinculadosF = [];
 $criteria = new CDbCriteria;
-$criteria->select = 'DISTINCT faena';
-$criteria->condition = "not exists (select * from faena_rindegasto where faena = t.centro_costo_faena) and vehiculo_equipo != ''";
+$criteria->select = 'DISTINCT centro_costo_faena';
+$criteria->condition = "not exists (select * from faena_rindegasto where faena = t.centro_costo_faena) and centro_costo_faena != ''";
 $faenas = GastoCompleta::model()->findAll($criteria);
 foreach($faenas as $faena){
     $noVinculadosF[] = ['faena'=>$faena['faena']];

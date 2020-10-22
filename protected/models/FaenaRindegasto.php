@@ -1,18 +1,27 @@
 <?php
 
 /**
- * This is the model class for table "faena_rindegasto".
+ * This is the model class for table "origen".
  *
- * The followings are the available columns in table 'faena_rindegasto':
+ * The followings are the available columns in table 'vehiculo_rindegasto':
  * @property integer $id
- * @property string $faena
  * @property integer $faena_id
+ * @property integer $faena
  *
  * The followings are the available model relations:
- * @property Faena $faena0
  */
 class FaenaRindegasto extends CActiveRecord
 {
+
+	/**
+	 * Returns the static model of the specified AR class.
+	 * @return Origen the static model class
+	 */
+	public static function model($className=__CLASS__)
+	{
+		return parent::model($className);
+	}
+
 	/**
 	 * @return string the associated database table name
 	 */
@@ -29,11 +38,12 @@ class FaenaRindegasto extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('faena, faena_id', 'required'),
-			array('faena_id', 'numerical', 'integerOnly'=>true),
+			array('faena', 'required'),
+			array('faena','ext.MyValidators.NoBlanco'),
+			array('id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('id, faena, faena_id', 'safe', 'on'=>'search'),
+			// Please remove those attributes that should not be searched.
+			array('id, faena', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -45,7 +55,7 @@ class FaenaRindegasto extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'faena0' => array(self::BELONGS_TO, 'Faena', 'faena_id'),
+			'cg' => array(self::BELONGS_TO, 'Faena', 'faena_id'),
 		);
 	}
 
@@ -56,46 +66,60 @@ class FaenaRindegasto extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'faena' => 'Faena',
-			'faena_id' => 'Faena',
+			'faena' => 'Faena Rindegastos',
+			'faena_id' => 'Faena SAM',
+			'vehiculosam' => 'Centro de Gestión SAM',
 		);
 	}
 
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
-	 *
-	 * Typical usecase:
-	 * - Initialize the model fields with values from filter form.
-	 * - Execute this method to get CActiveDataProvider instance which will filter
-	 * models according to data in model fields.
-	 * - Pass data provider to CGridView, CListView or any similar widget.
-	 *
-	 * @return CActiveDataProvider the data provider that can return the models
-	 * based on the search/filter conditions.
+	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
 	 */
 	public function search()
 	{
-		// @todo Please modify the following code to remove attributes that should not be searched.
+		// Warning: Please modify the following code to remove attributes that
+		// should not be searched.
 
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('faena',$this->faena,true);
-		$criteria->compare('faena_id',$this->faena_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
+	
+	public function listarNoVinculados(){
+		$novinculados = [];
+		$criteria = new CDbCriteria;
+		$criteria->select = 'DISTINCT centro_costo_faena';
+		$criteria->condition = "not exists (select * from faena_rindegasto where faena = t.centro_costo_faena) and centro_costo_faena != ''";
+		$faenas = GastoCompleta::model()->findAll($criteria);
+		foreach($faenas as $faena){
+			$novinculados[] = ['faena'=>$faena['centro_costo_faena']];
+		}
+		asort($novinculados);
+		return $novinculados;
+	}
 
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return FaenaRindegasto the static model class
-	 */
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
+
+	public static function autoVincular(){
+		$criteria = new CDbCriteria;
+		$criteria->select = 'DISTINCT centro_costo_faena';
+		$faenas = GastoCompleta::model()->findAll($criteria);
+		foreach($faenas as $vFaena){
+			$faena = trim($vFaena['centro_costo_faena']);
+			$faenaSAM = Faena::model()->findByAttributes(['nombre'=>$faena]);
+			if(isset($faenaSAM)){
+				$faenaRindeGasto = new FaenaRindegasto();
+				$faenaRindeGasto->faena = $faena;
+				$faenaRindeGasto->faena_id = $faenaSAM->id;
+				$faenaRindeGasto->save();
+				continue;
+			}
+		}
+
 	}
 }
