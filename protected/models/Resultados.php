@@ -29,7 +29,7 @@
  * The followings are the available model relations:
  * @property Gasto $gasto
  */
-class GastoRepuesto extends CActiveRecord
+class Resultados extends CActiveRecord
 {
 	/**
 	 * @return array validation rules for model attributes.
@@ -78,6 +78,7 @@ class GastoRepuesto extends CActiveRecord
 		$inicioAgrupacion = "	maquina,
 								operador,
 								centro_gestion,
+								sum(litros) as litros,
 								sum(total) as total";
 		$finAgrupacion = "		operador,maquina,centro_gestion";
 
@@ -87,6 +88,7 @@ class GastoRepuesto extends CActiveRecord
 				maquina,
 				'' as operador,
 				'' as centro_gestion,
+				sum(litros) as litros,
 				sum(total) as total
 				";
 				$finAgrupacion = "maquina";
@@ -96,6 +98,7 @@ class GastoRepuesto extends CActiveRecord
 				'' as maquina,
 				operador,
 				'' as centro_gestion,
+				sum(litros) as litros,
 				sum(total) as total
 				";
 				$finAgrupacion = "operador";
@@ -105,6 +108,7 @@ class GastoRepuesto extends CActiveRecord
 				'' as maquina,
 				'' as operador,
 				centro_gestion,
+				sum(litros) as litros,
 				sum(total) as total
 				";
 				$finAgrupacion = "centro_gestion";
@@ -114,6 +118,7 @@ class GastoRepuesto extends CActiveRecord
 				maquina,
 				'' as operador,
 				centro_gestion,
+				sum(litros) as litros,
 				sum(total) as total,
 				'CENTROMAQUINA' as id
 				";
@@ -124,6 +129,7 @@ class GastoRepuesto extends CActiveRecord
 				'' as maquina,
 				operador,
 				centro_gestion,
+				sum(litros) as litros,
 				sum(total) as total
 				";
 				$finAgrupacion = "centro_gestion,operador";
@@ -133,6 +139,7 @@ class GastoRepuesto extends CActiveRecord
 				maquina,
 				operador,
 				'' as centro_gestion,
+				sum(litros) as litros,
 				sum(total) as total
 				";
 				$finAgrupacion = "operador,maquina";
@@ -153,7 +160,7 @@ class GastoRepuesto extends CActiveRecord
 
 	public function tableName()
 	{
-		return 'vgastorepuesto';
+		return 'vresultados';
 	}
 
 	public function relations()

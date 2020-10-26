@@ -200,9 +200,5 @@ class GastoCombustible extends CActiveRecord
 	{
 		return parent::model($className);
 	}
-	protected function gridDataColumn($data, $row)
-	{
-		return Tools::backFecha($data->date);
-	}
 
 }

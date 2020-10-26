@@ -18,6 +18,11 @@
  */
 class UnidadfaenaEquipo extends CActiveRecord
 {
+
+	public const UNIDAD_HORAS = 1;
+	public const UNIDAD_DIAS = 2;
+	public const UNIDAD_MESES = 3;
+
 	/**
 	 * @return string the associated database table name
 	 */
@@ -30,9 +35,9 @@ class UnidadfaenaEquipo extends CActiveRecord
 
 	public static function listar(){
 		return [
-			['id' =>1, 'nombre'=>'HORAS'], 
-			['id' =>2, 'nombre'=>'DÍAS'], 
-			['id' =>3, 'nombre'=>'MESES'], 
+			['id' =>UnidadfaenaEquipo::UNIDAD_HORAS, 'nombre'=>'HORAS'], 
+			['id' =>UnidadfaenaEquipo::UNIDAD_DIAS, 'nombre'=>'DÍAS'], 
+			['id' =>UnidadfaenaEquipo::UNIDAD_MESES, 'nombre'=>'MESES'], 
 		];
 	}
 

@@ -6,7 +6,7 @@ Bienvenido <?php echo CHtml::encode($nombre);?>, por favor seleccione una de las
 </ul>
 <ul>
  <li><?php echo CHtml::link("Informe de Gasto de Combustible",CController::createUrl('//gastoCombustible/admin')); ?></li>
- <li><?php echo CHtml::link("Informe de Gasto de Repuestos",CController::createUrl('//gerencia/gastoRepuesto')); ?></li>
+ <li><?php echo CHtml::link("Informe de Gasto de Repuestos",CController::createUrl('//gastoRepuesto/admin')); ?></li>
 </ul>
 <ul>
  <li><?php echo CHtml::link("Informe de Resultados",CController::createUrl('//gerencia/resultados')); ?></li>

@@ -1,6 +1,6 @@
 <?php
 
-class GastoRepuestoController extends Controller
+class ResultadosController extends Controller
 {
 
 	/**
@@ -42,12 +42,12 @@ class GastoRepuestoController extends Controller
 		
 		$this->pageTitle = "";
 
-		$model=new GastoRepuesto('search');
+		$model=new Resultados('search');
 		$model->fecha_inicio = date("Y-m-01");
 		$model->fecha_fin = date("Y-m-t");
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['GastoRepuesto'])){
-			$model->attributes=$_GET['GastoRepuesto'];
+		if(isset($_GET['Resultados'])){
+			$model->attributes=$_GET['Resultados'];
 		}
 
 	
@@ -55,6 +55,7 @@ class GastoRepuestoController extends Controller
 			['name'=>'Máquina o camión','width'=>'lg'],
 			['name'=>'Operador o Chofer','width'=>'lg'],
 			['name'=>'Centro Gestión','width'=>'lg'],
+			['name'=>'Consumo (Lts)','width'=>'md'],
 			['name'=>'Consumo ($)','width'=>'md'],
 			['name'=>'Ver','width'=>'xs'],
 		];
@@ -63,11 +64,12 @@ class GastoRepuestoController extends Controller
 			['campo'=>'maquina','exportable','dots'=>"md"],
 			['campo'=>'operador','exportable','dots'=>'md'],
 			['campo'=>'centro_gestion','exportable','dots'=>'md'],
+			['campo'=>'litros','exportable', 'format'=>'number','acumulado'=>'suma'],
 			['campo'=>'total','exportable', 'format'=>'money','acumulado'=>'suma'],
 			['campo'=>'id','dots'=>'xs'],
 		];
 
-		$datos = GastoRepuesto::model()->findAll($model->search());
+		$datos = GastoCombustible::model()->findAll($model->search());
 
 		$this->render("admin",array(
 			'model'=>$model,

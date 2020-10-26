@@ -70,6 +70,37 @@ class SiteController extends Controller
 		}
 	}
 
+	public function actionFix(){
+		$rEquiposPropios = REquipoPropio::model()->findAll();
+		foreach($rEquiposPropios as $rEquipoPropio){
+			$uFaenaEquipo = UnidadfaenaEquipo::model()->findByAttributes(['faena_id'=>$rEquipoPropio->faena_id,'equipopropio_id'=>$rEquipoPropio->equipoPropio_id,'unidad'=>UnidadfaenaEquipo::UNIDAD_HORAS]);
+			if(!isset($uFaenaEquipo)){
+				$uFaenaEquipo = new UnidadfaenaEquipo();
+				$uFaenaEquipo->unidad = UnidadfaenaEquipo::UNIDAD_HORAS;
+				if(isset($rEquipoPropio->equipos)){
+					$uFaenaEquipo->pu = $rEquipoPropio->equipos->precioUnitario;
+				}
+				$uFaenaEquipo->faena_id = $rEquipoPropio->faena_id;
+				$uFaenaEquipo->equipopropio_id = $rEquipoPropio->equipoPropio_id;
+				$uFaenaEquipo->save();
+			}
+		}
+		$rEquiposArrendados = REquipoArrendado::model()->findAll();
+		foreach($rEquiposArrendados as $rEquipoArrendado){
+			$uFaenaEquipo = UnidadfaenaEquipo::model()->findByAttributes(['faena_id'=>$rEquipoArrendado->faena_id,'equipoarrendado_id'=>$rEquipoArrendado->equipoArrendado_id,'unidad'=>UnidadfaenaEquipo::UNIDAD_HORAS]);
+			if(!isset($uFaenaEquipo)){
+				$uFaenaEquipo = new UnidadfaenaEquipo();
+				$uFaenaEquipo->unidad = UnidadfaenaEquipo::UNIDAD_HORAS;
+				if(isset($rEquipoArrendado->equipos)){
+					$uFaenaEquipo->pu = $rEquipoArrendado->equipos->precioUnitario;
+				}
+				$uFaenaEquipo->faena_id = $rEquipoArrendado->faena_id;
+				$uFaenaEquipo->equipoarrendado_id = $rEquipoArrendado->equipoArrendado_id;
+				$uFaenaEquipo->save();
+			}
+		}
+	}
+
 	public function actionRinde(){
 		$carga = new Carga();
 		$carga->rindeGastos();
@@ -205,7 +236,7 @@ class SiteController extends Controller
 		return array(
 			array(
 				'allow',
-				'actions' => array('login', 'logout', 'error', 'index', 'gastos', 'informes', 'rinde'),
+				'actions' => array('login', 'logout', 'error', 'index', 'gastos', 'informes', 'rinde','fix'),
 				'users' => array('*'),
 			),
 			array(
