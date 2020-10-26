@@ -70,6 +70,7 @@ class SiteController extends Controller
 		}
 	}
 
+	/*
 	public function actionFix(){
 		$rEquiposPropios = REquipoPropio::model()->findAll();
 		foreach($rEquiposPropios as $rEquipoPropio){
@@ -117,7 +118,7 @@ class SiteController extends Controller
 		$carga = new Carga();
 		$carga->informes();
 	}
-	
+	*/
 
 	/**
 	 * This is the action to handle external exceptions.

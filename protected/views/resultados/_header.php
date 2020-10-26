@@ -77,8 +77,15 @@
 	    <?php echo $form->dropDownList($model,'agruparPor', CHtml::listData(array(array('id'=>'NINGUNO','nombre'=>'Sin agrupación'),array('id'=>'MAQUINA','nombre'=>'Máquina'),array('id'=>'OPERADOR','nombre'=>'Operador'),array('id'=>'CENTROGESTION','nombre'=>'Centro de Gestión'),array('id'=>'CENTROMAQUINA','nombre'=>'Centro de Gestión y Máquina'),array('id'=>'CENTROOPERADOR','nombre'=>'Centro de Gestión y Operador'),array('id'=>'OPERADORMAQUINA','nombre'=>'Operador y Máquina')), 'id', 'nombre')); ?>
 	</td>
 	<td>
+		<?php echo $form->labelEx($model,'chbRepuestos'); ?>
+		<?php echo $form->checkBox($model,'chbRepuestos',  array('checked'=>'checked')); ?><br/>
+		<?php echo $form->labelEx($model,'chbCombustible'); ?>
+		<?php echo $form->checkBox($model,'chbCombustible',  array('checked'=>'checked')); ?>
+	</td>
+	<td>
 		<?php echo CHtml::submitButton('Filtrar'); ?>
 	</td>
+	
  </tr>
 </table>
 <?php $this->endWidget(); ?>

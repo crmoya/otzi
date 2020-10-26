@@ -39,7 +39,7 @@ class Resultados extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fecha_inicio, fecha_fin, agruparPor,propiosOArrendados', 'safe', 'on'=>'search'),
+			array('fecha_inicio, fecha_fin, agruparPor,propiosOArrendados,chbResultados', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -78,71 +78,65 @@ class Resultados extends CActiveRecord
 		$inicioAgrupacion = "	maquina,
 								operador,
 								centro_gestion,
-								sum(litros) as litros,
-								sum(total) as total";
-		$finAgrupacion = "		operador,maquina,centro_gestion";
+								sum(produccion) as produccion,
+								sum(repuestos) as repuestos,
+								sum(combustible) as combustible";
+		$finAgrupacion = "		maquina,operador,centro_gestion";
 
 		if(isset($this->agruparPor) && $this->agruparPor != "NINGUNO"){
 			if($this->agruparPor == "MAQUINA"){
-				$inicioAgrupacion = "
-				maquina,
-				'' as operador,
-				'' as centro_gestion,
-				sum(litros) as litros,
-				sum(total) as total
-				";
-				$finAgrupacion = "maquina";
+				$inicioAgrupacion = "	maquina,
+										'' as operador,
+										'' as centro_gestion,
+										sum(produccion) as produccion,
+										sum(repuestos) as repuestos,
+										sum(combustible) as combustible";
+				$finAgrupacion = "		maquina";
 			}
 			if($this->agruparPor == "OPERADOR"){
-				$inicioAgrupacion = "
-				'' as maquina,
-				operador,
-				'' as centro_gestion,
-				sum(litros) as litros,
-				sum(total) as total
-				";
-				$finAgrupacion = "operador";
+				$inicioAgrupacion = "	'' as maquina,
+										operador,
+										'' as centro_gestion,
+										sum(produccion) as produccion,
+										sum(repuestos) as repuestos,
+										sum(combustible) as combustible";
+				$finAgrupacion = "		operador";
 			}
 			if($this->agruparPor == "CENTROGESTION"){
-				$inicioAgrupacion = "
-				'' as maquina,
-				'' as operador,
-				centro_gestion,
-				sum(litros) as litros,
-				sum(total) as total
-				";
-				$finAgrupacion = "centro_gestion";
+				$inicioAgrupacion = "	'' as maquina,
+										'' as operador,
+										centro_gestion,
+										sum(produccion) as produccion,
+										sum(repuestos) as repuestos,
+										sum(combustible) as combustible";
+				$finAgrupacion = "		centro_gestion";
 			}
 			if($this->agruparPor == "CENTROMAQUINA"){
-				$inicioAgrupacion = "
-				maquina,
-				'' as operador,
-				centro_gestion,
-				sum(litros) as litros,
-				sum(total) as total,
-				'CENTROMAQUINA' as id
-				";
-				$finAgrupacion = "maquina,centro_gestion";
+				$inicioAgrupacion = "	maquina,
+										'' as operador,
+										centro_gestion,
+										sum(produccion) as produccion,
+										sum(repuestos) as repuestos,
+										sum(combustible) as combustible";
+				$finAgrupacion = "		maquina,centro_gestion";
 			}
 			if($this->agruparPor == "CENTROOPERADOR"){
-				$inicioAgrupacion = "
-				'' as maquina,
-				operador,
-				centro_gestion,
-				sum(litros) as litros,
-				sum(total) as total
-				";
-				$finAgrupacion = "centro_gestion,operador";
+				$inicioAgrupacion = "	'' as maquina,
+										operador,
+										centro_gestion,
+										sum(produccion) as produccion,
+										sum(repuestos) as repuestos,
+										sum(combustible) as combustible";
+				$finAgrupacion = "		operador,centro_gestion";
 			}
 			if($this->agruparPor == "OPERADORMAQUINA"){
-				$inicioAgrupacion = "
-				maquina,
-				operador,
-				'' as centro_gestion,
-				sum(litros) as litros,
-				sum(total) as total
-				";
-				$finAgrupacion = "operador,maquina";
+				$inicioAgrupacion = "	maquina,
+										operador,
+										'' as centro_gestion,
+										sum(produccion) as produccion,
+										sum(repuestos) as repuestos,
+										sum(combustible) as combustible";
+				$finAgrupacion = "		maquina,operador";
 			}
 		}
 
@@ -156,6 +150,8 @@ class Resultados extends CActiveRecord
 	public $fecha_fin;
 	public $propiosOArrendados;
 	public $agruparPor;
+	public $chbRepuestos;
+	public $chbCombustible;
 
 
 	public function tableName()
@@ -179,6 +175,8 @@ class Resultados extends CActiveRecord
 	{
 		return array(
 			'propiosOArrendados' => 'Propios / Arrendados',
+			'chbRepuestos' => 'Repuestos',
+			'chbCombustible' => 'Combustible',
 		);
 	}
 
@@ -192,6 +190,10 @@ class Resultados extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+
+	public function getResultados(){
+		return $this->produccion - $this->repuestos - $this->combustible;
 	}
 
 }

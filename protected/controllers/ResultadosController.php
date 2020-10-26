@@ -45,31 +45,34 @@ class ResultadosController extends Controller
 		$model=new Resultados('search');
 		$model->fecha_inicio = date("Y-m-01");
 		$model->fecha_fin = date("Y-m-t");
+		$model->chbRepuestos = true;
+		$model->chbCombustible = true;
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Resultados'])){
 			$model->attributes=$_GET['Resultados'];
 		}
-
 	
 		$cabeceras = [
 			['name'=>'Máquina o camión','width'=>'lg'],
 			['name'=>'Operador o Chofer','width'=>'lg'],
 			['name'=>'Centro Gestión','width'=>'lg'],
-			['name'=>'Consumo (Lts)','width'=>'md'],
-			['name'=>'Consumo ($)','width'=>'md'],
-			['name'=>'Ver','width'=>'xs'],
+			['name'=>'Producción','width'=>'md'],
+			['name'=>'Repuestos','width'=>'md'],
+			['name'=>'Combustible','width'=>'md'],
+			['name'=>'Resultados','width'=>'md'],
 		];
 
 		$extra_datos = [
 			['campo'=>'maquina','exportable','dots'=>"md"],
 			['campo'=>'operador','exportable','dots'=>'md'],
 			['campo'=>'centro_gestion','exportable','dots'=>'md'],
-			['campo'=>'litros','exportable', 'format'=>'number','acumulado'=>'suma'],
-			['campo'=>'total','exportable', 'format'=>'money','acumulado'=>'suma'],
-			['campo'=>'id','dots'=>'xs'],
+			['campo'=>'produccion','exportable', 'format'=>'money','acumulado'=>'suma'],
+			['campo'=>'repuestos','exportable', 'format'=>'money','acumulado'=>'suma'],
+			['campo'=>'combustible','exportable', 'format'=>'money','acumulado'=>'suma'],
+			['campo'=>'resultados','exportable', 'format'=>'money','acumulado'=>'suma'],
 		];
 
-		$datos = GastoCombustible::model()->findAll($model->search());
+		$datos = Resultados::model()->findAll($model->search());
 
 		$this->render("admin",array(
 			'model'=>$model,
