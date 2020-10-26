@@ -66,6 +66,7 @@ return array(
 			'username' => 'cot27290_SAM',
 			'password' => '?)ZkEI(O]nDl',
 			'charset' => 'utf8',
+			'enableParamLogging' => true,
 		),
 		'authManager'=>array(
             'class'=>'CDbAuthManager',

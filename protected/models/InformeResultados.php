@@ -134,7 +134,7 @@ class InformeResultados extends CActiveRecord
 		$inicioAgrupacionArrendados = "
 			m.nombre as maquina,
 			concat(o.nombre,' / ',o.rut) as operador,
-			f.nombre as centroGestion,
+			ifnull(f.nombre,'') as centroGestion,
 		";
 		
 		$finAgrupacion = "group by maquina,operador,centroGestion";
@@ -250,37 +250,37 @@ class InformeResultados extends CActiveRecord
 				sum(produccion) - sum(repuesto) - sum(combustible) as resultado
 			from
 				(
-				select 
-					maquina,
-					operador,
-					centroGestion,
-					sum(tsumas.produccion) as produccion,
-					sum(tsumas.repuesto) as repuesto,
-					sum(tsumas.combustible) as combustible
-				from
-					(			
 					select 	r.camionPropio_id as maquina,
 							r.chofer_id as operador,
 							v.faena_id as centroGestion,
 							sum(v.total) as produccion,
 							0 as repuesto,
-							0 as combustible,
-							r.id				
+							0 as combustible	
 					from 	rCamionPropio as r,
 							viajeCamionPropio as v
 					where	v.rCamionPropio_id = r.id
 							$filtroFecha
-					group by r.id,maquina,operador,centroGestion
 					
-					union all 
+					union all
+					
+					select 	r.camionPropio_id as maquina,
+							r.chofer_id as operador,
+							v.faena_id as centroGestion,
+							sum(v.total) as produccion,
+							0 as repuesto,
+							0 as combustible	
+					from 	rCamionPropio as r 
+					join	expedicionportiempo as v on	v.rcamionpropio_id = r.id
+							$filtroFecha
+					
+					union all
 					
 					select 	r.camionPropio_id as maquina,
 							r.chofer_id as operador,
 							c.faena_id as centroGestion,
 							0 as produccion,
 							c.montoNeto as repuesto,
-							0 as combustible,
-							r.id				
+							0 as combustible	
 					from 	rCamionPropio as r,
 							compraRepuestoCamionPropio as c
 					where	c.rCamionPropio_id = r.id
@@ -293,22 +293,40 @@ class InformeResultados extends CActiveRecord
 							c.faena_id as centroGestion,
 							0 as produccion,
 							0 as repuesto,
-							c.valorTotal as combustible,
-							r.id			
+							c.valorTotal as combustible
 					from 	rCamionPropio as r,
 							cargaCombCamionPropio as c
 					where	c.rCamionPropio_id = r.id
 							$filtroFecha
-					) as tsumas
-					group by maquina,operador,centroGestion
-				) as ts,
-				camionPropio as m,
-				faena as f,
-				chofer as o
-			where
-				ts.maquina = m.id and
-				ts.centroGestion = f.id and
-				ts.operador = o.id 
+					
+					union all
+
+					select 	m.id as maquina,
+							'' as operador,
+							ifnull(cr.faena_id,0) as centroGestion,
+							0 as produccion,
+							0 as repuesto,
+							cr.total as combustible
+					from 	camionPropio as m 
+					join	combustible_rindegasto as cr on cr.camionpropio_id = m.id
+					where	1 = 1 $filtroFecha
+
+					union all
+
+					select 	m.id as maquina,
+							'' as operador,
+							ifnull(cr.faena_id,0) as centroGestion,
+							0 as produccion,
+							cr.total as repuesto,
+							0 as combustible
+					from 	camionPropio as m 
+					join	nocombustible_rindegasto as cr on cr.camionpropio_id = m.id
+					where	1 = 1 $filtroFecha
+					
+				) as ts
+			join	camionPropio as m on m.id = ts.maquina
+			left join 	chofer as o on o.id = ts.operador
+			left join	faena as f on f.id = ts.centroGestion
 				
 			$finAgrupacion			
 						

@@ -1,11 +1,10 @@
 <?php
 
-Yii::app()->getController()->pageTitle="Gastos de " . $gastoNombre;
+Yii::app()->getController()->pageTitle="Informe de Gasto de Repuestos";
 ?>
 
-<h3>Registros de gastos de <?=$gastoNombre?></h3>
 
-<?php echo $this->renderPartial('//tables/_header', ['model'=>$model]); ?>
+<?php echo $this->renderPartial('_header', ['model'=>$model]); ?>
 
 <?php
 echo $this->renderPartial('//tables/_cuerpo',['datos'=>$datos, 'cabeceras' => $cabeceras, 'extra_datos'=>$extra_datos]);

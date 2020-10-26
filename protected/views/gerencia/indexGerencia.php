@@ -5,7 +5,7 @@ Bienvenido <?php echo CHtml::encode($nombre);?>, por favor seleccione una de las
  <li><?php echo CHtml::link("Informe de Producción de camiones, camionetas, autos",CController::createUrl('//gerencia/produccionCamiones')); ?></li>
 </ul>
 <ul>
- <li><?php echo CHtml::link("Informe de Gasto de Combustible",CController::createUrl('//gerencia/gastoCombustible')); ?></li>
+ <li><?php echo CHtml::link("Informe de Gasto de Combustible",CController::createUrl('//gastoCombustible/admin')); ?></li>
  <li><?php echo CHtml::link("Informe de Gasto de Repuestos",CController::createUrl('//gerencia/gastoRepuesto')); ?></li>
 </ul>
 <ul>
