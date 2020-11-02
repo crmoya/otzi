@@ -1,10 +1,7 @@
 <?php
 
-Yii::app()->getController()->pageTitle="Gastos de " . $gastoNombre;
+Yii::app()->getController()->pageTitle="Gastos de " . $gastoNombre . " de Rindegastos";
 ?>
-
-<h3>Registros de gastos de <?=$gastoNombre?></h3>
-
 <?php echo $this->renderPartial('//tables/_header', ['model'=>$model]); ?>
 
 <?php

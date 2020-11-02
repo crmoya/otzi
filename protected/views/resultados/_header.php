@@ -21,7 +21,7 @@
 
 
 ?>
-
+<h3><?=Yii::app()->getController()->pageTitle?></h3>
 <table>
  <tr>
   <td>
