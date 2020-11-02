@@ -1,6 +1,6 @@
 <?php
 
-Yii::app()->getController()->pageTitle="Informe de Gasto de Combustibles";
+Yii::app()->getController()->pageTitle="Informe de Resultados";
 ?>
 
 
