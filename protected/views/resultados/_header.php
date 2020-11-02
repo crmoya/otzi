@@ -78,9 +78,9 @@
 	</td>
 	<td>
 		<?php echo $form->labelEx($model,'chbRepuestos'); ?>
-		<?php echo $form->checkBox($model,'chbRepuestos',  array('checked'=>'checked')); ?><br/>
+		<?php echo $form->checkBox($model,'chbRepuestos',  array('checked'=>$model->chbRepuestos==1?"checked":"")); ?><br/>
 		<?php echo $form->labelEx($model,'chbCombustible'); ?>
-		<?php echo $form->checkBox($model,'chbCombustible',  array('checked'=>'checked')); ?>
+		<?php echo $form->checkBox($model,'chbCombustible',  array('checked'=>$model->chbCombustible==1?"checked":"")); ?>
 	</td>
 	<td>
 		<?php echo CHtml::submitButton('Filtrar'); ?>

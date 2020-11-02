@@ -39,7 +39,7 @@ class Resultados extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fecha_inicio, fecha_fin, agruparPor,propiosOArrendados,chbResultados', 'safe', 'on'=>'search'),
+			array('fecha_inicio, fecha_fin, agruparPor,propiosOArrendados,chbRepuestos,chbCombustible', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -74,13 +74,47 @@ class Resultados extends CActiveRecord
 			}
 		}
 
+		$inicioAgrupacion = "";
 
-		$inicioAgrupacion = "	maquina,
-								operador,
-								centro_gestion,
-								sum(produccion) as produccion,
-								sum(repuestos) as repuestos,
-								sum(combustible) as combustible";
+		if($this->chbCombustible == 1 && $this->chbRepuestos == 1){
+			$inicioAgrupacion = "	maquina,
+									operador,
+									centro_gestion,
+									sum(produccion) as produccion,
+									sum(repuestos) as repuestos,
+									sum(combustible) as combustible,
+									sum(produccion) - sum(repuestos) - sum(combustible) as resultados";
+		}
+		if($this->chbCombustible == 1 && $this->chbRepuestos == 0){
+			$inicioAgrupacion = "	maquina,
+									operador,
+									centro_gestion,
+									sum(produccion) as produccion,
+									0 as repuestos,
+									sum(combustible) as combustible,
+									sum(produccion) - sum(combustible) as resultados";
+		}
+		if($this->chbCombustible == 0 && $this->chbRepuestos == 1){
+			$inicioAgrupacion = "	maquina,
+									operador,
+									centro_gestion,
+									sum(produccion) as produccion,
+									sum(repuestos) as repuestos,
+									0 as combustible,
+									sum(produccion) - sum(repuestos) as resultados";
+		}
+		if($this->chbCombustible == 0 && $this->chbRepuestos == 0){
+			$inicioAgrupacion = "	maquina,
+									operador,
+									centro_gestion,
+									sum(produccion) as produccion,
+									0 as repuestos,
+									0 as combustible,
+									sum(produccion) as resultados";
+		}
+
+		
+
 		$finAgrupacion = "		maquina,operador,centro_gestion";
 
 		if(isset($this->agruparPor) && $this->agruparPor != "NINGUNO"){
