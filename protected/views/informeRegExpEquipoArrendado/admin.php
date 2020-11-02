@@ -26,6 +26,12 @@ $('.search-form form').submit(function(){
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <?php echo CHtml::link('Exportar a Excel', 'exportar'); ?>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button id="adjuntos">Exportar Adjuntos</button>
 <div class="search-form" style="display:none">
     <?php $this->renderPartial('_search', array(
         'model' => $model,
@@ -109,6 +115,17 @@ $('.search-form form').submit(function(){
             'imageUrl'=>Yii::app()->request->baseUrl .'/images/search.png',
             'urlExpression'=>'array("admin/preview","id"=>$data->id_reg,"tipo"=>"equipos_arrendados")',
         ),
+
+
+        array(
+            'name' => 'check',
+            'id' => 'selectedIds',
+            'value' => '$data->id_reg',
+            'class' => 'CCheckBoxColumn',
+            'checkBoxHtmlOptions' => array('class' => 'adjuntos'),
+            'selectableRows' => '100',
+            
+        ),
     ),
 ));
 
@@ -173,6 +190,19 @@ function reinstallDatePicker(id, data) {
                         data: $(this).serialize()
                     });
                 });
+            }
+        });
+
+        $(document.body).on('click', '#adjuntos', function(e) {
+            var registros = "";
+            $('.adjuntos').each(function() {
+                if($(this).prop('checked')){
+                    registros += $(this).val()+"-";
+                }
+            });
+            if(registros != ""){
+                registros = registros.substring(0,registros.length-1);
+                window.location = "<?=CController::createUrl("//gerencia/adjuntos");?>?ids="+registros+"&tipo=EA";
             }
         });
     });

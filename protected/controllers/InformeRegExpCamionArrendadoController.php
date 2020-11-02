@@ -6,17 +6,17 @@ class InformeregexpcamionarrendadoController extends Controller
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
-	public $layout='//layouts/column1';
+	public $layout = '//layouts/column1';
 
-        
+
 	public function behaviors()
-    {
-        return array(
-            'eexcelview'=>array(
-                'class'=>'ext.eexcelview.EExcelBehavior',
-            ),
-        );
-    }
+	{
+		return array(
+			'eexcelview' => array(
+				'class' => 'ext.eexcelview.EExcelBehavior',
+			),
+		);
+	}
 	/**
 	 * @return array action filters
 	 */
@@ -28,18 +28,19 @@ class InformeregexpcamionarrendadoController extends Controller
 		);
 	}
 
-        function actionExportar()
+	function actionExportar()
 	{
 		// generate a resultset
 		$data = Informeregexpcamionarrendado::model()->findAll();
-		
-		$this->toExcel($data,
-			array('fecha','reporte','observaciones','observaciones_obra','camion','kmRecorridos','kmGps','combustible','repuesto','produccionReal','horasPanne','panne'),
+
+		$this->toExcel(
+			$data,
+			array('fecha', 'reporte', 'observaciones', 'observaciones_obra', 'camion', 'kmRecorridos', 'kmGps', 'combustible', 'repuesto', 'produccionReal', 'horasPanne', 'panne'),
 			'Expediciones Camión Arrendado',
 			array()
 		);
 	}
-        
+
 	/**
 	 * Specifies the access control rules.
 	 * This method is used by the 'accessControl' filter.
@@ -48,12 +49,14 @@ class InformeregexpcamionarrendadoController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('admin','view','exportar'),
-				'roles'=>array('gerencia'),
+			array(
+				'allow',  // allow all users to perform 'index' and 'view' actions
+				'actions' => array('admin', 'view', 'exportar'),
+				'roles' => array('gerencia'),
 			),
-			array('deny',  // deny all users
-				'users'=>array('*'),
+			array(
+				'deny',  // deny all users
+				'users' => array('*'),
 			),
 		);
 	}
@@ -64,9 +67,9 @@ class InformeregexpcamionarrendadoController extends Controller
 	 */
 	public function actionView($id)
 	{
-		$model=new Informeregexpcamionarrendado;
+		$model = new Informeregexpcamionarrendado;
 		$id_reg = $model->getReg($id);
-		$this->redirect(CController::createUrl("//rCamionArrendado/".$id_reg));
+		$this->redirect(CController::createUrl("//rCamionArrendado/" . $id_reg));
 	}
 
 	/**
@@ -75,20 +78,19 @@ class InformeregexpcamionarrendadoController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Informeregexpcamionarrendado;
+		$model = new Informeregexpcamionarrendado;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Informeregexpcamionarrendado']))
-		{
-			$model->attributes=$_POST['Informeregexpcamionarrendado'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+		if (isset($_POST['Informeregexpcamionarrendado'])) {
+			$model->attributes = $_POST['Informeregexpcamionarrendado'];
+			if ($model->save())
+				$this->redirect(array('view', 'id' => $model->id));
 		}
 
-		$this->render('create',array(
-			'model'=>$model,
+		$this->render('create', array(
+			'model' => $model,
 		));
 	}
 
@@ -99,20 +101,19 @@ class InformeregexpcamionarrendadoController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
-		$model=$this->loadModel($id);
+		$model = $this->loadModel($id);
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Informeregexpcamionarrendado']))
-		{
-			$model->attributes=$_POST['Informeregexpcamionarrendado'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+		if (isset($_POST['Informeregexpcamionarrendado'])) {
+			$model->attributes = $_POST['Informeregexpcamionarrendado'];
+			if ($model->save())
+				$this->redirect(array('view', 'id' => $model->id));
 		}
 
-		$this->render('update',array(
-			'model'=>$model,
+		$this->render('update', array(
+			'model' => $model,
 		));
 	}
 
@@ -126,7 +127,7 @@ class InformeregexpcamionarrendadoController extends Controller
 		$this->loadModel($id)->delete();
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
+		if (!isset($_GET['ajax']))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
 
@@ -135,9 +136,9 @@ class InformeregexpcamionarrendadoController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Informeregexpcamionarrendado');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
+		$dataProvider = new CActiveDataProvider('Informeregexpcamionarrendado');
+		$this->render('index', array(
+			'dataProvider' => $dataProvider,
 		));
 	}
 
@@ -146,26 +147,30 @@ class InformeregexpcamionarrendadoController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Informeregexpcamionarrendado('search');
+		$model = new Informeregexpcamionarrendado('search');
 		$model->unsetAttributes();  // clear any default values
-		
-                $model->fechaInicio = "01/".date("m/Y");
-		$model->fechaFin = date("t/").date("m/Y");
 
-		if(isset($_GET['Informeregexpcamionarrendado'])){
-                    $model->attributes=$_GET['Informeregexpcamionarrendado'];
-                if(isset($_GET['Informeregexpcamionarrendado']['fechaInicio']))
-                    $model->fechaInicio=$_GET['Informeregexpcamionarrendado']['fechaInicio'];
-                if(isset($_GET['Informeregexpcamionarrendado']['fechaFin']))
-                    $model->fechaFin=$_GET['Informeregexpcamionarrendado']['fechaFin'];
-                if(isset($_GET['Informeregexpcamionarrendado']['reporte']))
-                    $model->reporte=$_GET['Informeregexpcamionarrendado']['reporte'];
-                if(isset($_GET['Informeregexpcamionarrendado']['camion_id']))
-                    $model->camion_id=$_GET['Informeregexpcamionarrendado']['camion_id'];
-                }
+		$model->fechaInicio = "01/" . date("m/Y");
+		$model->fechaFin = date("t/") . date("m/Y");
+
+		if (isset($_GET['Informeregexpcamionarrendado'])) {
+			$model->attributes = $_GET['Informeregexpcamionarrendado'];
+			if (isset($_GET['Informeregexpcamionarrendado']['fechaInicio']))
+				$model->fechaInicio = $_GET['Informeregexpcamionarrendado']['fechaInicio'];
+			if (isset($_GET['Informeregexpcamionarrendado']['fechaFin']))
+				$model->fechaFin = $_GET['Informeregexpcamionarrendado']['fechaFin'];
+			if (isset($_GET['Informeregexpcamionarrendado']['reporte']))
+				$model->reporte = $_GET['Informeregexpcamionarrendado']['reporte'];
+			if (isset($_GET['Informeregexpcamionarrendado']['camion_id']))
+				$model->camion_id = $_GET['Informeregexpcamionarrendado']['camion_id'];
+
+				
+		}
+
+
 		$model->generarInforme();
-		
-		$this->render('admin',array('model'=>$model,));
+
+		$this->render('admin', array('model' => $model,));
 	}
 
 	/**
@@ -177,9 +182,9 @@ class InformeregexpcamionarrendadoController extends Controller
 	 */
 	public function loadModel($id)
 	{
-		$model=Informeregexpcamionarrendado::model()->findByPk($id);
-		if($model===null)
-			throw new CHttpException(404,'The requested page does not exist.');
+		$model = Informeregexpcamionarrendado::model()->findByPk($id);
+		if ($model === null)
+			throw new CHttpException(404, 'The requested page does not exist.');
 		return $model;
 	}
 
@@ -189,8 +194,7 @@ class InformeregexpcamionarrendadoController extends Controller
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='informeregexpcamionarrendado-form')
-		{
+		if (isset($_POST['ajax']) && $_POST['ajax'] === 'informeregexpcamionarrendado-form') {
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}

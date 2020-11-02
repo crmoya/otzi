@@ -168,6 +168,40 @@ class GerenciaController extends Controller
 		//ExcelExporter::sendAsXLS($data, true, 'UsoCamionesChofer.xls');
 	}
 
+	public function actionGenerapdf($ids,$tipo){
+		require_once __DIR__ . '../../../vendor/autoload.php';
+
+		$mpdf = new \Mpdf\Mpdf();
+		$ids = explode('*__*',$ids);
+		$html = "";
+		foreach($ids as $archivoArr){
+			$archivo = explode("_!!_",$archivoArr);
+			$path_tipo = "";
+			if($tipo == "CA"){
+				$path_tipo = "camiones_arrendados";
+			}
+			if($tipo == "CP"){
+				$path_tipo = "camiones_propios";
+			}
+			if($tipo == "EA"){
+				$path_tipo = "equipos_arrendados";
+			}
+			if($tipo == "EP"){
+				$path_tipo = "equipos_propios";
+			}
+			$path = __DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . 'archivos' . DIRECTORY_SEPARATOR . $path_tipo . DIRECTORY_SEPARATOR . $archivo[0] . DIRECTORY_SEPARATOR . $archivo[1];
+			$extension = strtolower(pathinfo($path)['extension']);
+			if($extension == 'png' || $extension == 'jpg' || $extension == 'jpeg'){
+				$html .= '<img src="' . $path . '" alt="" width="100%"><br/>';
+			}
+		}
+		$mpdf->WriteHTML($html);
+		$mpdf->Output();
+	}
+
+	public function actionAdjuntos($ids,$tipo){
+		$this->render("adjuntos",['ids'=>$ids,'tipo'=>$tipo]);
+	}
 
 	public function actionIndex(){
 		$this->render("indexGerencia",array('nombre'=>Yii::app()->user->nombre));
@@ -430,7 +464,7 @@ class GerenciaController extends Controller
 	{
 		return array(
 			array('allow',
-					'actions'=>array('viewGastoRepuesto','viewGastoCombustible','produccionMaquinaria','exportarProduccionMaquinaria','consumoMaquinaria','exportarConsumoMaquinaria','consumoCamiones','exportarConsumoCamiones','produccionCamiones','exportarProduccionCamiones','gastoCombustible','exportarGastoCombustible','gastoRepuesto','exportarGastoRepuesto','resultados','exportarResultados','operario','exportarOperario','chofer','exportarChofer','exportarDetalleGastoRepuesto','exportarDetalleGastoCombustible'),
+					'actions'=>array('generapdf','adjuntos','viewGastoRepuesto','viewGastoCombustible','produccionMaquinaria','exportarProduccionMaquinaria','consumoMaquinaria','exportarConsumoMaquinaria','consumoCamiones','exportarConsumoCamiones','produccionCamiones','exportarProduccionCamiones','gastoCombustible','exportarGastoCombustible','gastoRepuesto','exportarGastoRepuesto','resultados','exportarResultados','operario','exportarOperario','chofer','exportarChofer','exportarDetalleGastoRepuesto','exportarDetalleGastoCombustible'),
 					'roles'=>array('gerencia'),
 			),
 			array('deny',  // deny all users

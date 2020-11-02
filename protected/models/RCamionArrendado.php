@@ -44,7 +44,7 @@ class RCamionArrendado extends CActiveRecord
 		return 'rCamionArrendado';
 	}
 
-        public static function getImagenValidado($id){
+	public static function getImagenValidado($id){
 		$report = RCamionArrendado::model()->findByPk($id);
 		if($report != null){
                     if($report->validado == 1)
