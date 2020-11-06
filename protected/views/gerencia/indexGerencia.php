@@ -13,7 +13,7 @@ Bienvenido <?php echo CHtml::encode($nombre);?>, por favor seleccione una de las
 </ul>
 <ul>
  <li><?php echo CHtml::link("Informe de Consumo de Maquinaria",CController::createUrl('//consumoMaquinaria/admin')); ?></li>
- <li><?php echo CHtml::link("Informe de Consumo de camiones, camionetas, autos",CController::createUrl('//gerencia/consumoCamiones')); ?></li>
+ <li><?php echo CHtml::link("Informe de Consumo de camiones, camionetas, autos",CController::createUrl('//consumoCamiones/admin')); ?></li>
 </ul>
 <ul>
  <li><?php echo CHtml::link("Informe Cálculo Trato Operador",CController::createUrl('//gerencia/operario')); ?></li>
