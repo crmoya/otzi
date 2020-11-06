@@ -70,7 +70,7 @@
 	</td>
 	<td>
 		<?php echo $form->labelEx($model,'propiosOArrendados'); ?>
-	    <?php echo $form->dropDownList($model,'propiosOArrendados', CHtml::listData(array(array('id'=>'TODOS','nombre'=>'Todos'),array('id'=>'CP','nombre'=>'Solamente camiones, camionetas, autos Propios'),array('id'=>'EP','nombre'=>'Solamente Máquinas Propias'),array('id'=>'C','nombre'=>'Solamente camiones, camionetas, autos Propios y Arrendados'),array('id'=>'E','nombre'=>'Solamente Máquinas Propias y Arrendadas'),array('id'=>'CA','nombre'=>'Solamente camiones, camionetas, autos Arrendados'),array('id'=>'EA','nombre'=>'Solamente Máquinas Arrendadas')), 'id', 'nombre')); ?>
+		<?php echo $form->dropDownList($model,'propiosOArrendados', CHtml::listData(array(array('id'=>'TODOS','nombre'=>'Todos'),array('id'=>'EP','nombre'=>'Solamente Máquinas Propias'),array('id'=>'EA','nombre'=>'Solamente Máquinas Arrendadas')), 'id', 'nombre')); ?>
 	</td>
 	<td>
 		<?php echo $form->labelEx($model,'agruparPor'); ?>

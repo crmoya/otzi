@@ -42,9 +42,6 @@ class ConsumoMaquinaria extends CActiveRecord
 				$criteria->addCondition('tipo_maquina = :tipo_maquina');
 				$criteria->params[':tipo_maquina'] = $this->propiosOArrendados;
 			}
-			else if($this->propiosOArrendados == "E"){
-				$criteria->addCondition("(tipo_maquina = 'EA' or tipo_maquina = 'EP')");
-			}
 		}
 		
 
