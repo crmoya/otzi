@@ -180,7 +180,7 @@ class InformeRegExpCamionPropio extends CActiveRecord
 			select 	fecha,
 					reporte,
 					tc.observaciones,
-                                        tc.observaciones_obra,
+					tc.observaciones_obra,
 					nombreM,
 					codigo,
 					kmRecorridos,
@@ -196,7 +196,7 @@ class InformeRegExpCamionPropio extends CActiveRecord
 					select 	fecha,
 							reporte,
 							tr.observaciones,
-                                                        tr.observaciones_obra,
+							tr.observaciones_obra,
 							nombreM,
 							codigo,
 							IFNULL(kmFinal - kmInicial,0) as kmRecorridos,
@@ -208,23 +208,23 @@ class InformeRegExpCamionPropio extends CActiveRecord
 							tr.id as id
 					from	(
 							select	rv.fecha,
-                                                                rv.reporte,
-                                                                rv.observaciones,
-                                                                rv.observaciones_obra,
-                                                                rv.nombreM,
-                                                                rv.codigo,
-                                                                rv.kmGps,
-                                                                rv.kmInicial,
-                                                                rv.kmFinal,
-                                                                IFNULL(sum(v.total),0) as produccionReal,
-                                                                rv.horasPanne,
-                                                                rv.panne,
-                                                                rv.id
+									rv.reporte,
+									rv.observaciones,
+									rv.observaciones_obra,
+									rv.nombreM,
+									rv.codigo,
+									rv.kmGps,
+									rv.kmInicial,
+									rv.kmFinal,
+									sum(IFNULL(v.total,0)) + sum(IFNULL(e.total,0))as produccionReal,
+									rv.horasPanne,
+									rv.panne,
+									rv.id
 							from	(						
 									select 	r.fecha,
 											r.reporte,
 											r.observaciones,
-                                                                                        r.observaciones_obra,
+											r.observaciones_obra,
 											c.nombre as nombreM,
 											c.codigo,
 											r.kmGps,
@@ -233,15 +233,15 @@ class InformeRegExpCamionPropio extends CActiveRecord
 											r.minPanne/60 as horasPanne,
 											IF(r.panne = 1,'SÍ','NO') as panne,
 											r.id as id
-									from 	rCamionPropio as r,
-											camionPropio as c
-									where 	r.camionPropio_id = c.id 
+									from 	rCamionPropio as r
+									join	camionPropio as c on r.camionPropio_id = c.id 
+									where 	1 = 1
 											$filtroCamion
 											$filtroFecha
 											$filtroReporte
 									) as rv
-							left join	viajeCamionPropio as v
-							on			v.rCamionPropio_id = rv.id
+							left join	viajeCamionPropio as v on v.rCamionPropio_id = rv.id
+							left join	expedicionportiempo e on e.rcamionpropio_id = rv.id
 							group by rv.id
 							) as tr
 					left join 
