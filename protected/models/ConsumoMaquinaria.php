@@ -46,23 +46,30 @@ class ConsumoMaquinaria extends CActiveRecord
 				$criteria->addCondition("(tipo_maquina = 'EA' or tipo_maquina = 'EP')");
 			}
 		}
-
+		
 
 		$inicioAgrupacion = "	maquina,
 								operador,
-								centro_gestion,
 								sum(litros) as litros,
-								sum(total) as total";
-		$finAgrupacion = "		operador,maquina,centro_gestion";
+								sum(horas) as horas,
+								sum(horas_gps) as horas_gps,
+								avg(consumo_esperado) as consumo_esperado,
+								sum(litros)/sum(horas) as litros_hora,
+								sum(litros)/sum(horas_gps) as litros_hora_gps    ";
+
+		$finAgrupacion = "		operador,maquina";
 
 		if(isset($this->agruparPor) && $this->agruparPor != "NINGUNO"){
 			if($this->agruparPor == "MAQUINA"){
 				$inicioAgrupacion = "
 				maquina,
 				'' as operador,
-				'' as centro_gestion,
 				sum(litros) as litros,
-				sum(total) as total
+				sum(horas) as horas,
+				sum(horas_gps) as horas_gps,
+				avg(consumo_esperado) as consumo_esperado,
+				sum(litros)/sum(horas) as litros_hora,
+				sum(litros)/sum(horas_gps) as litros_hora_gps   
 				";
 				$finAgrupacion = "maquina";
 			}
@@ -70,52 +77,14 @@ class ConsumoMaquinaria extends CActiveRecord
 				$inicioAgrupacion = "
 				'' as maquina,
 				operador,
-				'' as centro_gestion,
 				sum(litros) as litros,
-				sum(total) as total
+				sum(horas) as horas,
+				sum(horas_gps) as horas_gps,
+				avg(consumo_esperado) as consumo_esperado,
+				sum(litros)/sum(horas) as litros_hora,
+				sum(litros)/sum(horas_gps) as litros_hora_gps   
 				";
 				$finAgrupacion = "operador";
-			}
-			if($this->agruparPor == "CENTROGESTION"){
-				$inicioAgrupacion = "
-				'' as maquina,
-				'' as operador,
-				centro_gestion,
-				sum(litros) as litros,
-				sum(total) as total
-				";
-				$finAgrupacion = "centro_gestion";
-			}
-			if($this->agruparPor == "CENTROMAQUINA"){
-				$inicioAgrupacion = "
-				maquina,
-				'' as operador,
-				centro_gestion,
-				sum(litros) as litros,
-				sum(total) as total,
-				'CENTROMAQUINA' as id
-				";
-				$finAgrupacion = "maquina,centro_gestion";
-			}
-			if($this->agruparPor == "CENTROOPERADOR"){
-				$inicioAgrupacion = "
-				'' as maquina,
-				operador,
-				centro_gestion,
-				sum(litros) as litros,
-				sum(total) as total
-				";
-				$finAgrupacion = "centro_gestion,operador";
-			}
-			if($this->agruparPor == "OPERADORMAQUINA"){
-				$inicioAgrupacion = "
-				maquina,
-				operador,
-				'' as centro_gestion,
-				sum(litros) as litros,
-				sum(total) as total
-				";
-				$finAgrupacion = "operador,maquina";
 			}
 		}
 
@@ -134,7 +103,7 @@ class ConsumoMaquinaria extends CActiveRecord
 
 	public function tableName()
 	{
-		return 'vgastocombustible';
+		return 'vconsumomaquinaria';
 	}
 
 	public function relations()
