@@ -122,7 +122,7 @@ class Informeregexpcamionarrendado extends CActiveRecord
 									rv.kmGps,
 									rv.kmFinal,
 									rv.kmInicial,
-									IFNULL(sum(v.total),0) as produccionReal,
+									sum(IFNULL(v.total,0)) + sum(IFNULL(e.total,0)) as produccionReal,
 									rv.horasPanne,
 									rv.panne,
 									rv.id
@@ -145,8 +145,8 @@ class Informeregexpcamionarrendado extends CActiveRecord
 											$filtroFecha
 											$filtroReporte
 									) as rv
-							left join	viajeCamionArrendado as v
-							on			v.rCamionArrendado_id = rv.id
+							left join	viajeCamionArrendado as v on v.rCamionArrendado_id = rv.id
+							left join	expedicionportiempoarr e on e.rcamionarrendado_id = rv.id
 							group by rv.id
 							) as tr
 					left join 
