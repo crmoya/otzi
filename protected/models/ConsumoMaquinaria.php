@@ -1,35 +1,6 @@
 <?php
 
-/**
- * This is the model class for table "gasto_completa".
- *
- * The followings are the available columns in table 'gasto_completa':
- * @property integer $id
- * @property string $retenido
- * @property string $cantidad
- * @property string $centro_costo_faena
- * @property string $departamento
- * @property string $faena
- * @property string $impuesto_especifico
- * @property string $iva
- * @property string $km_carguio
- * @property string $litros_combustible
- * @property string $monto_neto
- * @property string $nombre_quien_rinde
- * @property string $nro_documento
- * @property string $periodo_planilla
- * @property string $rut_proveedor
- * @property string $supervisor_combustible
- * @property string $tipo_documento
- * @property string $unidad
- * @property string $vehiculo_equipo
- * @property string $vehiculo_oficina_central
- * @property integer $gasto_id
- *
- * The followings are the available model relations:
- * @property Gasto $gasto
- */
-class GastoCombustible extends CActiveRecord
+class ConsumoMaquinaria extends CActiveRecord
 {
 	/**
 	 * @return array validation rules for model attributes.
@@ -67,12 +38,9 @@ class GastoCombustible extends CActiveRecord
 		}
 
 		if(isset($this->propiosOArrendados) && $this->propiosOArrendados != "TODOS"){
-			if($this->propiosOArrendados == "CA" || $this->propiosOArrendados == "CP" || $this->propiosOArrendados == "EA" || $this->propiosOArrendados == "EP"){
+			if($this->propiosOArrendados == "EA" || $this->propiosOArrendados == "EP"){
 				$criteria->addCondition('tipo_maquina = :tipo_maquina');
 				$criteria->params[':tipo_maquina'] = $this->propiosOArrendados;
-			}
-			else if($this->propiosOArrendados == "C"){
-				$criteria->addCondition("(tipo_maquina = 'CA' or tipo_maquina = 'CP')");
 			}
 			else if($this->propiosOArrendados == "E"){
 				$criteria->addCondition("(tipo_maquina = 'EA' or tipo_maquina = 'EP')");
