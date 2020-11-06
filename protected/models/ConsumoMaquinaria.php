@@ -33,7 +33,7 @@ class ConsumoMaquinaria extends CActiveRecord
 		}
 
 		if(isset($this->tipoCombustible_id) && $this->tipoCombustible_id != ""){
-			$criteria->addCondition('tipo_combustible = :combustible');
+			$criteria->addCondition('(tipo_combustible = :combustible or tipo_combustible = -1)');
 			$criteria->params[':combustible'] = $this->tipoCombustible_id;
 		}
 
