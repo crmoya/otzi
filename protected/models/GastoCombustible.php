@@ -174,7 +174,7 @@ class GastoCombustible extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			//'gasto' => array(self::BELONGS_TO, 'Gasto', 'gasto_id'),
+			'tipoCombustible' => array(self::BELONGS_TO, 'TipoCombustible', 'tipo_combustible'),
 		);
 	}
 

@@ -40,7 +40,12 @@
 					}
 					$style .= "'";
 					if (isset($th['name'])) {
-						echo "<th " . $style . " title='" . $th['name'] . "'><input style='width:" . $ancho . "px' $atributos_input type='text' placeholder='" . $th['name'] . "' /></th>";
+						if ($th['name'] == 'Ver') {
+							echo "<th " . $style . " title='" . $th['name'] . "'> Ver </th>";
+						}
+						else{
+							echo "<th " . $style . " title='" . $th['name'] . "'><input style='width:" . $ancho . "px' $atributos_input type='text' placeholder='" . $th['name'] . "' /></th>";
+						}
 					}
 				}
 			}
@@ -82,6 +87,20 @@
 								}
 							}
 							$valor = '<a href="' . CController::createUrl($extra_dato['url']) . '?' . $params .'">' . $valor . '</a>';
+						}
+						if($extra_dato['format'] == "enlace-ver"){
+							$params = "";
+							if(isset($extra_dato['params'])){
+								foreach($extra_dato['params'] as $param){
+									$params .= $param . "=" . $fila->$param . "&";
+								}
+							}
+							$valor = '
+							<a href="' . CController::createUrl($extra_dato['url']) . '&' . $params .'"><img src="' . Yii::app()->request->baseUrl . '/images/search.png"/></a>';
+						}
+						if($extra_dato['format'] == "date"){
+							$estilos .= "text-align:center;";
+							$valor = Tools::backFecha($valor);
 						}
 					}
 					if(isset($extra_dato['visible'])){
