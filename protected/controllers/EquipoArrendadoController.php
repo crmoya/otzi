@@ -91,11 +91,6 @@ class EquipoArrendadoController extends Controller
 			$model->attributes=$_POST['EquipoArrendado'];
 			$model->vigente=$_POST['EquipoArrendado']['vigente'];
 			if($model->save()){
-				$historial = new HistorialPuArrendado;
-				$historial->pu = $model->precioUnitario;
-				$historial->fecha_desde = date("Y-m-d H:i:s");
-				$historial->equipoarrendado_id = $model->id;
-				$historial->save();
 				$this->redirect(array('view','id'=>$model->id));
 			}
 				
@@ -123,19 +118,6 @@ class EquipoArrendadoController extends Controller
 		{
 			$model->attributes=$_POST['EquipoArrendado'];
 			$model->vigente=$_POST['EquipoArrendado']['vigente'];
-			$puNuevo = $model->precioUnitario;
-			if($puAnterior != $puNuevo){
-				$historialAnterior = HistorialPuArrendado::model()->findByAttributes(['equipoarrendado_id'=>$id],['order'=>'id DESC']);
-				if(isset($historialAnterior)){
-					$historialAnterior->fecha_hasta = date("Y-m-d H:i:s");
-					$historialAnterior->save();
-				}
-				$historial = new HistorialPuArrendado;
-				$historial->pu = $puNuevo;
-				$historial->fecha_desde = date("Y-m-d H:i:s");
-				$historial->equipoarrendado_id = $id;
-				$historial->save();
-			}
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}

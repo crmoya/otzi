@@ -92,11 +92,6 @@ class EquipoPropioController extends Controller
 			$model->attributes=$_POST['EquipoPropio'];
 			$model->vigente=$_POST['EquipoPropio']['vigente'];
 			if($model->save()){
-				$historial = new HistorialPuPropio;
-				$historial->pu = $model->precioUnitario;
-				$historial->fecha_desde = date("Y-m-d H:i:s");
-				$historial->equipopropio_id = $model->id;
-				$historial->save();
 				$this->redirect(array('view','id'=>$model->id));
 			}
 				
@@ -123,19 +118,6 @@ class EquipoPropioController extends Controller
 		{
 			$model->attributes=$_POST['EquipoPropio'];
 			$model->vigente=$_POST['EquipoPropio']['vigente'];
-			$puNuevo = $model->precioUnitario;
-			if($puAnterior != $puNuevo){
-				$historialAnterior = HistorialPuPropio::model()->findByAttributes(['equipopropio_id'=>$id],['order'=>'id DESC']);
-				if(isset($historialAnterior)){
-					$historialAnterior->fecha_hasta = date("Y-m-d H:i:s");
-					$historialAnterior->save();
-				}
-				$historial = new HistorialPuPropio;
-				$historial->pu = $puNuevo;
-				$historial->fecha_desde = date("Y-m-d H:i:s");
-				$historial->equipopropio_id = $id;
-				$historial->save();
-			}
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
