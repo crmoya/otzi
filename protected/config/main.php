@@ -104,5 +104,4 @@ return array(
 			'class'=>'system.gii.GiiModule',
 			'password'=>'g11m0dul3',
 		),*/
-	),
-);
+	),);

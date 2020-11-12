@@ -203,6 +203,8 @@ class REquipoArrendadoController extends Controller
 	{
 		$model = $this->loadModel($id);
 
+		$viajesT = Expedicionportiempoeqarr::model()->findAllByAttributes(array('requipoarrendado_id' => $id));
+
 		$cargas = CargaCombEquipoArrendado::model()->findAllByAttributes(array('rEquipoArrendado_id' => $id));
 		$compras = CompraRepuestoEquipoArrendado::model()->findAllByAttributes(array('rEquipoArrendado_id' => $id));
 
@@ -274,6 +276,10 @@ class REquipoArrendadoController extends Controller
 								}
 							}
 						}
+						foreach ($viajesT as $viajeT) {
+                            $valid = $viajeT->validate() && $valid;
+                            $viajeT->delete();
+                        }
 					}
 
 					//end archivos del report
@@ -291,6 +297,20 @@ class REquipoArrendadoController extends Controller
 					}
 					if ($valid) {
 
+						if (isset($_POST['Expedicionportiempoeqarr']) && $model->validado == 0) {
+                            foreach ($_POST['Expedicionportiempoeqarr'] as $i => $viajeTArr) {								
+								$viajeT = new Expedicionportiempoeqarr();
+								$viajeT->unidadfaena_equipo_id = $viajeTArr['unidadfaena_equipo_id'];
+								$viajeT->faena_id = $viajeTArr['faena_id'];
+								$viajeT->requipoarrendado_id = $model->id;
+								$viajeT->total = $viajeTArr['total'];
+								$viajeT->cantidad = $viajeTArr['cantidad'];
+								$valid = $valid && $viajeT->validate();
+								if ($valid) {
+                                    $viajeT->save();
+								}
+							}
+						}
 
 						if (isset($_POST['CargaCombEquipoArrendado'])) {
 							foreach ($_POST['CargaCombEquipoArrendado'] as $i => $cargaArr) {
@@ -398,6 +418,7 @@ class REquipoArrendadoController extends Controller
 				'codigo' => $codigo,
 				'cargas' => $cargas,
 				'compras' => $compras,
+				'viajesT' => $viajesT,
 			));
 		}
 		if (Yii::app()->user->rol == "operativo") {
@@ -406,6 +427,7 @@ class REquipoArrendadoController extends Controller
 				'codigo' => $codigo,
 				'cargas' => $cargas,
 				'compras' => $compras,
+				'viajesT' => $viajesT,
 			));
 		}
 	}

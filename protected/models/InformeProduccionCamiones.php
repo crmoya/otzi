@@ -326,7 +326,7 @@ class InformeProduccionCamiones extends CActiveRecord
 				where	1 = 1 $filtroFecha
 				$finAgrupacion,fecha,r.id
 				
-				union
+				union all
 				
 				select  $inicioAgrupacionPropiosSinFaena
 						0 as totalTransportado,
@@ -346,7 +346,7 @@ class InformeProduccionCamiones extends CActiveRecord
 							 where	v.rCamionPropio_id = r.id)
 				$finAgrupacion,fecha,r.id
 
-				union
+				union all
 
 				select  $inicioAgrupacionPropios
 						0 as totalTransportado,
@@ -397,7 +397,7 @@ class InformeProduccionCamiones extends CActiveRecord
 						$filtroFecha
 				$finAgrupacion,fecha,r.id
 				
-				union
+				union all
 				
 				select  $inicioAgrupacionArrendadosSinFaena
 						0 as totalTransportado,
@@ -417,7 +417,7 @@ class InformeProduccionCamiones extends CActiveRecord
 							 where	v.rCamionArrendado_id = r.id)
 				$finAgrupacion,fecha,r.id
 
-				union
+				union all
 
 				select  $inicioAgrupacionArrendados
 						0 as totalTransportado,
@@ -477,7 +477,7 @@ class InformeProduccionCamiones extends CActiveRecord
 								$filtroFecha
 						$finAgrupacion,fecha,r.id
 						
-						union
+						union all
 						
 						select  $inicioAgrupacionPropiosSinFaena
 								0 as totalTransportado,
@@ -497,7 +497,7 @@ class InformeProduccionCamiones extends CActiveRecord
 									 where	v.rCamionPropio_id = r.id)
 						$finAgrupacion,fecha,r.id
 
-						union
+						union all
 
 						select  $inicioAgrupacionPropios
 								0 as totalTransportado,
@@ -546,7 +546,7 @@ class InformeProduccionCamiones extends CActiveRecord
 								$filtroFecha
 						$finAgrupacion,fecha,r.id
 						
-						union
+						union all
 				
 						select  $inicioAgrupacionArrendadosSinFaena
 								0 as totalTransportado,
@@ -566,7 +566,7 @@ class InformeProduccionCamiones extends CActiveRecord
 									 where	v.rCamionArrendado_id = r.id)
 						$finAgrupacion,fecha,r.id
 
-						union
+						union all
 
 						select  $inicioAgrupacionArrendados
 								0 as totalTransportado,

@@ -435,6 +435,21 @@ $cs->registerCoreScript('jquery');
                     });
 		});
 
+		function checkUnidades() {
+			var ok = true;
+			$('.unidadfaena').each(function(e) {
+				var valor = $(this).val();
+				var id = $(this).attr('id');
+				var i = id.substring(id.length - 1);
+				if (valor == null || valor == "") {
+					$(this).css('background', 'pink');
+					ok = false;
+				} else {
+					$(this).css('background', 'white');
+				}
+			});
+			return ok;
+		}
 		
 		$("#guardar").click(function(){
 			var valid = true;
@@ -466,6 +481,8 @@ $cs->registerCoreScript('jquery');
 			valid = valid && checkNumero();
 
 			valid = valid && checkPanne();
+
+			valid = valid && checkUnidades();
 
 			
 			return valid;
@@ -587,6 +604,75 @@ $cs->registerCoreScript('jquery');
 			  </td>
 			</tr>
 		 </table>
+	</fieldset>
+
+
+	<fieldset>
+		<legend>Expediciones con PU por tiempo</legend>
+		<div class="complex">
+			<table>
+				<tr>
+					<td style="vertical-align:top;">
+						<div>
+							<table class="templateFrame grid" cellspacing="0">
+								<tbody class="templateTarget">
+									
+								</tbody>
+								<tfoot>
+									<tr>
+										<td>
+											<?php if ($model->validado == 0) : ?>
+												<div class="add" tipo="expedicionT">Agregar</div>
+											<?php endif; ?>
+											<textarea class="template" rows="0" cols="0">
+											<tr class="templateContent">
+												<td width="100px">
+													<?php $expedicion = new Expedicionportiempoeqarr(); ?>
+													<table style="border:solid 1px silver;padding:10px;">
+														<tr>
+															<td><?php echo $form->labelEx($expedicion, "faena_id", array('style' => 'width:80px;')); ?></td>
+															<td><?php echo $form->dropDownList($expedicion, '[{0}]faena_id', CHtml::listData(Faena::model()->listarPorTiempo(), 'id', 'nombre'), array('id' => 'faena_idT{0}', 'class' => 'faenaT')); ?></td>
+															<td><div id="errorFaena_id{0}" style="color:red;width:100px;"></div></td>
+															<td><?php echo $form->labelEx($expedicion, "unidadfaena_equipo_id", array('style' => 'width:80px;')); ?></td>	
+															<td><select name="Expedicionportiempoeqarr[{0}][unidadfaena_equipo_id]" class="unidadfaena" id="unidadfaena{0}"></select></td>	
+															<td id="puT{0}" pu=""></td>	
+															<td>
+															<input type="hidden" class="rowIndex" value="{0}" />
+																															<?php if ($model->validado == 0) : ?>
+															<div class="remove" tipo="expedicionT" id="removeExpedicion{0}" validate="true">Eliminar</div>
+																															<?php endif; ?>
+															</td>															  
+														</tr>
+														<tr>
+															<td><?php echo $form->labelEx($expedicion, "cantidad", array('style' => 'width:80px;')); ?></td>
+															<td><?php echo $form->textField($expedicion, "[{0}]cantidad", array('id' => "cantidad{0}", 'class' => 'cantidad fixed')); ?></td>
+															<td><div id="errorCantidad{0}" style="color:red;width:100px;"></div></td>
+															<td><label><b>PU</b></label></td>
+															<td><input class="labelPUt" id="labelPUt{0}" type="text" value="0.00" readonly="readonly" enabled="disabled"/></td>
+															<td></td>
+														</tr>
+														<tr>
+															<td><?php echo $form->labelEx($expedicion, "total", array('style' => 'width:80px;')); ?></td>
+															<td><?php echo $form->textField($expedicion, "[{0}]total", array('id' => "totalT{0}", 'class' => 'fixed totalT', 'readonly' => 'readonly')); ?></td>
+															<td><div id="errorTotalT{0}" style="color:red;width:100px;"></div></td>
+															<td></td>
+														</tr>
+
+													</table>	
+												</td>
+											</tr>
+										</textarea>
+										</td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+						<!--panel-->
+					</td>
+				</tr>
+			</table>
+		</div>
+		<!--complex-->
 	</fieldset>
 
 

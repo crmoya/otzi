@@ -260,6 +260,24 @@ class InformeProduccionMaquinaria extends CActiveRecord
 						f.id = r.faena_id 
 						$filtroFecha
 				$finAgrupacion,fecha
+
+				union all
+
+				select  $inicioAgrupacionPropios
+						fecha,
+						avg(u.pu) as pu,
+						0 as horas,
+						0 as horasMin,
+						sum(et.total) as produccion,
+						0 as produccionMin
+				from 	rEquipoPropio as r
+				join	expedicionportiempoeq as et on et.requipopropio_id = r.id
+				join	equipoPropio as e on r.equipoPropio_id = e.id
+				join	operador as o on o.id = r.operador_id
+				join	faena as f on f.id = et.faena_id
+				join 	unidadfaena_equipo as u on u.id = et.unidadfaena_equipo_id
+				where	1 = 1 $filtroFecha
+				$finAgrupacion,fecha,r.id
 				
 				) as tPropios
 			$finAgrupacion
@@ -294,6 +312,24 @@ class InformeProduccionMaquinaria extends CActiveRecord
 						f.id = r.faena_id 
 						$filtroFecha
 				$finAgrupacion,fecha
+
+				union all
+
+				select  $inicioAgrupacionArrendados
+						fecha,
+						avg(u.pu) as pu,
+						0 as horas,
+						0 as horasMin,
+						sum(et.total) as produccion,
+						0 as produccionMin
+				from 	rEquipoArrendado as r
+				join	expedicionportiempoeqarr as et on et.requipoarrendado_id = r.id
+				join	equipoArrendado as e on r.equipoArrendado_id = e.id
+				join	operador as o on o.id = r.operador_id
+				join	faena as f on f.id = et.faena_id
+				join 	unidadfaena_equipo as u on u.id = et.unidadfaena_equipo_id
+				where	1 = 1 $filtroFecha
+				$finAgrupacion,fecha,r.id
 				
 				) as tArrendados
 			$finAgrupacion
@@ -338,6 +374,24 @@ class InformeProduccionMaquinaria extends CActiveRecord
 							f.id = r.faena_id 
 							$filtroFecha
 					$finAgrupacion,fecha
+
+					union all
+
+					select  $inicioAgrupacionPropios
+							fecha,
+							avg(u.pu) as pu,
+							0 as horas,
+							0 as horasMin,
+							sum(et.total) as produccion,
+							0 as produccionMin
+					from 	rEquipoPropio as r
+					join	expedicionportiempoeq as et on et.requipopropio_id = r.id
+					join	equipoPropio as e on r.equipoPropio_id = e.id
+					join	operador as o on o.id = r.operador_id
+					join	faena as f on f.id = et.faena_id
+					join 	unidadfaena_equipo as u on u.id = et.unidadfaena_equipo_id
+					where	1 = 1 $filtroFecha
+					$finAgrupacion,fecha,r.id
 					
 					) as tPropios
 				$finAgrupacion
@@ -371,6 +425,24 @@ class InformeProduccionMaquinaria extends CActiveRecord
 							f.id = r.faena_id 
 							$filtroFecha
 					$finAgrupacion,fecha
+
+					union all
+
+					select  $inicioAgrupacionArrendados
+							fecha,
+							avg(u.pu) as pu,
+							0 as horas,
+							0 as horasMin,
+							sum(et.total) as produccion,
+							0 as produccionMin	
+					from 	rEquipoArrendado as r
+					join	expedicionportiempoeqarr as et on et.requipoarrendado_id = r.id
+					join	equipoArrendado as e on r.equipoArrendado_id = e.id
+					join	operador as o on o.id = r.operador_id
+					join	faena as f on f.id = et.faena_id
+					join 	unidadfaena_equipo as u on u.id = et.unidadfaena_equipo_id
+					where	1 = 1 $filtroFecha
+					$finAgrupacion,fecha,r.id
 					
 					) as tArrendados
 				$finAgrupacion

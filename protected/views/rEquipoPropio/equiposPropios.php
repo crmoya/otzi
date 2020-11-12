@@ -290,40 +290,40 @@ $cs->registerCoreScript('jquery');
                         }
                     });
 		});
-                $(document.body).on('keyup','.nombre_proveedor',function(e){
-                    var nombre = $(this).val();
-                    var i = $(this).attr('i');
-                    $.ajax({
-                        type: "POST",
-                        url: "<?php echo Yii::app()->createUrl('//operativo/proveedorRut/');?>",
-                        data: { nombre: nombre }
-                    }).done(function( msg ) {
-                        var disponibles = msg.split("|");
-                        $('#rut_proveedor'+i).autocomplete({
-                            source: disponibles,
-                            select: function(ev,ui){
-                                var rut = ui.item.value;
-                                $.ajax({
-                                    type: "POST",
-                                    url: "<?php echo Yii::app()->createUrl('//operativo/proveedor/');?>",
-                                    data: { rut: rut }
-                                }).done(function( msg ) {
-                                    var disponibles = msg.split("|");
-                                    if(disponibles.length > 0){
-                                       $('#nombre_proveedor'+i).val(disponibles[0]);
-                                    }
-                                });
-                            }
-                        });
-                        if(disponibles.length > 0){
-                           $('#rut_proveedor'+i).data("ui-Autocomplete").search(' ');
-                        }
-                    });
+		$(document.body).on('keyup','.nombre_proveedor',function(e){
+			var nombre = $(this).val();
+			var i = $(this).attr('i');
+			$.ajax({
+				type: "POST",
+				url: "<?php echo Yii::app()->createUrl('//operativo/proveedorRut/');?>",
+				data: { nombre: nombre }
+			}).done(function( msg ) {
+				var disponibles = msg.split("|");
+				$('#rut_proveedor'+i).autocomplete({
+					source: disponibles,
+					select: function(ev,ui){
+						var rut = ui.item.value;
+						$.ajax({
+							type: "POST",
+							url: "<?php echo Yii::app()->createUrl('//operativo/proveedor/');?>",
+							data: { rut: rut }
+						}).done(function( msg ) {
+							var disponibles = msg.split("|");
+							if(disponibles.length > 0){
+								$('#nombre_proveedor'+i).val(disponibles[0]);
+							}
+						});
+					}
+				});
+				if(disponibles.length > 0){
+					$('#rut_proveedor'+i).data("ui-Autocomplete").search(' ');
+				}
+			});
 		});
 		
 		
-                $('#habilitar').click(function(e){
-                    $.ajax({
+		$('#habilitar').click(function(e){
+			$.ajax({
 			  type: "POST",
 			  url: "<?php echo Yii::app()->createUrl('//rEquipoPropio/unlock/');?>",
 			  data: { admin1:  $('#REquipoPropio_administrador_1').val(), admin2:$('#REquipoPropio_administrador_2').val(), aut1: $('#REquipoPropio_clave_admin_1').val(), aut2: $('#REquipoPropio_clave_admin_2').val(),report_id:<?php echo $model->id;?>}
@@ -338,104 +338,104 @@ $cs->registerCoreScript('jquery');
                                 alert('Report correctamente habilitado para modificación.');
                             }
 			});
-                });
-		
-                $(document.body).on('keyup','.rut_rinde',function(e){
-                    var rut = $(this).val();
-                    var i = $(this).attr('i');
-                    $.ajax({
-                        type: "POST",
-                        url: "<?php echo Yii::app()->createUrl('//operativo/rendidor/');?>",
-                        data: { rut: rut }
-                    }).done(function( msg ) {
-                        var disponibles = msg.split("|");
-                        $('#nombre'+i).autocomplete({
-                            source: disponibles,
-                            select: function(ev,ui){
-                                var nombre = ui.item.value;
-                                $.ajax({
-                                    type: "POST",
-                                    url: "<?php echo Yii::app()->createUrl('//operativo/rendidorRutExacto/');?>",
-                                    data: { nombre: nombre }
-                                }).done(function( msg ) {
-                                    var disponibles = msg.split("|");
-                                    if(disponibles.length > 0){
-                                       $('#rut_rinde'+i).val(disponibles[0]);
-                                    }
-                                });
-                            }
-                        });
-                        if(disponibles.length > 0){
-                           $('#nombre'+i).data("ui-Autocomplete").search(' ');
-                        }
-                    });
 		});
-                $(document.body).on('keyup','.nombre',function(e){
-                    var nombre = $(this).val();
-                    var i = $(this).attr('i');
-                    $.ajax({
-                        type: "POST",
-                        url: "<?php echo Yii::app()->createUrl('//operativo/rendidorRut/');?>",
-                        data: { nombre: nombre }
-                    }).done(function( msg ) {
-                        var disponibles = msg.split("|");
-                        $('#rut_rinde'+i).autocomplete({
-                            source: disponibles,
-                            select: function(ev,ui){
-                                var rut = ui.item.value;
-                                $.ajax({
-                                    type: "POST",
-                                    url: "<?php echo Yii::app()->createUrl('//operativo/rendidor/');?>",
-                                    data: { rut: rut }
-                                }).done(function( msg ) {
-                                    var disponibles = msg.split("|");
-                                    if(disponibles.length > 0){
-                                       $('#nombre'+i).val(disponibles[0]);
-                                    }
-                                });
-                            }
-                        });
-                        if(disponibles.length > 0){
-                           $('#rut_rinde'+i).data("ui-Autocomplete").search(' ');
-                        }
-                    });
+
+		$(document.body).on('keyup','.rut_rinde',function(e){
+			var rut = $(this).val();
+			var i = $(this).attr('i');
+			$.ajax({
+				type: "POST",
+				url: "<?php echo Yii::app()->createUrl('//operativo/rendidor/');?>",
+				data: { rut: rut }
+			}).done(function( msg ) {
+				var disponibles = msg.split("|");
+				$('#nombre'+i).autocomplete({
+					source: disponibles,
+					select: function(ev,ui){
+						var nombre = ui.item.value;
+						$.ajax({
+							type: "POST",
+							url: "<?php echo Yii::app()->createUrl('//operativo/rendidorRutExacto/');?>",
+							data: { nombre: nombre }
+						}).done(function( msg ) {
+							var disponibles = msg.split("|");
+							if(disponibles.length > 0){
+								$('#rut_rinde'+i).val(disponibles[0]);
+							}
+						});
+					}
+				});
+				if(disponibles.length > 0){
+					$('#nombre'+i).data("ui-Autocomplete").search(' ');
+				}
+			});
+		});
+		$(document.body).on('keyup','.nombre',function(e){
+			var nombre = $(this).val();
+			var i = $(this).attr('i');
+			$.ajax({
+				type: "POST",
+				url: "<?php echo Yii::app()->createUrl('//operativo/rendidorRut/');?>",
+				data: { nombre: nombre }
+			}).done(function( msg ) {
+				var disponibles = msg.split("|");
+				$('#rut_rinde'+i).autocomplete({
+					source: disponibles,
+					select: function(ev,ui){
+						var rut = ui.item.value;
+						$.ajax({
+							type: "POST",
+							url: "<?php echo Yii::app()->createUrl('//operativo/rendidor/');?>",
+							data: { rut: rut }
+						}).done(function( msg ) {
+							var disponibles = msg.split("|");
+							if(disponibles.length > 0){
+								$('#nombre'+i).val(disponibles[0]);
+							}
+						});
+					}
+				});
+				if(disponibles.length > 0){
+					$('#rut_rinde'+i).data("ui-Autocomplete").search(' ');
+				}
+			});
 		});
 		
-                $(document.body).on('keyup','.rut_rindeR',function(e){
-                    var rut = $(this).val();
-                    var i = $(this).attr('i');
-                    $.ajax({
-                        type: "POST",
-                        url: "<?php echo Yii::app()->createUrl('//operativo/rendidor/');?>",
-                        data: { rut: rut }
-                    }).done(function( msg ) {
-                        var disponibles = msg.split("|");
-                        $('#nombreR'+i).autocomplete({
-                            source: disponibles,
-                            select: function(ev,ui){
-                                var nombre = ui.item.value;
-                                $.ajax({
-                                    type: "POST",
-                                    url: "<?php echo Yii::app()->createUrl('//operativo/rendidorRutExacto/');?>",
-                                    data: { nombre: nombre }
-                                }).done(function( msg ) {
-                                    var disponibles = msg.split("|");
-                                    if(disponibles.length > 0){
-                                       $('#rut_rindeR'+i).val(disponibles[0]);
-                                    }
-                                });
-                            }
-                        });
-                        if(disponibles.length > 0){
-                           $('#nombreR'+i).data("ui-Autocomplete").search(' ');
-                        }
-                    });
+		$(document.body).on('keyup','.rut_rindeR',function(e){
+			var rut = $(this).val();
+			var i = $(this).attr('i');
+			$.ajax({
+				type: "POST",
+				url: "<?php echo Yii::app()->createUrl('//operativo/rendidor/');?>",
+				data: { rut: rut }
+			}).done(function( msg ) {
+				var disponibles = msg.split("|");
+				$('#nombreR'+i).autocomplete({
+					source: disponibles,
+					select: function(ev,ui){
+						var nombre = ui.item.value;
+						$.ajax({
+							type: "POST",
+							url: "<?php echo Yii::app()->createUrl('//operativo/rendidorRutExacto/');?>",
+							data: { nombre: nombre }
+						}).done(function( msg ) {
+							var disponibles = msg.split("|");
+							if(disponibles.length > 0){
+								$('#rut_rindeR'+i).val(disponibles[0]);
+							}
+						});
+					}
+				});
+				if(disponibles.length > 0){
+					$('#nombreR'+i).data("ui-Autocomplete").search(' ');
+				}
+			});
 		});
 		
 		
 
 
-                $("#equipo").html('<?php echo $codigo; ?>');
+		$("#equipo").html('<?php echo $codigo; ?>');
 		
 		<?php 
 		foreach ($cargas as $carga){
@@ -446,6 +446,21 @@ $cs->registerCoreScript('jquery');
 		}
 		?>		
 
+		function checkUnidades() {
+			var ok = true;
+			$('.unidadfaena').each(function(e) {
+				var valor = $(this).val();
+				var id = $(this).attr('id');
+				var i = id.substring(id.length - 1);
+				if (valor == null || valor == "") {
+					$(this).css('background', 'pink');
+					ok = false;
+				} else {
+					$(this).css('background', 'white');
+				}
+			});
+			return ok;
+		}
 
 		
 		$("#guardar").click(function(){
@@ -472,11 +487,13 @@ $cs->registerCoreScript('jquery');
 			valid = valid && checkMontoNeto();
 			valid = valid && checkHorasPropio();
 			valid = valid && checkFaenaRep();
-                        valid = valid && checkNombreProveedor();
-                        valid = valid && checkRutProveedor();
+			valid = valid && checkNombreProveedor();
+			valid = valid && checkRutProveedor();
 
 			valid = valid && checkPanne();
 			valid = valid && checkNumero();
+
+			valid = valid && checkUnidades();
 
 			
 			return valid;
@@ -667,6 +684,126 @@ $this->endWidget('zii.widgets.jui.CJuiDialog');
 			  </td>
 			</tr>
 		 </table>
+	</fieldset>
+
+
+	<fieldset>
+		<legend>Expediciones con PU por tiempo</legend>
+		<div class="complex">
+			<table>
+				<tr>
+					<td style="vertical-align:top;">
+						<div>
+							<table class="templateFrame grid" cellspacing="0">
+								<tbody class="templateTarget">
+									<?php for ($i = 0; $i < count($viajesT); $i++) :
+										$expedicion = $viajesT[$i]; ?>
+										<tr class="templateContent">
+											<td width="100px">
+												<table style="border:solid 1px silver;padding:10px;">
+													<tr>
+														<td><?php echo $form->labelEx($expedicion, "faena_id", array('style' => 'width:80px;',)); ?></td>
+														<td><?php echo $form->dropDownList($expedicion, "[$i]faena_id", CHtml::listData(Faena::model()->listarPorTiempo(), 'id', 'nombre'), array('id' => "faenaT_id$i", 'class' => 'faenaT', 'selUnidad' => isset($expedicion->unidadfaenaEquipo) ? $expedicion->unidadfaenaEquipo->id : "", 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
+														<td>
+															<div id="errorFaenaT_id<?php echo $i; ?>" style="color:red;width:100px;"></div>
+														</td>
+														<td><?php echo $form->labelEx($expedicion, "unidadfaena_equipo_id", array('style' => 'width:80px;')); ?></td>
+														<td><select name="Expedicionportiempoeq[<?php echo $i; ?>][unidadfaena_equipo_id]" <?php echo $model->validado == 1 || $model->validado == 2 ? 'disabled' : ''; ?> class="unidadfaena" id="unidadfaena<?php echo $i; ?>">
+																<option>Seleccione unidad de tiempo</option>
+															</select></td>
+														<td id="puT<?php echo $i; ?>" pu=""></td>
+														<td>
+															<input type="hidden" class="rowIndex" value="<?php echo $i; ?>" />
+															<?php if ($model->validado == 0) : ?>
+																<div class="remove" tipo="expedicionT" id="removeExpedicion<?php echo $i; ?>" validate="true">Eliminar</div>
+															<?php else : ?>
+																<div tipo="expedicion" id="removeExpedicion<?php echo $i; ?>" validate="true"></div>
+															<?php endif; ?>
+														</td>
+													</tr>
+													<tr>
+
+														<td><?php echo $form->labelEx($expedicion, "cantidad", array('style' => 'width:80px;',)); ?></td>
+														<td><?php echo $form->textField($expedicion, "[$i]cantidad", array('id' => "cantidad$i", 'class' => 'fixed cantidad', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
+														<td>
+															<div id="errorCantidad<?php echo $i; ?>" style="color:red;width:100px;"></div>
+														</td>
+
+														<td><label><b>PU</b></label></td>
+														<td><input class="labelPUt" id="labelPUt<?= $i ?>" type="text" value="<?= isset($expedicion->unidadfaenaEquipo) ? $expedicion->unidadfaenaEquipo->pu : "" ?>" readonly="readonly" enabled="disabled" /></td>
+														<td></td>
+														<td></td>
+													</tr>
+													<tr>
+														<td><?php echo $form->labelEx($expedicion, "total", array('style' => 'width:80px;')); ?></td>
+														<td><?php echo $form->textField($expedicion, "[$i]total", array('id' => "totalT$i", 'class' => 'fixed totalT', 'readonly' => 'readonly', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
+														<td>
+															<div id="errorTotal<?php echo $i; ?>" style="color:red;width:100px;"></div>
+														</td>
+
+														<td></td>
+													</tr>
+
+												</table>
+											</td>
+										</tr>
+									<?php endfor; ?>
+								</tbody>
+								<tfoot>
+									<tr>
+										<td>
+											<?php if ($model->validado == 0) : ?>
+												<div class="add" tipo="expedicionT">Agregar</div>
+											<?php endif; ?>
+											<textarea class="template" rows="0" cols="0">
+											<tr class="templateContent">
+												<td width="100px">
+													<?php $expedicion = new Expedicionportiempoeq(); ?>
+													<table style="border:solid 1px silver;padding:10px;">
+														<tr>
+															<td><?php echo $form->labelEx($expedicion, "faena_id", array('style' => 'width:80px;')); ?></td>
+															<td><?php echo $form->dropDownList($expedicion, '[{0}]faena_id', CHtml::listData(Faena::model()->listarPorTiempo(), 'id', 'nombre'), array('id' => 'faena_idT{0}', 'class' => 'faenaT')); ?></td>
+															<td><div id="errorFaena_id{0}" style="color:red;width:100px;"></div></td>
+															<td><?php echo $form->labelEx($expedicion, "unidadfaena_equipo_id", array('style' => 'width:80px;')); ?></td>	
+															<td><select name="Expedicionportiempoeq[{0}][unidadfaena_equipo_id]" class="unidadfaena" id="unidadfaena{0}"></select></td>	
+															<td id="puT{0}" pu=""></td>	
+															<td>
+															<input type="hidden" class="rowIndex" value="{0}" />
+																															<?php if ($model->validado == 0) : ?>
+															<div class="remove" tipo="expedicionT" id="removeExpedicion{0}" validate="true">Eliminar</div>
+																															<?php endif; ?>
+															</td>															  
+														</tr>
+														<tr>
+															<td><?php echo $form->labelEx($expedicion, "cantidad", array('style' => 'width:80px;')); ?></td>
+															<td><?php echo $form->textField($expedicion, "[{0}]cantidad", array('id' => "cantidad{0}", 'class' => 'cantidad fixed')); ?></td>
+															<td><div id="errorCantidad{0}" style="color:red;width:100px;"></div></td>
+															<td><label><b>PU</b></label></td>
+															<td><input class="labelPUt" id="labelPUt{0}" type="text" value="0.00" readonly="readonly" enabled="disabled"/></td>
+															<td></td>
+														</tr>
+														<tr>
+															<td><?php echo $form->labelEx($expedicion, "total", array('style' => 'width:80px;')); ?></td>
+															<td><?php echo $form->textField($expedicion, "[{0}]total", array('id' => "totalT{0}", 'class' => 'fixed totalT', 'readonly' => 'readonly')); ?></td>
+															<td><div id="errorTotalT{0}" style="color:red;width:100px;"></div></td>
+															<td></td>
+														</tr>
+
+													</table>	
+												</td>
+											</tr>
+										</textarea>
+										</td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+						<!--panel-->
+					</td>
+				</tr>
+			</table>
+		</div>
+		<!--complex-->
 	</fieldset>
 
 
