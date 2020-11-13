@@ -176,6 +176,17 @@ class GastoRepuesto extends CActiveRecord
 	}
 
 
+	public function getGastoCompleta(){
+		$partes = explode("-",$this->id);
+		$id = (int)$partes[0];
+		$tipo = $partes[1];
+		$tipo_maquina = $partes[2];
+		if($tipo == "RG"){
+			return GastoCompleta::model()->findByPk($id);
+		}
+	}
+
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

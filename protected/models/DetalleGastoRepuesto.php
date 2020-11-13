@@ -2,6 +2,7 @@
 
 class DetalleGastoRepuesto{
 
+    public $id;
     public $fecha;
     public $reporte;
     public $operador;

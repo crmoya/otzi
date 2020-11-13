@@ -24,7 +24,7 @@ class GastoCombustibleController extends Controller
 		return array(
 			array(
 				'allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions' => array('index', 'view', 'create', 'update', 'admin', 'delete', 'exportar', 'export'),
+				'actions' => array('index', 'view', 'create', 'update', 'admin', 'delete', 'exportar', 'export', 'redirect'),
 				'roles' => array('gerencia'),
 			),
 			array(
@@ -141,7 +141,7 @@ class GastoCombustibleController extends Controller
 
 		$extra_datos = [
 			['campo'=>'fecha','exportable', 'format'=>'date', 'dots'=>"sm"],
-			['campo'=>'reporte','exportable', 'dots'=>"sm"],
+			['campo'=>'reporte','format'=> 'enlace_rg', 'url'=>"//gastoCombustible/redirect", 'params'=>['id','reporte','fuente']],
 			['campo'=>'fuente','exportable', 'dots'=>"sm"],
 			['campo'=>'operador','exportable', 'dots'=>"md"],
 			['campo'=>'maquina','exportable', 'dots'=>"md"],
@@ -215,7 +215,13 @@ class GastoCombustibleController extends Controller
 				$detalleGastoCombustible->fuente = "SAM";
 			}
 			if($tipo == "RG"){
-				$detalleGastoCombustible->reporte = $id;
+				$gastoCompleta = $gasto->gastoCompleta;
+				if(isset($gastoCompleta)){
+					if(isset($gastoCompleta->gasto))
+					$informeGasto = InformeGasto::model()->findByPk($gastoCompleta->gasto->report_id);
+					$detalleGastoCombustible->reporte = $informeGasto->numero;
+					$detalleGastoCombustible->id = $gastoCompleta->gasto->id;
+				}
 				$detalleGastoCombustible->fuente = "RindeGastos";
 			}
 			$detalleGastoCombustible->fecha = $gasto->fecha;
@@ -244,6 +250,15 @@ class GastoCombustibleController extends Controller
 			'centro_gestion' => $centro_gestion,
 			'tipoCombustible_id' => $tipoCombustible_id,
 		));
+	}
+
+	public function actionRedirect($id, $reporte, $fuente){
+		if($fuente == "SAM"){
+			$this->redirect(['','id'=>$model->id]);
+		}
+		if($fuente == "RindeGastos"){
+			$this->redirect(['informeGasto/view','folio'=>$reporte,'gasto_id'=>$id]);
+		}
 	}
 
 }

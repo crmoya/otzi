@@ -2,6 +2,7 @@
 
 class DetalleGastoCombustible{
 
+    public $id;
     public $fecha;
     public $reporte;
     public $operador;

@@ -76,21 +76,22 @@ return array(
 			// use 'site/error' action to display errors
             'errorAction'=>'site/error',
 		),
-		'log'=>array(
+
+/*		'log'=>array(
 			'class'=>'CLogRouter',
 			'routes'=>array(
 				array(
 					'class'=>'CFileLogRoute',
-					'levels'=>'error, warning',
+					'levels'=>'trace,log',
+					'categories' => 'system.db.CDbCommand',
+					'logFile' => 'db.log',
 				),
 				// uncomment the following to show log messages on web pages
-				/*
 				array(
 					'class'=>'CWebLogRoute',
 				),
-				*/
 			),
-		),
+		),*/
 	),
 
 	// application-level parameters that can be accessed

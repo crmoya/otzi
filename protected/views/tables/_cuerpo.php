@@ -88,6 +88,18 @@
 							}
 							$valor = '<a href="' . CController::createUrl($extra_dato['url']) . '?' . $params .'">' . $valor . '</a>';
 						}
+						if($extra_dato['format'] == "enlace_rg"){
+							$params = "";
+							if(isset($extra_dato['params'])){
+								foreach($extra_dato['params'] as $param){
+									$params .= $param . "=" . $fila->$param . "&";
+								}
+							}
+							$fuente = "fuente";
+							if($fila->$fuente == "RindeGastos"){
+								$valor = '<a href="' . CController::createUrl($extra_dato['url']) . '?' . $params .'">' . $valor . '</a>';
+							}
+						}
 						if($extra_dato['format'] == "enlace-ver"){
 							$params = "";
 							if(isset($extra_dato['params'])){
@@ -95,8 +107,7 @@
 									$params .= $param . "=" . $fila->$param . "&";
 								}
 							}
-							$valor = '
-							<a href="' . CController::createUrl($extra_dato['url']) . '&' . $params .'"><img src="' . Yii::app()->request->baseUrl . '/images/search.png"/></a>';
+							$valor = '<a href="' . CController::createUrl($extra_dato['url']) . '&' . $params .'"><img src="' . Yii::app()->request->baseUrl . '/images/search.png"/></a>';	
 						}
 						if($extra_dato['format'] == "date"){
 							$estilos .= "text-align:center;";

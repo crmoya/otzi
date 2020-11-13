@@ -133,7 +133,6 @@ class ResultadosController extends Controller
 				['campo'=>'resultados','exportable', 'format'=>'money','acumulado'=>'suma'],
 			];
 		}
-		
 
 		$datos = Resultados::model()->findAll($model->search());
 
