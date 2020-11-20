@@ -62,16 +62,30 @@ class ConsumoCamionesController extends Controller
 			['name'=>'Kms/Lt Esperados[Kms/Lt]','width'=>'md'],
 		];
 
-		$extra_datos = [
-			['campo'=>'maquina','exportable','dots'=>"md"],
-			['campo'=>'operador','exportable','dots'=>'md'],
-			['campo'=>'litros','exportable', 'format'=>'number','acumulado'=>'suma'],
-			['campo'=>'kms','exportable', 'format'=>'number','acumulado'=>'suma'],
-			['campo'=>'kms_gps','exportable', 'format'=>'number','acumulado'=>'suma'],
-			['campo'=>'kms_litro','exportable', 'format'=>'number','acumulado'=>'suma'],
-			['campo'=>'kms_litro_gps','exportable', 'format'=>'number','acumulado'=>'suma'],
-			['campo'=>'consumo_esperado','exportable', 'format'=>'number','acumulado'=>'suma'],
-		];
+		if($model->decimales != 0){
+			$extra_datos = [
+				['campo'=>'maquina','exportable','dots'=>"md"],
+				['campo'=>'operador','exportable','dots'=>'md'],
+				['campo'=>'litros','exportable', 'format'=>'decimal'.$model->decimales,'acumulado'=>'suma'],
+				['campo'=>'kms','exportable', 'format'=>'decimal'.$model->decimales,'acumulado'=>'suma'],
+				['campo'=>'kms_gps','exportable', 'format'=>'decimal'.$model->decimales,'acumulado'=>'suma'],
+				['campo'=>'kms_litro','exportable', 'format'=>'decimal'.$model->decimales,'acumulado'=>'suma'],
+				['campo'=>'kms_litro_gps','exportable', 'format'=>'decimal'.$model->decimales,'acumulado'=>'suma'],
+				['campo'=>'consumo_esperado','exportable', 'format'=>'decimal'.$model->decimales,'acumulado'=>'suma'],
+			];
+		}
+		else{
+			$extra_datos = [
+				['campo'=>'maquina','exportable','dots'=>"md"],
+				['campo'=>'operador','exportable','dots'=>'md'],
+				['campo'=>'litros','exportable', 'format'=>'number','acumulado'=>'suma'],
+				['campo'=>'kms','exportable', 'format'=>'number','acumulado'=>'suma'],
+				['campo'=>'kms_gps','exportable', 'format'=>'number','acumulado'=>'suma'],
+				['campo'=>'kms_litro','exportable', 'format'=>'number','acumulado'=>'suma'],
+				['campo'=>'kms_litro_gps','exportable', 'format'=>'number','acumulado'=>'suma'],
+				['campo'=>'consumo_esperado','exportable', 'format'=>'number','acumulado'=>'suma'],
+			];
+		}
 
 		$datos = ConsumoCamiones::model()->findAll($model->search());
 

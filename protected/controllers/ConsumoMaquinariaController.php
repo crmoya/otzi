@@ -62,16 +62,30 @@ class ConsumoMaquinariaController extends Controller
 			['name'=>'Lts/Hr GPS[Lts/Hr]','width'=>'md'],
 		];
 
-		$extra_datos = [
-			['campo'=>'maquina','exportable','dots'=>"md"],
-			['campo'=>'operador','exportable','dots'=>'md'],
-			['campo'=>'litros','exportable', 'format'=>'number','acumulado'=>'suma'],
-			['campo'=>'horas','exportable', 'format'=>'number','acumulado'=>'suma'],
-			['campo'=>'horas_gps','exportable', 'format'=>'number','acumulado'=>'suma'],
-			['campo'=>'consumo_esperado','exportable', 'format'=>'number','acumulado'=>'suma'],
-			['campo'=>'litros_hora','exportable', 'format'=>'number','acumulado'=>'suma'],
-			['campo'=>'litros_hora_gps','exportable', 'format'=>'number','acumulado'=>'suma'],
-		];
+		if($model->decimales != 0){
+			$extra_datos = [
+				['campo'=>'maquina','exportable','dots'=>"md"],
+				['campo'=>'operador','exportable','dots'=>'md'],
+				['campo'=>'litros','exportable', 'format'=>'decimal'.$model->decimales,'acumulado'=>'suma'],
+				['campo'=>'horas','exportable', 'format'=>'decimal'.$model->decimales,'acumulado'=>'suma'],
+				['campo'=>'horas_gps','exportable', 'format'=>'decimal'.$model->decimales,'acumulado'=>'suma'],
+				['campo'=>'consumo_esperado','exportable', 'format'=>'decimal'.$model->decimales,'acumulado'=>'suma'],
+				['campo'=>'litros_hora','exportable', 'format'=>'decimal'.$model->decimales,'acumulado'=>'suma'],
+				['campo'=>'litros_hora_gps','exportable', 'format'=>'decimal'.$model->decimales,'acumulado'=>'suma'],
+			];
+		}
+		else{
+			$extra_datos = [
+				['campo'=>'maquina','exportable','dots'=>"md"],
+				['campo'=>'operador','exportable','dots'=>'md'],
+				['campo'=>'litros','exportable', 'format'=>'number','acumulado'=>'suma'],
+				['campo'=>'horas','exportable', 'format'=>'number','acumulado'=>'suma'],
+				['campo'=>'horas_gps','exportable', 'format'=>'number','acumulado'=>'suma'],
+				['campo'=>'consumo_esperado','exportable', 'format'=>'number','acumulado'=>'suma'],
+				['campo'=>'litros_hora','exportable', 'format'=>'number','acumulado'=>'suma'],
+				['campo'=>'litros_hora_gps','exportable', 'format'=>'number','acumulado'=>'suma'],
+			];
+		}
 
 		$datos = ConsumoMaquinaria::model()->findAll($model->search());
 

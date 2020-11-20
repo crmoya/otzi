@@ -81,6 +81,10 @@
 		<?php echo $form->dropDownList($model,'tipoCombustible_id',CHtml::listData(TipoCombustible::model()->listar(), 'id', 'nombre'));?>
 	</td>
 	<td>
+		<?php echo $form->labelEx($model,'decimales'); ?>
+	    <?php echo $form->dropDownList($model,'decimales', CHtml::listData(array(array('id'=>'0'),array('id'=>'1'),array('id'=>'2'),array('id'=>'3')), 'id', 'id')); ?>
+	</td>
+	<td>
 		<?php echo CHtml::submitButton('Filtrar'); ?>
 	</td>
  </tr>

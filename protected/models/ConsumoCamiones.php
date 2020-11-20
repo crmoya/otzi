@@ -10,7 +10,7 @@ class ConsumoCamiones extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fecha_inicio, fecha_fin, agruparPor,tipoCombustible_id,propiosOArrendados', 'safe', 'on'=>'search'),
+			array('fecha_inicio, fecha_fin, agruparPor,tipoCombustible_id,propiosOArrendados,decimales', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -96,7 +96,7 @@ class ConsumoCamiones extends CActiveRecord
 	public $propiosOArrendados;
 	public $agruparPor;
 	public $tipoCombustible_id;
-
+	public $decimales;
 
 	public function tableName()
 	{
