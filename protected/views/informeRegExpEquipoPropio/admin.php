@@ -79,7 +79,6 @@ $('.search-form form').submit(function(){
         ['name' => 'repuesto', 'value' => '"$".number_format($data->repuesto,0,",",".")', 'htmlOptions' => ['style' => 'text-align:right;']],
         ['name' => 'horasPanne', 'value' => 'number_format($data->horasPanne,2,",",".")', 'htmlOptions' => ['style' => 'text-align:right;']],
         'panne',
-        'faena',
         array(
             'class' => 'ViewCButtonColumn',
             'header' => 'Ver',

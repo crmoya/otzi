@@ -31,8 +31,6 @@
 			<tr>
 				<td style='font-size:0.9em;'><b>Horómetro GPS:</b></td>
 				<td ><?php echo CHtml::encode(number_format($model->horasGps,2,',','.'));?></td>
-				<td style='font-size:0.9em;'><b>Faena:</b></td>
-				<td><?php echo CHtml::encode(Faena::model()->getNombre($model['faena_id']));?></td>
 			</tr>
 		</table>
 	</fieldset>

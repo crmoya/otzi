@@ -56,9 +56,6 @@
 			);
 		?>
         </td>	
-	<td><?php echo $form->labelEx($model,"faena_id",array('style'=>'width:80px;'));?></td>
-        <td><?php echo $form->dropDownList($model,'faena_id',CHtml::listData(Faena::model()->listar(), 'id', 'nombre'));?></td>		
-  
  </tr>	
  <tr>
      <td>

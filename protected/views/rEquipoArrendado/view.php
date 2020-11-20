@@ -29,8 +29,6 @@
 				<td ><?php echo CHtml::encode(number_format($model->hFinal,2,',','.'));?></td>
 			</tr>
 			<tr>
-				<td style='font-size:0.9em;'><b>Faena:</b></td>
-				<td><?php echo CHtml::encode(Faena::model()->getNombre($model['faena_id']));?></td>
 				<td style='font-size:0.9em;'><b>Horas:</b></td>
 				<td><?php echo CHtml::encode(number_format($model->horas,2,',','.'));?></td>
 			

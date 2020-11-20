@@ -244,32 +244,13 @@ class InformeProduccionMaquinaria extends CActiveRecord
 			from
 				(
 				
-				select 	$inicioAgrupacionPropios
-						fecha,
-						avg(e.precioUnitario) as pu,
-						sum(r.horas) as horas,
-						sum(GREATEST(r.horas,GREATEST(e.horasMin - r.minPanne/60,0))) as horasMin,
-						avg(e.precioUnitario)*sum(r.horas) as produccion,
-						avg(e.precioUnitario)*sum(GREATEST(r.horas,GREATEST(e.horasMin - r.minPanne/60,0))) as produccionMin
-				from 	rEquipoPropio as r,
-						equipoPropio as e,
-						operador as o,
-						faena as f
-				where	r.equipoPropio_id = e.id and
-						o.id = r.operador_id and
-						f.id = r.faena_id 
-						$filtroFecha
-				$finAgrupacion,fecha
-
-				union all
-
 				select  $inicioAgrupacionPropios
 						fecha,
 						avg(u.pu) as pu,
-						0 as horas,
-						0 as horasMin,
+						sum(r.horas) as horas,
+						sum(GREATEST(r.horas,GREATEST(e.horasMin - r.minPanne/60,0))) as horasMin,
 						sum(et.total) as produccion,
-						0 as produccionMin
+						avg(u.pu)*sum(GREATEST(r.horas,GREATEST(e.horasMin - r.minPanne/60,0))) as produccionMin
 				from 	rEquipoPropio as r
 				join	expedicionportiempoeq as et on et.requipopropio_id = r.id
 				join	equipoPropio as e on r.equipoPropio_id = e.id
@@ -296,32 +277,13 @@ class InformeProduccionMaquinaria extends CActiveRecord
 			from
 				(
 				
-				select $inicioAgrupacionArrendados
-						fecha,
-						avg(e.precioUnitario) as pu,
-						sum(r.horas) as horas,
-						sum(GREATEST(r.horas,GREATEST(e.horasMin - r.minPanne/60,0))) as horasMin,
-						avg(e.precioUnitario)*sum(r.horas) as produccion,
-						avg(e.precioUnitario)*sum(GREATEST(r.horas,GREATEST(e.horasMin - r.minPanne/60,0))) as produccionMin
-				from 	rEquipoArrendado as r,
-						equipoArrendado as e,
-						operador as o,
-						faena as f
-				where	r.equipoArrendado_id = e.id and
-						o.id = r.operador_id and
-						f.id = r.faena_id 
-						$filtroFecha
-				$finAgrupacion,fecha
-
-				union all
-
 				select  $inicioAgrupacionArrendados
 						fecha,
 						avg(u.pu) as pu,
-						0 as horas,
-						0 as horasMin,
+						sum(r.horas) as horas,
+						sum(GREATEST(r.horas,GREATEST(e.horasMin - r.minPanne/60,0))) as horasMin,
 						sum(et.total) as produccion,
-						0 as produccionMin
+						avg(u.pu)*sum(GREATEST(r.horas,GREATEST(e.horasMin - r.minPanne/60,0))) as produccionMin
 				from 	rEquipoArrendado as r
 				join	expedicionportiempoeqarr as et on et.requipoarrendado_id = r.id
 				join	equipoArrendado as e on r.equipoArrendado_id = e.id
@@ -358,32 +320,13 @@ class InformeProduccionMaquinaria extends CActiveRecord
 				from
 					(
 					
-					select $inicioAgrupacionPropios
-							fecha,
-							avg(e.precioUnitario) as pu,
-							sum(r.horas) as horas,
-							sum(GREATEST(r.horas,GREATEST(e.horasMin - r.minPanne/60,0))) as horasMin,
-							avg(e.precioUnitario)*sum(r.horas) as produccion,
-							avg(e.precioUnitario)*sum(GREATEST(r.horas,GREATEST(e.horasMin - r.minPanne/60,0))) as produccionMin
-					from 	rEquipoPropio as r,
-							equipoPropio as e,
-							operador as o,
-							faena as f
-					where	r.equipoPropio_id = e.id and
-							o.id = r.operador_id and
-							f.id = r.faena_id 
-							$filtroFecha
-					$finAgrupacion,fecha
-
-					union all
-
 					select  $inicioAgrupacionPropios
 							fecha,
 							avg(u.pu) as pu,
-							0 as horas,
-							0 as horasMin,
+							sum(r.horas) as horas,
+							sum(GREATEST(r.horas,GREATEST(e.horasMin - r.minPanne/60,0))) as horasMin,
 							sum(et.total) as produccion,
-							0 as produccionMin
+							avg(u.pu)*sum(GREATEST(r.horas,GREATEST(e.horasMin - r.minPanne/60,0))) as produccionMin
 					from 	rEquipoPropio as r
 					join	expedicionportiempoeq as et on et.requipopropio_id = r.id
 					join	equipoPropio as e on r.equipoPropio_id = e.id
@@ -409,32 +352,13 @@ class InformeProduccionMaquinaria extends CActiveRecord
 				from
 					(
 					
-					select $inicioAgrupacionArrendados
-							fecha,
-							avg(e.precioUnitario) as pu,
-							sum(r.horas) as horas,
-							sum(GREATEST(r.horas,GREATEST(e.horasMin - r.minPanne/60,0))) as horasMin,
-							avg(e.precioUnitario)*sum(r.horas) as produccion,
-							avg(e.precioUnitario)*sum(GREATEST(r.horas,GREATEST(e.horasMin - r.minPanne/60,0))) as produccionMin
-					from 	rEquipoArrendado as r,
-							equipoArrendado as e,
-							operador as o,
-							faena as f
-					where	r.equipoArrendado_id = e.id and
-							o.id = r.operador_id and
-							f.id = r.faena_id 
-							$filtroFecha
-					$finAgrupacion,fecha
-
-					union all
-
 					select  $inicioAgrupacionArrendados
 							fecha,
 							avg(u.pu) as pu,
-							0 as horas,
-							0 as horasMin,
+							sum(r.horas) as horas,
+							sum(GREATEST(r.horas,GREATEST(e.horasMin - r.minPanne/60,0))) as horasMin,
 							sum(et.total) as produccion,
-							0 as produccionMin	
+							avg(u.pu)*sum(GREATEST(r.horas,GREATEST(e.horasMin - r.minPanne/60,0))) as produccionMin
 					from 	rEquipoArrendado as r
 					join	expedicionportiempoeqarr as et on et.requipoarrendado_id = r.id
 					join	equipoArrendado as e on r.equipoArrendado_id = e.id

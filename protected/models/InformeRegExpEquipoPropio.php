@@ -17,30 +17,31 @@
  */
 class InformeRegExpEquipoPropio extends CActiveRecord
 {
-	
+
 	public $fechaInicio;
 	public $fechaFin;
 	public $equipo_id;
-        public $validador_nm;
-        public $faena_id;
-        
-	
-        public static function getImagenValidado($id){
+	public $validador_nm;
+	public $faena_id;
+
+
+	public static function getImagenValidado($id)
+	{
 		$report = REquipoPropio::model()->findByPk($id);
-		if($report != null){
-                    if($report->validado == 1)
-                        return Yii::app()->request->baseUrl.'/images/ok.png';
-                    else 
-                        return Yii::app()->request->baseUrl.'/images/eliminar.png';
+		if ($report != null) {
+			if ($report->validado == 1)
+				return Yii::app()->request->baseUrl . '/images/ok.png';
+			else
+				return Yii::app()->request->baseUrl . '/images/eliminar.png';
 		}
 	}
-        
-		
+
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return InformeRegExpEquipoPropio the static model class
 	 */
-	public static function model($className=__CLASS__)
+	public static function model($className = __CLASS__)
 	{
 		return parent::model($className);
 	}
@@ -62,13 +63,13 @@ class InformeRegExpEquipoPropio extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('fecha, reporte, observaciones, observaciones_obra,equipo, codigo, horasReales, combustible, repuesto, horasPanne', 'required'),
-			array('repuesto', 'numerical', 'integerOnly'=>true),
-			array('reporte, horasReales, combustible, horasPanne', 'length', 'max'=>12),
-			array('equipo', 'length', 'max'=>100),
-			array('codigo', 'length', 'max'=>45),
+			array('repuesto', 'numerical', 'integerOnly' => true),
+			array('reporte, horasReales, combustible, horasPanne', 'length', 'max' => 12),
+			array('equipo', 'length', 'max' => 100),
+			array('codigo', 'length', 'max' => 45),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('faena_id,equipo_id,fechaInicio,fechaFin,reporte', 'safe', 'on'=>'search'),
+			array('faena_id,equipo_id,fechaInicio,fechaFin,reporte', 'safe', 'on' => 'search'),
 		);
 	}
 
@@ -80,7 +81,7 @@ class InformeRegExpEquipoPropio extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-                    'registro'=>array(self::BELONGS_TO, 'REquipoPropio', 'id_reg'),
+			'registro' => array(self::BELONGS_TO, 'REquipoPropio', 'id_reg'),
 		);
 	}
 
@@ -101,9 +102,9 @@ class InformeRegExpEquipoPropio extends CActiveRecord
 			'repuesto' => 'Repuesto ($)',
 			'horasPanne' => 'Horas Panne',
 			'faena' => 'Faena',
-                    'faena_id'=>'Faena',
-                    'equipo_id'=>'Equipo',
-                    'validador_nm'=>'Validado Por',
+			'faena_id' => 'Faena',
+			'equipo_id' => 'Equipo',
+			'validador_nm' => 'Validado Por',
 		);
 	}
 
@@ -116,76 +117,69 @@ class InformeRegExpEquipoPropio extends CActiveRecord
 		// Warning: Please modify the following code to remove attributes that
 		// should not be searched.
 
-		$criteria=new CDbCriteria;
+		$criteria = new CDbCriteria;
 
-                $thisF = Tools::fixFecha($this->fecha);
-		$criteria->compare('fecha',$thisF,true);
-		$criteria->compare('reporte',$this->reporte,true);
-		$criteria->compare('observaciones',$this->observaciones,true);
-		$criteria->compare('equipo',$this->equipo,true);
-		$criteria->compare('codigo',$this->codigo,true);
-		$criteria->compare('horasReales',$this->horasReales,true);
-                $criteria->compare('horasGps',$this->horasGps,true);
-		$criteria->compare('combustible',$this->combustible,true);
-		$criteria->compare('repuesto',$this->repuesto);
-		$criteria->compare('horasPanne',$this->horasPanne,true);
-		$criteria->compare('panne',$this->panne,true);
-		$criteria->compare('faena',$this->faena,true);
+		$thisF = Tools::fixFecha($this->fecha);
+		$criteria->compare('fecha', $thisF, true);
+		$criteria->compare('reporte', $this->reporte, true);
+		$criteria->compare('observaciones', $this->observaciones, true);
+		$criteria->compare('equipo', $this->equipo, true);
+		$criteria->compare('codigo', $this->codigo, true);
+		$criteria->compare('horasReales', $this->horasReales, true);
+		$criteria->compare('horasGps', $this->horasGps, true);
+		$criteria->compare('combustible', $this->combustible, true);
+		$criteria->compare('repuesto', $this->repuesto);
+		$criteria->compare('horasPanne', $this->horasPanne, true);
+		$criteria->compare('panne', $this->panne, true);
+		$criteria->compare('faena', $this->faena, true);
 
 		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-                        'sort'=>array(
-                            'defaultOrder'=>'t.id DESC',
-                            'attributes'=>array(
-                                '*',
-                            ),
-                        ),
+			'criteria' => $criteria,
+			'sort' => array(
+				'defaultOrder' => 't.id DESC',
+				'attributes' => array(
+					'*',
+				),
+			),
 		));
 	}
-	
-	
-	public function generarInforme(){
+
+
+	public function generarInforme()
+	{
 		$this->limpiar();
-		$connection=Yii::app()->db;
-		$connection->active=true;
-				
+		$connection = Yii::app()->db;
+		$connection->active = true;
+
 		$insertSql = "
 		insert into informeRegExpEquipoPropio
-			(fecha,reporte,observaciones,observaciones_obra,equipo,codigo,horasReales,produccion,combustible,repuesto,horasPanne,horasGps,panne,id_reg,faena)
-		";	
+			(fecha,reporte,observaciones,observaciones_obra,equipo,codigo,horasReales,combustible,repuesto,horasPanne,horasGps,panne,id_reg)
+		";
 
-                
-                
-                $filtroReporte = "";
+
+
+		$filtroReporte = "";
 		$filtroFecha = "";
-		if(isset($this->fechaInicio) && isset($this->fechaFin)){
-			if($this->fechaInicio != "" && $this->fechaFin != ""){
+		if (isset($this->fechaInicio) && isset($this->fechaFin)) {
+			if ($this->fechaInicio != "" && $this->fechaFin != "") {
 				$filtroFecha = "	
 					and		fecha >= :fechaInicio 
 					and		fecha <= :fechaFin
 				";
 			}
 		}
-				
+
 		$filtroEquipo = "";
-		if(isset($this->equipo_id)){
-			if($this->equipo_id != ""){
+		if (isset($this->equipo_id)) {
+			if ($this->equipo_id != "") {
 				$filtroEquipo = "	
 					and		e.id = :equipo_id 
 				";
 			}
 		}
-		
-                $filtroFaena = "";
-		if(isset($this->faena_id)){
-			if($this->faena_id != ""){
-				$filtroFaena = "	
-					and		f.id = :faena_id 
-				";
-			}
-		}
-		
-		
+
+
+
 		$sql = "
 			select 	fecha,
 					reporte,
@@ -199,14 +193,13 @@ class InformeRegExpEquipoPropio extends CActiveRecord
 					horasPanne,
 					horasGps,
 					panne,
-					tc.id,
-					faena
+					tc.id
 			from	
 					(		
 					select 	fecha,
 							reporte,
 							tr.observaciones,
-                                                        tr.observaciones_obra,
+							tr.observaciones_obra,
 							tr.nombre as nombreM,
 							codigo,
 							horas,
@@ -214,8 +207,7 @@ class InformeRegExpEquipoPropio extends CActiveRecord
 							horasPanne,
 							horasGps,
 							panne,
-							tr.id as id,
-							faena
+							tr.id as id
 					from
 							(
 							select 	r.fecha,
@@ -228,15 +220,11 @@ class InformeRegExpEquipoPropio extends CActiveRecord
 									r.minPanne/60 as horasPanne,
 									r.horasGps,
 									IF(r.panne=1,'SÍ','NO') as panne,
-									r.id,
-									f.nombre as faena 
+									r.id
 							from 	rEquipoPropio as r,
-									equipoPropio as e,
-									faena as f
-							where 	r.equipoPropio_id = e.id and
-									r.faena_id = f.id
+									equipoPropio as e
+							where 	r.equipoPropio_id = e.id
 									$filtroEquipo 
-                                                                        $filtroFaena
 									$filtroFecha
 									$filtroReporte
 							) as tr
@@ -250,71 +238,65 @@ class InformeRegExpEquipoPropio extends CActiveRecord
 			on		cr.rEquipoPropio_id = tc.id
 			group by tc.id
 		";
-			
-                
-		$command=$connection->createCommand($insertSql.$sql);
-		
-                $fechaI = Tools::fixFecha($this->fechaInicio);
-                $fechaF = Tools::fixFecha($this->fechaFin);
-		if($filtroFecha!=""){
-			$command->bindParam(":fechaInicio",$fechaI,PDO::PARAM_STR);
-			$command->bindParam(":fechaFin",$fechaF,PDO::PARAM_STR);
+
+
+		$command = $connection->createCommand($insertSql . $sql);
+
+		$fechaI = Tools::fixFecha($this->fechaInicio);
+		$fechaF = Tools::fixFecha($this->fechaFin);
+		if ($filtroFecha != "") {
+			$command->bindParam(":fechaInicio", $fechaI, PDO::PARAM_STR);
+			$command->bindParam(":fechaFin", $fechaF, PDO::PARAM_STR);
 		}
-                
-                
-		
-		if($filtroReporte!=""){
-			$command->bindParam(":reporte",$this->reporte,PDO::PARAM_STR);
+
+
+
+		if ($filtroReporte != "") {
+			$command->bindParam(":reporte", $this->reporte, PDO::PARAM_STR);
 		}
-		
-		if($filtroEquipo!=""){
-			$command->bindParam(":equipo_id",$this->equipo_id,PDO::PARAM_STR);
-		}
-                if($filtroFaena!=""){
-			$command->bindParam(":faena_id",$this->faena_id,PDO::PARAM_STR);
+
+		if ($filtroEquipo != "") {
+			$command->bindParam(":equipo_id", $this->equipo_id, PDO::PARAM_STR);
 		}
 		$command->execute();
-		
-		$connection->active=false;
+
+		$connection->active = false;
 		$command = null;
-		
-		
 	}
-	public function getReg($id){
-		$connection=Yii::app()->db;
-		$connection->active=true;
-		$command=$connection->createCommand("
+	public function getReg($id)
+	{
+		$connection = Yii::app()->db;
+		$connection->active = true;
+		$command = $connection->createCommand("
 			select		id_reg
 			from		informeRegExpEquipoPropio
 			where 		id = :id
-			"
-		);
-		$command->bindParam(":id",$id,PDO::PARAM_INT);
-		$dataReader=$command->query();
-		$rows=$dataReader->readAll();
-		$connection->active=false;
+			");
+		$command->bindParam(":id", $id, PDO::PARAM_INT);
+		$dataReader = $command->query();
+		$rows = $dataReader->readAll();
+		$connection->active = false;
 		$command = null;
-		foreach($rows as $row){
+		foreach ($rows as $row) {
 			return $row['id_reg'];
 		}
 	}
-	
-	public function limpiar(){
-		$connection=Yii::app()->db;
-		$connection->active=true;
-		$command=$connection->createCommand("
+
+	public function limpiar()
+	{
+		$connection = Yii::app()->db;
+		$connection->active = true;
+		$command = $connection->createCommand("
 			truncate informeRegExpEquipoPropio;
-			"
-		);
+			");
 
 		$command->execute();
-		$connection->active=false;
+		$connection->active = false;
 		$command = null;
 	}
-	
-	protected function gridDataColumn($data,$row)
-    {
-     	return Tools::backFecha($data->fecha);   
-	} 
-	
+
+	protected function gridDataColumn($data, $row)
+	{
+		return Tools::backFecha($data->fecha);
+	}
 }
