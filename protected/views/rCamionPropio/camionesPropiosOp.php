@@ -418,6 +418,12 @@ $cs->registerCoreScript('jquery');
 						$("#labelPUt" + i).val(0);
 					}else{
 						var msgArr = msg.split("-||-");
+						if(msgArr[0] == ""){
+							$("#errorFaenaT_id" + i).html('ERROR: La faena no tiene unidades de tiempo disponibles para este vehículo');
+						}
+						else{
+							$("#errorFaenaT_id" + i).html("");
+						}
 						$('#unidadfaena'+i).html(msgArr[0]);
 						$("#puT" + i).attr("pu", msgArr[1]);
 						$("#labelPUt" + i).val(msgArr[1]);

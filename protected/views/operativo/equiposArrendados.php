@@ -33,6 +33,12 @@ $cs->registerCoreScript('jquery');
 				success: function(msg){
 					if(msg == ""){
 						$("#errorFaenaT_id" + i).html('ERROR: La faena no tiene unidades de tiempo disponibles');
+						if(msgArr[0] == ""){
+							$("#errorFaenaT_id" + i).html('ERROR: La faena no tiene unidades de tiempo disponibles para este vehículo');
+						}
+						else{
+							$("#errorFaenaT_id" + i).html("");
+						}
 						$('#unidadfaena'+i).empty();
 						$("#puT" + i).attr("pu", 0);
 						$("#labelPUt" + i).val(0);
@@ -632,7 +638,7 @@ $cs->registerCoreScript('jquery');
 														<tr>
 															<td><?php echo $form->labelEx($expedicion, "faena_id", array('style' => 'width:80px;')); ?></td>
 															<td><?php echo $form->dropDownList($expedicion, '[{0}]faena_id', CHtml::listData(Faena::model()->listarPorTiempo(), 'id', 'nombre'), array('id' => 'faena_idT{0}', 'class' => 'faenaT')); ?></td>
-															<td><div id="errorFaena_id{0}" style="color:red;width:100px;"></div></td>
+															<td><div id="errorFaenaT_id{0}" style="color:red;width:100px;"></div></td>
 															<td><?php echo $form->labelEx($expedicion, "unidadfaena_equipo_id", array('style' => 'width:80px;')); ?></td>	
 															<td><select name="Expedicionportiempoeqarr[{0}][unidadfaena_equipo_id]" class="unidadfaena" id="unidadfaena{0}"></select></td>	
 															<td id="puT{0}" pu=""></td>	
