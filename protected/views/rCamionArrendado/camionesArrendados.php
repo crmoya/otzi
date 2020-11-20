@@ -11,7 +11,7 @@ $cs->registerCoreScript('jquery');
 	$(function() {
 
 		$(document.body).on('change', '.faenaT', function(e) {
-			$('#unidadfaena'+i).empty();
+			$('#unidadfaena' + i).empty();
 			var id = $(this).attr("id");
 			var i = id.substring(id.length - 1);
 			var faena_id = $(this).val();
@@ -20,38 +20,41 @@ $cs->registerCoreScript('jquery');
 			$.ajax({
 				type: 'POST',
 				cache: false,
-				url: '<?=CController::createUrl('//faena/listunits')?>',
-				data: { faena_id: faena_id, camion_id: camion_id, arrendado: "true" },
-				success: function(msg){
-					if(msg == ""){
+				url: '<?= CController::createUrl('//faena/listunits') ?>',
+				data: {
+					faena_id: faena_id,
+					camion_id: camion_id,
+					arrendado: "true"
+				},
+				success: function(msg) {
+					if (msg == "") {
 						$("#errorFaenaT_id" + i).html('ERROR: La faena no tiene unidades de tiempo disponibles');
-						$('#unidadfaena'+i).empty();
+						$('#unidadfaena' + i).empty();
 						$("#puT" + i).attr("pu", 0);
 						$("#labelPUt" + i).val(0);
-					}else{
+					} else {
 						var msgArr = msg.split("-||-");
-						if(msgArr[0] == ""){
+						if (msgArr[0] == "") {
 							$("#errorFaenaT_id" + i).html('ERROR: La faena no tiene unidades de tiempo disponibles para este vehículo');
-						}
-						else{
+						} else {
 							$("#errorFaenaT_id" + i).html("");
 						}
-						$('#unidadfaena'+i).html(msgArr[0]);
+						$('#unidadfaena' + i).html(msgArr[0]);
 						$("#puT" + i).attr("pu", msgArr[1]);
 						$("#labelPUt" + i).val(msgArr[1]);
 					}
-					$('#cantidad'+i).val(0);
-					$('#totalT'+i).val(0);
+					$('#cantidad' + i).val(0);
+					$('#totalT' + i).val(0);
 				},
 				error: function(XMLHttpRequest, textStatus, errorThrown) {
-					
+
 				}
 			});
-			
+
 		});
 
-		
-		$('.camion').change(function(e){
+
+		$('.camion').change(function(e) {
 			$('.unidadfaena').empty();
 			$('.faenaT').val("");
 			$('.cantidad').val(0);
@@ -69,60 +72,63 @@ $cs->registerCoreScript('jquery');
 			$.ajax({
 				type: 'POST',
 				cache: false,
-				url: '<?=CController::createUrl('//faena/getunit')?>',
-				data: {unidad_id: unidad_id},
-				success: function(msg){
-					if(msg == "ERROR"){
+				url: '<?= CController::createUrl('//faena/getunit') ?>',
+				data: {
+					unidad_id: unidad_id
+				},
+				success: function(msg) {
+					if (msg == "ERROR") {
 						$("#errorFaenaT_id" + i).html('ERROR: La faena no tiene unidades de tiempo disponibles');
-					}else{
-						$('#puT'+i).attr('pu',msg);
+					} else {
+						$('#puT' + i).attr('pu', msg);
 						$("#labelPUt" + i).val(msg);
 					}
-					var pu = $('#puT'+i).attr('pu');
-					var cantidad = $('#cantidad'+i).val();
-					var total = cantidad*pu;
-					$('#totalT'+i).val(total.toFixed(2));
+					var pu = $('#puT' + i).attr('pu');
+					var cantidad = $('#cantidad' + i).val();
+					var total = cantidad * pu;
+					$('#totalT' + i).val(total.toFixed(2));
 				},
 				error: function(XMLHttpRequest, textStatus, errorThrown) {
-					
+
 				}
 			});
-			
+
 		});
 
 		$(document.body).on('change', '.cantidad', function(e) {
 			var id = $(this).attr("id");
 			var i = id.substring(id.length - 1);
-			var pu = $('#puT'+i).attr('pu');
-			if(pu == 0){
+			var pu = $('#puT' + i).attr('pu');
+			if (pu == 0) {
 				$.ajax({
 					type: 'POST',
 					cache: false,
-					url: '<?=CController::createUrl('//faena/getunit')?>',
-					data: {unidad_id:  $('#unidadfaena'+i).val()},
-					success: function(msg){
-						if(msg == "ERROR"){
+					url: '<?= CController::createUrl('//faena/getunit') ?>',
+					data: {
+						unidad_id: $('#unidadfaena' + i).val()
+					},
+					success: function(msg) {
+						if (msg == "ERROR") {
 							$("#errorFaenaT_id" + i).html('ERROR: La faena no tiene unidades de tiempo disponibles');
-						}else{
-							$('#puT'+i).attr('pu',msg);
+						} else {
+							$('#puT' + i).attr('pu', msg);
 						}
-						pu = $('#puT'+i).attr('pu');
-						var cantidad = $('#cantidad'+i).val();
-						var total = cantidad*pu;
+						pu = $('#puT' + i).attr('pu');
+						var cantidad = $('#cantidad' + i).val();
+						var total = cantidad * pu;
 						console.log(pu + " " + cantidad);
-						$('#totalT'+i).val(total.toFixed(2));
+						$('#totalT' + i).val(total.toFixed(2));
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
-						
+
 					}
 				});
+			} else {
+				var cantidad = $('#cantidad' + i).val();
+				var total = cantidad * pu;
+				$('#totalT' + i).val(total.toFixed(2));
 			}
-			else{
-				var cantidad = $('#cantidad'+i).val();
-				var total = cantidad*pu;
-				$('#totalT'+i).val(total.toFixed(2));
-			}
-			
+
 		});
 
 
@@ -517,7 +523,7 @@ $cs->registerCoreScript('jquery');
 				var km = reg[3];
 				if (id == ods[k]) {
 					$("#pu" + k).attr("pu", pu);
-					$('#labelPU'+k).val(pu);
+					$('#labelPU' + k).val(pu);
 					$("#kmRecorridos" + k).val(km);
 					var valor = $("#totalTransportado" + k).val();
 					var total = valor * pu * km;
@@ -547,7 +553,7 @@ $cs->registerCoreScript('jquery');
 				if (primero) {
 					primero = false;
 					$("#pu" + i).attr("pu", pu);
-					$('#labelPU'+i).val(pu);
+					$('#labelPU' + i).val(pu);
 					$("#kmRecorridos" + i).val(km);
 					var valor = $("#totalTransportado" + i).val();
 					var total = valor * pu * km;
@@ -558,7 +564,7 @@ $cs->registerCoreScript('jquery');
 			}
 			if (filtradas.length == 0) {
 				$("#pu" + i).attr("pu", 0);
-				$('#labelPU'+i).val(0);
+				$('#labelPU' + i).val(0);
 				$("#kmRecorridos" + i).val(0);
 				$("#total" + i).val(0);
 				$("#errorFaena_id" + i).html('ERROR: La faena no tiene orígenes-destinos disponibles');
@@ -573,7 +579,7 @@ $cs->registerCoreScript('jquery');
 			var pu = arr[1];
 			var km = arr[0];
 			$("#pu" + i).attr("pu", pu);
-			$('#labelPU'+i).val(pu);
+			$('#labelPU' + i).val(pu);
 			$("#kmRecorridos" + i).val(km);
 			var valor = $("#totalTransportado" + i).val();
 			var total = valor * pu * km;
@@ -651,31 +657,30 @@ $cs->registerCoreScript('jquery');
 			return valid;
 		});
 
-		
+
 		function checkUnidades() {
 			var ok = true;
-			$('.unidadfaena').each(function(e){
+			$('.unidadfaena').each(function(e) {
 				var valor = $(this).val();
 				var id = $(this).attr('id');
 				var i = id.substring(id.length - 1);
-				if(valor == null || valor == ""){
+				if (valor == null || valor == "") {
 					$(this).css('background', 'pink');
 					ok = false;
-				}
-				else{
+				} else {
 					$(this).css('background', 'white');
 				}
 			});
 			return ok;
 		}
 
-		$(document).ready(function(e){
+		$(document).ready(function(e) {
 
 			var kms = ($('#RCamionArrendado_kmFinal').val() - $('#RCamionArrendado_kmInicial').val()).toFixed(2);
 			$('#kmRecorridos').val(kms);
 
 
-			$('.faenaT').each(function(e){
+			$('.faenaT').each(function(e) {
 				var faenaId = $(this).val();
 				var camion_id = $("#RCamionArrendado_camionArrendado_id").val();
 				var id = $(this).attr('id');
@@ -684,13 +689,18 @@ $cs->registerCoreScript('jquery');
 				$.ajax({
 					type: 'POST',
 					cache: false,
-					url: '<?=CController::createUrl('//faena/listunits')?>',
-					data: {faena_id: faenaId, camion_id: camion_id, selunidad: selunidad, arrendado: "true"},
-					success: function(msg){
-						$('#unidadfaena'+i).html(msg);
+					url: '<?= CController::createUrl('//faena/listunits') ?>',
+					data: {
+						faena_id: faenaId,
+						camion_id: camion_id,
+						selunidad: selunidad,
+						arrendado: "true"
+					},
+					success: function(msg) {
+						$('#unidadfaena' + i).html(msg);
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
-						
+
 					}
 				});
 			});
@@ -874,7 +884,7 @@ $cs->registerCoreScript('jquery');
 					<td><?php echo $form->labelEx($model, "kmGps"); ?></td>
 					<td><?php echo $form->textField($model, "kmGps", array('class' => 'fixed', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?> <?php echo $form->error($model, 'kmGps'); ?></td>
 					<td><?php echo $form->labelEx($model, "kms"); ?></td>
-					<td><?php echo $form->textField($model, "kms", array('class' => 'fixed','disabled'=>'disabled', 'readonly'=>'readonly', 'id' => "kmRecorridos")); ?> <?php echo $form->error($model, 'kms'); ?></td>
+					<td><?php echo $form->textField($model, "kms", array('class' => 'fixed', 'disabled' => 'disabled', 'readonly' => 'readonly', 'id' => "kmRecorridos")); ?> <?php echo $form->error($model, 'kms'); ?></td>
 				</tr>
 			</table>
 		</fieldset>
@@ -894,7 +904,7 @@ $cs->registerCoreScript('jquery');
 													<table style="border:solid 1px silver;padding:10px;">
 														<tr>
 															<td><?php echo $form->labelEx($expedicion, "faena_id", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->dropDownList($expedicion, "[$i]faena_id", CHtml::listData(Faena::model()->listar(), 'id', 'nombre'), array('id' => "faena_id$i", 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '', 'class' => 'faena')); ?></td>
+															<td><?php echo $form->dropDownList($expedicion, "[$i]faena_id", CHtml::listData(Faena::model()->listar($model->faena_id), 'id', 'nombre'), array('id' => "faena_id$i", 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '', 'class' => 'faena')); ?></td>
 															<td>
 																<div id="errorFaena_id<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
@@ -932,7 +942,7 @@ $cs->registerCoreScript('jquery');
 																<div id="errorCoeficiente<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
 															<td><label><b>PU</b></label></td>
-															<td><input id="labelPU<?=$i?>" type="text" value="0.00" readonly="readonly" enabled="disabled"/></td>
+															<td><input id="labelPU<?= $i ?>" type="text" value="0.00" readonly="readonly" enabled="disabled" /></td>
 															<td></td>
 														</tr>
 
@@ -1038,19 +1048,21 @@ $cs->registerCoreScript('jquery');
 							<div>
 								<table class="templateFrame grid" cellspacing="0">
 									<tbody class="templateTarget">
-										<?php for ($i=0;$i<count($viajesT);$i++) : 
-											$expedicion = $viajesT[$i];?>
+										<?php for ($i = 0; $i < count($viajesT); $i++) :
+											$expedicion = $viajesT[$i]; ?>
 											<tr class="templateContent">
 												<td width="100px">
 													<table style="border:solid 1px silver;padding:10px;">
 														<tr>
 															<td><?php echo $form->labelEx($expedicion, "faena_id", array('style' => 'width:80px;',)); ?></td>
-															<td><?php echo $form->dropDownList($expedicion, "[$i]faena_id", CHtml::listData(Faena::model()->listarPorTiempo(), 'id', 'nombre'), array('id' => "faenaT_id$i", 'class' => 'faenaT', 'selUnidad'=> isset($expedicion->unidadfaena)?$expedicion->unidadfaena->id:"", 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
+															<td><?php echo $form->dropDownList($expedicion, "[$i]faena_id", CHtml::listData(Faena::model()->listarPorTiempo($expedicion->faena_id), 'id', 'nombre'), array('id' => "faenaT_id$i", 'class' => 'faenaT', 'selUnidad' => isset($expedicion->unidadfaena) ? $expedicion->unidadfaena->id : "", 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
 															<td>
 																<div id="errorFaenaT_id<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
 															<td><?php echo $form->labelEx($expedicion, "unidadfaena_id", array('style' => 'width:80px;')); ?></td>
-															<td><select name="Expedicionportiempoarr[<?php echo $i; ?>][unidadfaena_id]" <?php echo $model->validado == 1 || $model->validado == 2 ? 'disabled' : ''; ?> class="unidadfaena" id="unidadfaena<?php echo $i; ?>"><option>Seleccione unidad de tiempo</option></select></td>
+															<td><select name="Expedicionportiempoarr[<?php echo $i; ?>][unidadfaena_id]" <?php echo $model->validado == 1 || $model->validado == 2 ? 'disabled' : ''; ?> class="unidadfaena" id="unidadfaena<?php echo $i; ?>">
+																	<option>Seleccione unidad de tiempo</option>
+																</select></td>
 															<td id="puT<?php echo $i; ?>" pu=""></td>
 															<td>
 																<input type="hidden" class="rowIndex" value="<?php echo $i; ?>" />
@@ -1069,7 +1081,7 @@ $cs->registerCoreScript('jquery');
 																<div id="errorCantidad<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
 															<td><label><b>PU</b></label></td>
-															<td><input class="labelPUt" id="labelPUt<?=$i?>" type="text" value="<?=isset($expedicion->unidadfaena)?$expedicion->unidadfaena->pu:""?>" readonly="readonly" enabled="disabled"/></td>
+															<td><input class="labelPUt" id="labelPUt<?= $i ?>" type="text" value="<?= isset($expedicion->unidadfaena) ? $expedicion->unidadfaena->pu : "" ?>" readonly="readonly" enabled="disabled" /></td>
 															<td></td>
 															<td></td>
 														</tr>
@@ -1162,7 +1174,7 @@ $cs->registerCoreScript('jquery');
 													<table style="border:solid 1px silver;padding:10px;">
 														<tr>
 															<td><?php echo $form->labelEx($combustible, "faena_id", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->dropDownList($combustible, "[$i]faena_id", CHtml::listData(Faena::model()->listar(), 'id', 'nombre'), array('id' => "faenaC_id$i", 'disabled' => $model->validado == 2 ? 'disabled' : '',)); ?></td>
+															<td><?php echo $form->dropDownList($combustible, "[$i]faena_id", CHtml::listData(Faena::model()->listar($combustible->faena_id), 'id', 'nombre'), array('id' => "faenaC_id$i", 'disabled' => $model->validado == 2 ? 'disabled' : '',)); ?></td>
 															<td>
 																<div id="errorFaenaC_id<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
@@ -1488,7 +1500,7 @@ $cs->registerCoreScript('jquery');
 																<div id="errorCuentaR_id<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
 															<td><?php echo $form->labelEx($repuesto, "faena_id", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->dropDownList($repuesto, '[' . $i . ']faena_id', CHtml::listData(Faena::model()->listar(), 'id', 'nombre'), array('id' => 'faenaR_id' . $i, 'disabled' => $model->validado == 2 ? 'disabled' : '')); ?></td>
+															<td><?php echo $form->dropDownList($repuesto, '[' . $i . ']faena_id', CHtml::listData(Faena::model()->listar($repuesto->faena_id), 'id', 'nombre'), array('id' => 'faenaR_id' . $i, 'disabled' => $model->validado == 2 ? 'disabled' : '')); ?></td>
 															<td>
 																<div id="errorFaenaR_id<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
@@ -1703,11 +1715,11 @@ $cs->registerCoreScript('jquery');
 
 		<fieldset>
 			<legend>Imágenes y documentos del Report</legend>
-			<?php if($model->validado == 0):?>
-			<div class="row" style="text-align:right;">
-				<a class="btn seleccionar"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/basura.png" /></a>
-			</div>
-			<?php endif;?>
+			<?php if ($model->validado == 0) : ?>
+				<div class="row" style="text-align:right;">
+					<a class="btn seleccionar"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/basura.png" /></a>
+				</div>
+			<?php endif; ?>
 			<div class="table table-hover">
 				<?php
 				$path = Yii::app()->basePath . DIRECTORY_SEPARATOR . 'archivos';

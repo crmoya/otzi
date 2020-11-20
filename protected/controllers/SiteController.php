@@ -70,6 +70,65 @@ class SiteController extends Controller
 		}
 	}
 
+	public function actionFixmaquinas(){
+
+		set_time_limit(0);
+
+		$rEquiposPropios = REquipoPropio::model()->findAll();
+		foreach($rEquiposPropios as $rEquipoPropio){
+			//agregar unidadfaena_equipo faltantes
+			$uFaenaEquipo = UnidadfaenaEquipo::model()->findByAttributes(['faena_id'=>$rEquipoPropio->faena_id,'equipopropio_id'=>$rEquipoPropio->equipoPropio_id,'unidad'=>UnidadfaenaEquipo::UNIDAD_HORAS]);
+			if(!isset($uFaenaEquipo)){
+				$uFaenaEquipo = new UnidadfaenaEquipo();
+				$uFaenaEquipo->unidad = UnidadfaenaEquipo::UNIDAD_HORAS;
+				if(isset($rEquipoPropio->equipos)){
+					$uFaenaEquipo->pu = $rEquipoPropio->equipos->precioUnitario;
+				}
+				$uFaenaEquipo->faena_id = $rEquipoPropio->faena_id;
+				$uFaenaEquipo->equipopropio_id = $rEquipoPropio->equipoPropio_id;
+				$uFaenaEquipo->save();
+			}
+
+			//agregar expediciones por tiempo faltantes
+			$expedicion = new Expedicionportiempoeq();
+			$expedicion->cantidad = $rEquipoPropio->horas;
+			$expedicion->total = $uFaenaEquipo->pu * $rEquipoPropio->horas;
+			$expedicion->faena_id = $uFaenaEquipo->faena_id;
+			$expedicion->requipopropio_id = $rEquipoPropio->id;
+			$expedicion->unidadfaena_equipo_id = $uFaenaEquipo->id;
+			$expedicion->agregada = 1;
+			$expedicion->save();
+		}
+
+		$rEquiposArrendados = REquipoArrendado::model()->findAll();
+		foreach($rEquiposArrendados as $rEquipoArrendado){
+			$uFaenaEquipo = UnidadfaenaEquipo::model()->findByAttributes(['faena_id'=>$rEquipoArrendado->faena_id,'equipoarrendado_id'=>$rEquipoArrendado->equipoArrendado_id,'unidad'=>UnidadfaenaEquipo::UNIDAD_HORAS]);
+			if(!isset($uFaenaEquipo)){
+				$uFaenaEquipo = new UnidadfaenaEquipo();
+				$uFaenaEquipo->unidad = UnidadfaenaEquipo::UNIDAD_HORAS;
+				if(isset($rEquipoArrendado->equipos)){
+					$uFaenaEquipo->pu = $rEquipoArrendado->equipos->precioUnitario;
+				}
+				$uFaenaEquipo->faena_id = $rEquipoArrendado->faena_id;
+				$uFaenaEquipo->equipoarrendado_id = $rEquipoArrendado->equipoArrendado_id;
+				$uFaenaEquipo->save();
+			}
+			
+			//agregar expediciones por tiempo faltantes
+			$expedicion = new Expedicionportiempoeqarr();
+			$expedicion->cantidad = $rEquipoArrendado->horas;
+			$expedicion->total = $uFaenaEquipo->pu * $rEquipoArrendado->horas;
+			$expedicion->faena_id = $uFaenaEquipo->faena_id;
+			$expedicion->requipoarrendado_id = $rEquipoArrendado->id;
+			$expedicion->unidadfaena_equipo_id = $uFaenaEquipo->id;
+			$expedicion->agregada = 1;
+			$expedicion->save();
+		}
+
+
+
+	}
+
 	/*
 	public function actionFix(){
 		$rEquiposPropios = REquipoPropio::model()->findAll();
@@ -237,7 +296,7 @@ class SiteController extends Controller
 		return array(
 			array(
 				'allow',
-				'actions' => array('login', 'logout', 'error', 'index', 'gastos', 'informes', 'rinde','fix'),
+				'actions' => array('login', 'logout', 'error', 'index', 'gastos', 'informes', 'rinde','fix','fixmaquinas'),
 				'users' => array('*'),
 			),
 			array(

@@ -102,7 +102,7 @@ class Faena extends CActiveRecord
 		);
 	}
 	
-	public function listar(){
+	public function listar($selected_id = null){
 
 		$data = array();
 		$connection=Yii::app()->db;
@@ -120,14 +120,22 @@ class Faena extends CActiveRecord
 		$command = null;
 		$data[0]=array('nombre'=>"Seleccione un faena",'id'=>'');
 		$i=1;
+		$selected_exists = false;
 		foreach($rows as $row){
 			$data[$i]=array('id'=>$row['id'],'nombre'=>$row['nombre']);
 			$i++;
+			if($row['id'] == $selected_id){
+				$selected_exists = true;
+			}
+		}
+		if(!$selected_exists && (int)$selected_id > 0){
+			$faena = Faena::model()->findByPk($selected_id);
+			$data[] = ['id'=>$selected_id,'nombre'=>$faena->nombre];
 		}
 		return $data;
 	}
 
-	public function listarPorTiempo(){
+	public function listarPorTiempo($selected_id = null){
 
 		$data = array();
 		$connection=Yii::app()->db;
@@ -146,14 +154,22 @@ class Faena extends CActiveRecord
 		$command = null;
 		$data[0]=array('nombre'=>"Seleccione un faena",'id'=>'');
 		$i=1;
+		$selected_exists = false;
 		foreach($rows as $row){
 			$data[$i]=array('id'=>$row['id'],'nombre'=>$row['nombre']);
 			$i++;
+			if($row['id'] == $selected_id){
+				$selected_exists = true;
+			}
+		}
+		if(!$selected_exists && (int)$selected_id > 0){
+			$faena = Faena::model()->findByPk($selected_id);
+			$data[] = ['id'=>$selected_id,'nombre'=>$faena->nombre];
 		}
 		return $data;
 	}
 
-	public function listarPorTiempoE(){
+	public function listarPorTiempoE($selected_id = null){
 
 		$data = array();
 		$connection=Yii::app()->db;
@@ -172,9 +188,17 @@ class Faena extends CActiveRecord
 		$command = null;
 		$data[0]=array('nombre'=>"Seleccione un faena",'id'=>'');
 		$i=1;
+		$selected_exists = false;
 		foreach($rows as $row){
 			$data[$i]=array('id'=>$row['id'],'nombre'=>$row['nombre']);
 			$i++;
+			if($row['id'] == $selected_id){
+				$selected_exists = true;
+			}
+		}
+		if(!$selected_exists && (int)$selected_id > 0){
+			$faena = Faena::model()->findByPk($selected_id);
+			$data[] = ['id'=>$selected_id,'nombre'=>$faena->nombre];
 		}
 		return $data;
 	}

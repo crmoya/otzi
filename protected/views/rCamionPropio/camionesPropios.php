@@ -902,7 +902,7 @@ $cs->registerCoreScript('jquery');
 													<table style="border:solid 1px silver;padding:10px;">
 														<tr>
 															<td><?php echo $form->labelEx($expedicion, "faena_id", array('style' => 'width:80px;',)); ?></td>
-															<td><?php echo $form->dropDownList($expedicion, "[$i]faena_id", CHtml::listData(Faena::model()->listar(), 'id', 'nombre'), array('id' => "faena_id$i", 'class' => 'faena', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
+															<td><?php echo $form->dropDownList($expedicion, "[$i]faena_id", CHtml::listData(Faena::model()->listar($expedicion->faena_id), 'id', 'nombre'), array('id' => "faena_id$i", 'class' => 'faena', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
 															<td>
 																<div id="errorFaena_id<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
@@ -1056,7 +1056,7 @@ $cs->registerCoreScript('jquery');
 													<table style="border:solid 1px silver;padding:10px;">
 														<tr>
 															<td><?php echo $form->labelEx($expedicion, "faena_id", array('style' => 'width:80px;',)); ?></td>
-															<td><?php echo $form->dropDownList($expedicion, "[$i]faena_id", CHtml::listData(Faena::model()->listarPorTiempo(), 'id', 'nombre'), array('id' => "faenaT_id$i", 'class' => 'faenaT', 'selUnidad' => isset($expedicion->unidadfaena) ? $expedicion->unidadfaena->id : "", 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
+															<td><?php echo $form->dropDownList($expedicion, "[$i]faena_id", CHtml::listData(Faena::model()->listarPorTiempo($expedicion->faena_id), 'id', 'nombre'), array('id' => "faenaT_id$i", 'class' => 'faenaT', 'selUnidad' => isset($expedicion->unidadfaena) ? $expedicion->unidadfaena->id : "", 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
 															<td>
 																<div id="errorFaenaT_id<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
@@ -1175,7 +1175,7 @@ $cs->registerCoreScript('jquery');
 													<table style="border:solid 1px silver;padding:10px;">
 														<tr>
 															<td><?php echo $form->labelEx($combustible, "faena_id", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->dropDownList($combustible, "[$i]faena_id", CHtml::listData(Faena::model()->listar(), 'id', 'nombre'), array('id' => "faenaC_id$i", 'disabled' => $model->validado == 2 ? 'disabled' : '',)); ?></td>
+															<td><?php echo $form->dropDownList($combustible, "[$i]faena_id", CHtml::listData(Faena::model()->listar($combustible->faena_id), 'id', 'nombre'), array('id' => "faenaC_id$i", 'disabled' => $model->validado == 2 ? 'disabled' : '',)); ?></td>
 															<td>
 																<div id="errorFaenaC_id<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
@@ -1499,7 +1499,7 @@ $cs->registerCoreScript('jquery');
 																<div id="errorCuentaR_id<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
 															<td><?php echo $form->labelEx($repuesto, "faena_id", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->dropDownList($repuesto, '[' . $i . ']faena_id', CHtml::listData(Faena::model()->listar(), 'id', 'nombre'), array('id' => 'faenaR_id' . $i, 'disabled' => $model->validado == 2 ? 'disabled' : '')); ?></td>
+															<td><?php echo $form->dropDownList($repuesto, '[' . $i . ']faena_id', CHtml::listData(Faena::model()->listar($repuesto->faena_id), 'id', 'nombre'), array('id' => 'faenaR_id' . $i, 'disabled' => $model->validado == 2 ? 'disabled' : '')); ?></td>
 															<td>
 																<div id="errorFaenaR_id<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>

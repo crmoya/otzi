@@ -151,7 +151,7 @@ class InformeRegExpEquipoPropio extends CActiveRecord
 				
 		$insertSql = "
 		insert into informeRegExpEquipoPropio
-			(fecha,reporte,observaciones,observaciones_obra,equipo,codigo,horasReales,combustible,repuesto,horasPanne,horasGps,panne,id_reg,faena)
+			(fecha,reporte,observaciones,observaciones_obra,equipo,codigo,horasReales,produccion,combustible,repuesto,horasPanne,horasGps,panne,id_reg,faena)
 		";	
 
                 
@@ -190,7 +190,7 @@ class InformeRegExpEquipoPropio extends CActiveRecord
 			select 	fecha,
 					reporte,
 					tc.observaciones,
-                                        tc.observaciones_obra,
+					tc.observaciones_obra,
 					tc.nombreM as nombreMaquina,
 					codigo,
 					horas,
@@ -221,7 +221,7 @@ class InformeRegExpEquipoPropio extends CActiveRecord
 							select 	r.fecha,
 									r.reporte,
 									r.observaciones,
-                                                                        r.observaciones_obra,
+									r.observaciones_obra,
 									e.nombre,
 									e.codigo,
 									r.horas,
