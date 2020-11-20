@@ -159,8 +159,8 @@ class GastoCombustibleController extends Controller
 
 		$gastos = GastoCombustible::model()->findAll($criteria);
 		$datos = [];
+		
 		foreach($gastos as $gasto){
-
 			$partes = explode("-",$gasto->id);
 			$id = (int)$partes[0];
 			$tipo = $partes[1];
@@ -217,10 +217,13 @@ class GastoCombustibleController extends Controller
 			if($tipo == "RG"){
 				$gastoCompleta = $gasto->gastoCompleta;
 				if(isset($gastoCompleta)){
-					if(isset($gastoCompleta->gasto))
-					$informeGasto = InformeGasto::model()->findByPk($gastoCompleta->gasto->report_id);
-					$detalleGastoCombustible->reporte = $informeGasto->numero;
-					$detalleGastoCombustible->id = $gastoCompleta->gasto->id;
+					if(isset($gastoCompleta->gasto)){
+						$informeGasto = InformeGasto::model()->findByPk($gastoCompleta->gasto->report_id);
+						if(isset($informeGasto)){
+							$detalleGastoCombustible->reporte = $informeGasto->numero;
+						}
+						$detalleGastoCombustible->id = $gastoCompleta->gasto->id;
+					}
 				}
 				$detalleGastoCombustible->fuente = "RindeGastos";
 			}

@@ -212,7 +212,9 @@ class GastoRepuestoController extends Controller
 				if(isset($gastoCompleta)){
 					if(isset($gastoCompleta->gasto)){
 						$informeGasto = InformeGasto::model()->findByPk($gastoCompleta->gasto->report_id);
-						$detalleGastoRepuesto->reporte = $informeGasto->numero;
+						if(isset($informeGasto)){
+							$detalleGastoRepuesto->reporte = $informeGasto->numero;
+						}
 						$detalleGastoRepuesto->id = $gastoCompleta->gasto->id;
 					}
 				}

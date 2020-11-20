@@ -549,7 +549,11 @@ class FaenaController extends Controller {
 				$primero = false;
 				$pu = $unidad->pu;
 			}
-			$dev .= "<option $selected value='" . $unidad->id . "'>" . Unidadfaena::getUnidad($unidad->unidad) . "</option>";
+			$agregado = "";
+			if($unidad->observaciones != ""){
+				$agregado .= " (" . $unidad->observaciones . ")";
+			}
+			$dev .= "<option $selected value='" . $unidad->id . "'>" . Unidadfaena::getUnidad($unidad->unidad) . $agregado . "</option>";
 		}
 		echo $dev."-||-".$pu;
 	}
