@@ -130,7 +130,7 @@ class Faena extends CActiveRecord
 		}
 		if(!$selected_exists && (int)$selected_id > 0){
 			$faena = Faena::model()->findByPk($selected_id);
-			$data[] = ['id'=>$selected_id,'nombre'=>$faena->nombre];
+			$data[] = ['id'=>$selected_id,'nombre'=>$faena->nombre." (NO VIGENTE)"];
 		}
 		return $data;
 	}
@@ -164,7 +164,7 @@ class Faena extends CActiveRecord
 		}
 		if(!$selected_exists && (int)$selected_id > 0){
 			$faena = Faena::model()->findByPk($selected_id);
-			$data[] = ['id'=>$selected_id,'nombre'=>$faena->nombre];
+			$data[] = ['id'=>$selected_id,'nombre'=>$faena->nombre." (NO VIGENTE)"];
 		}
 		return $data;
 	}
@@ -198,7 +198,7 @@ class Faena extends CActiveRecord
 		}
 		if(!$selected_exists && (int)$selected_id > 0){
 			$faena = Faena::model()->findByPk($selected_id);
-			$data[] = ['id'=>$selected_id,'nombre'=>$faena->nombre];
+			$data[] = ['id'=>$selected_id,'nombre'=>$faena->nombre." (NO VIGENTE)"];
 		}
 		return $data;
 	}

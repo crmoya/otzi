@@ -89,7 +89,7 @@ class Destino extends CActiveRecord
 		));
 	}
 	
-	public function listar(){
+	public function listar($selected_id = null){
 
 		$data = array();
 		$connection=Yii::app()->db;
@@ -107,9 +107,17 @@ class Destino extends CActiveRecord
 		$command = null;
 		$data[0]=array('nombre'=>"Seleccione un destino",'id'=>'');
 		$i=1;
+		$selected_exists = false;
 		foreach($rows as $row){
 			$data[$i]=array('id'=>$row['id'],'nombre'=>$row['nombre']);
 			$i++;
+			if($row['id'] == $selected_id){
+				$selected_exists = true;
+			}
+		}
+		if(!$selected_exists && (int)$selected_id > 0){
+			$destino = Destino::model()->findByPk($selected_id);
+			$data[] = ['id'=>$selected_id,'nombre'=>$destino->nombre." (NO VIGENTE)"];
 		}
 		return $data;
 	}

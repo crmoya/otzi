@@ -603,11 +603,7 @@ $cs->registerCoreScript('jquery');
 		 	</tr>	
 		 	<tr>
 		 	  <td width="30"><?php echo $form->labelEx($model,'horasGps'); ?></td><td><?php echo $form->textField($model,'horasGps',array('class'=>'fixed')); ?><?php echo $form->error($model,'horas'); ?></td>
-			  <td width="30"><?php echo $form->labelEx($model,'faena_id'); ?></td>
-			  <td colspan="3">
-			   <?php echo $form->dropDownList($model,'faena_id', CHtml::listData(Faena::model()->listar(), 'id', 'nombre')); ?>
-			   <?php echo $form->error($model,'faena_id'); ?>
-			  </td>
+			  
 			</tr>
 		 </table>
 	</fieldset>

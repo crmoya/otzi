@@ -66,7 +66,7 @@ class Expedicionportiempoarr extends CActiveRecord
 			'id' => 'ID',
 			'cantidad' => 'Cantidad',
 			'total' => 'Total',
-			'unidadfaena_id' => 'Unidadfaena',
+			'unidadfaena_id' => 'Unidad',
 			'faena_id' => 'Faena',
 			'rcamionarrendado_id' => 'Rcamionarrendado',
 		);

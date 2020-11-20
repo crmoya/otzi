@@ -736,11 +736,7 @@ $cs->registerCoreScript('jquery');
 				<tr>
 					<td width="30"><?php echo $form->labelEx($model, 'horasGps'); ?></td>
 					<td><?php echo $form->textField($model, 'horasGps', array('class' => 'fixed', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?><?php echo $form->error($model, 'horas'); ?></td>
-					<td width="30"><?php echo $form->labelEx($model, 'faena_id'); ?></td>
-					<td colspan="3">
-						<?php echo $form->dropDownList($model, 'faena_id', CHtml::listData(Faena::model()->listar($model->faena_id), 'id', 'nombre'), array('disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?>
-						<?php echo $form->error($model, 'faena_id'); ?>
-					</td>
+					
 				</tr>
 			</table>
 		</fieldset>

@@ -51,12 +51,12 @@ $cs->registerCoreScript('jquery');
 								<tr class="templateContent">
 									<td>
 										<?php 
-										echo $form->dropDownList($od,"[$i]origen",CHtml::listData(Origen::model()->listar(), 'id', 'nombre'),array('style'=>'width:100px'));  
+										echo $form->dropDownList($od,"[$i]origen",CHtml::listData(Origen::model()->listar($od->origen_id), 'id', 'nombre'),array('style'=>'width:100px'));  
 										?>
 									</td>
 									<td>
 										<?php 
-										echo $form->dropDownList($od,"[$i]destino",CHtml::listData(Destino::model()->listar(), 'id', 'nombre'),array('style'=>'width:100px'));
+										echo $form->dropDownList($od,"[$i]destino",CHtml::listData(Destino::model()->listar($od->destino_id), 'id', 'nombre'),array('style'=>'width:100px'));
 										?>
 									</td>
 									<td>
@@ -443,6 +443,13 @@ $(document).ready(function(e){
 			var checked = $(this).attr('checked');
 			var tipo = $(this).val();
 			$(this).css('background','white');
+			$("#tipo_camionpropio"+i).parent().css('background','#EBF3FD');
+			$("#tipo_camionarrendado"+i).parent().css('background','#EBF3FD');
+			if($("#tipo_camionpropio"+i).attr('checked') == undefined && $("#tipo_camionarrendado"+i).attr('checked') == undefined){
+				$("#tipo_camionpropio"+i).parent().css('background','pink');
+				$("#tipo_camionarrendado"+i).parent().css('background','pink');
+				ok = false;
+			}
 			if(checked == "checked"){
 				var seleccionado = $('.camiones_'+tipo+i).val();
 				if(seleccionado == ''){
@@ -457,6 +464,13 @@ $(document).ready(function(e){
 			var checked = $(this).attr('checked');
 			var tipo = $(this).val();
 			$(this).css('background','white');
+			$("#tipo_equipopropio"+i).parent().css('background','#EBF3FD');
+			$("#tipo_equipoarrendado"+i).parent().css('background','#EBF3FD');
+			if($("#tipo_equipopropio"+i).attr('checked') == undefined && $("#tipo_camionarrendado"+i).attr('checked') == undefined){
+				$("#tipo_equipopropio"+i).parent().css('background','pink');
+				$("#tipo_equipoarrendado"+i).parent().css('background','pink');
+				ok = false;
+			}
 			if(checked == "checked"){
 				var seleccionado = $('.equipos_'+tipo+i).val();
 				if(seleccionado == ''){

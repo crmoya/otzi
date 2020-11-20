@@ -193,8 +193,8 @@ class OrigendestinoFaena extends CActiveRecord
 			where		od.faena_id = :faena and
 						od.destino_id = d.id and
 						od.origen_id = o.id and
-                                                d.vigente = 'SÍ' and
-                                                o.vigente = 'SÍ'
+						d.vigente = 'SÍ' and
+						o.vigente = 'SÍ'
 			"
 		);
 		$command->bindParam(":faena",$idFaena,PDO::PARAM_INT);

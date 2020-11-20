@@ -90,7 +90,7 @@ class Origen extends CActiveRecord
 		));
 	}
 	
-	public function listar(){
+	public function listar($selected_id = null){
 
 		$data = array();
 		$connection=Yii::app()->db;
@@ -108,9 +108,17 @@ class Origen extends CActiveRecord
 		$command = null;
 		$data[0]=array('nombre'=>"Seleccione un origen",'id'=>'');
 		$i=1;
+		$selected_exists = false;
 		foreach($rows as $row){
 			$data[$i]=array('id'=>$row['id'],'nombre'=>$row['nombre']);
 			$i++;
+			if($row['id'] == $selected_id){
+				$selected_exists = true;
+			}
+		}
+		if(!$selected_exists && (int)$selected_id > 0){
+			$origen = Origen::model()->findByPk($selected_id);
+			$data[] = ['id'=>$selected_id,'nombre'=>$origen->nombre." (NO VIGENTE)"];
 		}
 		return $data;
 	}

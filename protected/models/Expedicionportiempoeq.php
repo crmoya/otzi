@@ -68,7 +68,7 @@ class Expedicionportiempoeq extends CActiveRecord
 			'total' => 'Total',
 			'faena_id' => 'Faena',
 			'requipopropio_id' => 'Requipopropio',
-			'unidadfaena_equipo_id' => 'Unidadfaena Equipo',
+			'unidadfaena_equipo_id' => 'Unidad',
 		);
 	}
 
