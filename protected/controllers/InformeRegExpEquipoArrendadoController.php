@@ -167,8 +167,6 @@ class InformeRegExpEquipoArrendadoController extends Controller
                     $model->reporte=$_GET['InformeRegExpEquipoArrendado']['reporte'];
                 if(isset($_GET['InformeRegExpEquipoArrendado']['equipo_id']))
                     $model->equipo_id=$_GET['InformeRegExpEquipoArrendado']['equipo_id'];
-                if(isset($_GET['InformeRegExpEquipoArrendado']['equipo_id']))
-                    $model->faena_id=$_GET['InformeRegExpEquipoArrendado']['faena_id'];
 		}
 
 		
