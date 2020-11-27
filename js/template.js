@@ -242,6 +242,38 @@ jQuery(document).ready(function () {
 		$("#kmRecorridos").val(valor.toFixed(2));
 	});
 
+	$(document.body).on('change', '.fixedHI', function (e) {
+		var text = $(this).val();
+		text = text.replace(',', '.');
+		if (!isNaN(text)) {
+			var num = new Number(text);
+			num = num.toFixed(2);
+			$(this).val(num);
+		} else {
+			$(this).val(0);
+		}
+		var valorInicial = $(this).val();
+		var valorFinal = $(".fixedHF").val();
+		var valor = (valorFinal - valorInicial).toFixed(2);
+		$(".fixedH").val(valor);
+	});
+
+	$(document.body).on('change', '.fixedHF', function (e) {
+		var text = $(this).val();
+		text = text.replace(',', '.');
+		if (!isNaN(text)) {
+			var num = new Number(text);
+			num = num.toFixed(2);
+			$(this).val(num);
+		} else {
+			$(this).val(0);
+		}
+		var valorInicial = $(".fixedHI").val();
+		var valorFinal = $(this).val();
+		var valor = (valorFinal - valorInicial).toFixed(2);
+		$(".fixedH").val(valor);
+	});
+
 	$(document.body).on('change', '.fixedHInicial', function (e) {
 		var text = $(this).val();
 		text = text.replace(',', '.');
@@ -1240,6 +1272,20 @@ function checkCantidad() {
 			$("#errorCantidad" + i).html("");
 		}
 	}
+	return true;
+}
+
+function checkHoras() {
+	$('.errorH').hide();
+	$(".errorH").html("");
+	$('.errorH').css('color','red');
+	var valor = $(".fixedH").val();
+	if (valor < 0 || valor > 24) {
+		$(".errorH").html("Debe ser mayor o igual que 0 y menor o igual a 24");
+		$(".errorH").show();
+		return false;
+	}
+
 	return true;
 }
 

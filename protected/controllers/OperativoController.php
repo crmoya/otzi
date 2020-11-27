@@ -153,6 +153,7 @@ class OperativoController extends Controller
 	public function actionCamionesPropios()
 	{
 		$model = new RCamionPropio();
+		$model->horas = number_format($model->horometro_final - $model->horometro_inicial,2,".","");
 		if (isset($_POST['RCamionPropio'])) {
 			$connection=Yii::app()->db;
 			$connection->active=true;
@@ -167,6 +168,8 @@ class OperativoController extends Controller
 			$model->iniPanne = $_POST['RCamionPropio']['iniPanne'];
 			$model->finPanne = $_POST['RCamionPropio']['finPanne'];
 			$model->panne = $_POST['RCamionPropio']['panne'];
+			$model->horometro_inicial = $_POST['RCamionPropio']['horometro_inicial'];
+			$model->horometro_final = $_POST['RCamionPropio']['horometro_final'];
 			
 
 			if ($model->panne == 1) {
@@ -636,7 +639,7 @@ class OperativoController extends Controller
 	{
 
 		$model = new RCamionArrendado();
-
+		$model->horas = number_format($model->horometro_final - $model->horometro_inicial,2,".","");
 
 		if (isset($_POST['RCamionArrendado'])) {
 
@@ -652,6 +655,8 @@ class OperativoController extends Controller
 			$model->iniPanne = $_POST['RCamionArrendado']['iniPanne'];
 			$model->finPanne = $_POST['RCamionArrendado']['finPanne'];
 			$model->panne = $_POST['RCamionArrendado']['panne'];
+			$model->horometro_inicial = $_POST['RCamionArrendado']['horometro_inicial'];
+			$model->horometro_final = $_POST['RCamionArrendado']['horometro_final'];
 
 			if ($model->panne == 1) {
 				$iniPanne = str_replace(":", "", $_POST['RCamionArrendado']['iniPanne']);

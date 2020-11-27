@@ -156,7 +156,10 @@ class UsuarioController extends Controller
 				$usuario = Usuario::model()->findByPk($model->id);
 				$rol = $usuario->rol;
 				$auth=Yii::app()->authManager;
-				$auth->revoke($rol,$model->id);
+				$authAssignments = Authassignment::model()->findAllByAttributes(['userid'=>$usuario->id]);
+				foreach($authAssignments as $authAssignment){
+					$authAssignment->delete();
+				}
 				$auth->assign($model->rol,$model->id);
 				$this->redirect(array('view','id'=>$model->id));
 			}

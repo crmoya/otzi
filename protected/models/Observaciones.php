@@ -21,14 +21,14 @@ class Observaciones extends CActiveRecord
 {
 	public $fecha_inicio;
 	public $fecha_fin;
-        public $obra_maquina;
-	
+	public $obra_maquina;
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
 	 * @return Observaciones the static model class
 	 */
-	public static function model($className=__CLASS__)
+	public static function model($className = __CLASS__)
 	{
 		return parent::model($className);
 	}
@@ -50,13 +50,13 @@ class Observaciones extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('id, maquina_id, propio_arrendado, maquina_camion, fecha, chofer_id, faena_id, maquina, chofer, faena', 'required'),
-			array('id, maquina_id, chofer_id, faena_id', 'numerical', 'integerOnly'=>true),
-			array('propio_arrendado, maquina_camion', 'length', 'max'=>1),
-			array('maquina', 'length', 'max'=>100),
-			array('chofer, faena', 'length', 'max'=>200),
+			array('id, maquina_id, chofer_id, faena_id', 'numerical', 'integerOnly' => true),
+			array('propio_arrendado, maquina_camion', 'length', 'max' => 1),
+			array('maquina', 'length', 'max' => 100),
+			array('chofer, faena', 'length', 'max' => 200),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, maquina_id, propio_arrendado, obra_maquina,maquina_camion, observaciones,observaciones_obra, fecha, chofer_id, faena_id, maquina, chofer, faena', 'safe', 'on'=>'search'),
+			array('id, maquina_id, propio_arrendado, obra_maquina,maquina_camion, observaciones,observaciones_obra, fecha, chofer_id, faena_id, maquina, chofer, faena', 'safe', 'on' => 'search'),
 		);
 	}
 
@@ -67,8 +67,7 @@ class Observaciones extends CActiveRecord
 	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
-		return array(
-		);
+		return array();
 	}
 
 	/**
@@ -88,7 +87,7 @@ class Observaciones extends CActiveRecord
 			'maquina' => 'Máquina o Vehículo',
 			'chofer' => 'Chofer u Operador',
 			'faena' => 'Centro de Gestión',
-                        'obra_maquina' => 'Mostrar de Obra y/o Máquina'
+			'obra_maquina' => 'Mostrar de Obra y/o Máquina'
 		);
 	}
 
@@ -101,30 +100,31 @@ class Observaciones extends CActiveRecord
 		// Warning: Please modify the following code to remove attributes that
 		// should not be searched.
 
-		$criteria=new CDbCriteria;
+		$criteria = new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('maquina_id',$this->maquina_id);
-		$criteria->compare('propio_arrendado',$this->propio_arrendado,true);
-		$criteria->compare('maquina_camion',$this->maquina_camion,true);
-		$criteria->compare('observaciones',$this->observaciones,true);
-		$criteria->compare('fecha',$this->fecha,true);
-		$criteria->compare('chofer_id',$this->chofer_id);
-		$criteria->compare('faena_id',$this->faena_id);
-		$criteria->compare('maquina',$this->maquina,true);
-		$criteria->compare('chofer',$this->chofer,true);
-		$criteria->compare('faena',$this->faena,true);
+		$criteria->compare('id', $this->id);
+		$criteria->compare('maquina_id', $this->maquina_id);
+		$criteria->compare('propio_arrendado', $this->propio_arrendado, true);
+		$criteria->compare('maquina_camion', $this->maquina_camion, true);
+		$criteria->compare('observaciones', $this->observaciones, true);
+		$criteria->compare('fecha', $this->fecha, true);
+		$criteria->compare('chofer_id', $this->chofer_id);
+		$criteria->compare('faena_id', $this->faena_id);
+		$criteria->compare('maquina', $this->maquina, true);
+		$criteria->compare('chofer', $this->chofer, true);
+		$criteria->compare('faena', $this->faena, true);
 
 		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
+			'criteria' => $criteria,
 		));
 	}
-	
-	public function listarMaquinas(){
+
+	public function listarMaquinas()
+	{
 		$data = array();
-		$connection=Yii::app()->db;
-		$connection->active=true;
-		$command=$connection->createCommand("
+		$connection = Yii::app()->db;
+		$connection->active = true;
+		$command = $connection->createCommand("
 			select 		id,nombre
 			from	(
 				select		concat(id,'MP') as id,nombre
@@ -151,26 +151,26 @@ class Observaciones extends CActiveRecord
 				
 			) as t
 			order by nombre
-			"
-		);
-		$dataReader=$command->query();
-		$rows=$dataReader->readAll();
-		$connection->active=false;
+			");
+		$dataReader = $command->query();
+		$rows = $dataReader->readAll();
+		$connection->active = false;
 		$command = null;
-		$data[0]=array('nombre'=>"Seleccione un Vehículo o Máquina",'id'=>'');
-		$i=1;
-		foreach($rows as $row){
-			$data[$i]=$row;
+		$data[0] = array('nombre' => "Seleccione un Vehículo o Máquina", 'id' => '');
+		$i = 1;
+		foreach ($rows as $row) {
+			$data[$i] = $row;
 			$i++;
 		}
 		return $data;
 	}
-	
-	public function listarChoferes(){
+
+	public function listarChoferes()
+	{
 		$data = array();
-		$connection=Yii::app()->db;
-		$connection->active=true;
-		$command=$connection->createCommand("
+		$connection = Yii::app()->db;
+		$connection->active = true;
+		$command = $connection->createCommand("
 			select 		id,nombre
 			from	(
 				select		concat(id,'O') as id,concat(nombre,', ',rut) as nombre
@@ -185,110 +185,96 @@ class Observaciones extends CActiveRecord
 				
 			) as t
 			order by nombre
-			"
-		);
-		$dataReader=$command->query();
-		$rows=$dataReader->readAll();
-		$connection->active=false;
+			");
+		$dataReader = $command->query();
+		$rows = $dataReader->readAll();
+		$connection->active = false;
 		$command = null;
-		$data[0]=array('nombre'=>"Seleccione un Chofer u Operador",'id'=>'');
-		$i=1;
-		foreach($rows as $row){
-			$data[$i]=$row;
+		$data[0] = array('nombre' => "Seleccione un Chofer u Operador", 'id' => '');
+		$i = 1;
+		foreach ($rows as $row) {
+			$data[$i] = $row;
 			$i++;
 		}
 		return $data;
 	}
-	
-	public function limpiar(){
-		$connection=Yii::app()->db;
-		$connection->active=true;
-		$command=$connection->createCommand("
+
+	public function limpiar()
+	{
+		$connection = Yii::app()->db;
+		$connection->active = true;
+		$command = $connection->createCommand("
 			truncate observaciones;
-			"
-		);
+			");
 		$command->execute();
-		$connection->active=false;
+		$connection->active = false;
 		$command = null;
 	}
-	
-	public function generarInforme(){
+
+	public function generarInforme()
+	{
 		$this->limpiar();
-		$connection=Yii::app()->db;
-		$connection->active=true;
-				
+		$connection = Yii::app()->db;
+		$connection->active = true;
+
 		$insertSql = "
 		insert into observaciones
 			(maquina_id,propio_arrendado,maquina_camion,observaciones,observaciones_obra,fecha,chofer_id,faena_id,maquina,chofer,faena)
-		";	
+		";
 
-				
+
 		$condiciones = "";
-		if(!empty($this->propio_arrendado))
-        {
-	        $condiciones = $condiciones." propio_arrendado = '".$this->propio_arrendado."' and ";
-        }
-        
-        /*AGREGAR LA CONDICIÓN DE OBRA O MÁQUINA*/
-                if(!empty($this->obra_maquina))
-                {
-                    if($this->obra_maquina == 'M'){
-                        $condiciones = $condiciones." observaciones <> '' and ";
-                    }
-                    if($this->obra_maquina == 'O'){
-                        $condiciones = $condiciones." observaciones_obra <> '' and ";
-                    }
+		if (!empty($this->propio_arrendado)) {
+			$condiciones = $condiciones . " propio_arrendado = '" . $this->propio_arrendado . "' and ";
+		}
 
-                }
-        /*END AGREGAR LA CONDICIÓN DE OBRA O MÁQUINA*/
-		if(!empty($this->maquina_camion))
-        {
-        	$condiciones = $condiciones." maquina_camion = '".$this->maquina_camion."' and ";
-        }
-        
-		if(!empty($this->fecha_inicio) && empty($this->fecha_fin))
-        {
-        	$condiciones = $condiciones." fecha >= '".Tools::fixFecha($this->fecha_inicio)."' and ";
-        }
-        elseif(!empty($this->fecha_fin) && empty($this->fecha_inicio))
-        {
-            $condiciones = $condiciones." fecha <= '".Tools::fixFecha($this->fecha_fin)."' and ";
-        }
-        elseif(!empty($this->fecha_fin) && !empty($this->fecha_inicio))
-        {
-            $condiciones = $condiciones." fecha  >= '".Tools::fixFecha($this->fecha_inicio)."' and fecha <= '".Tools::fixFecha($this->fecha_fin)."' and ";
-        }
-		
-		if(!empty($this->chofer_id))
-        {
-        	$condiciones = $condiciones." chofer_id = '".$this->chofer_id."' and ";
-        }
-		if(!empty($this->maquina_id))
-        {
-        	$condiciones = $condiciones." maquina_id = '".$this->maquina_id."' and ";
-        }
-		if(!empty($this->faena_id) && $this->faena_id != '-1')
-        {
-        	$condiciones = $condiciones." faena_id = '".$this->faena_id."' and ";
-        }
-	        
-        $condiciones = $condiciones." 1=1 ";
-        
+		/*AGREGAR LA CONDICIÓN DE OBRA O MÁQUINA*/
+		if (!empty($this->obra_maquina)) {
+			if ($this->obra_maquina == 'M') {
+				$condiciones = $condiciones . " observaciones <> '' and ";
+			}
+			if ($this->obra_maquina == 'O') {
+				$condiciones = $condiciones . " observaciones_obra <> '' and ";
+			}
+		}
+		/*END AGREGAR LA CONDICIÓN DE OBRA O MÁQUINA*/
+		if (!empty($this->maquina_camion)) {
+			$condiciones = $condiciones . " maquina_camion = '" . $this->maquina_camion . "' and ";
+		}
+
+		if (!empty($this->fecha_inicio) && empty($this->fecha_fin)) {
+			$condiciones = $condiciones . " fecha >= '" . Tools::fixFecha($this->fecha_inicio) . "' and ";
+		} elseif (!empty($this->fecha_fin) && empty($this->fecha_inicio)) {
+			$condiciones = $condiciones . " fecha <= '" . Tools::fixFecha($this->fecha_fin) . "' and ";
+		} elseif (!empty($this->fecha_fin) && !empty($this->fecha_inicio)) {
+			$condiciones = $condiciones . " fecha  >= '" . Tools::fixFecha($this->fecha_inicio) . "' and fecha <= '" . Tools::fixFecha($this->fecha_fin) . "' and ";
+		}
+
+		if (!empty($this->chofer_id)) {
+			$condiciones = $condiciones . " chofer_id = '" . $this->chofer_id . "' and ";
+		}
+		if (!empty($this->maquina_id)) {
+			$condiciones = $condiciones . " maquina_id = '" . $this->maquina_id . "' and ";
+		}
+		if (!empty($this->faena_id) && $this->faena_id != '-1') {
+			$condiciones = $condiciones . " faena_id = '" . $this->faena_id . "' and ";
+		}
+
+		$condiciones = $condiciones . " 1=1 ";
+
 		$sql = "select 	maquina_id,propio_arrendado,maquina_camion,observaciones,observaciones_obra,fecha,chofer_id,faena_id,maquina,chofer,faena
 				from 	vObservaciones
 				where	$condiciones";
-		
-		$command=$connection->createCommand($insertSql.$sql);
+
+		$command = $connection->createCommand($insertSql . $sql);
 		$command->execute();
-		
-		$connection->active=false;
+
+		$connection->active = false;
 		$command = null;
-		
-		
 	}
-	
-	protected function gridDataColumn($data,$row)
-    {
-     	return Tools::backFecha($data->fecha);   
+
+	protected function gridDataColumn($data, $row)
+	{
+		return Tools::backFecha($data->fecha);
 	}
 }

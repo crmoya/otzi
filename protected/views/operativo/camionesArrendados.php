@@ -594,6 +594,8 @@ $cs->registerCoreScript('jquery');
 
 			
 			valid = valid && checkUnidades();
+			
+			valid = valid && checkHoras();
 
 			return valid;
 		});
@@ -747,6 +749,16 @@ $cs->registerCoreScript('jquery');
 					<td><?php echo $form->textField($model, "kmGps", array('class' => 'fixed')); ?> <?php echo $form->error($model, 'kmGps'); ?></td>
 					<td><?php echo $form->labelEx($model, "kms"); ?></td>
 					<td><?php echo $form->textField($model, "kms", array('class' => 'fixed','disabled'=>'disabled', 'readonly'=>'readonly', 'id' => "kmRecorridos")); ?> <?php echo $form->error($model, 'kms'); ?></td>
+				</tr>
+				<tr>
+					<td><?php echo $form->labelEx($model, "horometro_inicial"); ?></td>
+					<td><?php echo $form->textField($model, "horometro_inicial", array('class' => 'fixedHI', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?> <?php echo $form->error($model, 'horometro_inicial'); ?></td>
+					<td width="30"><?php echo $form->labelEx($model, 'horometro_final'); ?></td>
+					<td><?php echo $form->textField($model, 'horometro_final', array('class' => 'fixedHF', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?> <?php echo $form->error($model, 'horometro_final'); ?></td>
+				</tr>
+				<tr>
+					<td><?php echo $form->labelEx($model, "horas"); ?></td>
+					<td><?php echo $form->textField($model, "horas", array('class' => 'fixedH', 'disabled' => 'disabled',)); ?> <?php echo $form->error($model, 'horas',['class'=>'errorH']); ?></td>
 				</tr>
 			</table>
 		</fieldset>

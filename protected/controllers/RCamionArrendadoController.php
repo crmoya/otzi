@@ -177,7 +177,7 @@ class RCamionArrendadoController extends Controller
 	public function actionUpdate($id)
 	{
 		$model = $this->loadModel($id);
-
+		$model->horas = number_format($model->horometro_final - $model->horometro_inicial,2,".","");
 
 		$viajes = ViajeCamionArrendado::model()->findAllByAttributes(array('rCamionArrendado_id' => $id));
 		$viajesT = Expedicionportiempoarr::model()->findAllByAttributes(array('rcamionarrendado_id' => $id));
@@ -199,6 +199,8 @@ class RCamionArrendadoController extends Controller
 				$model->iniPanne = $_POST['RCamionArrendado']['iniPanne'];
 				$model->finPanne = $_POST['RCamionArrendado']['finPanne'];
 				$model->panne = $_POST['RCamionArrendado']['panne'];
+				$model->horometro_inicial = $_POST['RCamionArrendado']['horometro_inicial'];
+				$model->horometro_final = $_POST['RCamionArrendado']['horometro_final'];
 
 				if ($model->panne == 1) {
 					$iniPanne = str_replace(":", "", $_POST['RCamionArrendado']['iniPanne']);

@@ -31,6 +31,8 @@ class RCamionPropio extends CActiveRecord
 	public $coeficiente;
 	public $validador_nm;
 
+	public $horas;
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return RCamionPropio the static model class
@@ -114,6 +116,8 @@ class RCamionPropio extends CActiveRecord
 			'total' => 'Total en $',
 			'validador_nm' => 'Validado Por',
 			'kms' => 'KMs Recorridos',
+			'horometro_inicial' => 'Horómetro Inicial',
+			'horometro_final' => 'Horómetro Final',
 		);
 	}
 

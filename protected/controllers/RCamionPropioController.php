@@ -206,6 +206,7 @@ class RCamionPropioController extends Controller
 	public function actionUpdate($id)
 	{
 		$model = $this->loadModel($id);
+		$model->horas = number_format($model->horometro_final - $model->horometro_inicial,2,".","");
 
 		$viajes = ViajeCamionPropio::model()->findAllByAttributes(array('rCamionPropio_id' => $id));
 		$viajesT = Expedicionportiempo::model()->findAllByAttributes(array('rcamionpropio_id' => $id));
@@ -228,6 +229,8 @@ class RCamionPropioController extends Controller
 				$model->iniPanne = $_POST['RCamionPropio']['iniPanne'];
 				$model->finPanne = $_POST['RCamionPropio']['finPanne'];
 				$model->panne = $_POST['RCamionPropio']['panne'];
+				$model->horometro_inicial = $_POST['RCamionPropio']['horometro_inicial'];
+				$model->horometro_final = $_POST['RCamionPropio']['horometro_final'];
 
 				if ($model->panne == 1) {
 					$iniPanne = str_replace(":", "", $_POST['RCamionPropio']['iniPanne']);
