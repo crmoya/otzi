@@ -170,6 +170,15 @@ class OperativoController extends Controller
 			$model->panne = $_POST['RCamionPropio']['panne'];
 			$model->horometro_inicial = $_POST['RCamionPropio']['horometro_inicial'];
 			$model->horometro_final = $_POST['RCamionPropio']['horometro_final'];
+
+			$camion = CamionPropio::model()->findByPk($_POST['RCamionPropio']['camionPropio_id']);
+			if(isset($camion)){
+				if($camion->odometro_en_millas){
+					$model->kmInicial = $model->kmInicial * Tools::FACTOR_KMS_MILLAS;
+					$model->kmFinal = $model->kmFinal * Tools::FACTOR_KMS_MILLAS;
+					$model->kmGps = $model->kmGps * Tools::FACTOR_KMS_MILLAS;
+				}
+			}
 			
 
 			if ($model->panne == 1) {
@@ -658,6 +667,15 @@ class OperativoController extends Controller
 			$model->horometro_inicial = $_POST['RCamionArrendado']['horometro_inicial'];
 			$model->horometro_final = $_POST['RCamionArrendado']['horometro_final'];
 
+			$camion = CamionArrendado::model()->findByPk($_POST['RCamionArrendado']['camionArrendado_id']);
+			if(isset($camion)){
+				if($camion->odometro_en_millas){
+					$model->kmInicial = $model->kmInicial * Tools::FACTOR_KMS_MILLAS;
+					$model->kmFinal = $model->kmFinal * Tools::FACTOR_KMS_MILLAS;
+					$model->kmGps = $model->kmGps * Tools::FACTOR_KMS_MILLAS;
+				}
+			}
+
 			if ($model->panne == 1) {
 				$iniPanne = str_replace(":", "", $_POST['RCamionArrendado']['iniPanne']);
 				$finPanne = str_replace(":", "", $_POST['RCamionArrendado']['finPanne']);
@@ -815,6 +833,26 @@ class OperativoController extends Controller
 	public function actionIndex()
 	{
 		$this->render("indexOper", array('nombre' => Yii::app()->user->nombre));
+	}
+
+	public function actionDatoscamion(){
+		if (isset($_POST['propio_arrendado']) && isset($_POST['camion_id'])) {
+			if($_POST['propio_arrendado'] == "propio"){
+				$camion = CamionPropio::model()->findByPk($_POST['camion_id']);
+				if(isset($camion)){
+					echo '{ "codigo": "' . $camion->codigo . '", "capacidad": "' . $camion->capacidad . '", "pOv": "' . ($camion->pesoOVolumen == "L"?"lts.":"kgs.") . '" , "odometro_en_millas": "' . $camion->odometro_en_millas . '"}';
+					return;
+				}
+			}
+			else if($_POST['propio_arrendado'] == "arrendado"){
+				$camion = CamionArrendado::model()->findByPk($_POST['camion_id']);
+				if(isset($camion)){
+					echo '{ "capacidad": "' . $camion->capacidad . '", "pOv": "' . ($camion->pesoOVolumen == "L"?"lts.":"kgs.") . '"  , "odometro_en_millas": "' . $camion->odometro_en_millas . '"}';
+					return;
+				}
+			}
+		}
+		echo "ERROR";
 	}
 
 	public function actionLlenaCamion()
@@ -1028,12 +1066,12 @@ class OperativoController extends Controller
 		return array(
 			array(
 				'allow',
-				'actions' => array('validaReporteUnico', 'rendidor', 'proveedor', 'rendidorRut', 'proveedorRut', 'rendidorRutExacto', 'proveedorRutExacto', 'camionesPropios', 'equiposArrendados', 'equiposPropios', 'llenaEquipoArrendado', 'index', 'llenaFaena', 'llenaEquipo', 'llenaCamion', 'llenaCamionArr', 'camionesArrendados'),
+				'actions' => array('validaReporteUnico', 'rendidor', 'proveedor', 'rendidorRut', 'proveedorRut', 'rendidorRutExacto', 'proveedorRutExacto', 'camionesPropios', 'equiposArrendados', 'equiposPropios', 'llenaEquipoArrendado', 'index', 'llenaFaena', 'llenaEquipo', 'llenaCamion', 'llenaCamionArr', 'camionesArrendados','datoscamion'),
 				'roles' => array('operativo'),
 			),
 			array(
 				'allow',
-				'actions' => array('rendidor', 'proveedor', 'proveedorRut', 'rendidorRut', 'rendidorRutExacto', 'proveedorRutExacto', 'llenaCamion', 'llenaCamionId', 'llenaCamionArrId', 'llenaFaenaId', 'llenaCamionArr', 'llenaFaena', 'llenaEquipoArrendadoId', 'llenaEquipoArrendado', 'llenaEquipo', 'llenaEquipoId'),
+				'actions' => array('rendidor', 'proveedor', 'proveedorRut', 'rendidorRut', 'rendidorRutExacto', 'proveedorRutExacto', 'llenaCamion', 'llenaCamionId', 'llenaCamionArrId', 'llenaFaenaId', 'llenaCamionArr', 'llenaFaena', 'llenaEquipoArrendadoId', 'llenaEquipoArrendado', 'llenaEquipo', 'llenaEquipoId','datoscamion'),
 				'roles' => array('administrador'),
 			),
 			array(

@@ -6,6 +6,8 @@ class Tools
 	public static $MD_CELL = 100;
 	public static $LG_CELL = 150;
 
+	const FACTOR_KMS_MILLAS = 1.60934;
+
 	public static $UNIDADES_TIEMPO = [
 		['id'=>1, 'nombre'=>'HORAS',],
 		['id'=>2, 'nombre'=>'DÍAS',],

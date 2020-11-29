@@ -357,11 +357,6 @@ $cs->registerCoreScript('jquery');
 		}
 		?>
 
-		$("#camion").html("<td style='font-size: 0.9em;'><b>Código:</b></td>" +
-			"<td><?php echo $codigo; ?></td>" +
-			"<td style='font-size: 0.9em;'><b>Capacidad:</b></td>" +
-			"<td><?php echo $capacidad; ?><input type='hidden' name='capacidad' id='capacidad' value='<?php echo $capacidad; ?>'/></td>");
-
 
 		var ods = Array();
 		var l = 0;
@@ -457,6 +452,35 @@ $cs->registerCoreScript('jquery');
 			$('.cantidad').val(0);
 			$('.totalT').val(0);
 			$('.labelPUt').val(0);
+
+			$.ajax({
+				type: "POST",
+				url: "<?php echo Yii::app()->createUrl('//operativo/datoscamion/'); ?>",
+				data: {
+					'propio_arrendado': 'propio',
+					'camion_id': $(this).val()
+				}
+			}).done(function(msg) {
+				if (msg != "ERROR") {
+					var datos = JSON.parse(msg);
+					$('#codigo').html(datos.codigo);
+					$('#capacidad').val(datos.capacidad);
+					$('#lblCapacidad').html(datos.capacidad + " " + datos.pOv);
+
+					if (datos.odometro_en_millas == 1) {
+						$("label[for='RCamionPropio_kmInicial']").text("Odómetro Inicial (en Millas)");
+						$("label[for='RCamionPropio_kmFinal']").text("Odómetro Final (en Millas)");
+						$("label[for='RCamionPropio_kmGps']").text("Millas GPS");
+						$("label[for='RCamionPropio_kms']").text("Millas recorridas");
+					} else {
+						$("label[for='RCamionPropio_kmInicial']").text("Odómetro Inicial");
+						$("label[for='RCamionPropio_kmFinal']").text("Odómetro Final");
+						$("label[for='RCamionPropio_kmGps']").text("KMs GPS");
+						$("label[for='RCamionPropio_kms']").text("KMs recorridos");
+					}
+				}
+			});
+
 		});
 
 		$(document.body).on('change', '.faenaT', function(e) {
@@ -677,9 +701,35 @@ $cs->registerCoreScript('jquery');
 
 		$(document).ready(function(e) {
 
+
+
 			var kms = ($('#RCamionPropio_kmFinal').val() - $('#RCamionPropio_kmInicial').val()).toFixed(2);
 			$('#kmRecorridos').val(kms);
 
+			<?php
+			$codigo = "";
+			$capacidad = "";
+			$pOv = "";
+			if (isset($model->camiones)) {
+				if (isset($model->camiones->codigo)) {
+					$codigo = $model->camiones->codigo;
+				}
+				if (isset($model->camiones->capacidad)) {
+					$capacidad = $model->camiones->capacidad;
+				}
+				if (isset($model->camiones->pesoOVolumen)) {
+					$pOv = $model->camiones->pesoOVolumen == "L" ? "lts." : "kgs.";
+				}
+			}
+			?>
+
+			var codigo = '<?= $codigo ?>';
+			var capacidad = '<?= $capacidad ?>';
+			var pOv = '<?= $pOv ?>';
+
+			$('#codigo').html(codigo);
+			$('#capacidad').val(capacidad);
+			$('#lblCapacidad').html(capacidad + " " + pOv);
 
 			$('.faenaT').each(function(e) {
 				var faenaId = $(this).val();
@@ -849,11 +899,6 @@ $cs->registerCoreScript('jquery');
 							array(
 								'class' => 'camion',
 								'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',
-								'ajax' => array(
-									'type' => 'POST', //request type
-									'url' => CController::createUrl('//operativo/llenaCamion'),
-									'update' => '#camion',
-								)
 							)
 						);
 						?> <?php echo $form->error($model, 'camionPropio_id'); ?>
@@ -866,12 +911,11 @@ $cs->registerCoreScript('jquery');
 					<td><?php echo $form->textField($model, 'reporte', array('disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?> <?php echo $form->error($model, 'reporte'); ?>
 					</td>
 				</tr>
-				<tr id="camion">
+				<tr>
 					<td style='font-size: 0.9em;'><b>Código:</b></td>
-					<td></td>
-					<td style='font-size: 0.9em;'><b>Capacidad:</b>
-					</td>
-					<td></td>
+					<td id="codigo"></td>
+					<td style='font-size: 0.9em;'><b>Capacidad:</b><input type="hidden" id="capacidad" /></td>
+					<td id="lblCapacidad"></td>
 				</tr>
 				<tr>
 					<td><?php echo $form->labelEx($model, "kmInicial"); ?></td>
@@ -893,7 +937,7 @@ $cs->registerCoreScript('jquery');
 				</tr>
 				<tr>
 					<td><?php echo $form->labelEx($model, "horas"); ?></td>
-					<td><?php echo $form->textField($model, "horas", array('class' => 'fixedH', 'disabled' => 'disabled',)); ?> <?php echo $form->error($model, 'horas',['class'=>'errorH']); ?></td>
+					<td><?php echo $form->textField($model, "horas", array('class' => 'fixedH', 'disabled' => 'disabled',)); ?> <?php echo $form->error($model, 'horas', ['class' => 'errorH']); ?></td>
 				</tr>
 			</table>
 		</fieldset>

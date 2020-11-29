@@ -43,7 +43,7 @@ class CamionArrendado extends CActiveRecord
 		array('capacidad,horasMin,produccionMinima,consumoPromedio','esDecimal'),
 		// The following rule is used by search().
 		// Please remove those attributes that should not be searched.
-		array('id, nombre, capacidad, pesoOVolumen,consumoPromedio,vigente', 'safe', 'on'=>'search'),
+		array('id, nombre, capacidad, pesoOVolumen,consumoPromedio,vigente,odometro_en_millas', 'safe', 'on'=>'search'),
 		);
 	}
 	
@@ -99,6 +99,7 @@ class CamionArrendado extends CActiveRecord
 			'produccionMinima' => 'Producción Mínima Diaria [$]',
 			'horasMin' => 'Horas Mínimas Pactadas',	
 			'coeficienteDeTrato' => 'Coeficiente de Trato (% sobre consumo de combustible)',
+			'odometro_en_millas' => 'Odómetro en millas',
 		);
 	}
 
@@ -119,6 +120,7 @@ class CamionArrendado extends CActiveRecord
 		$criteria->compare('consumoPromedio',$this->consumoPromedio,true);
 		$criteria->compare('pesoOVolumen',$this->pesoOVolumen,true);
 		$criteria->compare('vigente',$this->vigente,true);
+		$criteria->compare('odometro_en_millas',$this->odometro_en_millas);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

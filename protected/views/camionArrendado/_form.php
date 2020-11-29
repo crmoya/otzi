@@ -60,6 +60,12 @@ $cs->registerCoreScript('jquery');
 		<?php echo $form->textField($model,'coeficienteDeTrato',array('size'=>10,'maxlength'=>10,'class'=>'fixed')); ?>
 		<?php echo $form->error($model,'coeficienteDeTrato'); ?>
 	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'odometro_en_millas'); ?>
+	    <?php echo $form->dropDownList($model,'odometro_en_millas', CHtml::listData(array(array('id'=>'1','nombre'=>'SÍ'),array('id'=>'0','nombre'=>'NO')), 'id', 'nombre')); ?>
+	  	<?php echo $form->error($model,'odometro_en_millas'); ?>
+	</div>
 	
 	<div class="row">
 		<?php echo $form->labelEx($model,'vigente'); ?>

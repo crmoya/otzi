@@ -208,6 +208,14 @@ class RCamionPropioController extends Controller
 		$model = $this->loadModel($id);
 		$model->horas = number_format($model->horometro_final - $model->horometro_inicial,2,".","");
 
+		if(isset($model->camiones)){
+			if($model->camiones->odometro_en_millas){
+				$model->kmInicial = number_format($model->kmInicial / Tools::FACTOR_KMS_MILLAS,2,'.','');
+				$model->kmFinal = number_format($model->kmFinal / Tools::FACTOR_KMS_MILLAS,2,'.','');
+				$model->kmGps = number_format($model->kmGps / Tools::FACTOR_KMS_MILLAS,2,'.','');
+			}
+		}
+
 		$viajes = ViajeCamionPropio::model()->findAllByAttributes(array('rCamionPropio_id' => $id));
 		$viajesT = Expedicionportiempo::model()->findAllByAttributes(array('rcamionpropio_id' => $id));
 		$cargas = CargaCombCamionPropio::model()->findAllByAttributes(array('rCamionPropio_id' => $id));
@@ -231,6 +239,17 @@ class RCamionPropioController extends Controller
 				$model->panne = $_POST['RCamionPropio']['panne'];
 				$model->horometro_inicial = $_POST['RCamionPropio']['horometro_inicial'];
 				$model->horometro_final = $_POST['RCamionPropio']['horometro_final'];
+				
+
+				$camion = CamionPropio::model()->findByPk($_POST['RCamionPropio']['camionPropio_id']);
+				if(isset($camion)){
+					if($camion->odometro_en_millas){
+						$model->kmInicial = $model->kmInicial * Tools::FACTOR_KMS_MILLAS;
+						$model->kmFinal = $model->kmFinal * Tools::FACTOR_KMS_MILLAS;
+						$model->kmGps = $model->kmGps * Tools::FACTOR_KMS_MILLAS;
+					}
+				}
+
 
 				if ($model->panne == 1) {
 					$iniPanne = str_replace(":", "", $_POST['RCamionPropio']['iniPanne']);

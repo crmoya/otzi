@@ -48,7 +48,12 @@ $('.search-form form').submit(function(){
 		 array(            
             'name'=>'pesoOVolumen',
             'value'=>array($model,'gridDataColumn'),
-        ),
+		),
+		[
+			'name'=>'odometro_en_millas',
+			'value'=>'$data->odometro_en_millas==1?"SÍ":"NO"',
+			'filter'=>CHtml::dropDownList('CamionArrendado[odometro_en_millas]', $model->odometro_en_millas, [''=>'TODOS','1'=>'SÍ','0'=>'NO']),
+		],
         'vigente',
 		array(
 			'class'=>'CButtonColumn',

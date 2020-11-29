@@ -91,6 +91,7 @@ class CamionPropioController extends Controller
 			$model->attributes=$_POST['CamionPropio'];
 			$model->capacidad = str_replace(",",".", $model->capacidad);
 			$model->consumoPromedio = str_replace(",",".", $model->consumoPromedio);
+			$model->odometro_en_millas = $_POST['CamionPropio']['odometro_en_millas'];
 			$model->vigente = $_POST['CamionPropio']['vigente'];
 			if($model->horasMin == ""){
 				$model->horasMin = 0;
@@ -131,6 +132,7 @@ class CamionPropioController extends Controller
 			$model->capacidad = str_replace(",",".", $model->capacidad);
 			$model->consumoPromedio = str_replace(",",".", $model->consumoPromedio);
 			$model->vigente = $_POST['CamionPropio']['vigente'];
+			$model->odometro_en_millas = $_POST['CamionPropio']['odometro_en_millas'];
 			if($model->horasMin == ""){
 				$model->horasMin = 0;
 			}

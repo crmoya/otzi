@@ -493,6 +493,35 @@ $cs->registerCoreScript('jquery');
 			$('.cantidad').val(0);
 			$('.totalT').val(0);
 			$('.labelPUt').val(0);
+
+			$.ajax({
+				type: "POST",
+				url: "<?php echo Yii::app()->createUrl('//operativo/datoscamion/'); ?>",
+				data: {
+					'propio_arrendado': 'arrendado',
+					'camion_id': $(this).val()
+				}
+			}).done(function(msg) {
+				if(msg != "ERROR"){
+					var datos = JSON.parse(msg);
+					$('#codigo').html(datos.codigo);
+					$('#capacidad').val(datos.capacidad);
+					$('#lblCapacidad').html(datos.capacidad + " " + datos.pOv);
+
+					if(datos.odometro_en_millas == 1){
+						$("label[for='RCamionArrendado_kmInicial']").text("Odómetro Inicial (en Millas)");
+						$("label[for='RCamionArrendado_kmFinal']").text("Odómetro Final (en Millas)");
+						$("label[for='RCamionArrendado_kmGps']").text("Millas GPS");
+						$("label[for='RCamionArrendado_kms']").text("Millas recorridas");
+					}
+					else{
+						$("label[for='RCamionArrendado_kmInicial']").text("Odómetro Inicial");
+						$("label[for='RCamionArrendado_kmFinal']").text("Odómetro Final");
+						$("label[for='RCamionArrendado_kmGps']").text("KMs GPS");
+						$("label[for='RCamionArrendado_kms']").text("KMs recorridos");
+					}
+				}
+			});
 		});
 
 		$(document.body).on('change', '.unidadfaena', function(e) {
@@ -710,7 +739,7 @@ $cs->registerCoreScript('jquery');
 					<td><?php echo $form->textField($model, 'reporte'); ?> <?php echo $form->error($model, 'reporte'); ?>
 					</td>
 				</tr>
-				<tr id="camion">
+				<tr>
 					<td width="100"><?php echo $form->labelEx($model, 'camionArrendado_id'); ?>
 					</td>
 					<td><?php
@@ -720,17 +749,12 @@ $cs->registerCoreScript('jquery');
 							CHtml::listData(CamionArrendado::model()->listar(), 'id', 'nombre'),
 							array(
 								'class' => 'camion',
-								'ajax' => array(
-									'type' => 'POST', //request type
-									'url' => CController::createUrl('//operativo/llenaCamionArr'),
-									'update' => '#capacidadTd',
-								)
 							)
 						);
 						?> <?php echo $form->error($model, 'camionArrendado_id'); ?>
 					</td>
-					<td style='font-size:0.9em;'><b>Capacidad:</b></td>
-					<td id="capacidadTd"></td>
+					<td style='font-size: 0.9em;'><b>Capacidad:</b><input type="hidden" id="capacidad"/></td>
+					<td id="lblCapacidad"></td>
 				</tr>
 				<tr>
 					<td width="30"><?php echo $form->labelEx($model, 'ordenCompra'); ?></td>

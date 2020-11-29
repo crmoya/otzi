@@ -104,6 +104,16 @@ class RCamionArrendado extends CActiveRecord
 	 */
 	public function attributeLabels()
 	{
+		$enMillas = "";
+		$kmsOMillas = "KMs recorridos";
+		$distanciaGps = "KMs GPS";
+		if(isset($this->camiones)){
+			if($this->camiones->odometro_en_millas == 1){
+				$enMillas = " (en Millas)";
+				$kmsOMillas = "Millas recorridas";
+				$distanciaGps = "Millas GPS";
+			}
+		}
 		return array(
 			'id' => 'ID',
 			'fecha' => 'Fecha',
@@ -112,12 +122,12 @@ class RCamionArrendado extends CActiveRecord
 			'ordenCompra' => 'Orden Compra o Contrato N°',
 			'camionArrendado_id' => 'camión, camioneta, auto Arrendado',
 			'chofer_id' => 'Chofer',
-			'kmInicial' => 'Km Inicial',
-			'kmFinal' => 'Km Final',
-			'kmGps' => 'Km Gps',
+			'kmInicial' => 'Odómetro Inicial'.$enMillas,
+			'kmFinal' => 'Odómetro Final'.$enMillas,
+			'kmGps' => $distanciaGps,
 			'total' => 'Total en $',
 			'validador_nm' => 'Validado Por',
-			'kms' => 'KMs Recorridos',
+			'kms' => $kmsOMillas,
 			'horometro_inicial' => 'Horómetro Inicial',
 			'horometro_final' => 'Horómetro Final',
 		);

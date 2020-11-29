@@ -92,6 +92,7 @@ class CamionArrendadoController extends Controller
 			$model->capacidad = str_replace(",",".", $model->capacidad);
 			$model->consumoPromedio = str_replace(",",".", $model->consumoPromedio);
 			$model->vigente = $_POST['CamionArrendado']['vigente'];
+			$model->odometro_en_millas = $_POST['CamionArrendado']['odometro_en_millas'];
 			if($model->horasMin == ""){
 				$model->horasMin = 0;
 			}
@@ -130,6 +131,7 @@ class CamionArrendadoController extends Controller
 			$model->attributes=$_POST['CamionArrendado'];
 			$model->capacidad = str_replace(",",".", $model->capacidad);
 			$model->consumoPromedio = str_replace(",",".", $model->consumoPromedio);
+			$model->odometro_en_millas = $_POST['CamionArrendado']['odometro_en_millas'];
 			$model->vigente = $_POST['CamionArrendado']['vigente'];
 			if($model->horasMin == ""){
 				$model->horasMin = 0;

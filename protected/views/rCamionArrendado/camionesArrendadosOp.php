@@ -60,6 +60,35 @@ $cs->registerCoreScript('jquery');
 			$('.cantidad').val(0);
 			$('.totalT').val(0);
 			$(".labelPUt").val(0);
+
+			$.ajax({
+				type: "POST",
+				url: "<?php echo Yii::app()->createUrl('//operativo/datoscamion/'); ?>",
+				data: {
+					'propio_arrendado': 'arrendado',
+					'camion_id': $(this).val()
+				}
+			}).done(function(msg) {
+				if(msg != "ERROR"){
+					var datos = JSON.parse(msg);
+					$('#codigo').html(datos.codigo);
+					$('#capacidad').val(datos.capacidad);
+					$('#lblCapacidad').html(datos.capacidad + " " + datos.pOv);
+
+					if(datos.odometro_en_millas == 1){
+						$("label[for='RCamionArrendado_kmInicial']").text("Odómetro Inicial (en Millas)");
+						$("label[for='RCamionArrendado_kmFinal']").text("Odómetro Final (en Millas)");
+						$("label[for='RCamionArrendado_kmGps']").text("Millas GPS");
+						$("label[for='RCamionArrendado_kms']").text("Millas recorridas");
+					}
+					else{
+						$("label[for='RCamionArrendado_kmInicial']").text("Odómetro Inicial");
+						$("label[for='RCamionArrendado_kmFinal']").text("Odómetro Final");
+						$("label[for='RCamionArrendado_kmGps']").text("KMs GPS");
+						$("label[for='RCamionArrendado_kms']").text("KMs recorridos");
+					}
+				}
+			});
 		});
 
 		$(document.body).on('change', '.unidadfaena', function(e) {
@@ -658,6 +687,27 @@ $cs->registerCoreScript('jquery');
 			var kms = ($('#RCamionArrendado_kmFinal').val() - $('#RCamionArrendado_kmInicial').val()).toFixed(2);
 			$('#kmRecorridos').val(kms);
 
+			<?php
+			$codigo = "";
+			$capacidad = "";
+			$pOv = "";
+			if (isset($model->camiones)) {
+				if (isset($model->camiones->capacidad)) {
+					$capacidad = $model->camiones->capacidad;
+				}
+				if (isset($model->camiones->pesoOVolumen)) {
+					$pOv = $model->camiones->pesoOVolumen == "L" ? "lts." : "kgs.";
+				}
+			}
+			?>
+
+			var capacidad = '<?= $capacidad ?>';
+			var pOv = '<?= $pOv ?>';
+
+			$('#capacidad').val(capacidad);
+			$('#lblCapacidad').html(capacidad + " " + pOv);
+
+
 			$('.faenaT').each(function(e) {
 				var faenaId = $(this).val();
 				var camion_id = $("#RCamionArrendado_camionArrendado_id").val();
@@ -766,17 +816,12 @@ $cs->registerCoreScript('jquery');
 							array(
 								'disabled' => $model->validado == 1 ? 'disabled' : '',
 								'class' => 'camion',
-								'ajax' => array(
-									'type' => 'POST', //request type
-									'url' => CController::createUrl('//operativo/llenaCamionArr'),
-									'update' => '#capacidadTd',
-								)
 							)
 						);
 						?> <?php echo $form->error($model, 'camionArrendado_id'); ?>
 					</td>
-					<td style='font-size:0.9em;'><b>Capacidad:</b></td>
-					<td id="capacidadTd"></td>
+					<td style='font-size: 0.9em;'><b>Capacidad:</b><input type="hidden" id="capacidad"/></td>
+					<td id="lblCapacidad"></td>
 				</tr>
 				<tr>
 					<td width="30"><?php echo $form->labelEx($model, 'ordenCompra'); ?></td>

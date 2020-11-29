@@ -20,6 +20,7 @@ $this->menu=array(
 		'produccionMinima',
 		'horasMin',
 		'coeficienteDeTrato',
+		['name'=>'odometro_en_millas','value'=>$model->odometro_en_millas?"Sí":"No"],
 		'vigente',
 	),
 )); ?>

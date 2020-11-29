@@ -57,7 +57,7 @@ class CamionPropio extends CActiveRecord
 			array('pesoOVolumen', 'length', 'max'=>1),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, vigente,nombre,consumoPromedio, codigo, capacidad, pesoOVolumen', 'safe', 'on'=>'search'),
+			array('id, vigente,nombre,consumoPromedio, codigo, capacidad, pesoOVolumen,odometro_en_millas', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -102,6 +102,7 @@ class CamionPropio extends CActiveRecord
 			'produccionMinima' => 'Producción Mínima Diaria [$]',	
 			'horasMin' => 'Horas Mínimas Pactadas',	
 			'coeficienteDeTrato' => 'Coeficiente de Trato (% sobre consumo de combustible)',
+			'odometro_en_millas' => 'Odómetro en millas',
 		);
 	}
 
@@ -123,7 +124,8 @@ class CamionPropio extends CActiveRecord
 		$criteria->compare('consumoPromedio',$this->consumoPromedio,true);
 		$criteria->compare('pesoOVolumen',$this->pesoOVolumen,true);
 		$criteria->compare('vigente',$this->vigente,true);
-		
+		$criteria->compare('odometro_en_millas',$this->odometro_en_millas);
+
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
