@@ -184,7 +184,6 @@ class RCamionArrendadoController extends Controller
 			if($model->camiones->odometro_en_millas){
 				$model->kmInicial = number_format($model->kmInicial / Tools::FACTOR_KMS_MILLAS,2,'.','');
 				$model->kmFinal = number_format($model->kmFinal / Tools::FACTOR_KMS_MILLAS,2,'.','');
-				$model->kmGps = number_format($model->kmGps / Tools::FACTOR_KMS_MILLAS,2,'.','');
 			}
 		}
 		
@@ -216,7 +215,6 @@ class RCamionArrendadoController extends Controller
 					if($camion->odometro_en_millas){
 						$model->kmInicial = $model->kmInicial * Tools::FACTOR_KMS_MILLAS;
 						$model->kmFinal = $model->kmFinal * Tools::FACTOR_KMS_MILLAS;
-						$model->kmGps = $model->kmGps * Tools::FACTOR_KMS_MILLAS;
 					}
 				}
 

@@ -463,7 +463,6 @@ $cs->registerCoreScript('jquery');
 					if(datos.odometro_en_millas == 1){
 						$("label[for='RCamionPropio_kmInicial']").text("Odómetro Inicial (en Millas)");
 						$("label[for='RCamionPropio_kmFinal']").text("Odómetro Final (en Millas)");
-						$("label[for='RCamionPropio_kmGps']").text("Millas GPS");
 						$("label[for='RCamionPropio_kms']").text("Millas recorridas");
 					}
 					else{

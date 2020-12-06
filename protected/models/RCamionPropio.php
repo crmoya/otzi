@@ -110,7 +110,6 @@ class RCamionPropio extends CActiveRecord
 			if($this->camiones->odometro_en_millas == 1){
 				$enMillas = " (en Millas)";
 				$kmsOMillas = "Millas recorridas";
-				$distanciaGps = "Millas GPS";
 			}
 		}
 		return array(

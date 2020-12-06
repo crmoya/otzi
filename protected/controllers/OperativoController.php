@@ -176,7 +176,6 @@ class OperativoController extends Controller
 				if($camion->odometro_en_millas){
 					$model->kmInicial = $model->kmInicial * Tools::FACTOR_KMS_MILLAS;
 					$model->kmFinal = $model->kmFinal * Tools::FACTOR_KMS_MILLAS;
-					$model->kmGps = $model->kmGps * Tools::FACTOR_KMS_MILLAS;
 				}
 			}
 			
@@ -672,7 +671,6 @@ class OperativoController extends Controller
 				if($camion->odometro_en_millas){
 					$model->kmInicial = $model->kmInicial * Tools::FACTOR_KMS_MILLAS;
 					$model->kmFinal = $model->kmFinal * Tools::FACTOR_KMS_MILLAS;
-					$model->kmGps = $model->kmGps * Tools::FACTOR_KMS_MILLAS;
 				}
 			}
 
