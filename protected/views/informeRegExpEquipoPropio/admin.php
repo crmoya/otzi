@@ -202,6 +202,9 @@ function reinstallDatePicker(id, data) {
                 registros = registros.substring(0,registros.length-1);
                 window.location = "<?=CController::createUrl("//gerencia/adjuntos");?>?ids="+registros+"&tipo=EP";
             }
+            else{
+                alert('Para exportar los adjuntos, debe seleccionar al menos un registro.');
+            }
         });
     });
 </script>

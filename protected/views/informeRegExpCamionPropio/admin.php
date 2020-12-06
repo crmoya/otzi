@@ -214,6 +214,9 @@ $('.search-form form').submit(function(){
                 registros = registros.substring(0,registros.length-1);
                 window.location = "<?=CController::createUrl("//gerencia/adjuntos");?>?ids="+registros+"&tipo=CP";
             }
+            else{
+                alert('Para exportar los adjuntos, debe seleccionar al menos un registro.');
+            }
         });
     });
 </script>
