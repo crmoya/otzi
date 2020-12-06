@@ -491,7 +491,7 @@ class RCamionArrendadoController extends Controller
 			foreach ($compras as $compra) {
 				$compra->delete();
 			}
-			Expedicionportiempo::model()->deleteAllByAttributes(['rCamionArrendado_id'=> $id]);
+			Expedicionportiempoarr::model()->deleteAllByAttributes(['rcamionarrendado_id'=> $id]);
 			// we only allow deletion via POST request
 			$this->loadModel($id)->delete();
 

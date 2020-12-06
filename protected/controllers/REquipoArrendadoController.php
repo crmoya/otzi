@@ -448,6 +448,9 @@ class REquipoArrendadoController extends Controller
 			foreach ($compras as $compra) {
 				$compra->delete();
 			}
+
+			Expedicionportiempoeqarr::model()->deleteAllByAttributes(array('requipoarrendado_id' => $id));
+
 			// we only allow deletion via POST request
 			$this->loadModel($id)->delete();
 

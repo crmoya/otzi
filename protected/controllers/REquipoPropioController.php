@@ -449,8 +449,15 @@ class REquipoPropioController extends Controller
             foreach ($compras as $compra) {
                 $compra->delete();
             }
+
+            Expedicionportiempoeq::model()->deleteAllByAttributes(array('requipopropio_id' => $id));
+
+
             // we only allow deletion via POST request
             $this->loadModel($id)->delete();
+
+            
+
 
             // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
             if (!isset($_GET['ajax']))
