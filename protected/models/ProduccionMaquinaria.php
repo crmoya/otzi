@@ -61,54 +61,66 @@ class ProduccionMaquinaria extends CActiveRecord
 				$inicioAgrupacion = "	maquina,
 										'' as operador,
 										'' as centro_gestion,
-										sum(produccion) as produccion,
-										sum(repuestos) as repuestos,
-										sum(combustible) as combustible";
+										avg(pu) as pu,
+										sum(horas_fisicas) as horas_fisicas,
+										sum(horas_contratadas) as horas_contratadas,
+										sum(produccion_fisica) as produccion_fisica,
+										sum(produccion_contratada) as produccion_contratada";
 				$finAgrupacion = "		maquina";
 			}
 			if($this->agruparPor == "OPERADOR"){
 				$inicioAgrupacion = "	'' as maquina,
 										operador,
 										'' as centro_gestion,
-										sum(produccion) as produccion,
-										sum(repuestos) as repuestos,
-										sum(combustible) as combustible";
+										avg(pu) as pu,
+										sum(horas_fisicas) as horas_fisicas,
+										sum(horas_contratadas) as horas_contratadas,
+										sum(produccion_fisica) as produccion_fisica,
+										sum(produccion_contratada) as produccion_contratada";
 				$finAgrupacion = "		operador";
 			}
 			if($this->agruparPor == "CENTROGESTION"){
 				$inicioAgrupacion = "	'' as maquina,
 										'' as operador,
 										centro_gestion,
-										sum(produccion) as produccion,
-										sum(repuestos) as repuestos,
-										sum(combustible) as combustible";
+										avg(pu) as pu,
+										sum(horas_fisicas) as horas_fisicas,
+										sum(horas_contratadas) as horas_contratadas,
+										sum(produccion_fisica) as produccion_fisica,
+										sum(produccion_contratada) as produccion_contratada";
 				$finAgrupacion = "		centro_gestion";
 			}
 			if($this->agruparPor == "CENTROMAQUINA"){
 				$inicioAgrupacion = "	maquina,
 										'' as operador,
 										centro_gestion,
-										sum(produccion) as produccion,
-										sum(repuestos) as repuestos,
-										sum(combustible) as combustible";
+										avg(pu) as pu,
+										sum(horas_fisicas) as horas_fisicas,
+										sum(horas_contratadas) as horas_contratadas,
+										sum(produccion_fisica) as produccion_fisica,
+										sum(produccion_contratada) as produccion_contratada";
 				$finAgrupacion = "		maquina,centro_gestion";
 			}
 			if($this->agruparPor == "CENTROOPERADOR"){
 				$inicioAgrupacion = "	'' as maquina,
 										operador,
 										centro_gestion,
-										sum(produccion) as produccion,
-										sum(repuestos) as repuestos,
-										sum(combustible) as combustible";
+										avg(pu) as pu,
+										sum(horas_fisicas) as horas_fisicas,
+										sum(horas_contratadas) as horas_contratadas,
+										sum(produccion_fisica) as produccion_fisica,
+										sum(produccion_contratada) as produccion_contratada";
 				$finAgrupacion = "		operador,centro_gestion";
 			}
 			if($this->agruparPor == "OPERADORMAQUINA"){
 				$inicioAgrupacion = "	maquina,
 										operador,
 										'' as centro_gestion,
-										sum(produccion) as produccion,
-										sum(repuestos) as repuestos,
-										sum(combustible) as combustible";
+										avg(pu) as pu,
+										sum(horas_fisicas) as horas_fisicas,
+										sum(horas_contratadas) as horas_contratadas,
+										sum(produccion_fisica) as produccion_fisica,
+										sum(produccion_contratada) as produccion_contratada";
 				$finAgrupacion = "		maquina,operador";
 			}
 		}

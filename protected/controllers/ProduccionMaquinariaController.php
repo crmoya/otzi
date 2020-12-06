@@ -54,20 +54,22 @@ class ProduccionMaquinariaController extends Controller
 			['name'=>'Máquina o camión','width'=>'lg'],
 			['name'=>'Operador o Chofer','width'=>'lg'],
 			['name'=>'Centro Gestión','width'=>'lg'],
-			['name'=>'Producción','width'=>'md'],
-			['name'=>'Repuestos','width'=>'md'],
-			['name'=>'Combustible','width'=>'md'],
-			['name'=>'Resultados','width'=>'md'],
+			['name'=>'PU','width'=>'sm'],
+			['name'=>'Hrs. Físicas','width'=>'sm'],
+			['name'=>'Hrs. Contratadas','width'=>'sm'],
+			['name'=>'Producción Física','width'=>'md'],
+			['name'=>'Producción Contratada','width'=>'md'],
 		];
 
 		$extra_datos = [
 			['campo'=>'maquina','exportable','dots'=>"md"],
 			['campo'=>'operador','exportable','dots'=>'md'],
 			['campo'=>'centro_gestion','exportable','dots'=>'md'],
-			['campo'=>'produccion','exportable', 'format'=>'money','acumulado'=>'suma'],
-			['campo'=>'repuestos','exportable', 'format'=>'money','acumulado'=>'suma'],
-			['campo'=>'combustible','exportable', 'format'=>'money','acumulado'=>'suma'],
-			['campo'=>'resultados','exportable', 'format'=>'money','acumulado'=>'suma'],
+			['campo'=>'pu','exportable', 'format'=>'money','acumulado'=>'suma'],
+			['campo'=>'horas_fisicas','exportable', 'format'=>'number','acumulado'=>'suma'],
+			['campo'=>'horas_contratadas','exportable', 'format'=>'number','acumulado'=>'suma'],
+			['campo'=>'produccion_fisica','exportable', 'format'=>'money','acumulado'=>'suma'],
+			['campo'=>'produccion_contratada','exportable', 'format'=>'money','acumulado'=>'suma'],
 		];
 
 		$datos = ProduccionMaquinaria::model()->findAll($model->search());
