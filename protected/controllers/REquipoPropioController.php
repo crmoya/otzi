@@ -202,6 +202,9 @@ class REquipoPropioController extends Controller
      */
     public function actionUpdate($id)
     {
+
+        $connection=Yii::app()->db;
+		$transaction=$connection->beginTransaction();
         $model = $this->loadModel($id);
 
         $viajesT = Expedicionportiempoeq::model()->findAllByAttributes(array('requipopropio_id' => $id));
@@ -388,23 +391,24 @@ class REquipoPropioController extends Controller
                         }
 
                         if ($valid) {
+                            $transaction->commit();
                             Yii::app()->user->setFlash('equiposMessage', "Formulario Guardado con éxito.");
                             
                         } else {
                             Yii::app()->user->setFlash('equiposError', "Error. No se pudo actualizar el formulario, inténtelo de nuevo: " . $model->errors);
-                            
+                            $transaction->rollback();
                         }
                     } else {
                         Yii::app()->user->setFlash('equiposError', "Error. No se pudo actualizar el formulario, inténtelo de nuevo: " . $model->errors);
-                        
+                        $transaction->rollback();
                     }
                 } else {
                     Yii::app()->user->setFlash('equiposError', "Error. No se pudo actualizar el formulario, inténtelo de nuevo: " . $model->errors);
-                   
+                    $transaction->rollback();
                 }
             } else {
                 Yii::app()->user->setFlash('equiposError', "Existen errores en el formulario, por favor vuelva a intentarlo: " . $model->errors);
-                
+                $transaction->rollback();
             }
             $this->refresh();
         }

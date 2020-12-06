@@ -7,20 +7,21 @@
 			<tr>
 				<td style='font-size:0.9em;'><b>Fecha:</b></td>
 				<td><?php echo CHtml::encode($model->fecha);?></td>
-				<td style='font-size:0.9em;'><b>Reporte:</b></td>
-				<td><?php echo CHtml::encode($model->reporte);?></td>
-			</tr>
-			<tr>
 				<td style='font-size:0.9em;'><b>camión, camioneta, auto:</b></td>
 				<td><?php echo CHtml::encode($camion->nombre);?></td>
-				<td style='font-size:0.9em;'><b>Capacidad:</b></td>
-				<td ><?php echo CHtml::encode(number_format($camion->capacidad,2,',','.'));?></td>
+			</tr>
+			<tr>
+				<td style='font-size:0.9em;'><b>Chofer:</b></td>
+				<td><?php echo CHtml::encode($chofer->nombre);?></td>
+				<td style='font-size:0.9em;'><b>Reporte:</b></td>
+				<td><?php echo CHtml::encode($model->reporte);?></td>
+				
 			</tr>
 			<tr>
 			 	<td style='font-size:0.9em;'><b>Código camión, camioneta, auto:</b></td>
 				<td><?php echo CHtml::encode($camion->codigo);?></td>
-				<td style='font-size:0.9em;'><b>Chofer:</b></td>
-				<td><?php echo CHtml::encode($chofer->nombre);?></td>
+				<td style='font-size:0.9em;'><b>Capacidad:</b></td>
+				<td ><?php echo CHtml::encode(number_format($camion->capacidad,2,',','.'));?></td>
 			</tr>
 			<tr>
 			 	<td style='font-size:0.9em;'><b>Km Inicial:</b></td>
@@ -38,7 +39,7 @@
 	</fieldset>
 	
 	<fieldset>
-		<legend>Expediciones del Reporte</legend>
+		<legend>Expediciones con PU por volumen</legend>
 		<table cellspacing="0">
 			<tbody>
 				<?php foreach($viajes as $expedicion): ?>

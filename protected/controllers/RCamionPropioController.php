@@ -205,6 +205,10 @@ class RCamionPropioController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
+
+		$connection=Yii::app()->db;
+		$transaction=$connection->beginTransaction();
+
 		$model = $this->loadModel($id);
 		$model->horas = number_format($model->horometro_final - $model->horometro_inicial,2,".","");
 
@@ -428,23 +432,24 @@ class RCamionPropioController extends Controller
 							}
 						}
 						if ($valid) {
+							$transaction->commit();
 							Yii::app()->user->setFlash('camionesMessage', "Formulario Guardado con éxito.");
 							
 						} else {
 							Yii::app()->user->setFlash('camionesError', "Error. No se pudo actualizar el formulario, inténtelo de nuevo. " . $model->errors);
-							
+							$transaction->rollback();
 						}
 					} else {
 						Yii::app()->user->setFlash('camionesError', "Error. No se pudo actualizar el formulario, inténtelo de nuevo. " . $model->errors);
-						
+						$transaction->rollback();
 					}
 				} else {
 					Yii::app()->user->setFlash('camionesError', "Error. No se pudo actualizar el formulario, inténtelo de nuevo. " . $model->errors);
-					
+					$transaction->rollback();
 				}
 			} else {
 				Yii::app()->user->setFlash('camionesError', "Existen errores en el formulario, por favor vuelva a intentarlo. " . $model->errors);
-				
+				$transaction->rollback();
 			}
 			$this->refresh();
 		}
