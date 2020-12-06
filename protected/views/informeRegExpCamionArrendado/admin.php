@@ -82,6 +82,7 @@ $('.search-form form').submit(function(){
         'camion',
         ['name' => 'kmRecorridos', 'value' => 'number_format($data->kmRecorridos,2,",",".")', 'htmlOptions' => ['style' => 'text-align:right;']],
         ['name' => 'kmGps', 'value' => 'number_format($data->kmGps,2,",",".")', 'htmlOptions' => ['style' => 'text-align:right;']],
+        ['name' => 'horas', 'value' => 'number_format($data->horas,2,",",".")', 'htmlOptions' => ['style' => 'text-align:right;']],
         ['name' => 'combustible', 'value' => 'number_format($data->combustible,2,",",".")', 'htmlOptions' => ['style' => 'text-align:right;']],
         ['name' => 'repuesto', 'value' => '"$".number_format($data->repuesto,0,",",".")', 'htmlOptions' => ['style' => 'text-align:right;']],
         ['name' => 'produccionReal', 'value' => '"$".number_format($data->produccionReal,0,",",".")', 'htmlOptions' => ['style' => 'text-align:right;']],

@@ -312,4 +312,9 @@ class Informeregexpcamionarrendado extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+	
+	public function getHoras(){
+		return $this->registro->horometro_final - $this->registro->horometro_inicial;
+	}
 }

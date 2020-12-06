@@ -33,7 +33,7 @@ class InformeRegExpCamionPropioController extends Controller
 		$data = InformeRegExpCamionPropio::model()->findAll();
 		
 		$this->toExcel($data,
-			array('fecha','reporte','observaciones','observaciones_obra','camion','codigo','kmRecorridos','kmGps','combustible','repuesto','produccionReal','horasPanne','panne'),
+			array('fecha','reporte','observaciones','observaciones_obra','camion','codigo','kmRecorridos','kmGps','horas','combustible','repuesto','produccionReal','horasPanne','panne'),
 			'Expediciones Camión Propio',
 			array()
 		);

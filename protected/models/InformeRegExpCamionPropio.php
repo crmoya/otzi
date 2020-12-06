@@ -313,4 +313,8 @@ class InformeRegExpCamionPropio extends CActiveRecord
 	{
 		return Tools::backFecha($data->fecha);
 	}
+
+	public function getHoras(){
+		return $this->registro->horometro_final - $this->registro->horometro_inicial;
+	}
 }

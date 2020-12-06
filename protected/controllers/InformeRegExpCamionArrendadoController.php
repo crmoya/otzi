@@ -35,7 +35,7 @@ class InformeregexpcamionarrendadoController extends Controller
 
 		$this->toExcel(
 			$data,
-			array('fecha', 'reporte', 'observaciones', 'observaciones_obra', 'camion', 'kmRecorridos', 'kmGps', 'combustible', 'repuesto', 'produccionReal', 'horasPanne', 'panne'),
+			array('fecha', 'reporte', 'observaciones', 'observaciones_obra', 'camion', 'kmRecorridos', 'kmGps', 'horas', 'combustible', 'repuesto', 'produccionReal', 'horasPanne', 'panne'),
 			'Expediciones Camión Arrendado',
 			array()
 		);
