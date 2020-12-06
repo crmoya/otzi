@@ -500,6 +500,7 @@ class RCamionPropioController extends Controller
 			foreach ($compras as $compra) {
 				$compra->delete();
 			}
+			Expedicionportiempo::model()->deleteAllByAttributes(['rCamionPropio_id'=> $id]);
 			// we only allow deletion via POST request
 			$this->loadModel($id)->delete();
 
