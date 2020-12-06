@@ -476,6 +476,7 @@ class RCamionArrendadoController extends Controller
 		$model = $this->loadModel($id);
 
 		$viajes = ViajeCamionArrendado::model()->findAllByAttributes(array('rCamionArrendado_id' => $id));
+		$viajesT = Expedicionportiempoarr::model()->findAllByAttributes(array('rcamionarrendado_id' => $id));
 		$cargas = CargaCombCamionArrendado::model()->findAllByAttributes(array('rCamionArrendado_id' => $id));
 		$compras = CompraRepuestoCamionArrendado::model()->findAllByAttributes(array('rCamionArrendado_id' => $id));
 		$model->fecha = Tools::backFecha($model->fecha);
@@ -490,6 +491,7 @@ class RCamionArrendadoController extends Controller
 		$this->render('view', array(
 			'model' => $model,
 			'viajes' => $viajes,
+			'viajesT' => $viajesT,
 			'cargas' => $cargas,
 			'compras' => $compras,
 			'camion' => $camion,

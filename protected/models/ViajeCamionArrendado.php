@@ -105,4 +105,11 @@ class ViajeCamionArrendado extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+	public function getPu(){
+		if($this->totalTransportado != 0 && $this->kmRecorridos != 0){
+			return $this->total / ($this->totalTransportado * $this->kmRecorridos); 
+		}
+		return 0;
+	}
 }
