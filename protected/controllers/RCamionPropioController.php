@@ -229,6 +229,7 @@ class RCamionPropioController extends Controller
 		// $this->performAjaxValidation($model);
 
 		if (isset($_POST['RCamionPropio'])) {
+			$errores = "";
 			$model->attributes = $_POST['RCamionPropio'];
 			$model->observaciones_obra = $_POST['RCamionPropio']['observaciones_obra'];
 			if ($model->validado == 2) {
@@ -325,6 +326,7 @@ class RCamionPropioController extends Controller
 							$compra->delete();
 						}
 					}
+					
 					if ($valid) {
 						if (isset($_POST['ViajeCamionPropio']) && $model->validado == 0) {
 							foreach ($_POST['ViajeCamionPropio'] as $i => $viajeArr) {
@@ -342,6 +344,11 @@ class RCamionPropioController extends Controller
 								if ($valid) {
 									$viaje->save();
 								}
+								else{
+									foreach($viaje->errors as $error){
+										$errores .= $error[0];
+									}
+								}
 							}
 						}
 
@@ -356,6 +363,11 @@ class RCamionPropioController extends Controller
 								$valid = $valid && $viajeT->validate();
 								if ($valid) {
 									$viajeT->save();
+								}
+								else{
+									foreach($viajeT->errors as $error){
+										$errores .= $error[0];
+									}
 								}
 							}
 						}
@@ -394,6 +406,11 @@ class RCamionPropioController extends Controller
 								if ($valid) {
 									$carga->save();
 								}
+								else{
+									foreach($carga->errors as $error){
+										$errores .= $error[0];
+									}
+								}
 							}
 						}
 						if (isset($_POST['CompraRepuestoCamionPropio'])) {
@@ -429,6 +446,11 @@ class RCamionPropioController extends Controller
 								if ($valid) {
 									$compra->save();
 								}
+								else{
+									foreach($compra->errors as $error){
+										$errores .= $error[0];
+									}
+								}
 							}
 						}
 						if ($valid) {
@@ -436,19 +458,19 @@ class RCamionPropioController extends Controller
 							Yii::app()->user->setFlash('camionesMessage', "Formulario Guardado con éxito.");
 							
 						} else {
-							Yii::app()->user->setFlash('camionesError', "Error. No se pudo actualizar el formulario, inténtelo de nuevo. " . $model->errors);
+							Yii::app()->user->setFlash('camionesError', "Error. No se pudo actualizar el formulario, inténtelo de nuevo. " . $errores);
 							$transaction->rollback();
 						}
 					} else {
-						Yii::app()->user->setFlash('camionesError', "Error. No se pudo actualizar el formulario, inténtelo de nuevo. " . $model->errors);
+						Yii::app()->user->setFlash('camionesError', "Error. No se pudo actualizar el formulario, inténtelo de nuevo. " );
 						$transaction->rollback();
 					}
 				} else {
-					Yii::app()->user->setFlash('camionesError', "Error. No se pudo actualizar el formulario, inténtelo de nuevo. " . $model->errors);
+					Yii::app()->user->setFlash('camionesError', "Error. No se pudo actualizar el formulario, inténtelo de nuevo. " );
 					$transaction->rollback();
 				}
 			} else {
-				Yii::app()->user->setFlash('camionesError', "Existen errores en el formulario, por favor vuelva a intentarlo. " . $model->errors);
+				Yii::app()->user->setFlash('camionesError', "Existen errores en el formulario, por favor vuelva a intentarlo. ");
 				$transaction->rollback();
 			}
 			$this->refresh();

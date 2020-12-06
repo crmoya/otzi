@@ -217,6 +217,7 @@ class REquipoPropioController extends Controller
         // $this->performAjaxValidation($model);
 
         if (isset($_POST['REquipoPropio'])) {
+            $errores = "";
             $model->attributes = $_POST['REquipoPropio'];
             $model->observaciones_obra = $_POST['REquipoPropio']['observaciones_obra'];
             if ($model->validado == 2) {
@@ -309,6 +310,11 @@ class REquipoPropioController extends Controller
 								$valid = $valid && $viajeT->validate();
 								if ($valid) {
                                     $viajeT->save();
+                                }
+                                else{
+									foreach($viajeT->errors as $error){
+										$errores .= $error[0];
+									}
 								}
 							}
 						}
@@ -353,6 +359,11 @@ class REquipoPropioController extends Controller
                                 if ($valid) {
                                     $carga->save();
                                 }
+                                else{
+									foreach($carga->errors as $error){
+										$errores .= $error[0];
+									}
+								}
                             }
                         }
                         if (isset($_POST['CompraRepuestoEquipoPropio'])) {
@@ -387,6 +398,11 @@ class REquipoPropioController extends Controller
                                 if ($valid) {
                                     $compra->save();
                                 }
+                                else{
+									foreach($compra->errors as $error){
+										$errores .= $error[0];
+									}
+								}
                             }
                         }
 
@@ -395,19 +411,19 @@ class REquipoPropioController extends Controller
                             Yii::app()->user->setFlash('equiposMessage', "Formulario Guardado con éxito.");
                             
                         } else {
-                            Yii::app()->user->setFlash('equiposError', "Error. No se pudo actualizar el formulario, inténtelo de nuevo: " . $model->errors);
+                            Yii::app()->user->setFlash('camionesError', "Error. No se pudo actualizar el formulario, inténtelo de nuevo. " . $errores);
                             $transaction->rollback();
                         }
                     } else {
-                        Yii::app()->user->setFlash('equiposError', "Error. No se pudo actualizar el formulario, inténtelo de nuevo: " . $model->errors);
+                        Yii::app()->user->setFlash('equiposError', "Error. No se pudo actualizar el formulario, inténtelo de nuevo: " );
                         $transaction->rollback();
                     }
                 } else {
-                    Yii::app()->user->setFlash('equiposError', "Error. No se pudo actualizar el formulario, inténtelo de nuevo: " . $model->errors);
+                    Yii::app()->user->setFlash('equiposError', "Error. No se pudo actualizar el formulario, inténtelo de nuevo: " );
                     $transaction->rollback();
                 }
             } else {
-                Yii::app()->user->setFlash('equiposError', "Existen errores en el formulario, por favor vuelva a intentarlo: " . $model->errors);
+                Yii::app()->user->setFlash('equiposError', "Existen errores en el formulario, por favor vuelva a intentarlo: " );
                 $transaction->rollback();
             }
             $this->refresh();
