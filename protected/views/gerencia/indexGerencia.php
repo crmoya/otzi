@@ -1,7 +1,7 @@
 <?php $this->pageTitle=Yii::app()->name; ?>
 Bienvenido <?php echo CHtml::encode($nombre);?>, por favor seleccione una de las siguientes operaciones para comenzar:<br/><br/>
 <ul>
- <li><?php echo CHtml::link("Informe de Producción de Maquinaria",CController::createUrl('//gerencia/produccionMaquinaria')); ?></li>
+ <li><?php echo CHtml::link("Informe de Producción de Maquinaria",CController::createUrl('//produccionMaquinaria/admin')); ?></li>
  <li><?php echo CHtml::link("Informe de Producción de camiones, camionetas, autos",CController::createUrl('//gerencia/produccionCamiones')); ?></li>
 </ul>
 <ul>
