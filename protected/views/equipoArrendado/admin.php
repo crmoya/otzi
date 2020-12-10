@@ -40,6 +40,7 @@ $('.search-form form').submit(function(){
 	'columns'=>array(
 		'id',
 		'nombre',
+		'horasMin',
 		'consumoEsperado',
 		'coeficienteDeTrato',
 		array('name'=>'propietario', 'value'=>'$data->propietarios->nombre'),

@@ -15,6 +15,7 @@ $this->menu=array(
 	'attributes'=>array(
 		'id',
 		'nombre',
+		'horasMin',
 		'propietarios.nombre',
 		'valorHora',
 		'consumoEsperado',

@@ -32,6 +32,12 @@ $cs->registerCoreScript('jquery');
 	</div>
 	
 	<div class="row">
+		<?php echo $form->labelEx($model,'horasMin'); ?>
+		<?php echo $form->textField($model,'horasMin',array('size'=>11,'maxlength'=>10,'class'=>'fixed')); ?>
+		<?php echo $form->error($model,'horasMin'); ?>
+	</div>
+	
+	<div class="row">
 		<?php echo $form->labelEx($model,'consumoEsperado'); ?>
 		<?php echo $form->textField($model,'consumoEsperado',array('size'=>10,'maxlength'=>10,'class'=>'fixed')); ?>
 		<?php echo $form->error($model,'consumoEsperado'); ?>

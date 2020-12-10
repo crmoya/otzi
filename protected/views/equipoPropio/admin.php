@@ -41,6 +41,7 @@ $('.search-form form').submit(function(){
 		'id',
 		'nombre',
 		'codigo',
+		'horasMin',
 		'consumoEsperado',
 		'coeficienteDeTrato',
 		'valorHora',
