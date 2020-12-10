@@ -93,8 +93,8 @@ class UnidadfaenaEquipo extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'equipoarrendado' => array(self::BELONGS_TO, 'Equipoarrendado', 'equipoarrendado_id'),
-			'equipopropio' => array(self::BELONGS_TO, 'Equipopropio', 'equipopropio_id'),
+			'equipoarrendado' => array(self::BELONGS_TO, 'EquipoArrendado', 'equipoarrendado_id'),
+			'equipopropio' => array(self::BELONGS_TO, 'EquipoPropio', 'equipopropio_id'),
 			'faena' => array(self::BELONGS_TO, 'Faena', 'faena_id'),
 		);
 	}
