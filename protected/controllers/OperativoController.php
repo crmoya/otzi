@@ -155,6 +155,7 @@ class OperativoController extends Controller
 		$model = new RCamionPropio();
 		$model->horas = number_format($model->horometro_final - $model->horometro_inicial,2,".","");
 		if (isset($_POST['RCamionPropio'])) {
+			
 			$connection=Yii::app()->db;
 			$connection->active=true;
 			$transaction=$connection->beginTransaction();
@@ -174,8 +175,8 @@ class OperativoController extends Controller
 			$camion = CamionPropio::model()->findByPk($_POST['RCamionPropio']['camionPropio_id']);
 			if(isset($camion)){
 				if($camion->odometro_en_millas){
-					$model->kmInicial = $model->kmInicial * Tools::FACTOR_KMS_MILLAS;
-					$model->kmFinal = $model->kmFinal * Tools::FACTOR_KMS_MILLAS;
+					$model->kmInicial = number_format($model->kmInicial * Tools::FACTOR_KMS_MILLAS,2,".","");
+					$model->kmFinal = number_format($model->kmFinal * Tools::FACTOR_KMS_MILLAS,2,".","");
 				}
 			}
 			
@@ -326,6 +327,8 @@ class OperativoController extends Controller
 			}
 			else{
 				$transaction->rollback();
+				echo "<pre>";
+				print_r($model);die;
 				Yii::app()->user->setFlash('camionesError', "Error. Datos del formulario erróneos: " . CHtml::errorSummary($model));
 			}
 			$connection->active=false;
@@ -669,8 +672,8 @@ class OperativoController extends Controller
 			$camion = CamionArrendado::model()->findByPk($_POST['RCamionArrendado']['camionArrendado_id']);
 			if(isset($camion)){
 				if($camion->odometro_en_millas){
-					$model->kmInicial = $model->kmInicial * Tools::FACTOR_KMS_MILLAS;
-					$model->kmFinal = $model->kmFinal * Tools::FACTOR_KMS_MILLAS;
+					$model->kmInicial = number_format($model->kmInicial * Tools::FACTOR_KMS_MILLAS,2,".","");
+					$model->kmFinal = number_format($model->kmFinal * Tools::FACTOR_KMS_MILLAS,2,".","");
 				}
 			}
 

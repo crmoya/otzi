@@ -250,8 +250,8 @@ class RCamionPropioController extends Controller
 				$camion = CamionPropio::model()->findByPk($_POST['RCamionPropio']['camionPropio_id']);
 				if(isset($camion)){
 					if($camion->odometro_en_millas){
-						$model->kmInicial = $model->kmInicial * Tools::FACTOR_KMS_MILLAS;
-						$model->kmFinal = $model->kmFinal * Tools::FACTOR_KMS_MILLAS;
+						$model->kmInicial = number_format($model->kmInicial * Tools::FACTOR_KMS_MILLAS,2,".","");
+						$model->kmFinal = number_format($model->kmFinal * Tools::FACTOR_KMS_MILLAS,2,".","");
 					}
 				}
 

@@ -217,8 +217,8 @@ class RCamionArrendadoController extends Controller
 				$camion = CamionArrendado::model()->findByPk($_POST['RCamionArrendado']['camionArrendado_id']);
 				if(isset($camion)){
 					if($camion->odometro_en_millas){
-						$model->kmInicial = $model->kmInicial * Tools::FACTOR_KMS_MILLAS;
-						$model->kmFinal = $model->kmFinal * Tools::FACTOR_KMS_MILLAS;
+						$model->kmInicial = number_format($model->kmInicial * Tools::FACTOR_KMS_MILLAS,2,".","");
+						$model->kmFinal = number_format($model->kmFinal * Tools::FACTOR_KMS_MILLAS,2,".","");
 					}
 				}
 
