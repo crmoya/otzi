@@ -12,8 +12,8 @@
  * @property integer $equipopropio_id
  *
  * The followings are the available model relations:
- * @property Equipoarrendado $equipoarrendado
- * @property Equipopropio $equipopropio
+ * @property EquipoArrendado $equipoarrendado
+ * @property EquipoPropio $equipopropio
  * @property Faena $faena
  */
 class UnidadfaenaEquipo extends CActiveRecord
