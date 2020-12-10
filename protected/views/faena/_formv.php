@@ -275,10 +275,10 @@ $cs->registerCoreScript('jquery');
 											</td>
 											<td>
 												<?php 
-												echo CHtml::dropDownList("UnidadfaenaEquipo[".$i."][equipopropio_id]",'',CHtml::listData(EquipoPropio::model()->list($ue->equipopropio_id),'id','nombre'),array('style'=>'width:150px;','empty'=>'Seleccione Equipo Propio','class'=>'equipos_propios'.$i, 'options'=>[$ue->equipopropio_id=>['selected'=>true]]));  
+												echo CHtml::dropDownList("UnidadfaenaEquipo[".$i."][equipopropio_id]",'',CHtml::listData(EquipoPropio::model()->list($ue->equipopropio_id),'id','nombre'),array('style'=>'width:150px;','empty'=>'Seleccione Equipo Propio','class'=>'select_equipo_propio equipos_propios'.$i,'i'=>$i, 'options'=>[$ue->equipopropio_id=>['selected'=>true]]));  
 												?>
 												<?php 
-												echo CHtml::dropDownList("UnidadfaenaEquipo[".$i."][equipoarrendado_id]",'',CHtml::listData(EquipoArrendado::model()->list($ue->equipoarrendado_id), 'id', 'nombre'),array('style'=>'width:150px;','empty'=>'Seleccione Equipo Arrendado','class'=>'equipos_arrendados'.$i, 'options'=>[$ue->equipoarrendado_id=>['selected'=>true]]));  
+												echo CHtml::dropDownList("UnidadfaenaEquipo[".$i."][equipoarrendado_id]",'',CHtml::listData(EquipoArrendado::model()->list($ue->equipoarrendado_id), 'id', 'nombre'),array('style'=>'width:150px;','empty'=>'Seleccione Equipo Arrendado','class'=>'select_equipo_arrendado equipos_arrendados'.$i, 'i'=>$i, 'options'=>[$ue->equipoarrendado_id=>['selected'=>true]]));  
 												?>
 											</td>
 										</tr>
@@ -302,8 +302,13 @@ $cs->registerCoreScript('jquery');
 									</td>
 									<td>
 										<?php 
-										echo $form->textField($ue,"[$i]horas_minimas",array('style'=>'width:100px','class'=>'fixed')); 
+										$equipo = EquipoPropio::model()->findByPk($ue->equipopropio_id);
+										if(!isset($equipo)){
+											$equipo = EquipoArrendado::model()->findByPk($ue->equipoarrendado_id);
+										}
+										echo $form->textField($ue,"[$i]horas_minimas",array('style'=>'width:100px','class'=>'fixed unidad horas_minimas','id'=>'horas'.$i,'horas_equipo' => $equipo->horasMin, 'i'=>$i)); 
 										?>
+										<div style="color:red" id="errorHoras<?=$i?>"></div>
 									</td>
 									<td>
 										<input type="hidden" class="rowIndex" value="<?php echo $i;?>" />
@@ -330,10 +335,10 @@ $cs->registerCoreScript('jquery');
 															</td>
 															<td>
 																<?php 
-																echo CHtml::dropDownList("UnidadfaenaEquipo[{0}][equipopropio_id]",'',CHtml::listData(EquipoPropio::model()->findAllByAttributes(['vigente'=>'SÍ'],['order'=>'nombre']), 'id', 'nombre'),array('style'=>'width:150px;display:none;','empty'=>'Seleccione Equipo Propio','class'=>'equipos_propios{0}'));  
+																echo CHtml::dropDownList("UnidadfaenaEquipo[{0}][equipopropio_id]",'',CHtml::listData(EquipoPropio::model()->findAllByAttributes(['vigente'=>'SÍ'],['order'=>'nombre']), 'id', 'nombre'),array('style'=>'width:150px;display:none;','empty'=>'Seleccione Equipo Propio','class'=>'equipos_propios{0} select_equipo_propio','i'=>"{0}"));  
 																?>
 																<?php 
-																echo CHtml::dropDownList("UnidadfaenaEquipo[{0}][equipoarrendado_id]",'',CHtml::listData(EquipoArrendado::model()->findAllByAttributes(['vigente'=>'SÍ'],['order'=>'nombre']), 'id', 'nombre'),array('style'=>'width:150px;display:none;','empty'=>'Seleccione Equipo Arrendado','class'=>'equipos_arrendados{0}'));  
+																echo CHtml::dropDownList("UnidadfaenaEquipo[{0}][equipoarrendado_id]",'',CHtml::listData(EquipoArrendado::model()->findAllByAttributes(['vigente'=>'SÍ'],['order'=>'nombre']), 'id', 'nombre'),array('style'=>'width:150px;display:none;','empty'=>'Seleccione Equipo Arrendado','class'=>'equipos_arrendados{0} select_equipo_arrendado','i'=>"{0}"));  
 																?>
 															</td>
 														</tr>
@@ -351,6 +356,10 @@ $cs->registerCoreScript('jquery');
 												</td>
 												<td width="100px">
 													<?php echo CHtml::textField('UnidadfaenaEquipo[{0}][pu]','',array('style'=>'width:100px','class'=>'fixed unidad')); ?>
+												</td>
+												<td width="100px">
+													<?php echo CHtml::textField('UnidadfaenaEquipo[{0}][horas_minimas]','',array('style'=>'width:100px','class'=>'fixed unidad horas_minimas','id'=>'horas{0}','horas_equipo' => '0')); ?>
+													<div style="color:red" id="errorHoras{0}"></div>
 												</td>
 												<td>
 													<input type="hidden" class="rowIndex" value="{0}" />
@@ -378,6 +387,65 @@ $cs->registerCoreScript('jquery');
 
 <script>
 $(document).ready(function(e){
+
+	$(document).on('change','.select_equipo_propio',function(e){
+		var equipo_id = $(this).val();
+		var i = $(this).attr('i');
+		$.ajax({
+				type: "POST",
+				url: "<?php echo Yii::app()->createUrl('//equipoPropio/horas/'); ?>",
+				data: {
+					id: equipo_id
+				}
+			}).done(function(msg) {
+				console.log(msg);
+				$("#horas"+i).attr('horas_equipo',msg);
+			});
+	});
+
+	$(document).on('change','.select_equipo_arrendado',function(e){
+		var equipo_id = $(this).val();
+		var i = $(this).attr('i');
+		$.ajax({
+				type: "POST",
+				url: "<?php echo Yii::app()->createUrl('//equipoArrendado/horas/'); ?>",
+				data: {
+					id: equipo_id
+				}
+			}).done(function(msg) {
+				console.log(msg);
+				$("#horas"+i).attr('horas_equipo',msg);
+			});
+	});
+
+	$(document).on('focusout','.horas_minimas',function(e){
+		var i = $(this).attr('i');
+		$("#errorHoras"+i).html("");
+		var horas_equipo = 0;
+		var horas = 0;
+		try{
+			console.log($(this).attr('horas_equipo'));
+			horas_equipo = parseFloat($(this).attr('horas_equipo'));
+		}catch($e){
+			horas_equipo = 0;
+		}
+		try{
+			horas = parseFloat($(this).val());
+			
+		}catch($ex){
+			$(this).css('background','pink');
+			$(this).val("0.00");
+		}
+		if(horas < horas_equipo){
+			$(this).css('background','pink');
+			$("#errorHoras"+i).html("Horas Mínimas no puede ser menor a " + horas_equipo); 
+		}
+		else{
+			$(this).css('background','white');
+			$("#errorHoras"+i).html("");
+		}
+		
+	});
 	$(document).on('click','.tipo_camion',function(e){
 		var i = $(this).attr('i');
 		$('.camiones_propios'+i).val("");
@@ -472,7 +540,7 @@ $(document).ready(function(e){
 			$(this).css('background','white');
 			$("#tipo_equipopropio"+i).parent().css('background','#EBF3FD');
 			$("#tipo_equipoarrendado"+i).parent().css('background','#EBF3FD');
-			if($("#tipo_equipopropio"+i).attr('checked') == undefined && $("#tipo_camionarrendado"+i).attr('checked') == undefined){
+			if($("#tipo_equipopropio"+i).attr('checked') == undefined && $("#tipo_equipoarrendado"+i).attr('checked') == undefined){
 				$("#tipo_equipopropio"+i).parent().css('background','pink');
 				$("#tipo_equipoarrendado"+i).parent().css('background','pink');
 				ok = false;

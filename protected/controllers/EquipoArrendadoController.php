@@ -48,7 +48,7 @@ class EquipoArrendadoController extends Controller
 	{
 		return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('index','view','create','update','admin','delete','exportar'),
+				'actions'=>array('index','view','create','update','admin','delete','exportar','horas'),
 				'roles'=>array('administrador'),
 			),
 			array('allow',  // allow all users to perform 'index' and 'view' actions
@@ -197,5 +197,12 @@ class EquipoArrendadoController extends Controller
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+
+	
+	public function actionHoras(){
+		$id = $_POST['id'];
+		$equipo = $this->loadModel($id);
+		echo $equipo->horasMin;
 	}
 }

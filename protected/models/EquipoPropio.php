@@ -117,8 +117,7 @@ class EquipoPropio extends CActiveRecord
 		$rows=$dataReader->readAll();
 		$connection->active=false;
 		$command = null;
-		$data[0]=array('nombre'=>"Seleccione un equipo propio",'id'=>'');
-		$i=1;
+		$i=0;
 		$selected_exists = false;
 		foreach($rows as $row){
 			$data[$i]=array('id'=>$row['id'],'nombre'=>$row['codigo']." / ".$row['nombre']);
