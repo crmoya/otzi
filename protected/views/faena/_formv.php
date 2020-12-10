@@ -250,6 +250,7 @@ $cs->registerCoreScript('jquery');
 									<td>Equipo</td>									
 									<td>Unidad</td>
 									<td>PU</td>
+									<td>Hrs.Mínimas</td>
 									<td>&nbsp</td>
 								</tr>
 							<?php 
@@ -297,6 +298,11 @@ $cs->registerCoreScript('jquery');
 									<td>
 										<?php 
 										echo $form->textField($ue,"[$i]pu",array('style'=>'width:100px','class'=>'fixed')); 
+										?>
+									</td>
+									<td>
+										<?php 
+										echo $form->textField($ue,"[$i]horas_minimas",array('style'=>'width:100px','class'=>'fixed')); 
 										?>
 									</td>
 									<td>

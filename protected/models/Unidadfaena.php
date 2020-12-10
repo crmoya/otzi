@@ -23,7 +23,6 @@ class Unidadfaena extends CActiveRecord
 
 	public const UNIDAD_HORAS = 1;
 	public const UNIDAD_DIAS = 2;
-	public const UNIDAD_MESES = 3;
 
 
 	/**
@@ -40,7 +39,6 @@ class Unidadfaena extends CActiveRecord
 		return [
 			['id' =>Unidadfaena::UNIDAD_HORAS, 'nombre'=>'HORAS'], 
 			['id' =>UnidadFaena::UNIDAD_DIAS, 'nombre'=>'DÍAS'], 
-			['id' =>Unidadfaena::UNIDAD_MESES, 'nombre'=>'MESES'], 
 		];
 	}
 
@@ -48,7 +46,6 @@ class Unidadfaena extends CActiveRecord
 		$unidades = [
 			1=>'HORAS', 
 			2=>'DÍAS', 
-			3=>'MESES', 
 		];
 		if(isset($unidades[$unidad])){
 			return $unidades[$unidad];

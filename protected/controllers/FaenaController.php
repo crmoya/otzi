@@ -74,16 +74,18 @@ class FaenaController extends Controller {
 		foreach($use as $u){
 			$objPHPExcel->setActiveSheetIndex(0)
 					->setCellValue('A'.$i, isset($u->equipopropio)?$u->equipopropio->nombre." (propio)":$u->equipoarrendado->nombre." (arrendado)")
-					->setCellValue('B'.$i, Unidadfaena::getUnidad($u->unidad))
+					->setCellValue('B'.$i, UnidadfaenaEquipo::getUnidad($u->unidad))
 					->setCellValue('C'.$i, $u->pu)
-					->setCellValue('D'.$i, $u->observaciones);
+					->setCellValue('D'.$i, $u->horas_minimas)
+					->setCellValue('E'.$i, $u->observaciones);
 			$i++;
 		}
 		$objPHPExcel->setActiveSheetIndex(0)
 		->setCellValue('A'.$iTitulos2,'Equipo')
 		->setCellValue('B'.$iTitulos2,'Unidad')
 		->setCellValue('C'.$iTitulos2, 'PU')
-		->setCellValue('D'.$iTitulos2, 'Observaciones');
+		->setCellValue('D'.$iTitulos2, 'Horas Mínimas')
+		->setCellValue('E'.$iTitulos2, 'Observaciones');
 
 		$sheet = $objPHPExcel->getActiveSheet();
 		$styleArray = array('font' => array('bold' => true));
@@ -104,6 +106,7 @@ class FaenaController extends Controller {
 		$sheet->getStyle('B'.$iTitulos2)->applyFromArray($styleArray);
 		$sheet->getStyle('C'.$iTitulos2)->applyFromArray($styleArray);
 		$sheet->getStyle('D'.$iTitulos2)->applyFromArray($styleArray);
+		$sheet->getStyle('E'.$iTitulos2)->applyFromArray($styleArray);
 		
 		// Rename sheet
 		$objPHPExcel->getActiveSheet()->setTitle('Informe');
@@ -453,6 +456,7 @@ class FaenaController extends Controller {
 								$ue->equipopropio_id = null;
 							}
 							$ue->pu = $upe['pu'];
+							$ue->horas_minimas = $upe['horas_minimas'];
 							$ue->observaciones = $upe['observaciones'];
 							if($ue->validate()){
 								$ue->save();

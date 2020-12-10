@@ -15,8 +15,6 @@ $this->menu=array(
 		'id',
 		'nombre',
 		'codigo',
-		'horasMin',
-		'precioUnitario',
 		'valorHora',
 		'consumoEsperado',
 		'coeficienteDeTrato',

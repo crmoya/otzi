@@ -32,18 +32,6 @@ $cs->registerCoreScript('jquery');
 	</div>
 	
 	<div class="row">
-		<?php echo $form->labelEx($model,'horasMin'); ?>
-		<?php echo $form->textField($model,'horasMin',array('size'=>11,'maxlength'=>11,'class'=>"fixed")); ?>
-		<?php echo $form->error($model,'horasMin'); ?>
-	</div>
-	
-	<div class="row">
-		<?php echo $form->labelEx($model,'precioUnitario'); ?>
-		<?php echo $form->textField($model,'precioUnitario',array('size'=>11,'maxlength'=>11)); ?>
-		<?php echo $form->error($model,'precioUnitario'); ?>
-	</div>
-	
-	<div class="row">
 		<?php echo $form->labelEx($model,'consumoEsperado'); ?>
 		<?php echo $form->textField($model,'consumoEsperado',array('size'=>10,'maxlength'=>10,'class'=>"fixed")); ?>
 		<?php echo $form->error($model,'consumoEsperado'); ?>

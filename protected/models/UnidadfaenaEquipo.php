@@ -21,7 +21,6 @@ class UnidadfaenaEquipo extends CActiveRecord
 
 	public const UNIDAD_HORAS = 1;
 	public const UNIDAD_DIAS = 2;
-	public const UNIDAD_MESES = 3;
 
 	/**
 	 * @return string the associated database table name
@@ -37,7 +36,6 @@ class UnidadfaenaEquipo extends CActiveRecord
 		return [
 			['id' =>UnidadfaenaEquipo::UNIDAD_HORAS, 'nombre'=>'HORAS'], 
 			['id' =>UnidadfaenaEquipo::UNIDAD_DIAS, 'nombre'=>'DÍAS'], 
-			['id' =>UnidadfaenaEquipo::UNIDAD_MESES, 'nombre'=>'MESES'], 
 		];
 	}
 
@@ -45,7 +43,6 @@ class UnidadfaenaEquipo extends CActiveRecord
 		$unidades = [
 			1=>'HORAS', 
 			2=>'DÍAS', 
-			3=>'MESES', 
 		];
 		if(isset($unidades[$unidad])){
 			return $unidades[$unidad];

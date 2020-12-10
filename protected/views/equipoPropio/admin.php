@@ -41,8 +41,6 @@ $('.search-form form').submit(function(){
 		'id',
 		'nombre',
 		'codigo',
-		'horasMin',
-		'precioUnitario',
 		'consumoEsperado',
 		'coeficienteDeTrato',
 		'valorHora',
