@@ -275,10 +275,10 @@ $cs->registerCoreScript('jquery');
 											</td>
 											<td>
 												<?php 
-												echo CHtml::dropDownList("UnidadfaenaEquipo[".$i."][equipopropio_id]",'',CHtml::listData(EquipoPropio::model()->findAllByAttributes(['vigente'=>'SÍ'],['order'=>'nombre']),'id', 'nombre'),array('style'=>'width:150px;','empty'=>'Seleccione Equipo Propio','class'=>'equipos_propios'.$i, 'options'=>[$ue->equipopropio_id=>['selected'=>true]]));  
+												echo CHtml::dropDownList("UnidadfaenaEquipo[".$i."][equipopropio_id]",'',CHtml::listData(EquipoPropio::model()->list($ue->equipopropio_id),'id','nombre'),array('style'=>'width:150px;','empty'=>'Seleccione Equipo Propio','class'=>'equipos_propios'.$i, 'options'=>[$ue->equipopropio_id=>['selected'=>true]]));  
 												?>
 												<?php 
-												echo CHtml::dropDownList("UnidadfaenaEquipo[".$i."][equipoarrendado_id]",'',CHtml::listData(EquipoArrendado::model()->findAllByAttributes(['vigente'=>'SÍ'],['order'=>'nombre']), 'id', 'nombre'),array('style'=>'width:150px;','empty'=>'Seleccione Equipo Arrendado','class'=>'equipos_arrendados'.$i, 'options'=>[$ue->equipoarrendado_id=>['selected'=>true]]));  
+												echo CHtml::dropDownList("UnidadfaenaEquipo[".$i."][equipoarrendado_id]",'',CHtml::listData(EquipoArrendado::model()->list($ue->equipoarrendado_id), 'id', 'nombre'),array('style'=>'width:150px;','empty'=>'Seleccione Equipo Arrendado','class'=>'equipos_arrendados'.$i, 'options'=>[$ue->equipoarrendado_id=>['selected'=>true]]));  
 												?>
 											</td>
 										</tr>

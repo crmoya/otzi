@@ -100,6 +100,39 @@ class EquipoPropio extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+	
+	public function list($selected_id){
+		$data = array();
+		$connection=Yii::app()->db;
+		$connection->active=true;
+		$command=$connection->createCommand("
+			select		id,nombre,codigo
+			from		equipoPropio
+			where		vigente = 'SÍ'
+			order by	nombre
+			"
+		);
+		$dataReader=$command->query();
+		$rows=$dataReader->readAll();
+		$connection->active=false;
+		$command = null;
+		$data[0]=array('nombre'=>"Seleccione un equipo propio",'id'=>'');
+		$i=1;
+		$selected_exists = false;
+		foreach($rows as $row){
+			$data[$i]=array('id'=>$row['id'],'nombre'=>$row['codigo']." / ".$row['nombre']);
+			$i++;
+			if($row['id'] == $selected_id){
+				$selected_exists = true;
+			}
+		}
+		if(!$selected_exists && (int)$selected_id > 0){
+			$equipo = EquipoPropio::model()->findByPk($selected_id);
+			$data[] = ['id'=>$selected_id,'nombre'=>$equipo->codigo . " / " . $equipo->nombre . " (NO VIGENTE)"];
+		}
+		return $data;
+	}
 	
 	public function listar(){
 
