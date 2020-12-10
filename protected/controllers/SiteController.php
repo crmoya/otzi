@@ -74,6 +74,27 @@ class SiteController extends Controller
 
 		set_time_limit(0);
 
+		$unidadesFaenaEquipo = UnidadfaenaEquipo::model()->findAll();
+		foreach($unidadesFaenaEquipo as $unidad){
+			if(!isset($unidad->horas_minimas)){
+				if(isset($unidad->equipoarrendado)){
+					$horas_minimas = (double)$unidad->equipoarrendado->horasMin;
+					$unidad->horas_minimas = $horas_minimas;
+					$unidad->save();
+				} else if(isset($unidad->equipopropio)){
+					$horas_minimas = (double)$unidad->equipopropio->horasMin;
+					$unidad->horas_minimas = $horas_minimas;
+					$unidad->save();
+				}
+			}
+		}
+	}
+
+	/*
+	public function actionFixmaquinas(){
+
+		set_time_limit(0);
+
 		$rEquiposPropios = REquipoPropio::model()->findAll();
 		foreach($rEquiposPropios as $rEquipoPropio){
 			//agregar unidadfaena_equipo faltantes
@@ -128,6 +149,7 @@ class SiteController extends Controller
 
 
 	}
+	*/
 
 	/*
 	public function actionFix(){
