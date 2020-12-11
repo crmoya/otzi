@@ -99,8 +99,8 @@ class Unidadfaena extends CActiveRecord
 		return array(
 			'expedicionportiempos' => array(self::HAS_MANY, 'Expedicionportiempo', 'unidadfaena_id'),
 			'expedicionportiempoarrs' => array(self::HAS_MANY, 'Expedicionportiempoarr', 'unidadfaena_id'),
-			'camionarrendado' => array(self::BELONGS_TO, 'Camionarrendado', 'camionarrendado_id'),
-			'camionpropio' => array(self::BELONGS_TO, 'Camionpropio', 'camionpropio_id'),
+			'camionarrendado' => array(self::BELONGS_TO, 'CamionArrendado', 'camionarrendado_id'),
+			'camionpropio' => array(self::BELONGS_TO, 'CamionPropio', 'camionpropio_id'),
 			'faena' => array(self::BELONGS_TO, 'Faena', 'faena_id'),
 		);
 	}
