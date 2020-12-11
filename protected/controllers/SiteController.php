@@ -182,8 +182,10 @@ class SiteController extends Controller
 			}
 		}
 	}
+*/
 
-	public function actionRinde(){
+	public function actionRindegastos(){
+		set_time_limit(0);
 		$carga = new Carga();
 		$carga->rindeGastos();
 	}
@@ -199,7 +201,7 @@ class SiteController extends Controller
 		$carga = new Carga();
 		$carga->informes();
 	}
-	*/
+	
 
 	/**
 	 * This is the action to handle external exceptions.
@@ -318,7 +320,7 @@ class SiteController extends Controller
 		return array(
 			array(
 				'allow',
-				'actions' => array('login', 'logout', 'error', 'index', 'gastos', 'informes', 'rinde','fix','fixmaquinas'),
+				'actions' => array('login', 'logout', 'error', 'index', 'gastos', 'informes', 'rindegastos','fix','fixmaquinas'),
 				'users' => array('*'),
 			),
 			array(
