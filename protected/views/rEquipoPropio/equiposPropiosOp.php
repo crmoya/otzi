@@ -1124,7 +1124,7 @@ $cs->registerCoreScript('jquery');
 
 														<tr>
 															<td><?php echo $form->labelEx($repuesto, "cantidad", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->textField($repuesto, "[$i]cantidad", array('id' => "cantidadR$i", 'disabled' => 'disabled',)); ?><div id="errorCantidadR<?php echo $i; ?>" style="color:red;width:100px;"></div>
+															<td><?php echo $form->textField($repuesto, "[$i]cantidad", array('id' => "cantidadR$i", 'disabled' => 'disabled','class'=>'fixed')); ?><div id="errorCantidadR<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
 															<td></td>
 															<td><?php echo $form->labelEx($repuesto, "unidad", array('style' => 'width:80px;')); ?></td>
@@ -1230,7 +1230,7 @@ $cs->registerCoreScript('jquery');
 															
 															<tr>
 															 <td><?php echo $form->labelEx($repuesto, "cantidad", array('style' => 'width:80px;')); ?></td>
-															 <td><?php echo $form->textField($repuesto, "[{0}]cantidad", array('id' => "cantidadR{0}")); ?><div id="errorCantidadR{0}" style="color:red;width:100px;"></div></td>
+															 <td><?php echo $form->textField($repuesto, "[{0}]cantidad", array('id' => "cantidadR{0}",'class'=>'fixed')); ?><div id="errorCantidadR{0}" style="color:red;width:100px;"></div></td>
 															 <td></td>
 															 <td><?php echo $form->labelEx($repuesto, "unidad", array('style' => 'width:80px;')); ?></td>
 															 <td><?php echo $form->dropDownList($repuesto, '[{0}]unidad', CHtml::listData(Unidad::model()->findAll(), 'sigla', 'nombre'), array('id' => 'unidad{0}')); ?></td>

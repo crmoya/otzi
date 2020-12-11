@@ -1264,7 +1264,7 @@ function checkCantidad() {
 				$("#errorCantidadR" + i).html("Error: No puede ser blanco");
 				return false;
 			}
-			if (!is_int(valor)) {
+			if (!is_decimal(valor)) {
 				$("#cantidadR" + i).css('background', 'pink');
 				$("#errorCantidadR" + i).html("Error: Debe ser un número entero");
 				return false;
