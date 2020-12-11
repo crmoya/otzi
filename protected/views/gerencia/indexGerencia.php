@@ -2,7 +2,7 @@
 Bienvenido <?php echo CHtml::encode($nombre);?>, por favor seleccione una de las siguientes operaciones para comenzar:<br/><br/>
 <ul>
  <li><?php echo CHtml::link("Informe de Producción de Maquinaria",CController::createUrl('//produccionMaquinaria/admin')); ?></li>
- <li><?php echo CHtml::link("Informe de Producción de camiones, camionetas, autos",CController::createUrl('//gerencia/produccionCamiones')); ?></li>
+ <li><?php echo CHtml::link("Informe de Producción de camiones, camionetas, autos",CController::createUrl('//produccionCamiones/admin')); ?></li>
 </ul>
 <ul>
  <li><?php echo CHtml::link("Informe de Gasto de Combustible",CController::createUrl('//gastoCombustible/admin')); ?></li>
