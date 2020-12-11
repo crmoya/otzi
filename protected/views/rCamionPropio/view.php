@@ -90,7 +90,7 @@
 									<td style='font-size:0.9em;'><b>Faena:</b></td>
 									<td><?php echo CHtml::encode(Faena::model()->getNombre($viajeT['faena_id'])); ?></td>
 									<td style='font-size:0.9em;'><b>Unidad:</b></td>
-									<td colspan="3"><?php echo CHtml::encode($viajeT->unidadfaena->getUnidad($viajeT->unidadfaena->unidad) . " (" . $viajeT->unidadfaena->observaciones . ")"); ?></td>
+									<td colspan="3"><?php echo CHtml::encode($viajeT->unidadfaena->getUnidad($viajeT->unidadfaena->unidad) . ($viajeT->unidadfaena->observaciones!=""?" (" . $viajeT->unidadfaena->observaciones . ")":"")); ?></td>
 								</tr>
 								<tr>
 									<td style='font-size:0.9em;'><b>Cantidad:</b></td>
