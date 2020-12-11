@@ -9,7 +9,7 @@
  * @property integer $montoNeto
  * @property string $guia
  * @property string $factura
- * @property integer $cantidad
+ * @property double $cantidad
  * @property string $unidad
  * @property integer $rEquipoArrendado_id
  * @property string cuenta
@@ -45,11 +45,12 @@ class CompraRepuestoEquipoArrendado extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('repuesto, montoNeto, rEquipoArrendado_id', 'required'),
-			array('montoNeto, cantidad, rEquipoArrendado_id', 'numerical', 'integerOnly'=>true),
+			array('montoNeto, rEquipoArrendado_id', 'numerical', 'integerOnly'=>true),
 			array('repuesto', 'length', 'max'=>200),
 			array('guia, factura', 'length', 'max'=>45),
 			array('unidad', 'length', 'max'=>1),
 			array('nombre', 'length', 'max'=>100),
+			array('cantidad', 'numerical'),
 			array('fechaRendicion,numero', 'length', 'max'=>20),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
