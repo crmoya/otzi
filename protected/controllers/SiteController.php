@@ -70,6 +70,26 @@ class SiteController extends Controller
 		}
 	}
 
+	public function actionFixcamiones(){
+
+		set_time_limit(0);
+
+		$unidadesFaena = Unidadfaena::model()->findAll();
+		foreach($unidadesFaena as $unidad){
+			if(!isset($unidad->produccion_minima)){
+				if(isset($unidad->camionarrendado)){
+					$produccion_minima = (double)$unidad->camionarrendado->produccionMinima;
+					$unidad->produccion_minima = $produccion_minima;
+				} else if(isset($unidad->camionpropio)){
+					$produccion_minima = (double)$unidad->camionpropio->produccionMinima;
+					$unidad->produccion_minima = $produccion_minima;
+				}
+				$unidad->save();
+			}
+		}
+	}
+
+	/*
 	public function actionFixmaquinas(){
 
 		set_time_limit(0);
@@ -90,7 +110,7 @@ class SiteController extends Controller
 		}
 	}
 
-	/*
+	
 	public function actionFixmaquinas(){
 
 		set_time_limit(0);
@@ -184,6 +204,7 @@ class SiteController extends Controller
 	}
 */
 
+/*
 	public function actionRindegastos(){
 		set_time_limit(0);
 		$carga = new Carga();
@@ -201,7 +222,7 @@ class SiteController extends Controller
 		$carga = new Carga();
 		$carga->informes();
 	}
-	
+*/	
 
 	/**
 	 * This is the action to handle external exceptions.
@@ -320,7 +341,7 @@ class SiteController extends Controller
 		return array(
 			array(
 				'allow',
-				'actions' => array('login', 'logout', 'error', 'index', 'gastos', 'informes', 'rindegastos','fix','fixmaquinas'),
+				'actions' => array('login', 'logout', 'error', 'index', 'gastos', 'informes', 'rindegastos','fix','fixmaquinas','fixcamiones'),
 				'users' => array('*'),
 			),
 			array(
