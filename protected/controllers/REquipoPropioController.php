@@ -154,6 +154,7 @@ class REquipoPropioController extends Controller
     public function actionView($id)
     {
         $model = $this->loadModel($id);
+        $viajesT = Expedicionportiempoeq::model()->findAllByAttributes(array('requipopropio_id' => $id));
         $cargas = CargaCombEquipoPropio::model()->findAllByAttributes(array('rEquipoPropio_id' => $id));
         $compras = CompraRepuestoEquipoPropio::model()->findAllByAttributes(array('rEquipoPropio_id' => $id));
         $model->fecha = Tools::backFecha($model->fecha);
@@ -165,6 +166,7 @@ class REquipoPropioController extends Controller
         $operador = Operador::model()->findByPk($operador_id);
         $this->render('view', array(
             'model' => $model,
+            'viajesT' => $viajesT,
             'cargas' => $cargas,
             'compras' => $compras,
             'equipo' => $equipo,

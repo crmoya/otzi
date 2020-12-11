@@ -733,7 +733,7 @@ $cs->registerCoreScript('jquery');
 				<tr>
 					<td width="30"><?php echo $form->labelEx($model, 'horasGps'); ?></td>
 					<td><?php echo $form->textField($model, 'horasGps', array('class' => 'fixed', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?><?php echo $form->error($model, 'horas'); ?></td>
-					
+
 				</tr>
 			</table>
 		</fieldset>
@@ -1211,7 +1211,7 @@ $cs->registerCoreScript('jquery');
 
 														<tr>
 															<td><?php echo $form->labelEx($repuesto, "cantidad", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->textField($repuesto, "[$i]cantidad", array('id' => "cantidad$i", 'disabled' => $model->validado == 1 ? 'disabled' : '',)); ?><div id="errorCantidad<?php echo $i; ?>" style="color:red;width:100px;"></div>
+															<td><?php echo $form->textField($repuesto, "[$i]cantidad", array('id' => "cantidadR$i", 'disabled' => $model->validado == 1 ? 'disabled' : '',)); ?><div id="errorCantidadR<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
 															<td></td>
 															<td><?php echo $form->labelEx($repuesto, "unidad", array('style' => 'width:80px;')); ?></td>
@@ -1316,7 +1316,7 @@ $cs->registerCoreScript('jquery');
 															
                                                                                                                         <tr>
 															 <td><?php echo $form->labelEx($repuesto, "cantidad", array('style' => 'width:80px;')); ?></td>
-															 <td><?php echo $form->textField($repuesto, "[{0}]cantidad", array('id' => "cantidad{0}")); ?><div id="errorCantidad{0}" style="color:red;width:100px;"></div></td>
+															 <td><?php echo $form->textField($repuesto, "[{0}]cantidad", array('id' => "cantidadR{0}")); ?><div id="errorCantidadR{0}" style="color:red;width:100px;"></div></td>
 															 <td></td>
 															 <td><?php echo $form->labelEx($repuesto, "unidad", array('style' => 'width:80px;')); ?></td>
 															 <td><?php echo $form->dropDownList($repuesto, '[{0}]unidad', CHtml::listData(Unidad::model()->findAll(), 'sigla', 'nombre'), array('id' => 'unidad{0}')); ?></td>
@@ -1342,12 +1342,12 @@ $cs->registerCoreScript('jquery');
 															 <td><?php echo $form->labelEx($repuesto, "fechaRendicion", array('style' => 'width:80px;')); ?></td>
 															 <td><?php echo $form->textField($repuesto, "[{0}]fechaRendicion", array('id' => "fechaRendicionRep{0}", 'class' => 'fecha', 'readonly' => 'readonly')); ?></td>
 															 <td></td>
-                                                                                                                         <td></td>
+															 <td></td>
 															</tr>
 															
 															<tr>
 															 
-                                                                                                                         <td><?php echo $form->labelEx($repuesto, "guia", array('style' => 'width:80px;')); ?></td>
+															 <td><?php echo $form->labelEx($repuesto, "guia", array('style' => 'width:80px;')); ?></td>
 															 <td><?php echo $form->textField($repuesto, "[{0}]guia", array('id' => "guia{0}")); ?></td>
 															 <td></td>
 															 

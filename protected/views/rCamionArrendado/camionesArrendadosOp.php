@@ -69,18 +69,17 @@ $cs->registerCoreScript('jquery');
 					'camion_id': $(this).val()
 				}
 			}).done(function(msg) {
-				if(msg != "ERROR"){
+				if (msg != "ERROR") {
 					var datos = JSON.parse(msg);
 					$('#codigo').html(datos.codigo);
 					$('#capacidad').val(datos.capacidad);
 					$('#lblCapacidad').html(datos.capacidad + " " + datos.pOv);
 
-					if(datos.odometro_en_millas == 1){
+					if (datos.odometro_en_millas == 1) {
 						$("label[for='RCamionArrendado_kmInicial']").text("Odómetro Inicial (en Millas)");
 						$("label[for='RCamionArrendado_kmFinal']").text("Odómetro Final (en Millas)");
 						$("label[for='RCamionArrendado_kms']").text("Millas recorridas");
-					}
-					else{
+					} else {
 						$("label[for='RCamionArrendado_kmInicial']").text("Odómetro Inicial");
 						$("label[for='RCamionArrendado_kmFinal']").text("Odómetro Final");
 						$("label[for='RCamionArrendado_kmGps']").text("KMs GPS");
@@ -819,7 +818,7 @@ $cs->registerCoreScript('jquery');
 						);
 						?> <?php echo $form->error($model, 'camionArrendado_id'); ?>
 					</td>
-					<td style='font-size: 0.9em;'><b>Capacidad:</b><input type="hidden" id="capacidad"/></td>
+					<td style='font-size: 0.9em;'><b>Capacidad:</b><input type="hidden" id="capacidad" /></td>
 					<td id="lblCapacidad"></td>
 				</tr>
 				<tr>
@@ -848,7 +847,7 @@ $cs->registerCoreScript('jquery');
 				</tr>
 				<tr>
 					<td><?php echo $form->labelEx($model, "horas"); ?></td>
-					<td><?php echo $form->textField($model, "horas", array('class' => 'fixedH', 'disabled' => 'disabled',)); ?> <?php echo $form->error($model, 'horas',['class'=>'errorH']); ?></td>
+					<td><?php echo $form->textField($model, "horas", array('class' => 'fixedH', 'disabled' => 'disabled',)); ?> <?php echo $form->error($model, 'horas', ['class' => 'errorH']); ?></td>
 				</tr>
 			</table>
 		</fieldset>
@@ -1472,7 +1471,7 @@ $cs->registerCoreScript('jquery');
 
 														<tr>
 															<td><?php echo $form->labelEx($repuesto, "cantidad", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->textField($repuesto, "[$i]cantidad", array('id' => "cantidad$i", 'disabled' => 'disabled',)); ?><div id="errorCantidad<?php echo $i; ?>" style="color:red;width:100px;"></div>
+															<td><?php echo $form->textField($repuesto, "[$i]cantidad", array('id' => "cantidadR$i", 'disabled' => 'disabled',)); ?><div id="errorCantidadR<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
 															<td></td>
 															<td><?php echo $form->labelEx($repuesto, "unidad", array('style' => 'width:80px;')); ?></td>
@@ -1577,7 +1576,7 @@ $cs->registerCoreScript('jquery');
 															
                                                                                                                         <tr>
 															 <td><?php echo $form->labelEx($repuesto, "cantidad", array('style' => 'width:80px;')); ?></td>
-															 <td><?php echo $form->textField($repuesto, "[{0}]cantidad", array('id' => "cantidad{0}")); ?><div id="errorCantidad{0}" style="color:red;width:100px;"></div></td>
+															 <td><?php echo $form->textField($repuesto, "[{0}]cantidad", array('id' => "cantidadR{0}")); ?><div id="errorCantidadR{0}" style="color:red;width:100px;"></div></td>
 															 <td></td>
 															 <td><?php echo $form->labelEx($repuesto, "unidad", array('style' => 'width:80px;')); ?></td>
 															 <td><?php echo $form->dropDownList($repuesto, '[{0}]unidad', CHtml::listData(Unidad::model()->findAll(), 'sigla', 'nombre'), array('id' => 'unidad{0}')); ?></td>

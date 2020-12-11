@@ -153,6 +153,7 @@ class REquipoArrendadoController extends Controller
 	public function actionView($id)
 	{
 		$model = $this->loadModel($id);
+		$viajesT = Expedicionportiempoeqarr::model()->findAllByAttributes(array('requipoarrendado_id' => $id));
 		$cargas = CargaCombEquipoArrendado::model()->findAllByAttributes(array('rEquipoArrendado_id' => $id));
 		$compras = CompraRepuestoEquipoArrendado::model()->findAllByAttributes(array('rEquipoArrendado_id' => $id));
 		$model->fecha = Tools::backFecha($model->fecha);
@@ -164,6 +165,7 @@ class REquipoArrendadoController extends Controller
 		$operador = Operador::model()->findByPk($operador_id);
 		$this->render('view', array(
 			'model' => $model,
+			'viajesT' => $viajesT,
 			'cargas' => $cargas,
 			'compras' => $compras,
 			'equipo' => $equipo,

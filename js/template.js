@@ -1020,6 +1020,11 @@ function checkPetroleoLts() {
 				$("#errorPetroleoLts" + i).html("Error: Debe ser un decimal");
 				return false;
 			}
+			if (valor < 0) {
+				$("#petroleoLts" + i).css('background', 'pink');
+				$("#errorPetroleoLts" + i).html("Error: Debe ser mayor que 0");
+				return false;
+			}
 		}
 	}
 	return true;
@@ -1252,24 +1257,25 @@ function checkFaenaRep() {
 function checkCantidad() {
 	for (i = 0; i < nRepuestos; i++) {
 		if ($("#removeRepuesto" + i).attr("validate") == "true") {
-			var valor = $("#cantidad" + i).val();
+			console.log(i);
+			var valor = $("#cantidadR" + i).val();
 			if (valor == "") {
-				$("#cantidad" + i).css('background', 'pink');
-				$("#errorCantidad" + i).html("Error: No puede ser blanco");
+				$("#cantidadR" + i).css('background', 'pink');
+				$("#errorCantidadR" + i).html("Error: No puede ser blanco");
 				return false;
 			}
 			if (!is_int(valor)) {
-				$("#cantidad" + i).css('background', 'pink');
-				$("#errorCantidad" + i).html("Error: Debe ser un número entero");
+				$("#cantidadR" + i).css('background', 'pink');
+				$("#errorCantidadR" + i).html("Error: Debe ser un número entero");
 				return false;
 			}
 			if (valor < 0) {
-				$("#cantidad" + i).css('background', 'pink');
-				$("#errorCantidad" + i).html("Error: No puede ser negativo");
+				$("#cantidadR" + i).css('background', 'pink');
+				$("#errorCantidadR" + i).html("Error: No puede ser negativo");
 				return false;
 			}
-			$("#cantidad" + i).css('background', 'white');
-			$("#errorCantidad" + i).html("");
+			$("#cantidadR" + i).css('background', 'white');
+			$("#errorCantidadR" + i).html("");
 		}
 	}
 	return true;
