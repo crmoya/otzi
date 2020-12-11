@@ -33,15 +33,9 @@ class ProduccionMaquinaria extends CActiveRecord
 		}
 
 		if(isset($this->propiosOArrendados) && $this->propiosOArrendados != "TODOS"){
-			if($this->propiosOArrendados == "CA" || $this->propiosOArrendados == "CP" || $this->propiosOArrendados == "EA" || $this->propiosOArrendados == "EP"){
+			if($this->propiosOArrendados == "EA" || $this->propiosOArrendados == "EP"){
 				$criteria->addCondition('tipo_maquina = :tipo_maquina');
 				$criteria->params[':tipo_maquina'] = $this->propiosOArrendados;
-			}
-			else if($this->propiosOArrendados == "C"){
-				$criteria->addCondition("(tipo_maquina = 'CA' or tipo_maquina = 'CP')");
-			}
-			else if($this->propiosOArrendados == "E"){
-				$criteria->addCondition("(tipo_maquina = 'EA' or tipo_maquina = 'EP')");
 			}
 		}
 
@@ -62,8 +56,8 @@ class ProduccionMaquinaria extends CActiveRecord
 		if(isset($this->agruparPor) && $this->agruparPor != "NINGUNO"){
 			if($this->agruparPor == "MAQUINA"){
 				$inicioAgrupacion = "	maquina,
-										'',
-										'',
+										'' as operador,
+										'' as centro_gestion,
 										CASE
 											WHEN min(pu) = max(pu) THEN min(pu)
 											WHEN min(pu) <> max(pu) THEN ''
@@ -75,9 +69,9 @@ class ProduccionMaquinaria extends CActiveRecord
 				$finAgrupacion = "		maquina";
 			}
 			if($this->agruparPor == "OPERADOR"){
-				$inicioAgrupacion = "	'',
+				$inicioAgrupacion = "	'' as maquina,
 										operador,
-										'',
+										'' as centro_gestion,
 										CASE
 											WHEN min(pu) = max(pu) THEN min(pu)
 											WHEN min(pu) <> max(pu) THEN ''
