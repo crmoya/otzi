@@ -169,7 +169,7 @@ class EquipoArrendado extends CActiveRecord
 			}
 		}
 		if(!$selected_exists && (int)$selected_id > 0){
-			$equipo = EquipoPropio::model()->findByPk($selected_id);
+			$equipo = EquipoArrendado::model()->findByPk($selected_id);
 			$data[] = ['id'=>$selected_id,'nombre'=> $equipo->nombre . " (NO VIGENTE)"];
 		}
 		return $data;

@@ -48,7 +48,7 @@ class CamionArrendadoController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','create','update','admin','delete','exportar'),
+				'actions'=>array('index','view','create','update','admin','delete','exportar','produccion'),
 				'roles'=>array('administrador'),
 			),
 			array('allow',  // allow all users to perform 'index' and 'view' actions
@@ -59,6 +59,12 @@ class CamionArrendadoController extends Controller
 				'users'=>array('*'),
 			),
 		);
+	}
+
+	public function actionProduccion(){
+		$id = $_POST['id'];
+		$camion = $this->loadModel($id);
+		echo $camion->produccionMinima;
 	}
 
 	/**

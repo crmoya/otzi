@@ -59,14 +59,16 @@ class FaenaController extends Controller {
 					->setCellValue('A'.$i, isset($u->camionpropio)?$u->camionpropio->nombre." (propio)":$u->camionarrendado->nombre." (arrendado)")
 					->setCellValue('B'.$i, Unidadfaena::getUnidad($u->unidad))
 					->setCellValue('C'.$i, $u->pu)
-					->setCellValue('D'.$i, $u->observaciones);
+					->setCellValue('D'.$i, $u->produccion_minima)
+					->setCellValue('E'.$i, $u->observaciones);
 			$i++;
 		}
 		$objPHPExcel->setActiveSheetIndex(0)
 		->setCellValue('A'.$iTitulos,'Camión')
 		->setCellValue('B'.$iTitulos,'Unidad')
 		->setCellValue('C'.$iTitulos, 'PU')
-		->setCellValue('D'.$iTitulos, 'Observaciones');
+		->setCellValue('D'.$iTitulos, 'Producción Mínima')
+		->setCellValue('E'.$iTitulos, 'Observaciones');
 		$i++;
 		$iTitulos2 = $i;
 		$i++;
@@ -102,6 +104,7 @@ class FaenaController extends Controller {
 		$sheet->getStyle('B'.$iTitulos)->applyFromArray($styleArray);
 		$sheet->getStyle('C'.$iTitulos)->applyFromArray($styleArray);
 		$sheet->getStyle('D'.$iTitulos)->applyFromArray($styleArray);
+		$sheet->getStyle('E'.$iTitulos)->applyFromArray($styleArray);
 		$sheet->getStyle('A'.$iTitulos2)->applyFromArray($styleArray);
 		$sheet->getStyle('B'.$iTitulos2)->applyFromArray($styleArray);
 		$sheet->getStyle('C'.$iTitulos2)->applyFromArray($styleArray);
@@ -421,7 +424,7 @@ class FaenaController extends Controller {
 								$u->camionpropio_id = null;
 							}
 							$u->pu = $up['pu'];
-							
+							$u->produccion_minima = $up['produccion_minima'];
 							$u->observaciones = $up['observaciones'];
 							if($u->validate()){
 								$u->save();

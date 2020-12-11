@@ -128,6 +128,7 @@ $cs->registerCoreScript('jquery');
 									<td>Camión o camioneta</td>
 									<td>Unidad</td>
 									<td>PU</td>
+									<td>Producción Mínima</td>
 									<td>&nbsp</td>
 								</tr>
 								<?php
@@ -174,7 +175,12 @@ $cs->registerCoreScript('jquery');
 											</td>
 											<td>
 												<?php
-												echo $form->textField($u, "[$i]pu", array('style' => 'width:100px', 'class' => 'fixed'));
+												echo $form->textField($u, "[$i]pu", array('style' => 'width:100px', 'class' => 'fixed','id'=>'puc'.$i));
+												?>
+											</td>
+											<td>
+												<?php
+												echo $form->textField($u, "[$i]produccion_minima", array('style' => 'width:100px', 'class' => 'fixed','id'=>'produccion'.$i));
 												?>
 											</td>
 											<td>
@@ -218,10 +224,13 @@ $cs->registerCoreScript('jquery');
 													</table>													
 												</td>
 												<td width="100px">	
-													<?php echo CHtml::dropDownList('Unidadfaena[{0}][unidad]', '', CHtml::listData(Unidadfaena::listar(), 'id', 'nombre'), array('style' => 'width:100px')); ?>
+													<?php echo CHtml::dropDownList('Unidadfaena[{0}][unidad]', '', CHtml::listData(Unidadfaena::listar(), 'id', 'nombre'), array('style' => 'width:100px','id'=>'unidadc{0}')); ?>
 												</td>
 												<td width="100px">
-													<?php echo CHtml::textField('Unidadfaena[{0}][pu]', '', array('style' => 'width:100px', 'class' => 'fixed unidad')); ?>
+													<?php echo CHtml::textField('Unidadfaena[{0}][pu]', '', array('style' => 'width:100px', 'class' => 'fixed unidad','id'=>'puc{0}')); ?>
+												</td>
+												<td width="100px">
+													<?php echo CHtml::textField('Unidadfaena[{0}][produccion_minima]', '', array('style' => 'width:100px', 'class' => 'fixed unidad','id'=>'produccion{0}')); ?>
 												</td>
 												<td>
 													<input type="hidden" class="rowIndex" value="{0}" />
@@ -455,10 +464,10 @@ $cs->registerCoreScript('jquery');
 		});
 		$(document).on('click', '.tipo_camion', function(e) {
 			var i = $(this).attr('i');
-			$('#pu_unidad'+i).val("");
-			$('#horas'+i).val("");
-			$('.camiones_propios' + i).val(0);
-			$('.camiones_arrendados' + i).val(0);
+			$('#puc'+i).val(0);
+			$('#produccion'+i).val(0);
+			$('.camiones_propios' + i).val("");
+			$('.camiones_arrendados' + i).val("");
 			var tipo = $(this).val();
 			$(this).attr('checked', 'checked');
 			if (tipo == "propios") {

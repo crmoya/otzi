@@ -151,4 +151,36 @@ class CamionArrendado extends CActiveRecord
 		}
 		return $data;
 	}
+
+	
+	public function list($selected_id){
+		$data = array();
+		$connection=Yii::app()->db;
+		$connection->active=true;
+		$command=$connection->createCommand("
+			select		id,nombre
+			from		camionArrendado
+			where		vigente = 'SÍ'
+			order by	nombre
+			"
+		);
+		$dataReader=$command->query();
+		$rows=$dataReader->readAll();
+		$connection->active=false;
+		$command = null;
+		$i=0;
+		$selected_exists = false;
+		foreach($rows as $row){
+			$data[$i]=array('id'=>$row['id'],'nombre'=>$row['nombre']);
+			$i++;
+			if($row['id'] == $selected_id){
+				$selected_exists = true;
+			}
+		}
+		if(!$selected_exists && (int)$selected_id > 0){
+			$camion = CamionArrendado::model()->findByPk($selected_id);
+			$data[] = ['id'=>$selected_id,'nombre'=> $camion->nombre . " (NO VIGENTE)"];
+		}
+		return $data;
+	}
 }
