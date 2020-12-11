@@ -24,6 +24,7 @@ class Carga{
 					$combustible->litros = floatval($gastoCompleta->litros_combustible);
 					$combustible->total = intval($gasto->net) + intval($gastoCompleta->impuesto_especifico);
 					$combustible->gasto_completa_id = intval($gastoCompleta->id);
+					$combustible->status = $gasto->status;
 					$vehiculoRG = VehiculoRindegastos::model()->findByAttributes(['vehiculo'=>$gastoCompleta->vehiculo_equipo]);
 					if(isset($vehiculoRG)){
 						if($vehiculoRG->camionpropio_id != null){
@@ -58,6 +59,7 @@ class Carga{
 				$gastoCompleta = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
 				if(isset($gastoCompleta)){
 					$nocombustible = new NocombustibleRindegasto();
+					$nocombustible->status = $gasto->status;
 					$nocombustible->fecha = $gasto->issue_date;
 					$nocombustible->total = intval($gasto->net);
 					$nocombustible->gasto_completa_id = intval($gastoCompleta->id);
