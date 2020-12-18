@@ -55,7 +55,7 @@ class ProduccionCamionesController extends Controller
 			['name'=>'Chofer','width'=>'lg'],
 			['name'=>'Centro Gestión','width'=>'lg'],
 			['name'=>'Transportado','width'=>'sm'],
-			['name'=>'Prod. Contratada','width'=>'sm'],
+			['name'=>'Prod. Contratada','width'=>'md'],
 			['name'=>'Prod. Real','width'=>'md'],
 			['name'=>'Diferencia','width'=>'md'],
 		];
