@@ -70,27 +70,60 @@ class SiteController extends Controller
 		}
 	}
 
-	/*
 
 	public function actionFixcamiones(){
 
 		set_time_limit(0);
 
-		$unidadesFaena = Unidadfaena::model()->findAll();
-		foreach($unidadesFaena as $unidad){
-			if(!isset($unidad->produccion_minima)){
-				if(isset($unidad->camionarrendado)){
-					$produccion_minima = (double)$unidad->camionarrendado->produccionMinima;
-					$unidad->produccion_minima = $produccion_minima;
-				} else if(isset($unidad->camionpropio)){
-					$produccion_minima = (double)$unidad->camionpropio->produccionMinima;
-					$unidad->produccion_minima = $produccion_minima;
-				}
-				$unidad->save();
+		$viajesCamionPropio = ViajeCamionPropio::model()->findAll();
+		foreach($viajesCamionPropio as $viaje){
+			$total = $viaje->total;
+			$totalTransportado = $viaje->totalTransportado;
+			$kms = $viaje->kmRecorridos;
+			if($totalTransportado == 0 || $kms == 0){
+				$pu = 0;
 			}
+			else{
+				$pu = $total / ($totalTransportado * $kms);
+			}
+			$faena_id = $viaje->faena_id;
+			$camionpropio_id = $viaje->rCamionPropio->camiones->id;
+			$unidad = Unidadfaena::UNIDAD_DIAS;
+			$produccion_minima = $viaje->rCamionPropio->camiones->produccionMinima;
+			$unidadFaena = new Unidadfaena();
+			$unidadFaena->unidad = $unidad;
+			$unidadFaena->pu = $pu;
+			$unidadFaena->faena_id = $faena_id;
+			$unidadFaena->camionpropio_id = $camionpropio_id;
+			$unidadFaena->produccion_minima = $produccion_minima;
+			$unidadFaena->save();
+		}
+
+		$viajesCamionArrendado = ViajeCamionArrendado::model()->findAll();
+		foreach($viajesCamionArrendado as $viaje){
+			$total = $viaje->total;
+			$totalTransportado = $viaje->totalTransportado;
+			$kms = $viaje->kmRecorridos;
+			if($totalTransportado == 0 || $kms == 0){
+				$pu = 0;
+			}
+			else{
+				$pu = $total / ($totalTransportado * $kms);
+			}
+			$faena_id = $viaje->faena_id;
+			$camionarrendado_id = $viaje->rCamionArrendado->camiones->id;
+			$unidad = Unidadfaena::UNIDAD_DIAS;
+			$produccion_minima = $viaje->rCamionArrendado->camiones->produccionMinima;
+			$unidadFaena = new Unidadfaena();
+			$unidadFaena->unidad = $unidad;
+			$unidadFaena->pu = $pu;
+			$unidadFaena->faena_id = $faena_id;
+			$unidadFaena->camionarrendado_id = $camionarrendado_id;
+			$unidadFaena->produccion_minima = $produccion_minima;
+			$unidadFaena->save();
 		}
 	}
-	*/
+	
 
 	/*
 	public function actionFixmaquinas(){
