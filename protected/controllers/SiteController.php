@@ -70,7 +70,7 @@ class SiteController extends Controller
 		}
 	}
 
-
+/*
 	public function actionFixcamiones(){
 
 		set_time_limit(0);
@@ -130,7 +130,7 @@ class SiteController extends Controller
 		}
 	}
 	
-/*
+
 	
 	public function actionFixmaquinas(){
 
