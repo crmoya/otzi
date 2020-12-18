@@ -323,7 +323,7 @@ class FaenaController extends Controller {
 
         $model = $this->loadModel($id);
 		$ods = Faena::model()->listarODs($id);
-		$unidades = Unidadfaena::model()->findAllByAttributes(['faena_id'=>$id]);
+		$unidades = Unidadfaena::model()->with('camionpropio')->findAll(['condition'=>'camionpropio.vigente="SÍ"',]);
 		$unidadesE = UnidadfaenaEquipo::model()->findAllByAttributes(['faena_id'=>$id]);
         
         // Uncomment the following line if AJAX validation is needed

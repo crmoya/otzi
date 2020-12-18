@@ -70,7 +70,7 @@ class SiteController extends Controller
 		}
 	}
 
-/*
+
 	public function actionFixcamiones(){
 
 		set_time_limit(0);
@@ -90,11 +90,14 @@ class SiteController extends Controller
 			$camionpropio_id = $viaje->rCamionPropio->camiones->id;
 			$unidad = Unidadfaena::UNIDAD_DIAS;
 			$produccion_minima = $viaje->rCamionPropio->camiones->produccionMinima;
-			$unidadFaena = new Unidadfaena();
+			$unidadFaena = UnidadFaena::model()->findByAttributes(['faena_id'=>$faena_id,'camionpropio_id'=>$camionpropio_id]);
+			if($unidadFaena == null){
+				$unidadFaena = new Unidadfaena();
+				$unidadFaena->faena_id = $faena_id;
+				$unidadFaena->camionpropio_id = $camionpropio_id;
+			}			
 			$unidadFaena->unidad = $unidad;
 			$unidadFaena->pu = $pu;
-			$unidadFaena->faena_id = $faena_id;
-			$unidadFaena->camionpropio_id = $camionpropio_id;
 			$unidadFaena->produccion_minima = $produccion_minima;
 			$unidadFaena->save();
 		}
@@ -112,9 +115,12 @@ class SiteController extends Controller
 			}
 			$faena_id = $viaje->faena_id;
 			$camionarrendado_id = $viaje->rCamionArrendado->camiones->id;
+			$unidadFaena = UnidadFaena::model()->findByAttributes(['faena_id'=>$faena_id,'camionarrendado_id'=>$camionarrendado_id]);
+			if($unidadFaena == null){
+				$unidadFaena = new Unidadfaena();
+			}
 			$unidad = Unidadfaena::UNIDAD_DIAS;
-			$produccion_minima = $viaje->rCamionArrendado->camiones->produccionMinima;
-			$unidadFaena = new Unidadfaena();
+			$produccion_minima = $viaje->rCamionArrendado->camiones->produccionMinima;			
 			$unidadFaena->unidad = $unidad;
 			$unidadFaena->pu = $pu;
 			$unidadFaena->faena_id = $faena_id;
@@ -124,7 +130,7 @@ class SiteController extends Controller
 		}
 	}
 	
-
+/*
 	
 	public function actionFixmaquinas(){
 
