@@ -324,15 +324,15 @@ class OperativoController extends Controller
 			if($ok){
 				$transaction->commit();
 				Yii::app()->user->setFlash('camionesMessage', "Datos guardados correctamente.");
+				$this->refresh();
 			}
 			else{
 				$transaction->rollback();
-				echo "<pre>";
-				print_r($model);die;
 				Yii::app()->user->setFlash('camionesError', "Error. Datos del formulario erróneos: " . CHtml::errorSummary($model));
+				
 			}
 			$connection->active=false;
-			$this->refresh();
+			
 
 		}		
 
@@ -482,13 +482,14 @@ class OperativoController extends Controller
 			if($ok){
 				$transaction->commit();
 				Yii::app()->user->setFlash('equiposMessage', "Datos guardados correctamente.");
+				$this->refresh();
 			}
 			else{
 				$transaction->rollback();
 				Yii::app()->user->setFlash('equiposError', CHtml::errorSummary($model));
 			}
 			$connection->active=false;
-			$this->refresh();
+			
 		}
 		$this->render('equiposPropios', array('model' => $model));
 	}
@@ -635,13 +636,14 @@ class OperativoController extends Controller
 			if($ok){
 				$transaction->commit();
 				Yii::app()->user->setFlash('equiposMessage', "Datos guardados correctamente.");
+				$this->refresh();
 			}
 			else{
 				$transaction->rollback();
 				Yii::app()->user->setFlash('equiposError', CHtml::errorSummary($model));
 			}
 			$connection->active=false;
-			$this->refresh();
+			
 		}
 		$this->render('equiposArrendados', array('model' => $model));
 	}
@@ -817,13 +819,14 @@ class OperativoController extends Controller
 			if($ok){
 				$transaction->commit();
 				Yii::app()->user->setFlash('camionesMessage', "Datos guardados correctamente.");
+				$this->refresh();
 			}
 			else{
 				$transaction->rollback();
 				Yii::app()->user->setFlash('camionesError', "Error. Datos del formulario erróneos: " . CHtml::errorSummary($model));
 			}
 			$connection->active=false;
-			$this->refresh();
+			
 
 
 		}

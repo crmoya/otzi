@@ -419,6 +419,7 @@ $cs->registerCoreScript('jquery');
 		}
 
 		var checkReporte = true;
+		
 		$('#RCamionPropio_reporte').change(function(e) {
 			var numero = $(this).val();
 			$.ajax({
@@ -438,7 +439,7 @@ $cs->registerCoreScript('jquery');
 				}
 			});
 		});
-
+		
 		$('.camion').change(function(e){
 			$('.unidadfaena').empty();
 			$('.faenaT').val("");

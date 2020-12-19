@@ -411,6 +411,7 @@ class REquipoPropioController extends Controller
                         if ($valid) {
                             $transaction->commit();
                             Yii::app()->user->setFlash('equiposMessage', "Formulario Guardado con éxito.");
+                            $this->refresh();
                             
                         } else {
                             Yii::app()->user->setFlash('camionesError', "Error. No se pudo actualizar el formulario, inténtelo de nuevo. " . $errores);
@@ -428,7 +429,7 @@ class REquipoPropioController extends Controller
                 Yii::app()->user->setFlash('equiposError', "Existen errores en el formulario, por favor vuelva a intentarlo: " );
                 $transaction->rollback();
             }
-            $this->refresh();
+            
         }
 
         $equipo_id = $model->equipoPropio_id;

@@ -458,6 +458,7 @@ class RCamionPropioController extends Controller
 						if ($valid) {
 							$transaction->commit();
 							Yii::app()->user->setFlash('camionesMessage', "Formulario Guardado con éxito.");
+							$this->refresh();
 							
 						} else {
 							Yii::app()->user->setFlash('camionesError', "Error. No se pudo actualizar el formulario, inténtelo de nuevo. " . $errores);
@@ -475,7 +476,7 @@ class RCamionPropioController extends Controller
 				Yii::app()->user->setFlash('camionesError', "Existen errores en el formulario, por favor vuelva a intentarlo. ");
 				$transaction->rollback();
 			}
-			$this->refresh();
+			
 		}
 
 		$camion_id = $model->camionPropio_id;

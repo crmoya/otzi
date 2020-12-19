@@ -75,6 +75,7 @@ class RCamionPropio extends CActiveRecord
 			array('camionPropio_id,chofer_id', 'numerical', 'integerOnly' => true),
 			array('camionPropio_id,kmInicial,kmFinal,kmGps', 'length', 'max' => 10),
 			array('reporte', 'length', 'max' => 12),
+			array('reporte','unique'),
 			array('observaciones', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
