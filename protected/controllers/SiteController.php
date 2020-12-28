@@ -245,7 +245,7 @@ class SiteController extends Controller
 		}
 	}
 */
-
+/*
 
 	public function actionRindegastos(){
 		set_time_limit(0);
@@ -264,7 +264,7 @@ class SiteController extends Controller
 		$carga = new Carga();
 		$carga->informes();
 	}
-
+*/
 
 	/**
 	 * This is the action to handle external exceptions.
