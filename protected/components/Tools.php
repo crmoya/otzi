@@ -267,6 +267,51 @@ class Tools
 		if ($unidad == "K") {
 			return "kgs.";
 		}
+		if ($unidad == "B") {
+			return "Balde";
+		}
+		if ($unidad == "G") {
+			return "Galón";
+		}
+		if ($unidad == "D") {
+			return "Día";
+		}
+		if ($unidad == "M3") {
+			return "Mts. cúbicos";
+		}
+		if ($unidad == "M") {
+			return "Mts.";
+		}
+	}
+
+	public static function convertUnidad($unidad)
+	{
+		$unidad = trim($unidad);
+		if ($unidad == "Balde") {
+			return "B";
+		}
+		if ($unidad == "día") {
+			return "D";
+		}
+		if ($unidad == "galon") {
+			return "G";
+		}
+		if ($unidad == "Kilos") {
+			return "K";
+		}
+		if ($unidad == "Litros") {
+			return "L";
+		}
+		if ($unidad == "Metro cúbico") {
+			return "M3";
+		}
+		if ($unidad == "Metros") {
+			return "M";
+		}
+		if ($unidad == "Unidades") {
+			return "U";
+		}
+		return "";
 	}
 
 	public static function sacarExtension($archivo)

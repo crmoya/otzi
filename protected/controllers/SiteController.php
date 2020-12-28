@@ -70,6 +70,41 @@ class SiteController extends Controller
 		}
 	}
 
+	public function actionTest(){
+		$fecha = new DateTime("2020-12-17");
+		$report = RCamionPropio::model()->findByAttributes(['fecha'=>$fecha->format("Y-m-d"), 'camionPropio_id'=>24]);
+		while($report == null){
+			$dow = date('w',strtotime($fecha->format("Y-m-d")));
+			//si no hay report busco para el día siguiente,
+			//sino para el subsiguiente, hasta llegar al día sábado, si no hay para el sábado
+			//creo un report para el sábado y asocio la compra a ese
+			//el día posterior, hasta el sábado de esa semana.
+			if($dow == 6){
+				//sábado
+				$report = new RCamionPropio();
+				$report->fecha = $fecha->format('Y-m-d');
+				$report->reporte = "*123123";
+				$report->camionPropio_id = 24;
+				$report->chofer_id = 1;
+				$report->panne = 0;
+				$report->iniPanne = "";
+				$report->finPanne = "";
+				$report->minPanne = 0;
+				$report->usuario_id = 213;
+				$report->horometro_inicial = 0;
+				$report->horometro_final = 0;
+				$report->save();
+				break;
+			}
+			else{
+				$fecha->add(new DateInterval('P1D'));
+				$report = RCamionPropio::model()->findByAttributes(['fecha'=>$fecha->format('Y-m-d'), 'camionPropio_id'=>24]);
+			}
+		}
+
+		var_dump($report);
+	}
+
 /*
 	public function actionFixcamiones(){
 
@@ -383,7 +418,7 @@ class SiteController extends Controller
 		return array(
 			array(
 				'allow',
-				'actions' => array('login', 'logout', 'error', 'index', 'gastos', 'informes', 'rindegastos','fix','fixmaquinas','fixcamiones'),
+				'actions' => array('login', 'logout', 'error', 'index', 'gastos', 'informes', 'rindegastos','fix','fixmaquinas','fixcamiones','test'),
 				'users' => array('*'),
 			),
 			array(

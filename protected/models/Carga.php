@@ -14,6 +14,12 @@ class Carga{
 			CombustibleRindegasto::model()->deleteAll();
 			NocombustibleRindegasto::model()->deleteAll();
 
+			//además elimino las compras de repuestos que hayan sido ingresadas por rindegastos
+			CompraRepuestoCamionPropio::model()->deleteAllByAttributes(['rindegastos'=>1]);
+			CompraRepuestoCamionArrendado::model()->deleteAllByAttributes(['rindegastos'=>1]);
+			CompraRepuestoEquipoPropio::model()->deleteAllByAttributes(['rindegastos'=>1]);
+			CompraRepuestoEquipoArrendado::model()->deleteAllByAttributes(['rindegastos'=>1]);
+
 			//INGRESO LOS GASTOS DE COMBUSTIBLE DE ACUERDO A LA TABLA GASTO_COMPLETA
 			$gastos = Gasto::model()->findAllByAttributes(['expense_policy_id'=>GastoCompleta::POLICY_COMBUSTIBLES]);
 			foreach($gastos as $gasto){
@@ -63,25 +69,312 @@ class Carga{
 					$nocombustible->fecha = $gasto->issue_date;
 					$nocombustible->total = intval($gasto->net);
 					$nocombustible->gasto_completa_id = intval($gastoCompleta->id);
+
+					
+					$tipo_report = "";
+
 					$vehiculoRG = VehiculoRindegastos::model()->findByAttributes(['vehiculo'=>$gastoCompleta->vehiculo_equipo]);
 					if(isset($vehiculoRG)){
 						if($vehiculoRG->camionpropio_id != null){
 							$nocombustible->camionpropio_id = $vehiculoRG->camionpropio_id;
+							$tipo_report = "CP";
 						}
 						if($vehiculoRG->camionarrendado_id != null){
 							$nocombustible->camionarrendado_id = $vehiculoRG->camionarrendado_id;
+							$tipo_report = "CA";
 						}
 						if($vehiculoRG->equipopropio_id != null){
 							$nocombustible->equipopropio_id = $vehiculoRG->equipopropio_id;
+							$tipo_report = "EP";
 						}
 						if($vehiculoRG->equipoarrendado_id != null){
 							$nocombustible->equipoarrendado_id = $vehiculoRG->equipoarrendado_id;
+							$tipo_report = "EA";
 						}
 					}
+
 					$faenaRG = FaenaRindegasto::model()->findByAttributes(['faena'=>$gastoCompleta->centro_costo_faena]);
 					if(isset($faenaRG)){
 						$nocombustible->faena_id = $faenaRG->faena_id;
 					}
+
+					//asociar gasto a report de compra de repuesto
+					//según el tipo de report, busco si hay uno para la fecha 
+					if($tipo_report == "CP"){
+						$compra = new CompraRepuestoCamionPropio();
+						if(strlen($gasto->note) > 200){
+							$compra->repuesto = substr($gasto->note,0,200);
+						}
+						else{
+							$compra->repuesto = $gasto->note;
+						}
+						$compra->montoNeto = (int)$gastoCompleta->monto_neto;
+						$cantidad = str_replace(",",".",$gastoCompleta->cantidad);
+						$compra->cantidad = (float)$cantidad;
+						$compra->unidad = Tools::convertUnidad($gastoCompleta->unidad);
+						if(isset($faenaRG)){
+							$compra->faena_id = $faenaRG->faena_id;
+						}
+						$compra->numero = $gastoCompleta->nro_documento;
+						if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
+							$compra->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
+						}
+						else{
+							$compra->nombre = $gastoCompleta->nombre_quien_rinde;
+						}
+						$compra->nombre_proveedor = $gasto->supplier;
+						$compra->rut_proveedor = $gastoCompleta->rut_proveedor;
+						$compra->tipo_documento = $gastoCompleta->tipo_documento;
+						$compra->rindegastos = 1;
+
+
+						//busco un report al que asociar la compra:
+						//inicio buscando para la fecha del gasto
+						$fecha = new DateTime($gasto->issue_date);
+						$report = RCamionPropio::model()->findByAttributes(['fecha'=>$gasto->issue_date, 'camionPropio_id'=>$vehiculoRG->camionpropio_id]);
+						while($report == null){
+							$dow = date('w',$fecha);
+							//si no hay report busco para el día siguiente,
+							//sino para el subsiguiente, hasta llegar al día sábado, si no hay para el sábado
+							//creo un report para el sábado y asocio la compra a ese
+							//el día posterior, hasta el sábado de esa semana.
+							if($dow == 6){
+								//sábado
+								$report = new RCamionPropio();
+								$report->fecha = $fecha->format('Y-m-d');
+								$report->reporte = "*".$gasto->id;
+								$report->observaciones = "Report creado automáticamente para asociación con RindeGastos";
+								$report->camionPropio_id = (int)$vehiculoRG->camionpropio_id;
+								$report->chofer_id = 1;
+								$report->panne = 0;
+								$report->iniPanne = "";
+								$report->finPanne = "";
+								$report->minPanne = 0;
+								$report->usuario_id = 213;
+								$report->horometro_inicial = 0;
+								$report->horometro_final = 0;
+								$report->save();
+								break;
+							}
+							else{
+								$fecha->add(new DateInterval('P1D'));
+								$report = RCamionPropio::model()->findByAttributes(['fecha'=>$fecha->format('Y-m-d'), 'camionPropio_id'=>$vehiculoRG->camionpropio_id]);
+							}
+						}
+						$compra->rCamionPropio_id = $report->id;						
+						//si puedo guardar la compra, enlazo el registro de rindegastos
+						if($compra->save()){
+							$nocombustible->compra_id = $compra->id;
+						}
+						
+					}
+					else if($tipo_report == "CA"){
+						$compra = new CompraRepuestoCamionArrendado();
+						if(strlen($gasto->note) > 200){
+							$compra->repuesto = substr($gasto->note,0,200);
+						}
+						else{
+							$compra->repuesto = $gasto->note;
+						}
+						$compra->montoNeto = (int)$gastoCompleta->monto_neto;
+						$cantidad = str_replace(",",".",$gastoCompleta->cantidad);
+						$compra->cantidad = (float)$cantidad;
+						$compra->unidad = Tools::convertUnidad($gastoCompleta->unidad);
+						if(isset($faenaRG)){
+							$compra->faena_id = $faenaRG->faena_id;
+						}
+						$compra->numero = $gastoCompleta->nro_documento;
+						if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
+							$compra->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
+						}
+						else{
+							$compra->nombre = $gastoCompleta->nombre_quien_rinde;
+						}
+						$compra->nombre_proveedor = $gasto->supplier;
+						$compra->rut_proveedor = $gastoCompleta->rut_proveedor;
+						$compra->tipo_documento = $gastoCompleta->tipo_documento;
+						$compra->rindegastos = 1;
+
+
+						//busco un report al que asociar la compra:
+						//inicio buscando para la fecha del gasto
+						$fecha = new DateTime($gasto->issue_date);
+						$report = RCamionArrendado::model()->findByAttributes(['fecha'=>$gasto->issue_date, 'camionArrendado_id'=>$vehiculoRG->camionarrendado_id]);
+						while($report == null){
+							$dow = date('w',$fecha);
+							//si no hay report busco para el día siguiente,
+							//sino para el subsiguiente, hasta llegar al día sábado, si no hay para el sábado
+							//creo un report para el sábado y asocio la compra a ese
+							//el día posterior, hasta el sábado de esa semana.
+							if($dow == 6){
+								//sábado
+								$report = new RCamionArrendado();
+								$report->fecha = $fecha->format('Y-m-d');
+								$report->reporte = "*".$gasto->id;
+								$report->observaciones = "Report creado automáticamente para asociación con RindeGastos";
+								$report->camionArrendado_id = (int)$vehiculoRG->camionarrendado_id;
+								$report->chofer_id = 1;
+								$report->panne = 0;
+								$report->iniPanne = "";
+								$report->finPanne = "";
+								$report->minPanne = 0;
+								$report->usuario_id = 213;
+								$report->horometro_inicial = 0;
+								$report->horometro_final = 0;
+								$report->save();
+								break;
+							}
+							else{
+								$fecha->add(new DateInterval('P1D'));
+								$report = RCamionArrendado::model()->findByAttributes(['fecha'=>$fecha->format('Y-m-d'), 'camionArrendado_id'=>$vehiculoRG->camionarrendado_id]);
+							}
+						}
+						$compra->rCamionArrendado_id = $report->id;						
+						//si puedo guardar la compra, enlazo el registro de rindegastos
+						if($compra->save()){
+							$nocombustible->compra_id = $compra->id;
+						}
+					}
+					else if($tipo_report == "EP"){
+						$compra = new CompraRepuestoEquipoPropio();
+						if(strlen($gasto->note) > 200){
+							$compra->repuesto = substr($gasto->note,0,200);
+						}
+						else{
+							$compra->repuesto = $gasto->note;
+						}
+						$compra->montoNeto = (int)$gastoCompleta->monto_neto;
+						$cantidad = str_replace(",",".",$gastoCompleta->cantidad);
+						$compra->cantidad = (float)$cantidad;
+						$compra->unidad = Tools::convertUnidad($gastoCompleta->unidad);
+						if(isset($faenaRG)){
+							$compra->faena_id = $faenaRG->faena_id;
+						}
+						$compra->numero = $gastoCompleta->nro_documento;
+						if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
+							$compra->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
+						}
+						else{
+							$compra->nombre = $gastoCompleta->nombre_quien_rinde;
+						}
+						$compra->nombre_proveedor = $gasto->supplier;
+						$compra->rut_proveedor = $gastoCompleta->rut_proveedor;
+						$compra->tipo_documento = $gastoCompleta->tipo_documento;
+						$compra->rindegastos = 1;
+
+
+						//busco un report al que asociar la compra:
+						//inicio buscando para la fecha del gasto
+						$fecha = new DateTime($gasto->issue_date);
+						$report = REquipoPropio::model()->findByAttributes(['fecha'=>$gasto->issue_date, 'equipoPropio_id'=>$vehiculoRG->equipopropio_id]);
+						while($report == null){
+							$dow = date('w',$fecha);
+							//si no hay report busco para el día siguiente,
+							//sino para el subsiguiente, hasta llegar al día sábado, si no hay para el sábado
+							//creo un report para el sábado y asocio la compra a ese
+							//el día posterior, hasta el sábado de esa semana.
+							if($dow == 6){
+								//sábado
+								$report = new REquipoPropio();
+								$report->fecha = $fecha->format('Y-m-d');
+								$report->reporte = "*".$gasto->id;
+								$report->observaciones = "Report creado automáticamente para asociación con RindeGastos";
+								$report->equipoPropio_id = (int)$vehiculoRG->equipopropio_id;
+								$report->hInicial = 0;
+								$report->hFinal = 0;
+								$report->horas = 0;
+								$report->operador_id = 1;
+								$report->panne = 0;
+								$report->iniPanne = "";
+								$report->finPanne = "";
+								$report->minPanne = 0;
+								$report->horasGps = 0;
+								$report->usuario_id = 213;
+								$report->save();
+								break;
+							}
+							else{
+								$fecha->add(new DateInterval('P1D'));
+								$report = REquipoPropio::model()->findByAttributes(['fecha'=>$fecha->format('Y-m-d'), 'equipoPropio_id'=>$vehiculoRG->equipopropio_id]);
+							}
+						}
+						$compra->rEquipoPropio_id = $report->id;						
+						//si puedo guardar la compra, enlazo el registro de rindegastos
+						if($compra->save()){
+							$nocombustible->compra_id = $compra->id;
+						}
+					}
+					else if($tipo_report == "EA"){
+						$compra = new CompraRepuestoEquipoArrendado();
+						if(strlen($gasto->note) > 200){
+							$compra->repuesto = substr($gasto->note,0,200);
+						}
+						else{
+							$compra->repuesto = $gasto->note;
+						}
+						$compra->montoNeto = (int)$gastoCompleta->monto_neto;
+						$cantidad = str_replace(",",".",$gastoCompleta->cantidad);
+						$compra->cantidad = (float)$cantidad;
+						$compra->unidad = Tools::convertUnidad($gastoCompleta->unidad);
+						if(isset($faenaRG)){
+							$compra->faena_id = $faenaRG->faena_id;
+						}
+						$compra->numero = $gastoCompleta->nro_documento;
+						if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
+							$compra->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
+						}
+						else{
+							$compra->nombre = $gastoCompleta->nombre_quien_rinde;
+						}
+						$compra->nombre_proveedor = $gasto->supplier;
+						$compra->rut_proveedor = $gastoCompleta->rut_proveedor;
+						$compra->tipo_documento = $gastoCompleta->tipo_documento;
+						$compra->rindegastos = 1;
+
+
+						//busco un report al que asociar la compra:
+						//inicio buscando para la fecha del gasto
+						$fecha = new DateTime($gasto->issue_date);
+						$report = REquipoArrendado::model()->findByAttributes(['fecha'=>$gasto->issue_date, 'equipoArrendado_id'=>$vehiculoRG->equipoarrendado_id]);
+						while($report == null){
+							$dow = date('w',$fecha);
+							//si no hay report busco para el día siguiente,
+							//sino para el subsiguiente, hasta llegar al día sábado, si no hay para el sábado
+							//creo un report para el sábado y asocio la compra a ese
+							//el día posterior, hasta el sábado de esa semana.
+							if($dow == 6){
+								//sábado
+								$report = new REquipoArrendado();
+								$report->fecha = $fecha->format('Y-m-d');
+								$report->reporte = "*".$gasto->id;
+								$report->ordenCompra = "";
+								$report->observaciones = "Report creado automáticamente para asociación con RindeGastos";
+								$report->equipoArrendado_id = (int)$vehiculoRG->equipoarrendado_id;
+								$report->hInicial = 0;
+								$report->hFinal = 0;
+								$report->horas = 0;
+								$report->operador_id = 1;
+								$report->panne = 0;
+								$report->iniPanne = "";
+								$report->finPanne = "";
+								$report->minPanne = 0;
+								$report->horasGps = 0;
+								$report->usuario_id = 213;
+								$report->save();
+								break;
+							}
+							else{
+								$fecha->add(new DateInterval('P1D'));
+								$report = REquipoArrendado::model()->findByAttributes(['fecha'=>$fecha->format('Y-m-d'), 'equipoArrendado_id'=>$vehiculoRG->equipoarrendado_id]);
+							}
+						}
+						$compra->rEquipoArrendado_id = $report->id;						
+						//si puedo guardar la compra, enlazo el registro de rindegastos
+						if($compra->save()){
+							$nocombustible->compra_id = $compra->id;
+						}
+					}
+
 					if(!$nocombustible->save()){
 						$errores[] = $nocombustible->errors;
 					}
