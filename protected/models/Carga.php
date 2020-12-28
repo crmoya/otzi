@@ -5,6 +5,8 @@ class Carga{
 
 	public function rindeGastos()
 	{
+		$connection= Yii::app()->db;
+		$transaction=$connection->beginTransaction();
 		$errores = [];
 		ini_set("memory_limit", "-1");
 		set_time_limit(0);
@@ -19,6 +21,7 @@ class Carga{
 			CompraRepuestoCamionArrendado::model()->deleteAllByAttributes(['rindegastos'=>1]);
 			CompraRepuestoEquipoPropio::model()->deleteAllByAttributes(['rindegastos'=>1]);
 			CompraRepuestoEquipoArrendado::model()->deleteAllByAttributes(['rindegastos'=>1]);
+
 
 			//INGRESO LOS GASTOS DE COMBUSTIBLE DE ACUERDO A LA TABLA GASTO_COMPLETA
 			$gastos = Gasto::model()->findAllByAttributes(['expense_policy_id'=>GastoCompleta::POLICY_COMBUSTIBLES]);
@@ -153,7 +156,9 @@ class Carga{
 								$report->usuario_id = 213;
 								$report->horometro_inicial = 0;
 								$report->horometro_final = 0;
-								$report->save();
+								if(!$report->save()){
+									$errores[] = $report->errors;
+								}
 								break;
 							}
 							else{
@@ -166,7 +171,9 @@ class Carga{
 						if($compra->save()){
 							$nocombustible->compra_id = $compra->id;
 						}
-						
+						else{
+							$errores[] = $compra->errors;
+						}
 					}
 					else if($tipo_report == "CA"){
 						$compra = new CompraRepuestoCamionArrendado();
@@ -221,7 +228,9 @@ class Carga{
 								$report->usuario_id = 213;
 								$report->horometro_inicial = 0;
 								$report->horometro_final = 0;
-								$report->save();
+								if(!$report->save()){
+									$errores[] = $report->errors;
+								}
 								break;
 							}
 							else{
@@ -290,7 +299,9 @@ class Carga{
 								$report->minPanne = 0;
 								$report->horasGps = 0;
 								$report->usuario_id = 213;
-								$report->save();
+								if(!$report->save()){
+									$errores[] = $report->errors;
+								}
 								break;
 							}
 							else{
@@ -302,6 +313,9 @@ class Carga{
 						//si puedo guardar la compra, enlazo el registro de rindegastos
 						if($compra->save()){
 							$nocombustible->compra_id = $compra->id;
+						}
+						else{
+							$errores[] = $compra->errors;
 						}
 					}
 					else if($tipo_report == "EA"){
@@ -360,7 +374,9 @@ class Carga{
 								$report->minPanne = 0;
 								$report->horasGps = 0;
 								$report->usuario_id = 213;
-								$report->save();
+								if(!$report->save()){
+									$errores[] = $report->errors;
+								}
 								break;
 							}
 							else{
@@ -372,6 +388,9 @@ class Carga{
 						//si puedo guardar la compra, enlazo el registro de rindegastos
 						if($compra->save()){
 							$nocombustible->compra_id = $compra->id;
+						}
+						else{
+							$errores[] = $compra->errors;
 						}
 					}
 
@@ -386,9 +405,14 @@ class Carga{
 				echo "<pre>";
 				print_r($errores);
 				echo "</pre>";
+				$transaction->rollback();
+			}
+			else{
+				$transaction->commit();
 			}
 		} catch (Exception $e) {
 			echo "Excepción: " . $e;
+			$transaction->rollback();
 		}
 
 	}
@@ -398,6 +422,10 @@ class Carga{
 		$errores = [];
 		ini_set("memory_limit", "-1");
 		set_time_limit(0);
+
+		$connection= Yii::app()->db;
+		$transaction=$connection->beginTransaction();
+
 		try {
 
 			//elimino todo lo anterior
@@ -680,7 +708,9 @@ class Carga{
 						if (isset($gasto_completa)) {
 							if ($gasto->net > 0 && ($gasto_completa->monto_neto == '' || $gasto_completa->monto_neto == null)) {
 								$gasto_completa->monto_neto = $gasto->net;
-								$gasto_completa->save();
+								if(!$gasto_completa->save()){
+									$errores[] = $gasto_completa->errors;
+								}
 							}
 							if ($gasto->tax > 0 && ($gasto_completa->iva == '' || $gasto_completa->iva == null)) {
 								$gasto_completa->iva = $gasto->tax;
@@ -688,7 +718,9 @@ class Carga{
 							if ($gasto->other_taxes > 0) {
 								$gasto_completa->impuesto_especifico = $gasto->other_taxes;
 							}
-							$gasto_completa->save();	
+							if(!$gasto_completa->save()){
+								$errores[] = $gasto_completa->errors;
+							}	
 						}
 
 						//ahora que ya agregué todos los campos extras a gasto_completa,
@@ -698,29 +730,39 @@ class Carga{
 						if (!isset($gasto_completa)) {
 							$gasto_completa = new GastoCompleta();
 							$gasto_completa->gasto_id = $gasto->id;
-							$gasto_completa->save();
+							if(!$gasto_completa->save()){
+								$errores[] = $gasto_completa->errors;
+							}
 						}
 						//para combustibles
 						if ($gasto->expense_policy_id == GastoCompleta::POLICY_COMBUSTIBLES) {
 							//para factura
 							if (trim($gasto_completa->tipo_documento) == 'Factura Combustible' || trim($gasto_completa->tipo_documento) == 'Factura afecta') {
 								$gasto_completa->total_calculado = (int)$gasto_completa->impuesto_especifico + (int)$gasto_completa->iva + (int)$gasto_completa->monto_neto;
-								$gasto_completa->save();
+								if(!$gasto_completa->save()){
+									$errores[] = $gasto_completa->errors;
+								}
 							}
 							//para boleta o vale
 							if (trim($gasto_completa->tipo_documento) == 'Boleta' || trim($gasto_completa->tipo_documento) == 'Vale') {
 								$gasto_completa->total_calculado = (int)$gasto->total;
-								$gasto_completa->save();
+								if(!$gasto_completa->save()){
+									$errores[] = $gasto_completa->errors;
+								}
 							}
 						} else {
 							//para factura afecta
 							if (trim($gasto_completa->tipo_documento) == 'Factura afecta') {
 								$gasto_completa->total_calculado = (int)($gasto_completa->monto_neto * 1.19);
 								$gasto_completa->iva = $gasto->total - $gasto_completa->monto_neto;
-								$gasto_completa->save();
+								if(!$gasto_completa->save()){
+									$errores[] = $gasto_completa->errors;
+								}
 							} else {
 								$gasto_completa->total_calculado = (int)$gasto->total;
-								$gasto_completa->save();
+								if(!$gasto_completa->save()){
+									$errores[] = $gasto_completa->errors;
+								}
 							}
 						}
 
@@ -753,9 +795,14 @@ class Carga{
 				echo "<pre>";
 				print_r($errores);
 				echo "</pre>";
+				$transaction->rollback();
+			}
+			else{
+				$transaction->commit();
 			}
 		} catch (Exception $e) {
 			echo "Excepción: " . $e;
+			$transaction->rollback();
 		}
 	}
 
@@ -765,6 +812,8 @@ class Carga{
 	{
 		ini_set("memory_limit", "-1");
 		set_time_limit(0);
+		$connection= Yii::app()->db;
+		$transaction=$connection->beginTransaction();
 		try {
 
 			//elimino todo lo anterior
@@ -820,9 +869,19 @@ class Carga{
 
 			//END TRAER INFORMES
 
+			if (count($errores) > 0) {
+				echo "<pre>";
+				print_r($errores);
+				echo "</pre>";
+				$transaction->rollback();
+			}
+			else{
+				$transaction->commit();
+			}
 
 		} catch (Exception $e) {
 			echo "Excepción: " . $e;
+			$transaction->rollback();
 		}
 	}
 
