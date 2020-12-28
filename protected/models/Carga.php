@@ -133,7 +133,7 @@ class Carga{
 						$fecha = new DateTime($gasto->issue_date);
 						$report = RCamionPropio::model()->findByAttributes(['fecha'=>$gasto->issue_date, 'camionPropio_id'=>$vehiculoRG->camionpropio_id]);
 						while($report == null){
-							$dow = date('w',$fecha);
+							$dow = date('w',strtotime($fecha->format("Y-m-d")));
 							//si no hay report busco para el día siguiente,
 							//sino para el subsiguiente, hasta llegar al día sábado, si no hay para el sábado
 							//creo un report para el sábado y asocio la compra a ese
@@ -201,7 +201,7 @@ class Carga{
 						$fecha = new DateTime($gasto->issue_date);
 						$report = RCamionArrendado::model()->findByAttributes(['fecha'=>$gasto->issue_date, 'camionArrendado_id'=>$vehiculoRG->camionarrendado_id]);
 						while($report == null){
-							$dow = date('w',$fecha);
+							$dow = date('w',strtotime($fecha->format("Y-m-d")));
 							//si no hay report busco para el día siguiente,
 							//sino para el subsiguiente, hasta llegar al día sábado, si no hay para el sábado
 							//creo un report para el sábado y asocio la compra a ese
@@ -268,7 +268,7 @@ class Carga{
 						$fecha = new DateTime($gasto->issue_date);
 						$report = REquipoPropio::model()->findByAttributes(['fecha'=>$gasto->issue_date, 'equipoPropio_id'=>$vehiculoRG->equipopropio_id]);
 						while($report == null){
-							$dow = date('w',$fecha);
+							$dow = date('w',strtotime($fecha->format("Y-m-d")));
 							//si no hay report busco para el día siguiente,
 							//sino para el subsiguiente, hasta llegar al día sábado, si no hay para el sábado
 							//creo un report para el sábado y asocio la compra a ese
@@ -337,7 +337,7 @@ class Carga{
 						$fecha = new DateTime($gasto->issue_date);
 						$report = REquipoArrendado::model()->findByAttributes(['fecha'=>$gasto->issue_date, 'equipoArrendado_id'=>$vehiculoRG->equipoarrendado_id]);
 						while($report == null){
-							$dow = date('w',$fecha);
+							$dow = date('w',strtotime($fecha->format("Y-m-d")));
 							//si no hay report busco para el día siguiente,
 							//sino para el subsiguiente, hasta llegar al día sábado, si no hay para el sábado
 							//creo un report para el sábado y asocio la compra a ese
