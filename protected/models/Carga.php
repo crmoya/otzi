@@ -105,20 +105,23 @@ class Carga{
 					//según el tipo de report, busco si hay uno para la fecha 
 					if($tipo_report == "CP"){
 						$compra = new CompraRepuestoCamionPropio();
-						if(strlen($gasto->note) > 200){
-							$compra->repuesto = substr($gasto->note,0,200);
+						$repuesto = $gasto->note;
+						if(strlen($repuesto) > 200){
+							$repuesto = substr($repuesto,0,200);
 						}
-						else{
-							$compra->repuesto = $gasto->note;
+						if($repuesto == ""){
+							$repuesto = "Sin descripción - Rindegastos";
 						}
+						$compra->repuesto = $repuesto;
 						$compra->montoNeto = (int)$gastoCompleta->monto_neto;
 						$cantidad = str_replace(",",".",$gastoCompleta->cantidad);
 						$compra->cantidad = (float)$cantidad;
 						$compra->unidad = Tools::convertUnidad($gastoCompleta->unidad);
 						if(isset($faenaRG)){
+							$faena = Faena::model()->findByPk($faenaRG->faena_id);
 							$compra->faena_id = $faenaRG->faena_id;
 						}
-						$compra->numero = $gastoCompleta->nro_documento;
+						$compra->factura = substr($gastoCompleta->nro_documento,0,45);
 						if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
 							$compra->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
 						}
@@ -166,7 +169,7 @@ class Carga{
 								$report = RCamionPropio::model()->findByAttributes(['fecha'=>$fecha->format('Y-m-d'), 'camionPropio_id'=>$vehiculoRG->camionpropio_id]);
 							}
 						}
-						$compra->rCamionPropio_id = $report->id;						
+						$compra->rCamionPropio_id = $report->id;
 						//si puedo guardar la compra, enlazo el registro de rindegastos
 						if($compra->save()){
 							$nocombustible->compra_id = $compra->id;
@@ -177,12 +180,14 @@ class Carga{
 					}
 					else if($tipo_report == "CA"){
 						$compra = new CompraRepuestoCamionArrendado();
-						if(strlen($gasto->note) > 200){
-							$compra->repuesto = substr($gasto->note,0,200);
+						$repuesto = $gasto->note;
+						if(strlen($repuesto) > 200){
+							$repuesto = substr($repuesto,0,200);
 						}
-						else{
-							$compra->repuesto = $gasto->note;
+						if($repuesto == ""){
+							$repuesto = "Sin descripción - Rindegastos";
 						}
+						$compra->repuesto = $repuesto;
 						$compra->montoNeto = (int)$gastoCompleta->monto_neto;
 						$cantidad = str_replace(",",".",$gastoCompleta->cantidad);
 						$compra->cantidad = (float)$cantidad;
@@ -190,7 +195,7 @@ class Carga{
 						if(isset($faenaRG)){
 							$compra->faena_id = $faenaRG->faena_id;
 						}
-						$compra->numero = $gastoCompleta->nro_documento;
+						$compra->factura = substr($gastoCompleta->nro_documento,0,45);
 						if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
 							$compra->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
 						}
@@ -220,6 +225,7 @@ class Carga{
 								$report->reporte = "*".$gasto->id;
 								$report->observaciones = "Report creado automáticamente para asociación con RindeGastos";
 								$report->camionArrendado_id = (int)$vehiculoRG->camionarrendado_id;
+								$report->ordenCompra = "OC - RindeGastos";
 								$report->chofer_id = 1;
 								$report->panne = 0;
 								$report->iniPanne = "";
@@ -243,15 +249,20 @@ class Carga{
 						if($compra->save()){
 							$nocombustible->compra_id = $compra->id;
 						}
+						else{
+							$errores[] = $compra->errors;
+						}
 					}
 					else if($tipo_report == "EP"){
 						$compra = new CompraRepuestoEquipoPropio();
-						if(strlen($gasto->note) > 200){
-							$compra->repuesto = substr($gasto->note,0,200);
+						$repuesto = $gasto->note;
+						if(strlen($repuesto) > 200){
+							$repuesto = substr($repuesto,0,200);
 						}
-						else{
-							$compra->repuesto = $gasto->note;
+						if($repuesto == ""){
+							$repuesto = "Sin descripción - Rindegastos";
 						}
+						$compra->repuesto = $repuesto;
 						$compra->montoNeto = (int)$gastoCompleta->monto_neto;
 						$cantidad = str_replace(",",".",$gastoCompleta->cantidad);
 						$compra->cantidad = (float)$cantidad;
@@ -259,7 +270,7 @@ class Carga{
 						if(isset($faenaRG)){
 							$compra->faena_id = $faenaRG->faena_id;
 						}
-						$compra->numero = $gastoCompleta->nro_documento;
+						$compra->factura = substr($gastoCompleta->nro_documento,0,45);
 						if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
 							$compra->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
 						}
@@ -320,12 +331,14 @@ class Carga{
 					}
 					else if($tipo_report == "EA"){
 						$compra = new CompraRepuestoEquipoArrendado();
-						if(strlen($gasto->note) > 200){
-							$compra->repuesto = substr($gasto->note,0,200);
+						$repuesto = $gasto->note;
+						if(strlen($repuesto) > 200){
+							$repuesto = substr($repuesto,0,200);
 						}
-						else{
-							$compra->repuesto = $gasto->note;
+						if($repuesto == ""){
+							$repuesto = "Sin descripción - Rindegastos";
 						}
+						$compra->repuesto = $repuesto;
 						$compra->montoNeto = (int)$gastoCompleta->monto_neto;
 						$cantidad = str_replace(",",".",$gastoCompleta->cantidad);
 						$compra->cantidad = (float)$cantidad;
@@ -333,7 +346,7 @@ class Carga{
 						if(isset($faenaRG)){
 							$compra->faena_id = $faenaRG->faena_id;
 						}
-						$compra->numero = $gastoCompleta->nro_documento;
+						$compra->factura = substr($gastoCompleta->nro_documento,0,45);
 						if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
 							$compra->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
 						}
@@ -361,7 +374,7 @@ class Carga{
 								$report = new REquipoArrendado();
 								$report->fecha = $fecha->format('Y-m-d');
 								$report->reporte = "*".$gasto->id;
-								$report->ordenCompra = "";
+								$report->ordenCompra = "OC - RindeGastos";
 								$report->observaciones = "Report creado automáticamente para asociación con RindeGastos";
 								$report->equipoArrendado_id = (int)$vehiculoRG->equipoarrendado_id;
 								$report->hInicial = 0;

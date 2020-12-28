@@ -48,7 +48,7 @@ class CompraRepuestoCamionArrendado extends CActiveRecord
 			array('montoNeto, rCamionArrendado_id', 'numerical', 'integerOnly'=>true),
 			array('repuesto', 'length', 'max'=>200),
 			array('guia, factura', 'length', 'max'=>45),
-			array('unidad', 'length', 'max'=>1),
+			array('unidad', 'length', 'max'=>2),
 			array('nombre', 'length', 'max'=>100),
 			array('cantidad', 'numerical'),
 			array('fechaRendicion,numero', 'length', 'max'=>20),
@@ -86,8 +86,8 @@ class CompraRepuestoCamionArrendado extends CActiveRecord
 			'numero'=>'N°Rendición',
 			'nombre'=>'Nombre quien rinde',
 			'rut_rinde'=>'Rut quien rinde',
-                        'fechaRendicion'=>'Fecha de Documento',
-                        'faena_id' => 'Faena',
+			'fechaRendicion'=>'Fecha de Documento',
+			'faena_id' => 'Faena',
 		);
 	}
 

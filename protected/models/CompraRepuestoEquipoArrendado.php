@@ -48,7 +48,7 @@ class CompraRepuestoEquipoArrendado extends CActiveRecord
 			array('montoNeto, rEquipoArrendado_id', 'numerical', 'integerOnly'=>true),
 			array('repuesto', 'length', 'max'=>200),
 			array('guia, factura', 'length', 'max'=>45),
-			array('unidad', 'length', 'max'=>1),
+			array('unidad', 'length', 'max'=>2),
 			array('nombre', 'length', 'max'=>100),
 			array('cantidad', 'numerical'),
 			array('fechaRendicion,numero', 'length', 'max'=>20),
@@ -87,7 +87,7 @@ class CompraRepuestoEquipoArrendado extends CActiveRecord
 			'fechaRendicion'=>'Fecha de Documento',
 			'rEquipoArrendado_id' => 'R Equipo Arrendado',
 			'rut_rinde'=>'Rut quien rinde',
-                        'faena_id' => 'Faena',
+			'faena_id' => 'Faena',
 		);
 	}
 
