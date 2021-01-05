@@ -144,6 +144,7 @@ class Tools
 				$dev = "FACTURA";
 				break;
 			default:
+				$dev = $id;
 				break;
 		}
 		return $dev;
@@ -163,6 +164,7 @@ class Tools
 				$dev = "FACTURA";
 				break;
 			default:
+				$dev = $id;
 				break;
 		}
 		return $dev;

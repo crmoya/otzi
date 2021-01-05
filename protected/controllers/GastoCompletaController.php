@@ -241,8 +241,8 @@ class GastoCompletaController extends Controller
 			];
 	
 			$extra_datos = [
-				['campo'=>'supplier','exportable','dots'=>"md"],
-				['campo'=>'date','exportable','dots'=>'sm'],
+				['campo'=>'comercio','exportable','dots'=>"md"],
+				['campo'=>'fecha','exportable','dots'=>'sm'],
 				['campo'=>'impuesto_especifico','exportable', 'format'=>'money','acumulado'=>'suma'],
 				['campo'=>'iva','exportable', 'format'=>'money','acumulado'=>'suma'],
 				['campo'=>'neto','exportable', 'format'=>'money','acumulado'=>'suma'],
@@ -306,8 +306,8 @@ class GastoCompletaController extends Controller
 			];
 	
 			$extra_datos = [
-				['campo'=>'supplier','exportable','dots'=>"md"],
-				['campo'=>'date','exportable','dots'=>'sm'],
+				['campo'=>'comercio','exportable','dots'=>"md"],
+				['campo'=>'fecha','exportable','dots'=>'sm'],
 				['campo'=>'neto','exportable', 'format'=>'money','acumulado'=>'suma'],
 				['campo'=>'iva','exportable', 'format'=>'money','acumulado'=>'suma'],
 				['campo'=>'total','exportable', 'format'=>'money','acumulado'=>'suma'],

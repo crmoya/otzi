@@ -39,11 +39,11 @@ class GastoCompleta extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('gasto_id', 'required'),
+			/*array('gasto_id', 'required'),
 			array('gasto_id', 'numerical', 'integerOnly'=>true),
 			array('retenido, cantidad, centro_costo_faena, departamento, faena, impuesto_especifico, iva, km_carguio, litros_combustible, monto_neto, nombre_quien_rinde, nro_documento, periodo_planilla, rut_proveedor, supervisor_combustible, tipo_documento, unidad, vehiculo_equipo, vehiculo_oficina_central', 'safe'),
 			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
+			// @todo Please remove those attributes that should not be searched.*/
 			array('id, fecha_inicio, fecha_fin, igual', 'safe', 'on'=>'search'),
 		);
 	}
@@ -54,16 +54,25 @@ class GastoCompleta extends CActiveRecord
 
 		$criteria=new CDbCriteria();
 
+		/*
 		$criteria->join = "	join gasto on t.gasto_id = gasto.id 
 							join informe_gasto on gasto.report_id = informe_gasto.id";
-
-		$criteria->compare('id',$this->id);
+*/
+		//$criteria->compare('id',$this->id);
 		
-		$criteria->compare('gasto.status',1);
-		$criteria->compare('gasto.expense_policy_id',$this->policy);
+		$criteria->compare('estado',1);
+		//$criteria->compare('politica',$this->policy);
+
+		if($this->policy == GastoCompleta::POLICY_COMBUSTIBLES){
+			$criteria->compare('politica',$this->policy);
+		}
+		else{
+			$criteria->addCondition('politica <> :politica');
+			$criteria->params[':politica'] = GastoCompleta::POLICY_COMBUSTIBLES;
+		}
 
 		if($this->igual == "SIN ERRORES"){
-			$criteria->addCondition('gasto.total = total_calculado');
+			$criteria->addCondition('total = total_calculado');
 			if($this->policy == GastoCompleta::POLICY_COMBUSTIBLES){
 				$criteria->addCondition("
 					(tipo_documento = 'Factura Combustible' and monto_neto > 0 and impuesto_especifico > 0 and iva > 0) or tipo_documento = 'Boleta' or tipo_documento = 'Factura afecta' or tipo_documento = 'Vale'
@@ -71,7 +80,7 @@ class GastoCompleta extends CActiveRecord
 			}
 			else{
 				$criteria->addCondition("
-					(tipo_documento = 'Factura afecta' and (gasto.net <> iva and gasto.total <> iva)) or tipo_documento <> 'Factura afecta'
+					(tipo_documento = 'Factura afecta' and (monto_neto <> iva and total <> iva)) or tipo_documento <> 'Factura afecta'
 				");
 			}
 		}
@@ -80,27 +89,27 @@ class GastoCompleta extends CActiveRecord
 				$criteria->addCondition("
 					(tipo_documento <> 'Factura Combustible' and tipo_documento <> 'Boleta' and tipo_documento <> 'Factura afecta' and tipo_documento <> 'Vale') or 
 					(tipo_documento = 'Factura Combustible' and (iva = 0 or impuesto_especifico = 0 or monto_neto = 0)) or
-					gasto.total <> total_calculado
+					total <> total_calculado
 				");
 			}
 			else{
 				$criteria->addCondition("
-					(tipo_documento = 'Factura afecta' and (gasto.net = iva and gasto.total = iva)) or
-					gasto.total <> total_calculado
+					(tipo_documento = 'Factura afecta' and (monto_neto = iva and total = iva)) or
+					total <> total_calculado
 				");
 			}
 		}
 		
 		if($this->fecha_inicio != "" && $this->fecha_fin == ""){
-			$criteria->addCondition('gasto.issue_date >= :fecha_inicio');
+			$criteria->addCondition('fecha >= :fecha_inicio');
 			$criteria->params[':fecha_inicio'] = $this->fecha_inicio;
 		}
 		if($this->fecha_inicio == "" && $this->fecha_fin != ""){
-			$criteria->addCondition('gasto.issue_date <= :fecha_fin');
+			$criteria->addCondition('fecha <= :fecha_fin');
 			$criteria->params = [':fecha_fin'=>$this->fecha_fin];
 		}
 		if($this->fecha_inicio != "" && $this->fecha_fin != ""){
-			$criteria->addCondition('gasto.issue_date >= :fecha_inicio and gasto.issue_date <= :fecha_fin');
+			$criteria->addCondition('fecha >= :fecha_inicio and fecha <= :fecha_fin');
 			$criteria->params[':fecha_inicio'] = $this->fecha_inicio;
 			$criteria->params[':fecha_fin'] = $this->fecha_fin;
 		}
@@ -115,6 +124,7 @@ class GastoCompleta extends CActiveRecord
 
 	const POLICY_COMBUSTIBLES = 44639;
 
+	/*
 	public function getSupplier(){
 		if(isset($this->gasto))
 			return $this->gasto->supplier;
@@ -185,13 +195,14 @@ class GastoCompleta extends CActiveRecord
 		}
 		return "SIN IMAGEN";
 	}
+	*/
 
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'gasto_completa';
+		return 'vGastoCompleta';
 	}
 
 	
