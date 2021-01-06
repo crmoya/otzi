@@ -174,6 +174,7 @@ class GastoCombustibleController extends Controller
 			$detalleGastoCombustible->supervisor_combustible = "";
 			$detalleGastoCombustible->numero = "";
 			$detalleGastoCombustible->tipo_combustible = "";
+
 			if($tipo == "R"){
 				$report = null;
 				$carga = null;
@@ -214,11 +215,12 @@ class GastoCombustibleController extends Controller
 				}
 				$detalleGastoCombustible->fuente = "SAM";
 			}
+			
 			if($tipo == "RG"){
 				$gastoCompleta = $gasto->gastoCompleta;
 				if(isset($gastoCompleta)){
 					if(isset($gastoCompleta->gasto)){
-						$informeGasto = InformeGasto::model()->findByPk($gastoCompleta->gasto->report_id);
+						$informeGasto = InformeGasto::model()->findByPk($gastoCompleta->gasto->report_id);						
 						if(isset($informeGasto)){
 							$detalleGastoCombustible->reporte = $informeGasto->numero;
 						}
@@ -238,7 +240,9 @@ class GastoCombustibleController extends Controller
 				$detalleGastoCombustible->tipo_combustible = $tipoCombustible->nombre;
 			}
 			$datos[] = $detalleGastoCombustible;
+			
 		}
+
 
 
 		$this->render("view",array(

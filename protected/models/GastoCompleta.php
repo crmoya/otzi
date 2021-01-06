@@ -206,6 +206,9 @@ class GastoCompleta extends CActiveRecord
 	}
 
 	
+	public function getGasto(){
+		return Gasto::model()->findByPk($this->gasto_id);
+	}
 
 	/**
 	 * @return array relational rules.
@@ -215,7 +218,7 @@ class GastoCompleta extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'gasto' => array(self::BELONGS_TO, 'Gasto', 'gasto_id'),
+			//'gasto' => array(self::BELONGS_TO, 'Gasto', 'gasto_id'),
 		);
 	}
 

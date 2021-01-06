@@ -190,12 +190,12 @@ class GastoCombustible extends CActiveRecord
 	}
 
 	public function getGastoCompleta(){
-		$partes = explode("-",$this->id);
+		$partes = explode("-",$this->id);;
 		$id = (int)$partes[0];
 		$tipo = $partes[1];
 		$tipo_maquina = $partes[2];
 		if($tipo == "RG"){
-			return GastoCompleta::model()->findByPk($id);
+			return GastoCompleta::model()->findByAttributes(['id'=>$id]);
 		}
 	}
 
