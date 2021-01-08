@@ -65,6 +65,9 @@ class Carga{
 					if(isset($faenaRG)){
 						$combustible->faena_id = $faenaRG->faena_id;
 					}
+					else{
+						$combustible->faena_id = 0;
+					}
 
 					//asociar gasto a report de carga de combustible
 					//según el tipo de report, busco si hay uno para la fecha 
@@ -78,6 +81,9 @@ class Carga{
 						$cargaComb->valorTotal = (int)$gastoCompleta->monto_neto + (int)$gastoCompleta->impuesto_especifico;
 						if(isset($faenaRG)){
 							$cargaComb->faena_id = $faenaRG->faena_id;
+						}
+						else{
+							$cargaComb->faena_id = 0;
 						}
 						$cargaComb->tipoCombustible_id = 0;
 						$cargaComb->supervisorCombustible_id = 0;
@@ -150,6 +156,9 @@ class Carga{
 						if(isset($faenaRG)){
 							$cargaComb->faena_id = $faenaRG->faena_id;
 						}
+						else{
+							$cargaComb->faena_id = 0;
+						}
 						if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
 							$cargaComb->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
 						}
@@ -182,6 +191,7 @@ class Carga{
 								$report->reporte = "*".$gasto->id;
 								$report->observaciones = "Report creado automáticamente para asociación con RindeGastos";
 								$report->camionArrendado_id = (int)$vehiculoRG->camionarrendado_id;
+								$report->ordenCompra = "OC - RindeGastos";
 								$report->chofer_id = 0;
 								$report->panne = 0;
 								$report->iniPanne = "";
@@ -219,6 +229,9 @@ class Carga{
 						$cargaComb->valorTotal = (int)$gastoCompleta->monto_neto + (int)$gastoCompleta->impuesto_especifico;
 						if(isset($faenaRG)){
 							$cargaComb->faena_id = $faenaRG->faena_id;
+						}
+						else{
+							$cargaComb->faena_id = 0;
 						}
 						$cargaComb->tipoCombustible_id = 0;
 						$cargaComb->supervisorCombustible_id = 0;
@@ -293,6 +306,9 @@ class Carga{
 						if(isset($faenaRG)){
 							$cargaComb->faena_id = $faenaRG->faena_id;
 						}
+						else{
+							$cargaComb->faena_id = 0;
+						}
 						$cargaComb->tipoCombustible_id = 0;
 						$cargaComb->supervisorCombustible_id = 0;
 						if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
@@ -330,6 +346,7 @@ class Carga{
 								$report->hFinal = 0;
 								$report->horas = 0;
 								$report->operador_id = 0;
+								$report->ordenCompra = "OC - RindeGastos";
 								$report->panne = 0;
 								$report->iniPanne = "";
 								$report->finPanne = "";
@@ -404,7 +421,9 @@ class Carga{
 					if(isset($faenaRG)){
 						$nocombustible->faena_id = $faenaRG->faena_id;
 					}
-
+					else{
+						$nocombustible->faena_id = 0;
+					}
 					//asociar gasto a report de compra de repuesto
 					//según el tipo de report, busco si hay uno para la fecha 
 					if($tipo_report == "CP"){
@@ -423,6 +442,9 @@ class Carga{
 						$compra->unidad = Tools::convertUnidad($gastoCompleta->unidad);
 						if(isset($faenaRG)){
 							$compra->faena_id = $faenaRG->faena_id;
+						}
+						else{
+							$compra->faena_id = 0;
 						}
 						$compra->factura = substr($gastoCompleta->nro_documento,0,45);
 						if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
@@ -500,6 +522,9 @@ class Carga{
 						$compra->unidad = Tools::convertUnidad($gastoCompleta->unidad);
 						if(isset($faenaRG)){
 							$compra->faena_id = $faenaRG->faena_id;
+						}
+						else{
+							$compra->faena_id = 0;
 						}
 						$compra->factura = substr($gastoCompleta->nro_documento,0,45);
 						if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
@@ -579,6 +604,9 @@ class Carga{
 						if(isset($faenaRG)){
 							$compra->faena_id = $faenaRG->faena_id;
 						}
+						else{
+							$compra->faena_id = 0;
+						}
 						$compra->factura = substr($gastoCompleta->nro_documento,0,45);
 						if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
 							$compra->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
@@ -657,6 +685,9 @@ class Carga{
 						$compra->unidad = Tools::convertUnidad($gastoCompleta->unidad);
 						if(isset($faenaRG)){
 							$compra->faena_id = $faenaRG->faena_id;
+						}
+						else{
+							$compra->faena_id = 0;
 						}
 						$compra->factura = substr($gastoCompleta->nro_documento,0,45);
 						if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
