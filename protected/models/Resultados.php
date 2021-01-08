@@ -74,48 +74,13 @@ class Resultados extends CActiveRecord
 			}
 		}
 
-		$inicioAgrupacion = "";
-
-		if($this->chbCombustible == 1 && $this->chbRepuestos == 1){
-			$inicioAgrupacion = "	maquina,
-									operador,
-									centro_gestion,
-									sum(produccion) as produccion,
-									sum(repuestos) as repuestos,
-									sum(combustible) as combustible,
-									sum(produccion) - sum(repuestos) - sum(combustible) as resultados";
-		}
-		if($this->chbCombustible == 1 && $this->chbRepuestos == 0){
-			$inicioAgrupacion = "	maquina,
-									operador,
-									centro_gestion,
-									sum(produccion) as produccion,
-									0 as repuestos,
-									sum(combustible) as combustible,
-									sum(produccion) - sum(combustible) as resultados";
-		}
-		if($this->chbCombustible == 0 && $this->chbRepuestos == 1){
-			$inicioAgrupacion = "	maquina,
-									operador,
-									centro_gestion,
-									sum(produccion) as produccion,
-									sum(repuestos) as repuestos,
-									0 as combustible,
-									sum(produccion) - sum(repuestos) as resultados";
-		}
-		if($this->chbCombustible == 0 && $this->chbRepuestos == 0){
-			$inicioAgrupacion = "	maquina,
-									operador,
-									centro_gestion,
-									sum(produccion) as produccion,
-									0 as repuestos,
-									0 as combustible,
-									sum(produccion) as resultados";
-		}
-
-		
-
-		$finAgrupacion = "		maquina,operador,centro_gestion";
+		$inicioAgrupacion 		  = "	maquina,
+										operador,
+										centro_gestion,
+										sum(produccion) as produccion,
+										sum(repuestos) as repuestos,
+										sum(combustible) as combustible";
+		$finAgrupacion			  = "	maquina,operador,centro_gestion";
 
 		if(isset($this->agruparPor) && $this->agruparPor != "NINGUNO"){
 			if($this->agruparPor == "MAQUINA"){
@@ -173,6 +138,23 @@ class Resultados extends CActiveRecord
 				$finAgrupacion = "		maquina,operador";
 			}
 		}
+		if($this->chbCombustible == 1 && $this->chbRepuestos == 1){
+			$inicioAgrupacion .= "	,
+									sum(produccion) - sum(repuestos) - sum(combustible) as resultados";
+		}
+		if($this->chbCombustible == 1 && $this->chbRepuestos == 0){
+			$inicioAgrupacion .= "	,
+									sum(produccion) - sum(combustible) as resultados";
+		}
+		if($this->chbCombustible == 0 && $this->chbRepuestos == 1){
+			$inicioAgrupacion .= "	,
+									sum(produccion) - sum(repuestos) as resultados";
+		}
+		if($this->chbCombustible == 0 && $this->chbRepuestos == 0){
+			$inicioAgrupacion .= "	,
+									sum(produccion) as resultados";
+		}
+
 
 		$criteria->select = $inicioAgrupacion;
 		$criteria->group = $finAgrupacion;
