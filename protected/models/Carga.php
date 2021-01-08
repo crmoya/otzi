@@ -168,7 +168,7 @@ class Carga{
 						//busco un report al que asociar la carga:
 						//inicio buscando para la fecha del gasto
 						$fecha = new DateTime($gasto->issue_date);
-						$report = RCamionPropio::model()->findByAttributes(['fecha'=>$gasto->issue_date, 'camionArrendado_id'=>$vehiculoRG->camionarrendado_id]);
+						$report = RCamionArrendado::model()->findByAttributes(['fecha'=>$gasto->issue_date, 'camionArrendado_id'=>$vehiculoRG->camionarrendado_id]);
 						while($report == null){
 							$dow = date('w',strtotime($fecha->format("Y-m-d")));
 							//si no hay report busco para el día siguiente,

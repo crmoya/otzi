@@ -245,14 +245,14 @@ class SiteController extends Controller
 		}
 	}
 */
-/*
+
 
 	public function actionRindegastos(){
 		set_time_limit(0);
 		$carga = new Carga();
 		$carga->rindeGastos();
 	}
-	
+/*
 	public function actionGastos(){
 		set_time_limit(0);
 		$carga = new Carga();
