@@ -30,7 +30,7 @@ class Carga{
 
 
 			//INGRESO LOS GASTOS DE COMBUSTIBLE DE ACUERDO A LA TABLA GASTO_COMPLETA
-			$gastos = Gasto::model()->findAllByAttributes(['expense_policy_id'=>GastoCompleta::POLICY_COMBUSTIBLES]);
+			$gastos = Gasto::model()->findAllByAttributes(['expense_policy_id'=>GastoCompleta::POLICY_COMBUSTIBLES,'status'=>1]);
 			foreach($gastos as $gasto){
 				$gastoCompleta = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
 				if(isset($gastoCompleta)){
@@ -382,7 +382,7 @@ class Carga{
 
 			//INGRESO LOS GASTOS DIFERENTES DE COMBUSTIBLE DE ACUERDO A LA TABLA GASTO_COMPLETA
 			$criteria=new CDbCriteria;
-			$criteria->condition = "expense_policy_id <> :policy";
+			$criteria->condition = "expense_policy_id <> :policy and status = 1";
 			$criteria->params = [':policy' => GastoCompleta::POLICY_COMBUSTIBLES];
 			$gastos = Gasto::model()->findAll($criteria);
 			foreach($gastos as $gasto){
