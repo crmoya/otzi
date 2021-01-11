@@ -51,11 +51,11 @@ class ExpedicionesEquipoPropioController extends Controller
 		}
 
 		$cabeceras = [
-			['name'=>'Fecha','width'=>'xs'],
-			['name'=>'Reporte','width'=>'xs'],
+			['name'=>'Fecha','width'=>'sm'],
+			['name'=>'Reporte','width'=>'sm'],
 			['name'=>'Obs.','width'=>'sm'],
 			['name'=>'Obs.Obra','width'=>'sm'],
-			['name'=>'Equipo','width'=>'md'],
+			['name'=>'Equipo','width'=>'lg'],
 			['name'=>'Hrs.Reales','width'=>'sm'],
 			['name'=>'Hrs.GPS','width'=>'sm'],
 			['name'=>'Producción','width'=>'sm'],
@@ -65,13 +65,10 @@ class ExpedicionesEquipoPropioController extends Controller
 			['name'=>'Panne','width'=>'sm'],
 			['name'=>'Validar','width'=>'xs'],
 			['name'=>'Validado por','width'=>'sm'],
-			['name'=>'Modificaciones','width'=>'sm'],
-			['name'=>'Adjuntos','width'=>'sm'],
-			['name'=>'','width'=>'sm'],
 		];
 
 		$extra_datos = [
-			['campo'=>'fecha','exportable','dots'=>"xs"],
+			['campo'=>'fecha','exportable','dots'=>"sm"],
 			['campo'=>'reporte','exportable','dots'=>'xs'],
 			['campo'=>'observaciones','exportable','dots'=>'md'],
 			['campo'=>'observaciones_obra','exportable', 'dots'=>'md'],
@@ -82,13 +79,9 @@ class ExpedicionesEquipoPropioController extends Controller
 			['campo'=>'combustible','exportable', 'format'=>'number','acumulado'=>'suma'],
 			['campo'=>'repuestos','exportable', 'format'=>'money','acumulado'=>'suma'],
 			['campo'=>'horas_panne','exportable', 'format'=>'number','acumulado'=>'suma'],
-			['campo'=>'horas_reales','exportable', 'format'=>'number','acumulado'=>'suma'],
 			['campo'=>'panne','exportable'],
-			['campo'=>'validar'],
-			['campo'=>'validado_por'],
-			['campo'=>'modificaciones'],
-			['campo'=>'adjuntos'],
-			['campo'=>'seleccionar'],
+			['campo'=>'validado'],
+			['campo'=>'validador'],
 		];
 
 		$datos = ExpedicionesEquipoPropio::model()->findAll($model->search());

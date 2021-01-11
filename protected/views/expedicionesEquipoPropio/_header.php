@@ -69,12 +69,12 @@
 	?>
 	</td>
 	<td>
-		<?php echo $form->labelEx($model,'propiosOArrendados'); ?>
-	    <?php echo $form->dropDownList($model,'propiosOArrendados', CHtml::listData(array(array('id'=>'TODOS','nombre'=>'Todos'),array('id'=>'EP','nombre'=>'Solamente Máquinas Propias'),array('id'=>'EA','nombre'=>'Solamente Máquinas Arrendadas')), 'id', 'nombre')); ?>
+		<?php echo $form->labelEx($model,'reporte'); ?>
+	    <?php echo $form->textField($model,'reporte',array('size'=>10)); ?>
 	</td>
 	<td>
-		<?php echo $form->labelEx($model,'agruparPor'); ?>
-	    <?php echo $form->dropDownList($model,'agruparPor', CHtml::listData(array(array('id'=>'NINGUNO','nombre'=>'Sin agrupación'),array('id'=>'MAQUINA','nombre'=>'Máquina'),array('id'=>'OPERADOR','nombre'=>'Operador'),array('id'=>'CENTROGESTION','nombre'=>'Centro de Gestión'),array('id'=>'CENTROMAQUINA','nombre'=>'Centro de Gestión y Máquina'),array('id'=>'CENTROOPERADOR','nombre'=>'Centro de Gestión y Operador'),array('id'=>'OPERADORMAQUINA','nombre'=>'Operador y Máquina')), 'id', 'nombre')); ?>
+		<?php echo $form->labelEx($model,'equipo'); ?>
+	    <?php echo $form->dropDownList($model,'equipo', CHtml::listData(EquipoPropio::model()->listarTodos(), 'id', 'nombre')); ?>
 	</td>
 	<td>
 		<?php echo CHtml::submitButton('Filtrar'); ?>

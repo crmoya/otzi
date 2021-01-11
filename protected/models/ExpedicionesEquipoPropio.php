@@ -2,6 +2,8 @@
 
 class ExpedicionesEquipoPropio extends CActiveRecord
 {
+
+
 	/**
 	 * @return array validation rules for model attributes.
 	 */
@@ -38,11 +40,11 @@ class ExpedicionesEquipoPropio extends CActiveRecord
 		}
 
 		if($this->equipo != ""){
-			$criteria->addCondition("equipo_id = :equipo");
+			$criteria->addCondition("equipo = :equipo");
 			$criteria->params[':equipo'] = $this->equipo;
 		}
 
-		$criteria->addCondition("propios_arrendados = 'P'");
+		$criteria->addCondition("propio_arrendado = 'P'");
 
 		return $criteria;
 	}
