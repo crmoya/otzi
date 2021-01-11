@@ -45,6 +45,9 @@ class ExpedicionesEquipoPropio extends CActiveRecord
 		}
 
 		$criteria->addCondition("propio_arrendado = 'P'");
+		
+		$criteria->select = 'fecha,reporte,observaciones,observaciones_obra,equipo,sum(horas_reales) as horas_reales,sum(horas_gps) as horas_gps,sum(produccion) as produccion,sum(combustible) as combustible, sum(repuestos) as repuestos, sum(horas_panne) as horas_panne, panne,validado,validador';
+		$criteria->group = 'fecha,reporte,observaciones,observaciones_obra,equipo,panne,validado,validador';
 
 		return $criteria;
 	}
