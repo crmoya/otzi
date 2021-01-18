@@ -22,7 +22,7 @@ Bienvenido <?php echo CHtml::encode($nombre);?>, por favor seleccione una de las
 <ul>
  <li><?php echo CHtml::link("Reporte Diario de camiones, camionetas, autos Propios",CController::createUrl('//informeRegExpCamionPropio/admin')); ?></li>
  <li><?php echo CHtml::link("Reporte Diario de camiones, camionetas, autos Arrendados",CController::createUrl('//informeRegExpCamionArrendado/admin')); ?></li>
- <li><?php echo CHtml::link("Reporte Diario de Equipos Propios",CController::createUrl('//informeRegExpEquipoPropio/admin')); ?></li>
+ <li><?php echo CHtml::link("Reporte Diario de Equipos Propios",CController::createUrl('//expedicionesEquipoPropio/admin')); ?></li>
  <li><?php echo CHtml::link("Reporte Diario de Equipos Arrendados",CController::createUrl('//informeRegExpEquipoArrendado/admin')); ?></li>
 </ul>
 <ul>
