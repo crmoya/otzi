@@ -198,6 +198,25 @@ $(document).ready( function () {
 	});
 	$.fn.dataTable.moment( 'YYYY-MM-DD' );
 
+
+	var allSelected = false;
+	$('.select-all').click(function(e){
+		var checked = 'checked';
+		if(allSelected){
+			checked = '';
+		}
+		allSelected = !allSelected;
+		$('.check-adjunto').prop('checked',checked);
+	});
+
+
+	$('.validar-1').attr('title','validar');
+	$('.validar-2').attr('title','realizar segunda validación');
+	$('.full-validado').attr('title','');
+
+	$('.validar-1').click(function(e){
+		
+	});
 });
 </script>
 <style>
@@ -238,5 +257,8 @@ $(document).ready( function () {
 }
 .loading{
 	margin: 0 auto;
+}
+.validar-1:hover, .validar-2:hover{
+	cursor: pointer;
 }
 </style>

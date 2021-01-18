@@ -26,7 +26,7 @@ $form=$this->beginWidget('CActiveForm', array(
 						'changeMonth'=>true,
 					),
 					'htmlOptions'=>array(
-				        'style'=>'width:70px;',
+				        'style'=>'width:90px;',
 						'readonly'=>'readonly',
 				    ),
 				)
@@ -50,7 +50,7 @@ $form=$this->beginWidget('CActiveForm', array(
 						'changeMonth'=>true,
 					),
 					'htmlOptions'=>array(
-				        'style'=>'width:70px;',
+				        'style'=>'width:90px;',
 						'readonly'=>'readonly',
 				    ),
 				)
@@ -62,7 +62,7 @@ $form=$this->beginWidget('CActiveForm', array(
  <tr>
   <td colspan="2">
     <div class="row buttons">
-		<?php echo CHtml::submitButton('Filtrar'); ?>
+		<?php echo CHtml::submitButton('Filtrar',['class'=>'btn btn-primary']); ?>
 	</div>
   </td>
  </tr>

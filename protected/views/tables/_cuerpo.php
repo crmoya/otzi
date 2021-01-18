@@ -39,14 +39,18 @@
 						}
 					}
 					$style .= "'";
-					if (isset($th['name'])) {
-						if ($th['name'] == 'Ver') {
-							echo "<th " . $style . " title='" . $th['name'] . "'> Ver </th>";
+					if (isset($th['filtro'])) {
+						if($th['filtro']=='false'){
+							echo "<th>" . $th['name'] . "</th>";
 						}
-						else{
-							echo "<th " . $style . " title='" . $th['name'] . "'><input style='width:" . $ancho . "px' $atributos_input type='text' placeholder='" . $th['name'] . "' /></th>";
+						if ($th['filtro'] == 'checkbox') {
+							echo "<th><img src='" . Yii::app()->request->baseUrl . "/images/check_old.png' class='select-all'/><span>" . $th['name'] . "</span></th>";
 						}
 					}
+					else{
+						echo "<th " . $style . " title='" . $th['name'] . "'><input style='width:" . $ancho . "px' $atributos_input type='text' placeholder='" . $th['name'] . "' /></th>";						
+					}
+					
 				}
 			}
 			?>
@@ -56,7 +60,8 @@
 		<tbody>
 		<?php 
 			$totales = [];
-			foreach($datos as $fila):?>
+			foreach($datos as $fila):
+			?>
 			<tr>
 				<?php foreach($extra_datos as $i => $extra_dato): 
 					$campo = $extra_dato['campo'];
@@ -71,6 +76,18 @@
 						if($extra_dato['format'] == "money"){
 							$estilos .= "text-align:right;";
 							$valor = "$".number_format((int)$fila->$campo,"0","",".");
+						}
+						if($extra_dato['format'] == "validado"){
+							$estilos .= "text-align:center;";
+							if($fila->$campo == 1){
+								$valor = "<img class='validar-2' src='" . Yii::app()->request->baseUrl . "/images/check.png'><span class='validar-2' style='display:none;'>1</span>";
+							}
+							else if($fila->$campo == 2){
+								$valor = "<img class='full-validado' src='" . Yii::app()->request->baseUrl . "/images/check2.png'><span class='full-validado' style='display:none;'>2</span>";
+							}
+							else{
+								$valor = "<img class='validar-1' src='" . Yii::app()->request->baseUrl . "/images/eliminar.png'><span class='validar-1' style='display:none;'>0</span>";
+							}
 						}
 						if($extra_dato['format'] == "number"){
 							$estilos .= "text-align:right;";
@@ -98,7 +115,43 @@
 									$params .= $param . "=" . $fila->$param . "&";
 								}
 							}
-							$valor = '<a href="' . CController::createUrl($extra_dato['url']) . '?' . $params .'">' . $valor . '</a>';
+							$newpage = "";
+							if(isset($extra_dato['new-page'])){
+								if($extra_dato['new-page'] == 'true'){
+									$newpage = "target ='_blank'";
+								}
+							}
+							$valor = '<a ' . $newpage . ' href="' . CController::createUrl($extra_dato['url']) . '?' . $params .'">' . $valor . '</a>';
+						}
+						if($extra_dato['format'] == "enlace-documento"){
+							$params = "";
+							if(isset($extra_dato['params'])){
+								foreach($extra_dato['params'] as $param){
+									$params .= $param . "=" . $fila->$param . "&";
+								}
+							}
+							$newpage = "";
+							if(isset($extra_dato['new-page'])){
+								if($extra_dato['new-page'] == 'true'){
+									$newpage = "target ='_blank'";
+								}
+							}
+							$valor = '<input value="' . $fila->$campo . '" type="checkbox" class="check-adjunto"/>&nbsp;<a ' . $newpage . ' href="' . CController::createUrl($extra_dato['url']) . '?' . $params .'"><img src="' . Yii::app()->request->baseUrl . '/images/txt-chico.png"></a>';
+						}
+						if($extra_dato['format'] == "enlace-imagen"){
+							$params = "";
+							if(isset($extra_dato['params'])){
+								foreach($extra_dato['params'] as $param){
+									$params .= $param . "=" . $fila->$param . "&";
+								}
+							}
+							$newpage = "";
+							if(isset($extra_dato['new-page'])){
+								if($extra_dato['new-page'] == 'true'){
+									$newpage = "target ='_blank'";
+								}
+							}
+							$valor = '<a ' . $newpage . ' href="' . CController::createUrl($extra_dato['url']) . '?' . $params .'"><img src="' . Yii::app()->request->baseUrl . '/images/search.png"></a>';
 						}
 						if($extra_dato['format'] == "enlace_rg"){
 							$params = "";

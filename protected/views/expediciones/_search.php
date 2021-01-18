@@ -43,7 +43,7 @@ if(isset($_GET['Expediciones'])){
 )); ?>
 <table>
 		<tr>
-			<td style="width:70px;"><?php echo $form->label($model,'fecha_inicio'); ?></td>
+			<td style="width:90px;"><?php echo $form->label($model,'fecha_inicio'); ?></td>
 			<td width="150">
 				<?php 
 					$this->widget('zii.widgets.jui.CJuiDatePicker',
@@ -59,7 +59,7 @@ if(isset($_GET['Expediciones'])){
 								'changeMonth'=>true,
 							),
 							'htmlOptions'=>array(
-						        'style'=>'width:70px;',
+						        'style'=>'width:90px;',
 								'readonly'=>'readonly',
 								'class'=>'fecha_inicio',
 								'value'=>$f_inicio,
@@ -69,7 +69,7 @@ if(isset($_GET['Expediciones'])){
 				?>	
 				<br/><div id="errorFecha" class="errorMessage"></div>						
 			</td>
-			<td style="width:70px;"><?php echo $form->label($model,'fecha_fin'); ?></td>
+			<td style="width:90px;"><?php echo $form->label($model,'fecha_fin'); ?></td>
 			<td>
 				<?php 
 				$this->widget('zii.widgets.jui.CJuiDatePicker',
@@ -85,7 +85,7 @@ if(isset($_GET['Expediciones'])){
 							'changeMonth'=>true,
 						),
 						'htmlOptions'=>array(
-					        'style'=>'width:70px;',
+					        'style'=>'width:90px;',
 							'readonly'=>'readonly',
 							'class'=>'fecha_final',
 							'value'=>$f_fin,
@@ -96,7 +96,7 @@ if(isset($_GET['Expediciones'])){
 			</td>
 		</tr>
 		<tr>
-			<td style="width:70px;"><?php echo $form->label($model,'chofer'); ?></td>
+			<td style="width:90px;"><?php echo $form->label($model,'chofer'); ?></td>
 			<td colspan="3">
 				<?php 
 					echo $form->dropDownList(
@@ -111,7 +111,7 @@ if(isset($_GET['Expediciones'])){
 			</td>			
 		</tr>
 		<tr>
-			<td style="width:70px;"><?php echo $form->label($model,'faena'); ?></td>
+			<td style="width:90px;"><?php echo $form->label($model,'faena'); ?></td>
 			<td colspan="3">
 			<?php 
 				echo $form->dropDownList(
@@ -131,7 +131,7 @@ if(isset($_GET['Expediciones'])){
 			</td>
 		</tr>
 		<tr>
-			<td style="width:70px;"><?php echo $form->label($model,'origen_destino'); ?></td>
+			<td style="width:90px;"><?php echo $form->label($model,'origen_destino'); ?></td>
 			<td colspan="3">
 				<?php 
 					echo $form->dropDownList(
@@ -143,7 +143,7 @@ if(isset($_GET['Expediciones'])){
 			</td>
 		</tr>
 		<tr>
-			<td style="width:70px;"><?php echo $form->label($model,'propio_arrendado'); ?></td>
+			<td style="width:90px;"><?php echo $form->label($model,'propio_arrendado'); ?></td>
 			<td>
 				<?php 
 				echo $form->dropDownList($model,'propio_arrendado', 
@@ -154,7 +154,7 @@ if(isset($_GET['Expediciones'])){
 					), 'id', 'nombre'));
 				?>				
 			</td>
-			<td style='width:70px'><?php echo $form->label($model,'agrupar_por');?></td>
+			<td style='width:90px'><?php echo $form->label($model,'agrupar_por');?></td>
 			<td>
 				<?php 
 					echo $form->dropDownList($model,'agrupar_por', 

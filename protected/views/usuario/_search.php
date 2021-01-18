@@ -31,7 +31,7 @@
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton('Filtrar'); ?>
+		<?php echo CHtml::submitButton('Filtrar',['class'=>'btn btn-primary']); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

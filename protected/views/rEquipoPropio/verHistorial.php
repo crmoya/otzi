@@ -5,7 +5,6 @@
         <tr>
             <th>Fecha</th>
             <th>Report</th>
-            <th>Faena</th>
             <th>Fecha Validación</th>
             <th>Validador</th>
             <th>Fecha Corrección Report validado</th>
@@ -22,7 +21,6 @@
         <tr>
             <td><?php echo date_format(date_create($validacion->rEquipoPropio->fecha),"d/m/Y");?></td>
             <td><?php echo $validacion->rEquipoPropio->reporte;?></td>
-            <td><?php echo $validacion->rEquipoPropio->faena->nombre;?></td>
             <td><?php echo date_format(date_create($validacion->fecha),"d/m/Y H:i ");?></td>
             <td><?php echo $validacion->usuario->nombre." (".$validacion->usuario->user.")";?></td>
             <td><?php echo $modificacion!=null?date_format(date_create($modificacion->fecha),"d/m/Y H:i "):"";?></td>

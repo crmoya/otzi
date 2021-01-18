@@ -602,7 +602,7 @@ $cs->registerCoreScript('jquery');
 									'changeMonth' => true,
 								),
 								'htmlOptions' => array(
-									'style' => 'width:70px;',
+									'style' => 'width:90px;',
 									'value' => date("d/m/Y"),
 								),
 							)

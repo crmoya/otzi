@@ -40,7 +40,7 @@
 					'changeMonth'=>true,
 				),
 				'htmlOptions'=>array(
-					'style'=>'width:70px;',
+					'style'=>'width:90px;',
 				),
 			)
 		);
@@ -62,7 +62,7 @@
 					'changeMonth'=>true,
 				),
 				'htmlOptions'=>array(
-					'style'=>'width:70px;',
+					'style'=>'width:90px;',
 				),
 			)
 		);
@@ -85,7 +85,7 @@
 	    <?php echo $form->dropDownList($model,'decimales', CHtml::listData(array(array('id'=>'0'),array('id'=>'1'),array('id'=>'2'),array('id'=>'3')), 'id', 'id')); ?>
 	</td>
 	<td>
-		<?php echo CHtml::submitButton('Filtrar'); ?>
+		<?php echo CHtml::submitButton('Filtrar',['class'=>'btn btn-primary']); ?>
 	</td>
  </tr>
 </table>

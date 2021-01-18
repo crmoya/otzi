@@ -34,7 +34,7 @@
 						'changeMonth'=>true,
 					),
 					'htmlOptions'=>array(
-				        'style'=>'width:70px;',
+				        'style'=>'width:90px;',
 						'readonly'=>'readonly',
 				    ),
 				)
@@ -58,7 +58,7 @@
 						'changeMonth'=>true,
 					),
 					'htmlOptions'=>array(
-				        'style'=>'width:70px;',
+				        'style'=>'width:90px;',
 						'readonly'=>'readonly',
 				    ),
 				)
@@ -70,7 +70,7 @@
  <tr>
   <td colspan="2">
     <div class="row buttons">
-		<?php echo CHtml::submitButton('Filtrar'); ?>
+		<?php echo CHtml::submitButton('Filtrar',['class'=>'btn btn-primary']); ?>
 	</div>
   </td>
  </tr>

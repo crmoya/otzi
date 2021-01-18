@@ -790,7 +790,7 @@ $cs->registerCoreScript('jquery');
 									'changeMonth' => true,
 								),
 								'htmlOptions' => array(
-									'style' => 'width:70px;',
+									'style' => 'width:90px;',
 									'disabled' => $model->validado == 1 ? 'disabled' : '',
 									'value' => Tools::backFecha($model->fecha),
 								),

@@ -105,7 +105,7 @@ $this->breadcrumbs=array(
 					'changeMonth'=>true,
 				),
 				'htmlOptions'=>array(
-					'style'=>'width:70px;',
+					'style'=>'width:90px;',
 				),
 			)
 		);

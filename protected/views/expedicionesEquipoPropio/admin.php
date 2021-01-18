@@ -1,6 +1,6 @@
 <?php
 
-Yii::app()->getController()->pageTitle="Informe de Producción de Maquinaria";
+Yii::app()->getController()->pageTitle="Registros de Expediciones de Equipos Propios";
 ?>
 
 
@@ -10,3 +10,23 @@ Yii::app()->getController()->pageTitle="Informe de Producción de Maquinaria";
 echo $this->renderPartial('//tables/_cuerpo',['datos'=>$datos, 'cabeceras' => $cabeceras, 'extra_datos'=>$extra_datos]);
 ?>
 <?php echo $this->renderPartial('//tables/_footer',['extra_datos'=>$extra_datos]); ?>
+
+<script>
+$(document).ready(function(e){
+    $('.exportar-adjuntos').click(function(e) {
+        var registros = "";
+        $('.check-adjunto').each(function() {
+            if($(this).prop('checked')){
+                registros += $(this).val()+"-";
+            }
+        });
+        if(registros != ""){
+            registros = registros.substring(0,registros.length-1);
+            window.location = "<?=CController::createUrl("//gerencia/adjuntos");?>?ids="+registros+"&tipo=CA";
+        }
+        else{
+            alert('Para exportar los adjuntos, debe seleccionar al menos un registro.');
+        }
+    });
+});
+</script>

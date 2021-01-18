@@ -797,7 +797,7 @@ $cs->registerCoreScript('jquery');
 								),
 								'htmlOptions' => array(
 									'disabled' => ($model->validado == 1) ? 'disabled' : '',
-									'style' => 'width:70px;',
+									'style' => 'width:90px;',
 									'value' => Tools::backFecha($model->fecha),
 
 								),

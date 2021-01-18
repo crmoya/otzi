@@ -25,13 +25,13 @@
 						'changeMonth'=>true,
 					),
 					'htmlOptions'=>array(
-				        'style'=>'width:70px;',
+				        'style'=>'width:90px;',
 						'readonly'=>'readonly',
 				    ),
 				)
 			);
 		?></td>
-		<td><?php echo CHtml::submitButton('Filtrar'); ?></td>
+		<td><?php echo CHtml::submitButton('Filtrar',['class'=>'btn btn-primary']); ?></td>
 	</tr>
 	<tr>
 	 	<td><?php echo $form->labelEx($model,'propiosOArrendados'); ?>
@@ -51,7 +51,7 @@
 						'changeMonth'=>true,
 					),
 					'htmlOptions'=>array(
-				        'style'=>'width:70px;',
+				        'style'=>'width:90px;',
 						'readonly'=>'readonly',
 				    ),
 				)

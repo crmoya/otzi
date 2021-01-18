@@ -14,6 +14,7 @@
 <script src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js"></script>
 
 
+
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'action'=>Yii::app()->createUrl($this->route),
 	'method'=>'get',
@@ -40,7 +41,7 @@
 					'changeMonth'=>true,
 				),
 				'htmlOptions'=>array(
-					'style'=>'width:70px;',
+					'style'=>'width:90px;',
 				),
 			)
 		);
@@ -62,7 +63,7 @@
 					'changeMonth'=>true,
 				),
 				'htmlOptions'=>array(
-					'style'=>'width:70px;',
+					'style'=>'width:90px;',
 				),
 			)
 		);
@@ -77,9 +78,9 @@
 	    <?php echo $form->dropDownList($model,'equipo', CHtml::listData(EquipoPropio::model()->listarTodos(), 'id', 'nombre')); ?>
 	</td>
 	<td>
-		<?php echo CHtml::submitButton('Filtrar'); ?>
+		<?php echo CHtml::submitButton('Filtrar',['class'=>'btn btn-primary']); ?>
 	</td>
-	
+	<td><div class="btn btn-info exportar-adjuntos">Exportar adjuntos seleccionados</div></td>
  </tr>
 </table>
 <?php $this->endWidget(); ?>

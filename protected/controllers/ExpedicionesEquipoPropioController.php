@@ -51,25 +51,27 @@ class ExpedicionesEquipoPropioController extends Controller
 		}
 
 		$cabeceras = [
-			['name'=>'Fecha','width'=>'sm'],
-			['name'=>'Reporte','width'=>'sm'],
+			['name'=>'Fecha','width'=>'md'],
+			['name'=>'Reporte','width'=>'md'],
 			['name'=>'Obs.','width'=>'sm'],
-			['name'=>'Obs.Obra','width'=>'sm'],
+			['name'=>'Obs.Obra','width'=>'md'],
 			['name'=>'Equipo','width'=>'lg'],
 			['name'=>'Hrs.Reales','width'=>'sm'],
 			['name'=>'Hrs.GPS','width'=>'sm'],
-			['name'=>'Producción','width'=>'sm'],
+			['name'=>'Producción','width'=>'md'],
 			['name'=>'Comb.Lts','width'=>'sm'],
 			['name'=>'Repuestos($)','width'=>'sm'],
 			['name'=>'Hrs.Panne','width'=>'sm'],
 			['name'=>'Panne','width'=>'sm'],
-			['name'=>'Validar','width'=>'xs'],
-			['name'=>'Validado por','width'=>'sm'],
+			['name'=>'Validar', 'filtro'=>'false', 'width'=>'xs'],
+			['name'=>'Validado por','width'=>'md'],
+			['name'=>'Adjuntos', 'filtro'=>'checkbox'],
+			['name'=>'Modificaciones', 'filtro'=>'false'],
 		];
 
 		$extra_datos = [
 			['campo'=>'fecha','exportable','dots'=>"sm"],
-			['campo'=>'reporte','exportable','dots'=>'xs'],
+			['campo'=>'reporte','exportable','format'=> 'enlace', 'new-page'=>'true', 'url'=>"//rEquipoPropio/view", 'params'=>['id']],
 			['campo'=>'observaciones','exportable','dots'=>'md'],
 			['campo'=>'observaciones_obra','exportable', 'dots'=>'md'],
 			['campo'=>'equipo','exportable', 'dots'=>'md'],
@@ -80,8 +82,10 @@ class ExpedicionesEquipoPropioController extends Controller
 			['campo'=>'repuestos','exportable', 'format'=>'money','acumulado'=>'suma'],
 			['campo'=>'horas_panne','exportable', 'format'=>'number','acumulado'=>'suma'],
 			['campo'=>'panne','exportable'],
-			['campo'=>'validado'],
+			['campo'=>'validado','format'=>'validado'],
 			['campo'=>'validador'],
+			['campo'=>'id','format'=> 'enlace-documento', 'new-page'=>'true', 'url'=>"//admin/preview", 'params'=>['id','tipo']],
+			['campo'=>'id','format'=> 'enlace-imagen', 'new-page'=>'true', 'url'=>"//rEquipoPropio/verHistorial", 'params'=>['id']],
 		];
 
 		$datos = ExpedicionesEquipoPropio::model()->findAll($model->search());
@@ -92,5 +96,9 @@ class ExpedicionesEquipoPropioController extends Controller
 			'cabeceras' => $cabeceras,
 			'extra_datos' => $extra_datos,
 		));
+	}
+
+	public function actionView($id){
+		$this->redirect(CController::createUrl("//rEquipoPropio/".$id));
 	}
 }

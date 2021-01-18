@@ -23,7 +23,7 @@
                                 'changeMonth'=>true,
                         ),
                         'htmlOptions'=>array(
-                        'style'=>'width:70px;',
+                        'style'=>'width:90px;',
                                 'readonly'=>'readonly',
                         ),
                     )
@@ -49,7 +49,7 @@
 						'changeMonth'=>true,
 					),
 					'htmlOptions'=>array(
-				        'style'=>'width:70px;',
+				        'style'=>'width:90px;',
 						'readonly'=>'readonly',
 				    ),
 				)
@@ -64,7 +64,7 @@
     <td>
         <?php echo $form->textField($model,'reporte');?>
     </td>
-    <td><?php echo CHtml::submitButton('Filtrar'); ?></div>
+    <td><?php echo CHtml::submitButton('Filtrar',['class'=>'btn btn-primary']); ?></div>
   </td>
  </tr>
 </table>

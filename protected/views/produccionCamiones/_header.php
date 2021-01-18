@@ -40,7 +40,7 @@
 					'changeMonth'=>true,
 				),
 				'htmlOptions'=>array(
-					'style'=>'width:70px;',
+					'style'=>'width:90px;',
 				),
 			)
 		);
@@ -62,7 +62,7 @@
 					'changeMonth'=>true,
 				),
 				'htmlOptions'=>array(
-					'style'=>'width:70px;',
+					'style'=>'width:90px;',
 				),
 			)
 		);
@@ -77,7 +77,7 @@
 	    <?php echo $form->dropDownList($model,'agruparPor', CHtml::listData(array(array('id'=>'NINGUNO','nombre'=>'Sin agrupación'),array('id'=>'CAMION','nombre'=>'Camión'),array('id'=>'CHOFER','nombre'=>'Chofer'),array('id'=>'CENTROGESTION','nombre'=>'Centro de Gestión'),array('id'=>'CENTROCAMION','nombre'=>'Centro de Gestión y Camión'),array('id'=>'CENTROCHOFER','nombre'=>'Centro de Gestión y Chofer'),array('id'=>'CHOFERCAMION','nombre'=>'Chofer y Camión')), 'id', 'nombre')); ?>
 	</td>
 	<td>
-		<?php echo CHtml::submitButton('Filtrar'); ?>
+		<?php echo CHtml::submitButton('Filtrar',['class'=>'btn btn-primary']); ?>
 	</td>
 	
  </tr>
