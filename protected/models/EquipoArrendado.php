@@ -199,4 +199,28 @@ class EquipoArrendado extends CActiveRecord
 		}
 		return $data;
 	}
+
+	public function listarTodos(){
+
+		$data = array();
+		$connection=Yii::app()->db;
+		$connection->active=true;
+		$command=$connection->createCommand("
+			select		id,nombre
+			from		equipoArrendado
+			order by	nombre
+			"
+		);
+		$dataReader=$command->query();
+		$rows=$dataReader->readAll();
+		$connection->active=false;
+		$command = null;
+		$data[0]=array('nombre'=>"Seleccione un equipo",'id'=>'');
+		$i=1;
+		foreach($rows as $row){
+			$data[$i]=$row;
+			$i++;
+		}
+		return $data;
+	}
 }
