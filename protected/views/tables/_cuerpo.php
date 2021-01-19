@@ -46,6 +46,9 @@
 						if ($th['filtro'] == 'checkbox') {
 							echo "<th><img src='" . Yii::app()->request->baseUrl . "/images/check_old.png' class='select-all'/><span>" . $th['name'] . "</span></th>";
 						}
+						if($th['filtro']=='validacion'){
+							echo "<th><img src='" . Yii::app()->request->baseUrl . "/images/check_old.png' class='validate-all'/><span>" . $th['name'] . "</span></th>";
+						}
 					}
 					else{
 						echo "<th " . $style . " title='" . $th['name'] . "'><input style='width:" . $ancho . "px' $atributos_input type='text' placeholder='" . $th['name'] . "' /></th>";						
@@ -79,14 +82,20 @@
 						}
 						if($extra_dato['format'] == "validado"){
 							$estilos .= "text-align:center;";
+							$valor_id = -1;
+							if(isset($extra_dato['params'])){
+								foreach($extra_dato['params'] as $param){
+									$valor_id = $fila->$param;
+								}
+							}
 							if($fila->$campo == 1){
-								$valor = "<img class='validar-2' src='" . Yii::app()->request->baseUrl . "/images/check.png'><span class='validar-2' style='display:none;'>1</span>";
+								$valor = "<img id_reg='" . $valor_id . "' class='validate validar-2' src='" . Yii::app()->request->baseUrl . "/images/check.png'><span class='validar-2' style='display:none;'>1</span>";
 							}
 							else if($fila->$campo == 2){
-								$valor = "<img class='full-validado' src='" . Yii::app()->request->baseUrl . "/images/check2.png'><span class='full-validado' style='display:none;'>2</span>";
+								$valor = "<img id_reg='" . $valor_id . "' class='full-validado' src='" . Yii::app()->request->baseUrl . "/images/check2.png'><span class='full-validado' style='display:none;'>2</span>";
 							}
 							else{
-								$valor = "<img class='validar-1' src='" . Yii::app()->request->baseUrl . "/images/eliminar.png'><span class='validar-1' style='display:none;'>0</span>";
+								$valor = "<img id_reg='" . $valor_id . "' class='validate validar-1' src='" . Yii::app()->request->baseUrl . "/images/eliminar.png'><span class='validar-1' style='display:none;'>0</span>";
 							}
 						}
 						if($extra_dato['format'] == "number"){

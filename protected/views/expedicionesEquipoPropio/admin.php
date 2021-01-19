@@ -22,11 +22,59 @@ $(document).ready(function(e){
         });
         if(registros != ""){
             registros = registros.substring(0,registros.length-1);
-            window.location = "<?=CController::createUrl("//gerencia/adjuntos");?>?ids="+registros+"&tipo=CA";
+            window.location = "<?=CController::createUrl("//gerencia/adjuntos");?>?ids="+registros+"&tipo=EP";
         }
         else{
             alert('Para exportar los adjuntos, debe seleccionar al menos un registro.');
         }
+        e.stopPropagation();
+    });
+    $(document).on('click','.validate-all',function(e){
+        if (confirm('¿Está seguro de que desea validar todos los reports que están siendo filtrados?')) {
+            var reports = Array();
+            var i = 0;
+            $('.validate').each(function() {
+                var rep_id = $(this).attr('id_reg');
+                reports[i] = rep_id;
+                i++;
+            });
+            var reports_str = reports.join();
+            console.log(reports_str);
+            $.ajax({
+                type: "POST",
+                url: "<?php echo Yii::app()->createUrl('//rEquipoPropio/validar/'); ?>",
+                data: {
+                    reports: reports_str
+                }
+            }).done(function(msg) {
+                if (msg != 'OK') {
+                    alert(msg);
+                }
+                else{
+                    location.reload();
+                }
+            });
+        }
+    });
+    $(document).on('click','.validate',function(e){
+        if (confirm('¿Está seguro de que desea validar este report?')) {
+            var rep_id = $(this).attr('id_reg');
+            $.ajax({
+                type: "POST",
+                url: "<?php echo Yii::app()->createUrl('//rEquipoPropio/validar/'); ?>",
+                data: {
+                    reports: rep_id
+                }
+            }).done(function(msg) {
+                if (msg != 'OK') {
+                    alert(msg);
+                }
+                else{
+                    location.reload();
+                }
+            });
+        }
+        e.stopPropagation();
     });
 });
 </script>

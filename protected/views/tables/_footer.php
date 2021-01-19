@@ -4,6 +4,23 @@ $(document).ready( function () {
 	// DataTable
 	var table = $('#datos').DataTable({
 		dom: 'Bfrtip',
+		columns: [
+			<?php
+			for($j=0; $j<count($extra_datos); $j++){
+				if(isset($extra_datos[$j]['ordenable'])){
+					if($extra_datos[$j]['ordenable'] == "false"){
+						echo "{ orderable: false }, ";
+					}
+					else{
+						echo "null, ";
+					}
+				}
+				else{
+					echo "null, ";
+				}
+			}
+			?>
+		],
 		buttons: [
 			{
 				extend: 'excelHtml5',
@@ -214,9 +231,7 @@ $(document).ready( function () {
 	$('.validar-2').attr('title','realizar segunda validación');
 	$('.full-validado').attr('title','');
 
-	$('.validar-1').click(function(e){
-		
-	});
+	
 });
 </script>
 <style>

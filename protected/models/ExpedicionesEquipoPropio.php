@@ -12,7 +12,7 @@ class ExpedicionesEquipoPropio extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fecha_inicio, fecha_fin, equipo, reporte', 'safe', 'on'=>'search'),
+			array('fecha_inicio, fecha_fin, equipo_id, reporte', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -34,20 +34,13 @@ class ExpedicionesEquipoPropio extends CActiveRecord
 			$criteria->params[':fecha_fin'] = $this->fecha_fin;
 		}
 
-		if($this->reporte != ""){
-			$criteria->addCondition("reporte like '%:reporte%'");
-			$criteria->params[':reporte'] = $this->reporte;
-		}
-
-		if($this->equipo != ""){
-			$criteria->addCondition("equipo = :equipo");
-			$criteria->params[':equipo'] = $this->equipo;
-		}
-
+		$criteria->compare('reporte',$this->reporte,true);
+		$criteria->compare('equipo_id',$this->equipo_id);
+		
 		$criteria->addCondition("tipo = 'equipos_propios'");
 		
-		$criteria->select = 'tipo,id,fecha,reporte,observaciones,observaciones_obra,equipo,sum(horas_reales) as horas_reales,sum(horas_gps) as horas_gps,sum(produccion) as produccion,sum(combustible) as combustible, sum(repuestos) as repuestos, sum(horas_panne) as horas_panne, panne,validado,validador';
-		$criteria->group = 'tipo,id,fecha,reporte,observaciones,observaciones_obra,equipo,panne,validado,validador';
+		$criteria->select = 'tipo,id,fecha,reporte,observaciones,observaciones_obra,equipo,equipo_id,sum(horas_reales) as horas_reales,sum(horas_gps) as horas_gps,sum(produccion) as produccion,sum(combustible) as combustible, sum(repuestos) as repuestos, sum(horas_panne) as horas_panne, panne,validado,validador';
+		$criteria->group = 'tipo,id,fecha,reporte,observaciones,observaciones_obra,equipo,equipo_id,panne,validado,validador';
 
 		return $criteria;
 	}
@@ -55,7 +48,7 @@ class ExpedicionesEquipoPropio extends CActiveRecord
 	public $fecha_inicio;
 	public $fecha_fin;
 	public $reporte;
-	public $equipo;
+	public $equipo_id;
 
 
 	public function tableName()
@@ -77,6 +70,9 @@ class ExpedicionesEquipoPropio extends CActiveRecord
 	 */
 	public function attributeLabels()
 	{
+		return [
+			'equipo_id' => 'Equipo',
+		];
 	}
 
 

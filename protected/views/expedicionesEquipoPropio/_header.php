@@ -74,13 +74,13 @@
 	    <?php echo $form->textField($model,'reporte',array('size'=>10)); ?>
 	</td>
 	<td>
-		<?php echo $form->labelEx($model,'equipo'); ?>
-	    <?php echo $form->dropDownList($model,'equipo', CHtml::listData(EquipoPropio::model()->listarTodos(), 'id', 'nombre')); ?>
+		<?php echo $form->labelEx($model,'equipo_id'); ?>
+	    <?php echo $form->dropDownList($model,'equipo_id', CHtml::listData(EquipoPropio::model()->listarTodos(), 'id', 'nombre')); ?>
 	</td>
 	<td>
 		<?php echo CHtml::submitButton('Filtrar',['class'=>'btn btn-primary']); ?>
 	</td>
-	<td><div class="btn btn-info exportar-adjuntos">Exportar adjuntos seleccionados</div></td>
+	<td><div class="btn btn-info exportar-adjuntos">Exportar adjuntos</div></td>
  </tr>
 </table>
 <?php $this->endWidget(); ?>

@@ -63,7 +63,7 @@ class ExpedicionesEquipoPropioController extends Controller
 			['name'=>'Repuestos($)','width'=>'sm'],
 			['name'=>'Hrs.Panne','width'=>'sm'],
 			['name'=>'Panne','width'=>'sm'],
-			['name'=>'Validar', 'filtro'=>'false', 'width'=>'xs'],
+			['name'=>'Validar', 'filtro'=>'validacion', 'width'=>'xs'],
 			['name'=>'Validado por','width'=>'md'],
 			['name'=>'Adjuntos', 'filtro'=>'checkbox'],
 			['name'=>'Modificaciones', 'filtro'=>'false'],
@@ -82,10 +82,10 @@ class ExpedicionesEquipoPropioController extends Controller
 			['campo'=>'repuestos','exportable', 'format'=>'money','acumulado'=>'suma'],
 			['campo'=>'horas_panne','exportable', 'format'=>'number','acumulado'=>'suma'],
 			['campo'=>'panne','exportable'],
-			['campo'=>'validado','format'=>'validado'],
+			['campo'=>'validado','format'=>'validado','params'=>['id'],'ordenable'=>'false'],
 			['campo'=>'validador'],
-			['campo'=>'id','format'=> 'enlace-documento', 'new-page'=>'true', 'url'=>"//admin/preview", 'params'=>['id','tipo']],
-			['campo'=>'id','format'=> 'enlace-imagen', 'new-page'=>'true', 'url'=>"//rEquipoPropio/verHistorial", 'params'=>['id']],
+			['campo'=>'id','format'=> 'enlace-documento', 'new-page'=>'true', 'url'=>"//admin/preview", 'params'=>['id','tipo'],'ordenable'=>'false'],
+			['campo'=>'id','format'=> 'enlace-imagen', 'new-page'=>'true', 'url'=>"//rEquipoPropio/verHistorial", 'params'=>['id'],'ordenable'=>'false'],
 		];
 
 		$datos = ExpedicionesEquipoPropio::model()->findAll($model->search());
