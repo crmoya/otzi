@@ -69,21 +69,14 @@ class RCamionArrendadoController extends Controller
 		foreach ($rep_arr as $report_id) {
 			if (is_numeric($report_id)) {
 				$report = RCamionArrendado::model()->findByPk($report_id);
-				$informe = Informeregexpcamionarrendado::model()->findByAttributes(array('id_reg' => $report_id));
-				if ($report != null && $informe != null) {
+				if ($report != null) {
 					if ($report->validado == 0) {
 						$report->validado = 1;
 					} else if ($report->validado == 1) {
 						$report->validado = 2;
 					}
-					if ($informe->validado == 0) {
-						$informe->validado = 1;
-					} else if ($informe->validado == 1) {
-						$informe->validado = 2;
-					}
 
 					$report->validador_id = Yii::app()->user->id;
-					$informe->validador_id = Yii::app()->user->id;
 					$historial = new HistorialValidacionesCa();
 					$historial->fecha = date("Y-m-d H:i");
 					$historial->rCamionArrendado_id = $report->id;

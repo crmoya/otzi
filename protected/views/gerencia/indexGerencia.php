@@ -20,8 +20,8 @@ Bienvenido <?php echo CHtml::encode($nombre);?>, por favor seleccione una de las
  <li><?php echo CHtml::link("Informe Cálculo Trato Chofer",CController::createUrl('//gerencia/chofer')); ?></li>
 </ul>
 <ul>
- <li><?php echo CHtml::link("Reporte Diario de camiones, camionetas, autos Propios",CController::createUrl('//informeRegExpCamionPropio/admin')); ?></li>
- <li><?php echo CHtml::link("Reporte Diario de camiones, camionetas, autos Arrendados",CController::createUrl('//informeRegExpCamionArrendado/admin')); ?></li>
+ <li><?php echo CHtml::link("Reporte Diario de camiones, camionetas, autos Propios",CController::createUrl('//expedicionesCamionPropio/admin')); ?></li>
+ <li><?php echo CHtml::link("Reporte Diario de camiones, camionetas, autos Arrendados",CController::createUrl('//expedicionesCamionArrendado/admin')); ?></li>
  <li><?php echo CHtml::link("Reporte Diario de Equipos Propios",CController::createUrl('//expedicionesEquipoPropio/admin')); ?></li>
  <li><?php echo CHtml::link("Reporte Diario de Equipos Arrendados",CController::createUrl('//expedicionesEquipoArrendado/admin')); ?></li>
 </ul>
