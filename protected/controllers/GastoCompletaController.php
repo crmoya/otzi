@@ -194,17 +194,17 @@ class GastoCompletaController extends Controller
 		
 		$this->pageTitle = "";
 
-		$model=new GastoCompleta('search');
+		$model=new VGastoCompleta('search');
 		$model->fecha_inicio = date("Y-01-01");
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['GastoCompleta'])){
-			$model->attributes=$_GET['GastoCompleta'];
+		if(isset($_GET['VGastoCompleta'])){
+			$model->attributes=$_GET['VGastoCompleta'];
 		}
 
 		$model->policy = $policy;
 
 		$gastoNombre = "DEPARTAMENTO DE MAQUINARIA DIFERENTE DE COMBUSTIBLES";
-		if($policy == GastoCompleta::POLICY_COMBUSTIBLES){
+		if($policy == VGastoCompleta::POLICY_COMBUSTIBLES){
 			$gastoNombre = "COMBUSTIBLES";
 			$cabeceras = [
 				['name'=>'Proveedor','width'=>'md'],
@@ -336,7 +336,7 @@ class GastoCompletaController extends Controller
 			];
 		}
 
-		$datos = GastoCompleta::model()->findAll($model->search());
+		$datos = VGastoCompleta::model()->findAll($model->search());
 
 		$this->render("admin",array(
 			'model'=>$model,
@@ -355,7 +355,7 @@ class GastoCompletaController extends Controller
 	 */
 	public function loadModel($id)
 	{
-		$model = GastoCompleta::model()->findByPk($id);
+		$model = VGastoCompleta::model()->findByPk($id);
 		if ($model === null)
 			throw new CHttpException(404, 'The requested page does not exist.');
 		return $model;
