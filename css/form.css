@@ -416,4 +416,7 @@ textarea.template
 {
 	display: none;
 }
+.btn{
+	max-width: 250px !important;
+}
 /* end of common style */

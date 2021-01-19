@@ -393,7 +393,7 @@ $cs->registerCoreScript('jquery');
 	<!--complex-->
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Crear' : 'Guardar', ['id' => 'guardar']); ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? 'Crear' : 'Guardar', ['id' => 'guardar','class'=>'form-control btn btn-primary']); ?>
 	</div>
 
 	<?php $this->endWidget(); ?>

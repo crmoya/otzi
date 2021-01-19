@@ -38,7 +38,7 @@
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton('Cambiar Clave'); ?>
+		<?php echo CHtml::submitButton('Cambiar Clave',['class'=>'btn btn-primary form-control']); ?>
 	</div>
 
 <?php $this->endWidget(); 

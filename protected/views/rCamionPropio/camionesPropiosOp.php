@@ -1726,7 +1726,7 @@ $cs->registerCoreScript('jquery');
 		</fieldset>
 
 		<div class="row buttons">
-			<?php echo CHtml::submitButton('Guardar', array('id' => 'guardar', 'disabled' => ($model->validado == 1) ? 'disabled' : '')); ?>
+			<?php echo CHtml::submitButton('Guardar', array('id' => 'guardar', 'disabled' => ($model->validado == 1) ? 'disabled' : '','class'=>'btn btn-primary form-control')); ?>
 		</div>
 
 	<?php $this->endWidget();

@@ -631,7 +631,7 @@ $cs->registerCoreScript('jquery');
 				</table>
 			</div>
 			<div class="row buttons">
-				<?php echo CHtml::submitButton('Habilitar para modificación', array('id' => 'habilitar')); ?>
+				<?php echo CHtml::submitButton('Habilitar para modificación', array('id' => 'habilitar','class'=>'btn btn-primary form-control')); ?>
 			</div>
 		</div>
 		<?php
@@ -1470,7 +1470,7 @@ $cs->registerCoreScript('jquery');
 		</fieldset>
 
 		<div class="row buttons">
-			<?php echo CHtml::submitButton('Guardar', array('id' => 'guardar', 'disabled' => $model->validado == 2 ? 'disabled' : '',)); ?>
+			<?php echo CHtml::submitButton('Guardar', array('id' => 'guardar', 'disabled' => $model->validado == 2 ? 'disabled' : '','class'=>'btn btn-primary form-control')); ?>
 		</div>
 
 	<?php $this->endWidget();

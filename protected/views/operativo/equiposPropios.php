@@ -1067,7 +1067,7 @@ $cs->registerCoreScript('jquery');
 
 
 		<div class="row buttons">
-			<?php echo CHtml::submitButton('Guardar', array('id' => 'guardar')); ?>
+			<?php echo CHtml::submitButton('Guardar', array('id' => 'guardar','class'=>'btn btn-primary form-control')); ?>
 		</div>
 
 	<?php $this->endWidget();

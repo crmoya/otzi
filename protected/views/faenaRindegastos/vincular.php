@@ -49,7 +49,7 @@
 	</table>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton('Vincular'); ?>
+		<?php echo CHtml::submitButton('Vincular',['class'=>'btn btn-primary form-control']); ?>
 	</div>
 
 <?php $this->endWidget(); ?>
