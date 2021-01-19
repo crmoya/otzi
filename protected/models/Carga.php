@@ -939,7 +939,7 @@ class Carga{
 											$gasto_completa = new GastoCompleta();
 											$gasto_completa->gasto_id = $gasto->id;
 										}
-										$gasto_completa->litros_combustible = $extra_gasto->value;
+										$gasto_completa->litros_combustible = (float)$extra_gasto->value;
 										if (!$gasto_completa->save()) {
 											$errores[] = $gasto_completa->errors;
 										}

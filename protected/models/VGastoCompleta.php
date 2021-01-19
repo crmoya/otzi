@@ -29,7 +29,7 @@
  * The followings are the available model relations:
  * @property Gasto $gasto
  */
-class GastoCompleta extends CActiveRecord
+class VGastoCompleta extends CActiveRecord
 {
 	/**
 	 * @return array validation rules for model attributes.
@@ -130,7 +130,7 @@ class GastoCompleta extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'gasto_completa';
+		return 'vGastoCompleta';
 	}
 
 	
