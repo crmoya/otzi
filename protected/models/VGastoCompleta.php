@@ -130,7 +130,7 @@ class VGastoCompleta extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'vgastocompleta';
+		return 'vGastoCompleta';
 	}
 
 	
