@@ -55,7 +55,8 @@ class GastoCombustibleController extends Controller
 		$cabeceras = [
 			['name'=>'Máquina o camión','width'=>'lg'],
 			['name'=>'Operador o Chofer','width'=>'lg'],
-			['name'=>'Centro Gestión','width'=>'lg'],
+			['name'=>'Centro Gestión','width'=>'md'],
+			['name'=>'Tipo Combustible','width'=>'md'],
 			['name'=>'Consumo (Lts)','width'=>'md'],
 			['name'=>'Consumo ($)','width'=>'md'],
 			['name'=>'Ver','width'=>'xs'],
@@ -65,6 +66,7 @@ class GastoCombustibleController extends Controller
 			['campo'=>'maquina','exportable','dots'=>"md"],
 			['campo'=>'operador','exportable','dots'=>'md'],
 			['campo'=>'centro_gestion','exportable','dots'=>'md'],
+			['campo'=>'tipocombustible','exportable','dots'=>'md'],
 			['campo'=>'litros','exportable', 'format'=>'number','acumulado'=>'suma'],
 			['campo'=>'total','exportable', 'format'=>'money','acumulado'=>'suma'],
 			['campo'=>'id','format'=> 'enlace-ver', 'url'=>"//gastoCombustible/view?fecha_inicio=$model->fecha_inicio&fecha_fin=$model->fecha_fin&propiosOArrendados=$model->propiosOArrendados&tipoCombustible_id=$model->tipoCombustible_id", 'params'=>['maquina','operador','centro_gestion']],

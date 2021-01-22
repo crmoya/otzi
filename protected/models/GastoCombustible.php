@@ -83,9 +83,11 @@ class GastoCombustible extends CActiveRecord
 		$inicioAgrupacion = "	maquina,
 								operador,
 								centro_gestion,
+								tipo_combustible,
+								tipocombustible,
 								sum(litros) as litros,
 								sum(total) as total";
-		$finAgrupacion = "		operador,maquina,centro_gestion";
+		$finAgrupacion = "		operador,maquina,centro_gestion,tipo_combustible,tipocombustible";
 
 		if(isset($this->agruparPor) && $this->agruparPor != "NINGUNO"){
 			if($this->agruparPor == "MAQUINA"){
@@ -96,7 +98,7 @@ class GastoCombustible extends CActiveRecord
 				sum(litros) as litros,
 				sum(total) as total
 				";
-				$finAgrupacion = "maquina";
+				$finAgrupacion = "maquina,tipocombustible,tipo_combustible";
 			}
 			if($this->agruparPor == "OPERADOR"){
 				$inicioAgrupacion = "
@@ -106,7 +108,7 @@ class GastoCombustible extends CActiveRecord
 				sum(litros) as litros,
 				sum(total) as total
 				";
-				$finAgrupacion = "operador";
+				$finAgrupacion = "operador,tipocombustible,tipo_combustible";
 			}
 			if($this->agruparPor == "CENTROGESTION"){
 				$inicioAgrupacion = "
@@ -116,7 +118,7 @@ class GastoCombustible extends CActiveRecord
 				sum(litros) as litros,
 				sum(total) as total
 				";
-				$finAgrupacion = "centro_gestion";
+				$finAgrupacion = "centro_gestion,tipocombustible,tipo_combustible";
 			}
 			if($this->agruparPor == "CENTROMAQUINA"){
 				$inicioAgrupacion = "
@@ -127,7 +129,7 @@ class GastoCombustible extends CActiveRecord
 				sum(total) as total,
 				'CENTROMAQUINA' as id
 				";
-				$finAgrupacion = "maquina,centro_gestion";
+				$finAgrupacion = "maquina,centro_gestion,tipocombustible,tipo_combustible";
 			}
 			if($this->agruparPor == "CENTROOPERADOR"){
 				$inicioAgrupacion = "
@@ -137,7 +139,7 @@ class GastoCombustible extends CActiveRecord
 				sum(litros) as litros,
 				sum(total) as total
 				";
-				$finAgrupacion = "centro_gestion,operador";
+				$finAgrupacion = "centro_gestion,operador,tipocombustible,tipo_combustible";
 			}
 			if($this->agruparPor == "OPERADORMAQUINA"){
 				$inicioAgrupacion = "
@@ -147,7 +149,7 @@ class GastoCombustible extends CActiveRecord
 				sum(litros) as litros,
 				sum(total) as total
 				";
-				$finAgrupacion = "operador,maquina";
+				$finAgrupacion = "operador,maquina,tipocombustible,tipo_combustible";
 			}
 		}
 
