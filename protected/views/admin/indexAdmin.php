@@ -18,6 +18,16 @@ foreach($faenas as $faena){
     $noVinculadosF[] = ['faena'=>$faena['faena']];
 }
 
+$noVinculadosTC = [];
+
+$criteria = new CDbCriteria;
+$criteria->select = 'DISTINCT category_code';
+$criteria->condition = "not exists (select * from tipocombustible_rindegasto where tipocombustible = t.category_code) and category_code != ''";
+$tipos = Gasto::model()->findAll($criteria);
+foreach($faenas as $faena){
+    $noVinculadosTC[] = ['category_code'=>$tipos['category_code']];
+}
+
 ?>
 Bienvenido <?php echo CHtml::encode($nombre);?>, por favor seleccione una de las siguientes operaciones para comenzar:<br/><br/>
 <ul>
@@ -48,6 +58,7 @@ Bienvenido <?php echo CHtml::encode($nombre);?>, por favor seleccione una de las
  <li>&nbsp;</li>
  <li><?php echo CHtml::link("Asociar vehículos no vinculados de Rinde Gastos (" . count($noVinculadosV) . " sin vincular)",CController::createUrl('//vehiculoRindegastos/vincular')); ?></li>
  <li><?php echo CHtml::link("Asociar faenas no vinculadas de Rinde Gastos (" . count($noVinculadosF) . " sin vincular)",CController::createUrl('//faenaRindegastos/vincular')); ?></li>
+ <li><?php echo CHtml::link("Asociar tipos de combustible no vinculadas de Rinde Gastos (" . count($noVinculadosTC) . " sin vincular)",CController::createUrl('//tipoCombustibleRindegastos/vincular')); ?></li>
  <li>&nbsp;</li>
  <li><?php echo CHtml::link("Cambiar mi clave",CController::createUrl('//site/cambiarClave')); ?></li>
 

@@ -829,6 +829,7 @@ class Carga{
 					$gasto->other_taxes = $expense->OtherTaxes;
 					$gasto->category = $expense->Category;
 					$gasto->category_group = $expense->CategoryGroup;
+					$gasto->category_code = $expense->CategoryCode;
 					$gasto->note = $expense->Note;
 					$gasto->expense_policy_id = (int)$expense->ExpensePolicyId;
 					$gasto->report_id = (int)$expense->ReportId;
