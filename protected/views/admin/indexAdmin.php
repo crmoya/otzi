@@ -57,7 +57,7 @@ Bienvenido <?php echo CHtml::encode($nombre);?>, por favor seleccione una de las
  <li>&nbsp;</li>
  <li><?php echo CHtml::link("Asociar vehículos no vinculados de Rinde Gastos (" . count($noVinculadosV) . " sin vincular)",CController::createUrl('//vehiculoRindegastos/vincular')); ?></li>
  <li><?php echo CHtml::link("Asociar faenas no vinculadas de Rinde Gastos (" . count($noVinculadosF) . " sin vincular)",CController::createUrl('//faenaRindegastos/vincular')); ?></li>
- <li><?php echo CHtml::link("Asociar tipos de combustible no vinculadas de Rinde Gastos (" . count($noVinculadosTC) . " sin vincular)",CController::createUrl('//tipoCombustibleRindegastos/vincular')); ?></li>
+ <li><?php echo CHtml::link("Asociar tipos de combustible no vinculadas de Rinde Gastos (" . count($noVinculadosTC) . " sin vincular)",CController::createUrl('//tipoCombustibleRG/vincular')); ?></li>
  <li>&nbsp;</li>
  <li><?php echo CHtml::link("Cambiar mi clave",CController::createUrl('//site/cambiarClave')); ?></li>
 
