@@ -98,7 +98,7 @@ class Carga{
 						$cargaComb->nombre_proveedor = $gasto->supplier;
 						$cargaComb->rut_proveedor = $gastoCompleta->rut_proveedor;
 						$cargaComb->observaciones = "Registro de Rindegastos";
-						$cargaComb->tipo_documento = $gastoCompleta->tipo_documento;
+						$cargaComb->tipo_documento = Tools::traducirTipoDocumento($gastoCompleta->tipo_documento);
 						$cargaComb->rindegastos = 1;
 
 						//busco un report al que asociar la carga:
@@ -169,7 +169,7 @@ class Carga{
 						$cargaComb->nombre_proveedor = $gasto->supplier;
 						$cargaComb->rut_proveedor = $gastoCompleta->rut_proveedor;
 						$cargaComb->observaciones = "Registro de Rindegastos";
-						$cargaComb->tipo_documento = $gastoCompleta->tipo_documento;
+						$cargaComb->tipo_documento = Tools::traducirTipoDocumento($gastoCompleta->tipo_documento);
 						$cargaComb->tipoCombustible_id = 0;
 						$cargaComb->supervisorCombustible_id = 0;	
 						$cargaComb->rindegastos = 1;
@@ -245,7 +245,7 @@ class Carga{
 						$cargaComb->nombre_proveedor = $gasto->supplier;
 						$cargaComb->rut_proveedor = $gastoCompleta->rut_proveedor;
 						$cargaComb->observaciones = "Registro de Rindegastos";
-						$cargaComb->tipo_documento = $gastoCompleta->tipo_documento;							
+						$cargaComb->tipo_documento = Tools::traducirTipoDocumento($gastoCompleta->tipo_documento);							
 						$cargaComb->rindegastos = 1;
 
 
@@ -321,7 +321,7 @@ class Carga{
 						$cargaComb->nombre_proveedor = $gasto->supplier;
 						$cargaComb->rut_proveedor = $gastoCompleta->rut_proveedor;
 						$cargaComb->observaciones = "Registro de Rindegastos";
-						$cargaComb->tipo_documento = $gastoCompleta->tipo_documento;							
+						$cargaComb->tipo_documento = Tools::traducirTipoDocumento($gastoCompleta->tipo_documento);							
 						$cargaComb->rindegastos = 1;
 
 
@@ -458,7 +458,7 @@ class Carga{
 						$compra->cuenta = " ";
 						$compra->nombre_proveedor = $gasto->supplier;
 						$compra->rut_proveedor = $gastoCompleta->rut_proveedor;
-						$compra->tipo_documento = $gastoCompleta->tipo_documento;
+						$compra->tipo_documento = Tools::traducirTipoDocumento($gastoCompleta->tipo_documento);
 						$compra->rindegastos = 1;
 
 
@@ -538,7 +538,7 @@ class Carga{
 						$compra->cuenta = " ";
 						$compra->nombre_proveedor = $gasto->supplier;
 						$compra->rut_proveedor = $gastoCompleta->rut_proveedor;
-						$compra->tipo_documento = $gastoCompleta->tipo_documento;
+						$compra->tipo_documento = Tools::traducirTipoDocumento($gastoCompleta->tipo_documento);
 						$compra->rindegastos = 1;
 
 
@@ -619,7 +619,7 @@ class Carga{
 						$compra->cuenta = " ";
 						$compra->nombre_proveedor = $gasto->supplier;
 						$compra->rut_proveedor = $gastoCompleta->rut_proveedor;
-						$compra->tipo_documento = $gastoCompleta->tipo_documento;
+						$compra->tipo_documento = Tools::traducirTipoDocumento($gastoCompleta->tipo_documento);
 						$compra->rindegastos = 1;
 
 
@@ -701,7 +701,7 @@ class Carga{
 						$compra->cuenta = " ";
 						$compra->nombre_proveedor = $gasto->supplier;
 						$compra->rut_proveedor = $gastoCompleta->rut_proveedor;
-						$compra->tipo_documento = $gastoCompleta->tipo_documento;
+						$compra->tipo_documento = Tools::traducirTipoDocumento($gastoCompleta->tipo_documento);
 						$compra->rindegastos = 1;
 
 

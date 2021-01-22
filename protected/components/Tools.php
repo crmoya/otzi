@@ -130,6 +130,86 @@ class Tools
 		return $devolver;
 	}
 
+	public static function traducirTipoDocumento($tipoDocumento){
+		$dev = "";
+		$tipoDocumento = trim(strtolower($tipoDocumento));
+		switch ($tipoDocumento) {
+			case 'boleta':
+				$dev = "B";
+				break;
+			case 'boleta':
+				$dev = "B";
+				break;
+			case 'boleta de honorarios':
+				$dev = "BH";
+				break;
+			case 'boleta de honorarios propia':
+				$dev = "BHP";
+				break;
+			case 'boleta de honorarios terceros':
+				$dev = "BHT";
+				break;
+			case 'boleta de prestación de servicios de terceros':
+				$dev = "BPS";
+				break;
+			case 'boleta honorarios terceros':
+				$dev = "BHT";
+				break;
+			case 'contrato de compra-venta':
+				$dev = "CCV";
+				break;
+			case 'factura afecta':
+				$dev = "FA";
+				break;
+			case 'factura combustible':
+				$dev = "FC";
+				break;
+			case 'factura excenta':
+				$dev = "FE";
+				break;
+			case 'factura exenta':
+				$dev = "FE";
+				break;
+			case 'factura no afecta':
+				$dev = "F";
+				break;
+			case 'interes planilla previsional':
+				$dev = "IPP";
+				break;
+			case 'interés planilla previsional':
+				$dev = "IPP";
+				break;
+			case 'nota de credito':
+				$dev = "N";
+				break;
+			case 'nota de crédito':
+				$dev = "N";
+				break;
+			case 'planilla remuneración o previsional':
+				$dev = "PRP";
+				break;
+			case 'planilla remuneracion o previsional':
+				$dev = "PRP";
+				break;
+			case 'planilla remuneracion previsional':
+				$dev = "PRP";
+				break;	
+			case 'planilla remuneración previsional':
+				$dev = "PRP";
+				break;
+			case 'planilla remuneración o previsionalñ':
+				$dev = "PRP";
+				break;	
+			case 'vale':
+				$dev = "V";
+				break;			
+			default:
+				$dev = "";
+				break;
+		}
+		return $dev;
+	}
+
 	public static function getTipoDocumento($id)
 	{
 		$dev = "";
@@ -182,7 +262,12 @@ class Tools
 			case 'RFR':
 				$dev = "RENDICIÓN FONDO POR RENDIR";
 				break;
-			
+			case 'IPP':
+				$dev = "INTERÉS PLANILLA PREVISIONAL";
+				break;
+			case 'PRP':
+				$dev = "PLANILLA DE REMUNERACIÓN O PREVISIONAL";
+				break;
 			default:
 				$dev = "OTRO";
 				break;
@@ -214,6 +299,8 @@ class Tools
 			array('id' => 'R', 'nombre' => 'Remesa'),
 			array('id' => 'RAP', 'nombre' => 'Rendición anticipo proveedores'),
 			array('id' => 'RFR', 'nombre' => 'Rendición fondo por rendir'),
+			array('id' => 'IPP', 'nombre' => 'Interés planilla previsional'),
+			array('id' => 'PRP', 'nombre' => 'Planilla de remuneración o previsional'),
 		);
 	}
 
