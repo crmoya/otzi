@@ -42,6 +42,11 @@ class Carga{
 					$combustible->status = $gasto->status;
 					$vehiculoRG = VehiculoRindegastos::model()->findByAttributes(['vehiculo'=>$gastoCompleta->vehiculo_equipo]);
 
+					$tipoCombustibleRG = TipoCombustibleRG::model()->findByAttributes(['tipocombustible'=>$gasto->category_code]);
+					if(isset($tipoCombustibleRG)){
+						$combustible->tipoCombustible_id = $tipoCombustibleRG->tipoCombustible_id;
+					}
+
 					$tipo_report = "";
 					if(isset($vehiculoRG)){
 						if($vehiculoRG->camionpropio_id != null){
