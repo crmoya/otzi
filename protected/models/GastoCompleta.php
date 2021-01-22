@@ -207,4 +207,26 @@ class GastoCompleta extends CActiveRecord
 		return Tools::backFecha($data->date);
 	}
 
+	public function getImagen(){
+		$gasto = $this->gasto;
+		if(isset($gasto)){
+			$gastoImagen = GastoImagen::model()->findByAttributes(['gasto_id'=>$gasto->id]);
+			if(isset($gastoImagen)){
+				if(isset($gastoImagen->original)){
+					return $gastoImagen->original;
+				}
+				else if(isset($gastoImagen->large)){
+					return $gastoImagen->large;
+				}
+				else if(isset($gastoImagen->medium)){
+					return $gastoImagen->medium;
+				}
+				if(isset($gastoImagen->small)){
+					return $gastoImagen->small;
+				}
+			}
+		}
+		return null;
+	}
+
 }

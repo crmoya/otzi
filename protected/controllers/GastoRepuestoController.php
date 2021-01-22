@@ -133,6 +133,7 @@ class GastoRepuestoController extends Controller
 			['name'=>'RUT rendidor','width'=>'md'],
 			['name'=>'Nombre','width'=>'md'],
 			['name'=>'Número','width'=>'sm'],
+			['name'=>'Ver','width'=>'sm', 'filtro'=>'false'],
 		];
 
 		$extra_datos = [
@@ -152,6 +153,7 @@ class GastoRepuestoController extends Controller
 			['campo'=>'rut_rinde','exportable', 'dots'=>"md"],
 			['campo'=>'nombre','exportable', 'dots'=>"md"],
 			['campo'=>'numero','exportable', 'dots'=>"sm"],
+			['campo'=>'imagen','format'=>'imagen-gasto'],
 		];
 
 		$gastos = GastoRepuesto::model()->findAll($criteria);
@@ -162,6 +164,7 @@ class GastoRepuestoController extends Controller
 			$tipo = $partes[1];
 			$tipo_maquina = $partes[2];
 			$detalleGastoRepuesto = new DetalleGastoRepuesto;
+			$detalleGastoRepuesto->id = $id;
 			$detalleGastoRepuesto->fecha = $gasto->fecha;
 			$detalleGastoRepuesto->repuesto = "";
 			$detalleGastoRepuesto->guia = "";
@@ -173,6 +176,8 @@ class GastoRepuestoController extends Controller
 			$detalleGastoRepuesto->nombre = "";
 			$detalleGastoRepuesto->rut_rinde = "";
 			$detalleGastoRepuesto->nombre_proveedor = "";
+
+			$gastoCompleta = $gasto->gastoCompleta;
 			
 			if($tipo == "R"){
 				$report = null;
@@ -208,19 +213,20 @@ class GastoRepuestoController extends Controller
 				$detalleGastoRepuesto->fuente = "SAM";
 			}
 			if($tipo == "RG"){
-				$gastoCompleta = $gasto->gastoCompleta;
 				if(isset($gastoCompleta)){
 					if(isset($gastoCompleta->gasto)){
 						$informeGasto = InformeGasto::model()->findByPk($gastoCompleta->gasto->report_id);
 						if(isset($informeGasto)){
 							$detalleGastoRepuesto->reporte = $informeGasto->numero;
 						}
-						$detalleGastoRepuesto->id = $gastoCompleta->gasto->id;
 					}
 				}
 				$detalleGastoRepuesto->fuente = "RindeGastos";
 			}
-			
+			$detalleGastoRepuesto->imagen = "";
+			if(isset($gastoCompleta)){
+				$detalleGastoRepuesto->imagen = $gastoCompleta->imagen;
+			}
 			$detalleGastoRepuesto->operador = $gasto->operador;
 			$detalleGastoRepuesto->maquina = $gasto->maquina;
 			$detalleGastoRepuesto->centro_gestion = $gasto->centro_gestion;

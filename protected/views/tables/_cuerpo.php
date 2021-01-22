@@ -117,6 +117,14 @@
 						if($extra_dato['format'] == "imagen"){
 							$valor = '<a target="_blank" href="' . $fila->$campo . '"><img src="' . Yii::app()->request->baseUrl . '/images/search.png"></a>';
 						}
+						if($extra_dato['format'] == "imagen-gasto"){
+							if($fila->$campo != ""){
+								$valor = '<a target="_blank" href="' . $fila->$campo . '"><img src="' . Yii::app()->request->baseUrl . '/images/search.png"></a>';
+							}
+							else{
+								$valor = "SIN IMAGEN";
+							}
+						}
 						if($extra_dato['format'] == "enlace"){
 							$params = "";
 							if(isset($extra_dato['params'])){

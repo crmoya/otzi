@@ -197,6 +197,61 @@ class GastoCombustible extends CActiveRecord
 		if($tipo == "RG"){
 			return GastoCompleta::model()->findByAttributes(['id'=>$id]);
 		}
+		if($tipo == "R"){
+			$report = null;
+			$carga = null;
+			$combustibleRG = null;
+			if($tipo_maquina == "CP"){
+				$report = RCamionPropio::model()->findByPk($id);
+				if(isset($report)){
+					$carga = CargaCombCamionPropio::model()->findByAttributes(['rCamionPropio_id'=>$report->id, 'rindegastos'=>1]);
+					if(isset($carga)){
+						$combustibleRG = CombustibleRindegasto::model()->findByAttributes(['carga_id'=>$carga->id, 'camionpropio_id'=>$report->camionPropio_id,'status'=>1]);
+						if(isset($combustibleRG)){
+							return GastoCompleta::model()->findByPk($combustibleRG->gasto_completa_id);
+						}
+					}
+				}				
+			}
+			if($tipo_maquina == "CA"){
+				$report = RCamionArrendado::model()->findByPk($id);
+				if(isset($report)){
+					$carga = CargaCombCamionArrendado::model()->findByAttributes(['rCamionArrendado_id'=>$report->id, 'rindegastos'=>1]);
+					if(isset($carga)){
+						$combustibleRG = CombustibleRindegasto::model()->findByAttributes(['carga_id'=>$carga->id, 'camionarrendado_id'=>$report->camionArrendado_id,'status'=>1]);
+						if(isset($combustibleRG)){
+							return GastoCompleta::model()->findByPk($combustibleRG->gasto_completa_id);
+						}
+					}
+				}
+			}
+			if($tipo_maquina == "EP"){
+				$report = REquipoPropio::model()->findByPk($id);
+				if(isset($report)){
+					$carga = CargaCombEquipoPropio::model()->findByAttributes(['rEquipoPropio_id'=>$report->id, 'rindegastos'=>1]);
+					if(isset($carga)){
+						$combustibleRG = CombustibleRindegasto::model()->findByAttributes(['carga_id'=>$carga->id, 'equipopropio_id'=>$report->equipoPropio_id,'status'=>1]);
+						if(isset($combustibleRG)){
+							return GastoCompleta::model()->findByPk($combustibleRG->gasto_completa_id);
+						}
+					}
+				}
+			}
+			if($tipo_maquina == "EA"){
+				$report = REquipoArrendado::model()->findByPk($id);
+				if(isset($report)){
+					$carga = CargaCombEquipoArrendado::model()->findByAttributes(['rEquipoArrendado_id'=>$report->id, 'rindegastos'=>1]);
+					if(isset($carga)){
+						$combustibleRG = CombustibleRindegasto::model()->findByAttributes(['carga_id'=>$carga->id, 'equipoarrendado_id'=>$report->equipoArrendado_id,'status'=>1]);
+						if(isset($combustibleRG)){
+							return GastoCompleta::model()->findByPk($combustibleRG->gasto_completa_id);
+						}
+					}
+				}
+			}
+			
+		}
+		return null;
 	}
 
 	/**

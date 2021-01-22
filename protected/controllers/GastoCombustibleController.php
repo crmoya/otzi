@@ -138,6 +138,7 @@ class GastoCombustibleController extends Controller
 			['name'=>'Tipo Combustible','width'=>'md'],
 			['name'=>'Supervisor Combustible','width'=>'md'],
 			['name'=>'Número','width'=>'sm'],
+			['name'=>'Ver','width'=>'sm', 'filtro'=>'false'],
 		];
 
 		$extra_datos = [
@@ -156,6 +157,7 @@ class GastoCombustibleController extends Controller
 			['campo'=>'tipo_combustible','exportable', 'dots'=>"md"],
 			['campo'=>'supervisor_combustible','exportable', 'dots'=>"md"],
 			['campo'=>'numero','exportable', 'dots'=>"sm"],
+			['campo'=>'imagen','format'=>'imagen-gasto'],
 		];
 
 		$gastos = GastoCombustible::model()->findAll($criteria);
@@ -175,6 +177,8 @@ class GastoCombustibleController extends Controller
 			$detalleGastoCombustible->supervisor_combustible = "";
 			$detalleGastoCombustible->numero = "";
 			$detalleGastoCombustible->tipo_combustible = "";
+
+			$gastoCompleta = $gasto->gastoCompleta;
 
 			if($tipo == "R"){
 				$report = null;
@@ -218,17 +222,19 @@ class GastoCombustibleController extends Controller
 			}
 			
 			if($tipo == "RG"){
-				$gastoCompleta = $gasto->gastoCompleta;
 				if(isset($gastoCompleta)){
 					if(isset($gastoCompleta->gasto)){
 						$informeGasto = InformeGasto::model()->findByPk($gastoCompleta->gasto->report_id);						
 						if(isset($informeGasto)){
 							$detalleGastoCombustible->reporte = $informeGasto->numero;
 						}
-						$detalleGastoCombustible->id = $gastoCompleta->gasto->id;
 					}
 				}
 				$detalleGastoCombustible->fuente = "RindeGastos";
+			}
+			$detalleGastoCombustible->imagen = "";
+			if(isset($gastoCompleta)){
+				$detalleGastoCombustible->imagen = $gastoCompleta->imagen;
 			}
 			$detalleGastoCombustible->fecha = $gasto->fecha;
 			$detalleGastoCombustible->operador = $gasto->operador;
