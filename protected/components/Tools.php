@@ -213,7 +213,7 @@ class Tools
 			array('id' => 'R', 'nombre' => 'Remesa'),
 			array('id' => 'RAP', 'nombre' => 'Rendición anticipo proveedores'),
 			array('id' => 'RFR', 'nombre' => 'Rendición fondo por rendir'),
-
+			array('id' => '', 'nombre' => 'Otro'),
 		);
 	}
 
