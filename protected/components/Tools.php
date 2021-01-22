@@ -198,6 +198,7 @@ class Tools
 				array('id'=>'Remesa','nombre'=>'Remesa'),);
                 */
 		return array(
+			array('id' => '', 'nombre' => 'Otro'),
 			array('id' => 'B', 'nombre' => 'Boleta'),
 			array('id' => 'F', 'nombre' => 'Factura'),
 			array('id' => 'FA', 'nombre' => 'Factura afecta'),
@@ -213,7 +214,6 @@ class Tools
 			array('id' => 'R', 'nombre' => 'Remesa'),
 			array('id' => 'RAP', 'nombre' => 'Rendición anticipo proveedores'),
 			array('id' => 'RFR', 'nombre' => 'Rendición fondo por rendir'),
-			array('id' => '', 'nombre' => 'Otro'),
 		);
 	}
 
