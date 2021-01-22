@@ -53,6 +53,7 @@ class ExpedicionesCamionPropioController extends Controller
 		$cabeceras = [
 			['name'=>'Fecha','width'=>'md'],
 			['name'=>'Reporte','width'=>'md'],
+			['name'=>'Reporte','width'=>'md','visible','false'],
 			['name'=>'Obs.','width'=>'sm'],
 			['name'=>'Obs.Obra','width'=>'md'],
 			['name'=>'Camión','width'=>'lg'],
@@ -74,7 +75,8 @@ class ExpedicionesCamionPropioController extends Controller
 
 		$extra_datos = [
 			['campo'=>'fecha','exportable','dots'=>"sm"],
-			['campo'=>'reporte','exportable','format'=> 'enlace', 'new-page'=>'true', 'url'=>"//rCamionPropio/view", 'params'=>['id']],
+			['campo'=>'reporte','format'=> 'enlace', 'new-page'=>'true', 'url'=>"//rCamionPropio/view", 'params'=>['id']],
+			['campo'=>'reporte','exportable','visible'=>'false'],
 			['campo'=>'observaciones','exportable','dots'=>'md'],
 			['campo'=>'observaciones_obra','exportable', 'dots'=>'md'],
 			['campo'=>'camion','exportable', 'dots'=>'md'],
