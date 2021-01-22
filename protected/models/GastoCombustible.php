@@ -96,7 +96,9 @@ class GastoCombustible extends CActiveRecord
 				'' as operador,
 				'' as centro_gestion,
 				sum(litros) as litros,
-				sum(total) as total
+				sum(total) as total,
+				tipocombustible,
+				tipo_combustible
 				";
 				$finAgrupacion = "maquina,tipocombustible,tipo_combustible";
 			}
@@ -106,7 +108,9 @@ class GastoCombustible extends CActiveRecord
 				operador,
 				'' as centro_gestion,
 				sum(litros) as litros,
-				sum(total) as total
+				sum(total) as total,
+				tipocombustible,
+				tipo_combustible
 				";
 				$finAgrupacion = "operador,tipocombustible,tipo_combustible";
 			}
@@ -116,7 +120,9 @@ class GastoCombustible extends CActiveRecord
 				'' as operador,
 				centro_gestion,
 				sum(litros) as litros,
-				sum(total) as total
+				sum(total) as total,
+				tipocombustible,
+				tipo_combustible
 				";
 				$finAgrupacion = "centro_gestion,tipocombustible,tipo_combustible";
 			}
@@ -127,7 +133,8 @@ class GastoCombustible extends CActiveRecord
 				centro_gestion,
 				sum(litros) as litros,
 				sum(total) as total,
-				'CENTROMAQUINA' as id
+				tipocombustible,
+				tipo_combustible
 				";
 				$finAgrupacion = "maquina,centro_gestion,tipocombustible,tipo_combustible";
 			}
@@ -137,7 +144,9 @@ class GastoCombustible extends CActiveRecord
 				operador,
 				centro_gestion,
 				sum(litros) as litros,
-				sum(total) as total
+				sum(total) as total,
+				tipocombustible,
+				tipo_combustible
 				";
 				$finAgrupacion = "centro_gestion,operador,tipocombustible,tipo_combustible";
 			}
@@ -147,7 +156,9 @@ class GastoCombustible extends CActiveRecord
 				operador,
 				'' as centro_gestion,
 				sum(litros) as litros,
-				sum(total) as total
+				sum(total) as total,
+				tipocombustible,
+				tipo_combustible
 				";
 				$finAgrupacion = "operador,maquina,tipocombustible,tipo_combustible";
 			}
