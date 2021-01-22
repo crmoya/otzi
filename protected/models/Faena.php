@@ -135,6 +135,38 @@ class Faena extends CActiveRecord
 		return $data;
 	}
 
+	public function listarTodas($selected_id = null){
+
+		$data = array();
+		$connection=Yii::app()->db;
+		$connection->active=true;
+		$command=$connection->createCommand("
+			select		id,nombre
+			from		faena
+			order by	nombre
+			"
+		);
+		$dataReader=$command->query();
+		$rows=$dataReader->readAll();
+		$connection->active=false;
+		$command = null;
+		$data[0]=array('nombre'=>"Seleccione un faena",'id'=>'');
+		$i=1;
+		$selected_exists = false;
+		foreach($rows as $row){
+			$data[$i]=array('id'=>$row['id'],'nombre'=>$row['nombre']);
+			$i++;
+			if($row['id'] == $selected_id){
+				$selected_exists = true;
+			}
+		}
+		if(!$selected_exists && (int)$selected_id > 0){
+			$faena = Faena::model()->findByPk($selected_id);
+			$data[] = ['id'=>$selected_id,'nombre'=>$faena->nombre." (NO VIGENTE)"];
+		}
+		return $data;
+	}
+
 	public function listarPorTiempo($selected_id = null){
 
 		$data = array();

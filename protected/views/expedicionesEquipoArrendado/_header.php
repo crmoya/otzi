@@ -26,7 +26,7 @@
 <table>
  <tr>
   <td>
-  	<?php echo $form->label($model,'fecha_inicio'); ?>
+  	<?php echo $form->label($model,'fecha_inicio'); ?><br/>
   	<?php 
 		$this->widget('zii.widgets.jui.CJuiDatePicker',
 			array(
@@ -48,7 +48,7 @@
 	?>
 	</td>
 	<td>
-  	<?php echo $form->label($model,'fecha_fin'); ?>
+  	<?php echo $form->label($model,'fecha_fin'); ?><br/>
   	<?php 
 		$this->widget('zii.widgets.jui.CJuiDatePicker',
 			array(
@@ -70,12 +70,16 @@
 	?>
 	</td>
 	<td>
-		<?php echo $form->labelEx($model,'reporte'); ?>
+		<?php echo $form->labelEx($model,'reporte'); ?><br/>
 	    <?php echo $form->textField($model,'reporte',array('size'=>10)); ?>
 	</td>
 	<td>
-		<?php echo $form->labelEx($model,'equipo_id'); ?>
+		<?php echo $form->labelEx($model,'equipo_id'); ?><br/>
 	    <?php echo $form->dropDownList($model,'equipo_id', CHtml::listData(EquipoArrendado::model()->listarTodos(), 'id', 'nombre')); ?>
+	</td>
+	<td>
+		<?php echo $form->labelEx($model,'faena_id'); ?><br/>
+	    <?php echo $form->dropDownList($model,'faena_id', CHtml::listData(Faena::model()->listarTodas(), 'id', 'nombre')); ?>
 	</td>
 	<td>
 		<?php echo CHtml::submitButton('Filtrar',['class'=>'btn btn-primary']); ?>

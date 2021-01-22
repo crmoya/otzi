@@ -12,7 +12,7 @@ class ExpedicionesCamionArrendado extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fecha_inicio, fecha_fin, camion_id, reporte', 'safe', 'on'=>'search'),
+			array('fecha_inicio, fecha_fin, camion_id, faena_id, reporte', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -36,11 +36,12 @@ class ExpedicionesCamionArrendado extends CActiveRecord
 
 		$criteria->compare('reporte',$this->reporte,true);
 		$criteria->compare('camion_id',$this->camion_id);
+		$criteria->compare('faena_id',$this->faena_id);
 		
 		$criteria->addCondition("tipo = 'camiones_arrendados'");
 		
-		$criteria->select = 'tipo,id,fecha,reporte,observaciones,observaciones_obra,camion,camion_id,camion_codigo,sum(km_recorridos) as km_recorridos,sum(km_gps) as km_gps,sum(horas) as horas,sum(produccion) as produccion,sum(combustible) as combustible, sum(repuestos) as repuestos, sum(horas_panne) as horas_panne, panne,validado,validador';
-		$criteria->group = 'tipo,id,fecha,reporte,observaciones,observaciones_obra,camion,camion_id,camion_codigo,panne,validado,validador';
+		$criteria->select = 'tipo,id,fecha,reporte,observaciones,observaciones_obra,camion,camion_id,faena_id,faena,camion_codigo,sum(km_recorridos) as km_recorridos,sum(km_gps) as km_gps,sum(horas) as horas,sum(produccion) as produccion,sum(combustible) as combustible, sum(repuestos) as repuestos, sum(horas_panne) as horas_panne, panne,validado,validador';
+		$criteria->group = 'tipo,id,fecha,reporte,observaciones,observaciones_obra,camion,camion_id,faena_id,faena,camion_codigo,panne,validado,validador';
 
 		return $criteria;
 	}
@@ -49,6 +50,7 @@ class ExpedicionesCamionArrendado extends CActiveRecord
 	public $fecha_fin;
 	public $reporte;
 	public $camion_id;
+	public $faena_id;
 
 
 	public function tableName()
@@ -72,6 +74,7 @@ class ExpedicionesCamionArrendado extends CActiveRecord
 	{
 		return [
 			'camion_id' => 'Camión',
+			'faena_id' => 'Faena',
 		];
 	}
 
