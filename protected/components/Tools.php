@@ -137,34 +137,54 @@ class Tools
 			case 'B':
 				$dev = "BOLETA";
 				break;
-			case 'N':
-				$dev = "NOTA DE CRÉDITO";
+			case 'F':
+				$dev = "FACTURA";
 				break;
 			case 'F':
 				$dev = "FACTURA";
 				break;
-			default:
-				$dev = $id;
-				break;
-		}
-		return $dev;
-	}
-
-	public static function getTipoDocumentoComb($id)
-	{
-		$dev = "";
-		switch ($id) {
-			case 'B':
-				$dev = "BOLETA";
+			case 'FA':
+				$dev = "FACTURA AFECTA";
 				break;
 			case 'G':
 				$dev = "GUÍA";
 				break;
-			case 'F':
-				$dev = "FACTURA";
+			case 'N':
+				$dev = "NOTA DE CRÉDITO";
 				break;
+			case 'V':
+				$dev = "VALE";
+				break;
+			case 'BHP':
+				$dev = "BOLETA HONORARIOS PROPIA";
+				break;
+			case 'BHT':
+				$dev = "BOLETA HONORARIOS TERCEROS";
+				break;
+			case 'BPS':
+				$dev = "BOLETA PRESTACIÓN SERVICIOS TERCERO";
+				break;
+			case 'CCV':
+				$dev = "CONTRATO COMPRA VENTA";
+				break;
+			case 'FC':
+				$dev = "FACTURA COMBUSTIBLE";
+				break;
+			case 'FE':
+				$dev = "FACTURA EXENTA";
+				break;
+			case 'R':
+				$dev = "REMESA";
+				break;
+			case 'RAP':
+				$dev = "RENDICIÓN ANTICIPO PROVEEDORES";
+				break;
+			case 'RFR':
+				$dev = "RENDICIÓN FONDO POR RENDIR";
+				break;
+			
 			default:
-				$dev = $id;
+				$dev = "TIPO DE DOCUMENTO NO RECONOCIDO";
 				break;
 		}
 		return $dev;
@@ -180,21 +200,20 @@ class Tools
 		return array(
 			array('id' => 'B', 'nombre' => 'Boleta'),
 			array('id' => 'F', 'nombre' => 'Factura'),
-			array('id' => 'N', 'nombre' => 'Nota de Crédito'),
-		);
-	}
-
-	public static function listarTiposDocumentosComb()
-	{
-		/*return array(
-				array('id'=>'Rendición fondo por rendir','nombre'=>'Rendición fondo por rendir'),
-				array('id'=>'Rendición Anticipo Proveedores','nombre'=>'Rendición Anticipo Proveedores'),
-				array('id'=>'Remesa','nombre'=>'Remesa'),);
-                */
-		return array(
-			array('id' => 'B', 'nombre' => 'Boleta'),
-			array('id' => 'F', 'nombre' => 'Factura'),
+			array('id' => 'FA', 'nombre' => 'Factura afecta'),
 			array('id' => 'G', 'nombre' => 'Guía'),
+			array('id' => 'N', 'nombre' => 'Nota de crédito'),
+			array('id' => 'V', 'nombre' => 'Vale'),
+			array('id' => 'BHP', 'nombre' => 'Boleta de honorarios propia'),
+			array('id' => 'BHT', 'nombre' => 'Boleta de honorarios terceros'),
+			array('id' => 'BPS', 'nombre' => 'Boleta de prestación de servicios tercero'),
+			array('id' => 'CCV', 'nombre' => 'Contrato de compra-venta'),
+			array('id' => 'FC', 'nombre' => 'Factura combustible'),
+			array('id' => 'FE', 'nombre' => 'Factura exenta'),
+			array('id' => 'R', 'nombre' => 'Remesa'),
+			array('id' => 'RAP', 'nombre' => 'Rendición anticipo proveedores'),
+			array('id' => 'RFR', 'nombre' => 'Rendición fondo por rendir'),
+
 		);
 	}
 

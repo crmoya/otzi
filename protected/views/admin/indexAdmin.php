@@ -19,13 +19,12 @@ foreach($faenas as $faena){
 }
 
 $noVinculadosTC = [];
-
 $criteria = new CDbCriteria;
 $criteria->select = 'DISTINCT category_code';
 $criteria->condition = "not exists (select * from tipocombustible_rindegasto where tipocombustible = t.category_code) and category_code != ''";
 $tipos = Gasto::model()->findAll($criteria);
-foreach($faenas as $faena){
-    $noVinculadosTC[] = ['category_code'=>$tipos['category_code']];
+foreach($tipos as $tipo){
+    $noVinculadosTC[] = ['category_code'=>$tipo['category_code']];
 }
 
 ?>

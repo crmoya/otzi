@@ -1245,7 +1245,7 @@ $cs->registerCoreScript('jquery');
 														</tr>
 														<tr>
 															<td><?php echo $form->labelEx($combustible, "tipo_documento", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->dropDownList($combustible, '[' . $i . ']tipo_documento', CHtml::listData(Tools::listarTiposDocumentosComb(), 'id', 'nombre'), array('disabled' => $model->validado == 2 ? 'disabled' : '',)); ?></td>
+															<td><?php echo $form->dropDownList($combustible, '[' . $i . ']tipo_documento', CHtml::listData(Tools::listarTiposDocumentos(), 'id', 'nombre'), array('disabled' => $model->validado == 2 ? 'disabled' : '',)); ?></td>
 															<td></td>
 															<td><?php echo $form->labelEx($combustible, "factura", array('style' => 'width:80px;')); ?></td>
 															<td><?php echo $form->textField($combustible, "[$i]factura", array('id' => "factura$i", 'class' => "factura", 'i' => $i, 'disabled' => $model->validado == 2 ? 'disabled' : '',)); ?></td>
@@ -1385,7 +1385,7 @@ $cs->registerCoreScript('jquery');
                                                                                                                         
 															<tr>
 															 <td><?php echo $form->labelEx($combustible, "tipo_documento", array('style' => 'width:80px;')); ?></td>
-															 <td><?php echo $form->dropDownList($combustible, '[{0}]tipo_documento', CHtml::listData(Tools::listarTiposDocumentosComb(), 'id', 'nombre')); ?></td>
+															 <td><?php echo $form->dropDownList($combustible, '[{0}]tipo_documento', CHtml::listData(Tools::listarTiposDocumentos(), 'id', 'nombre')); ?></td>
 															 <td></td>
 															 
 															 <td><?php echo $form->labelEx($combustible, "factura", array('style' => 'width:80px;')); ?></td>

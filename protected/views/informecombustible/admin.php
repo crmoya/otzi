@@ -44,7 +44,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         'camion',
         array(            
             'name'=>'tipo_documento',
-            'value'=>'Tools::getTipoDocumentoComb($data->tipo_documento)', 
+            'value'=>'Tools::getTipoDocumento($data->tipo_documento)', 
         ),
         'rut_proveedor',
         'nombre_proveedor',

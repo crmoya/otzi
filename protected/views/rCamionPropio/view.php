@@ -120,7 +120,7 @@
 									<td style='font-size:0.9em;'><b>Faena:</b></td>
 									<td><?php echo Faena::model()->getNombre(CHtml::encode($combustible['faena_id'])); ?></td>
 									<td style='font-size:0.9em;'><b>Tipo documento:</b></td>
-									<td><?php echo CHtml::encode(Tools::getTipoDocumentoComb($combustible['tipo_documento'])); ?></td>
+									<td><?php echo CHtml::encode(Tools::getTipoDocumento($combustible['tipo_documento'])); ?></td>
 									<td style='font-size:0.9em;'><b>Nº documento:</b></td>
 									<td><?php echo CHtml::encode($combustible['factura']); ?></td>
 								</tr>
