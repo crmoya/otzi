@@ -184,7 +184,7 @@ class Tools
 				break;
 			
 			default:
-				$dev = "TIPO DE DOCUMENTO NO RECONOCIDO";
+				$dev = "OTRO";
 				break;
 		}
 		return $dev;
