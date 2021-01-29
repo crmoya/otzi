@@ -34,6 +34,7 @@ return array(
 
 	// application components
 	'components'=>array(
+		'oauth'=>array('class'=>'OAuth'),
 		'excel'=>array(
 				'class'=>'application.extensions.PHPExcel',
 		),

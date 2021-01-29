@@ -247,6 +247,7 @@ class SiteController extends Controller
 */
 
 
+	/*
 	public function actionRindegastos(){
 		set_time_limit(0);
 		$carga = new Carga();
@@ -263,6 +264,11 @@ class SiteController extends Controller
 		set_time_limit(0);
 		$carga = new Carga();
 		$carga->informes();
+	}
+	*/
+
+	public function actionLoginmovil(){
+		echo Yii::app()->oauth->login();
 	}
 
 
@@ -383,7 +389,7 @@ class SiteController extends Controller
 		return array(
 			array(
 				'allow',
-				'actions' => array('login', 'logout', 'error', 'index', 'gastos', 'informes', 'rindegastos','fix','fixmaquinas','fixcamiones','test'),
+				'actions' => array('login','loginmovil', 'logout', 'error', 'index', 'gastos', 'informes', 'rindegastos','fix','fixmaquinas','fixcamiones','test'),
 				'users' => array('*'),
 			),
 			array(
