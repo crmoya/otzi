@@ -28,13 +28,23 @@ $(document).ready( function () {
 				footer: true,
 				enabled: true,
 				action: function(e, dt, button, config) {
-					var before = $('#datos thead').html();
+					/*var before = $('#datos thead').html();
+					
+					var footerBefore = $('#datos tfoot').html();
+					
+					
+					$('#datos thead').html(before);
+					$('#datos tfoot').html(footerBefore);
+					
+					*/
 					$('#datos thead th input').each( function () {
 						var title = $(this).attr('placeholder');
 						$(this).parent().html( title );
-					} );
+					});
+					$('#datos tfoot th').each( function () {
+						$(this).html("");
+					});
 					$.fn.dataTable.ext.buttons.excelHtml5.action.call(this, e, dt, button, config);
-					$('#datos thead').html(before);
 					location.reload();
 				},
 				exportOptions: {
