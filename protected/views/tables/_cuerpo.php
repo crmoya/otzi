@@ -78,7 +78,7 @@
 					if(isset($extra_dato['format'])){
 						if($extra_dato['format'] == "money"){
 							$estilos .= "text-align:right;";
-							$valor = "$".number_format((int)$fila->$campo,"0","",".");
+							$valor = "$".number_format((int)$fila->$campo,0,"",".");
 						}
 						if($extra_dato['format'] == "validado"){
 							$estilos .= "text-align:center;";
@@ -100,19 +100,19 @@
 						}
 						if($extra_dato['format'] == "number"){
 							$estilos .= "text-align:right;";
-							$valor = number_format((int)$fila->$campo,"0","",".");
+							$valor = number_format((float)$fila->$campo,"0","",".");
 						}
 						if($extra_dato['format'] == "decimal1"){
 							$estilos .= "text-align:right;";
-							$valor = number_format((int)$fila->$campo,"1",",",".");
+							$valor = number_format((float)$fila->$campo,"1",",",".");
 						}
 						if($extra_dato['format'] == "decimal2"){
 							$estilos .= "text-align:right;";
-							$valor = number_format((int)$fila->$campo,"2",",",".");
+							$valor = number_format((float)$fila->$campo,"2",",",".");
 						}
 						if($extra_dato['format'] == "decimal3"){
 							$estilos .= "text-align:right;";
-							$valor = number_format((int)$fila->$campo,"3",",",".");
+							$valor = number_format((float)$fila->$campo,"3",",",".");
 						}
 						if($extra_dato['format'] == "imagen"){
 							$valor = '<a target="_blank" href="' . $fila->$campo . '"><img src="' . Yii::app()->request->baseUrl . '/images/search.png"></a>';
