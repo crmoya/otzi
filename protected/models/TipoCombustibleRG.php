@@ -106,6 +106,8 @@ class TipoCombustibleRG extends CActiveRecord
 		$novinculados = [];
 		$criteria = new CDbCriteria;
 		$criteria->select = 'DISTINCT category_code';
+		$criteria->addCondition('expense_policy_id = :policy_fuel');
+		$criteria->params[':policy_fuel'] = GastoCompleta::POLICY_COMBUSTIBLES;
 		$tipos = Gasto::model()->findAll($criteria);
 		foreach($tipos as $tipo){
 			$novinculados[] = ['tipocombustible'=>$tipo['category_code']];

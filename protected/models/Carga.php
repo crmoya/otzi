@@ -47,6 +47,16 @@ class Carga{
 						$combustible->tipoCombustible_id = $tipoCombustibleRG->tipoCombustible_id;
 					}
 
+					/*
+					echo "<pre>";
+					if($gasto->id == 1674088){
+						print_r($gasto);
+						print_r($combustible);
+						print_r($tipoCombustibleRG);
+						die;
+					}
+*/
+
 					$tipo_report = "";
 					if(isset($vehiculoRG)){
 						if($vehiculoRG->camionpropio_id != null){
@@ -118,10 +128,17 @@ class Carga{
 							//el día posterior, hasta el sábado de esa semana.
 							if($dow == 6){
 								//sábado
-								$report = new RCamionPropio();
-								$report->fecha = $fecha->format('Y-m-d');
-								$report->reporte = "*".$gasto->id;
-								$report->observaciones = "Report creado automáticamente para asociación con RindeGastos";
+								$report = RCamionPropio::model()->findByAttributes([
+									'fecha' => $fecha->format('Y-m-d'),
+									'reporte' => "*".$gasto->id,
+									'observaciones' => "Report creado automáticamente para asociación con RindeGastos",
+								]);
+								if(!isset($report)){
+									$report = new RCamionPropio();
+									$report->fecha = $fecha->format('Y-m-d');
+									$report->reporte = "*".$gasto->id;
+									$report->observaciones = "Report creado automáticamente para asociación con RindeGastos";
+								}
 								$report->camionPropio_id = (int)$vehiculoRG->camionpropio_id;
 								$report->chofer_id = 0;
 								$report->panne = 0;
@@ -191,10 +208,17 @@ class Carga{
 							//el día posterior, hasta el sábado de esa semana.
 							if($dow == 6){
 								//sábado
-								$report = new RCamionArrendado();
-								$report->fecha = $fecha->format('Y-m-d');
-								$report->reporte = "*".$gasto->id;
-								$report->observaciones = "Report creado automáticamente para asociación con RindeGastos";
+								$report = RCamionArrendado::model()->findByAttributes([
+									'fecha' => $fecha->format('Y-m-d'),
+									'reporte' => "*".$gasto->id,
+									'observaciones' => "Report creado automáticamente para asociación con RindeGastos",
+								]);
+								if(!isset($report)){
+									$report = new RCamionArrendado();
+									$report->fecha = $fecha->format('Y-m-d');
+									$report->reporte = "*".$gasto->id;
+									$report->observaciones = "Report creado automáticamente para asociación con RindeGastos";
+								}
 								$report->camionArrendado_id = (int)$vehiculoRG->camionarrendado_id;
 								$report->ordenCompra = "OC - RindeGastos";
 								$report->chofer_id = 0;
@@ -266,10 +290,17 @@ class Carga{
 							//el día posterior, hasta el sábado de esa semana.
 							if($dow == 6){
 								//sábado
-								$report = new REquipoPropio();
-								$report->fecha = $fecha->format('Y-m-d');
-								$report->reporte = "*".$gasto->id;
-								$report->observaciones = "Report creado automáticamente para asociación con RindeGastos";
+								$report = REquipoPropio::model()->findByAttributes([
+									'fecha' => $fecha->format('Y-m-d'),
+									'reporte' => "*".$gasto->id,
+									'observaciones' => "Report creado automáticamente para asociación con RindeGastos",
+								]);
+								if(!isset($report)){
+									$report = new REquipoPropio();
+									$report->fecha = $fecha->format('Y-m-d');
+									$report->reporte = "*".$gasto->id;
+									$report->observaciones = "Report creado automáticamente para asociación con RindeGastos";
+								}
 								$report->equipoPropio_id = (int)$vehiculoRG->equipopropio_id;
 								$report->hInicial = 0;
 								$report->hFinal = 0;
@@ -342,10 +373,17 @@ class Carga{
 							//el día posterior, hasta el sábado de esa semana.
 							if($dow == 6){
 								//sábado
-								$report = new REquipoArrendado();
-								$report->fecha = $fecha->format('Y-m-d');
-								$report->reporte = "*".$gasto->id;
-								$report->observaciones = "Report creado automáticamente para asociación con RindeGastos";
+								$report = REquipoArrendado::model()->findByAttributes([
+									'fecha' => $fecha->format('Y-m-d'),
+									'reporte' => "*".$gasto->id,
+									'observaciones' => "Report creado automáticamente para asociación con RindeGastos",
+								]);
+								if(!isset($report)){
+									$report = new REquipoArrendado();
+									$report->fecha = $fecha->format('Y-m-d');
+									$report->reporte = "*".$gasto->id;
+									$report->observaciones = "Report creado automáticamente para asociación con RindeGastos";
+								}
 								$report->equipoArrendado_id = (int)$vehiculoRG->equipoarrendado_id;
 								$report->hInicial = 0;
 								$report->hFinal = 0;
