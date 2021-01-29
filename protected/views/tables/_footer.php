@@ -48,9 +48,13 @@ $(document).ready( function () {
 					format: {
 						body: function(data, row, column, node) {
 							data = data.replace("$","");
-							data = data.replace(",",".");
-							data = $.isNumeric(data.replace('.', '')) ? data.replace('.', '') : data;
-							data = $.isNumeric(data.replace(',', '')) ? data.replace(',', '') : data;
+							//data = data.replace(",",".");
+							var numero = data.replace(".","");
+							numero = numero.replace(",","");
+							if($.isNumeric(numero)){
+								data = data.replace(".","");
+								data = data.replace(',', '.');
+							}
 							return data;
 						}
 					},
