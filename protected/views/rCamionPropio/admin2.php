@@ -1,4 +1,4 @@
-<h1>Registros de Expediciones de camiones, camionetas, autos Propios</h1>
+<h4>Registros de Expediciones de camiones, camionetas, autos Propios</h4>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'rcamion-propio-grid',

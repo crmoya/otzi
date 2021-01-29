@@ -310,7 +310,7 @@ class RCamionPropioController extends Controller
 							$viajeT->delete();
 						}
 					}
-					if (Yii::app()->user->rol == "administrador") {
+					//if (Yii::app()->user->rol == "administrador") {
 						foreach ($cargas as $carga) {
 							$valid = $carga->validate() && $valid;
 							$carga->delete();
@@ -319,7 +319,7 @@ class RCamionPropioController extends Controller
 							$valid = $compra->validate() && $valid;
 							$compra->delete();
 						}
-					}
+					//}
 					
 					if ($valid) {
 						if (isset($_POST['ViajeCamionPropio']) && $model->validado == 0) {
@@ -371,11 +371,11 @@ class RCamionPropioController extends Controller
 								$carga = null;
 								$id = -1;
 								if (isset($cargaArr['id'])) $id = $cargaArr['id'];
-								if ($id > 0 && Yii::app()->user->rol == "operativo") {
-									continue;
-								} else {
+								//if ($id > 0 && Yii::app()->user->rol == "operativo") {
+								//	continue;
+								//} else {
 									$carga = new CargaCombCamionPropio();
-								}
+								//}
 								$carga->factura = $cargaArr['factura'];
 								$carga->faena_id = $cargaArr['faena_id'];
 								$carga->guia = $cargaArr['guia'];
@@ -412,11 +412,11 @@ class RCamionPropioController extends Controller
 								$compra = null;
 								$id = -1;
 								if (isset($compraArr['id'])) $id = $compraArr['id'];
-								if ($id > 0 && Yii::app()->user->rol == "operativo") {
-									continue;
-								} else {
+								//if ($id > 0 && Yii::app()->user->rol == "operativo") {
+								//	continue;
+								//} else {
 									$compra = new CompraRepuestoCamionPropio();
-								}
+								//}
 								$compra->factura = $compraArr['factura'];
 								$compra->guia = $compraArr['guia'];
 								$compra->montoNeto = $compraArr['montoNeto'];

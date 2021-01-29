@@ -21,7 +21,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Registros de Expediciones de Camiones Propios</h1>
+<h3>Registros de Expediciones de Camiones Propios</h3>
 
 <?php echo CHtml::link('Búsqueda Avanzada', '#', array('class' => 'search-button')); ?>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

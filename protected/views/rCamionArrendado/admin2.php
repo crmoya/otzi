@@ -1,4 +1,4 @@
-<h1>Registros de Expediciones de camiones, camionetas, autos Arrendados</h1>
+<h4>Registros de Expediciones de camiones, camionetas, autos Arrendados</h4>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'rcamion-arrendado-grid',

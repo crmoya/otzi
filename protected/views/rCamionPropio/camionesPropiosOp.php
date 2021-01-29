@@ -844,7 +844,7 @@ $cs->registerCoreScript('jquery');
 					<td><?php echo $form->labelEx($model, "kmGps"); ?></td>
 					<td><?php echo $form->textField($model, "kmGps", array('class' => 'fixed', 'disabled' => ($model->validado == 1) ? 'disabled' : '',)); ?> <?php echo $form->error($model, 'kmGps'); ?></td>
 					<td><?php echo $form->labelEx($model, "kms"); ?></td>
-					<td><?php echo $form->textField($model, "kms", array('class' => 'fixed', 'disabled' => 'disabled', 'readonly' => 'readonly', 'id' => "kmRecorridos")); ?> <?php echo $form->error($model, 'kms'); ?></td>
+					<td><?php echo $form->textField($model, "kms", array('class' => 'fixed', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '', 'readonly' => 'readonly', 'id' => "kmRecorridos")); ?> <?php echo $form->error($model, 'kms'); ?></td>
 				</tr>
 				<tr>
 					<td><?php echo $form->labelEx($model, "horometro_inicial"); ?></td>
@@ -854,7 +854,7 @@ $cs->registerCoreScript('jquery');
 				</tr>
 				<tr>
 					<td><?php echo $form->labelEx($model, "horas"); ?></td>
-					<td><?php echo $form->textField($model, "horas", array('class' => 'fixedH', 'disabled' => 'disabled',)); ?> <?php echo $form->error($model, 'horas', ['class' => 'errorH']); ?></td>
+					<td><?php echo $form->textField($model, "horas", array('class' => 'fixedH', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?> <?php echo $form->error($model, 'horas', ['class' => 'errorH']); ?></td>
 				</tr>
 			</table>
 		</fieldset>
@@ -1142,7 +1142,7 @@ $cs->registerCoreScript('jquery');
 													<table style="border:solid 1px silver;padding:10px;">
 														<tr>
 															<td><?php echo $form->labelEx($combustible, "faena_id", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->dropDownList($combustible, "[$i]faena_id", CHtml::listData(Faena::model()->listar($combustible->faena_id), 'id', 'nombre'), array('id' => "faenaC_id$i", 'disabled' => 'disabled',)); ?></td>
+															<td><?php echo $form->dropDownList($combustible, "[$i]faena_id", CHtml::listData(Faena::model()->listar($combustible->faena_id), 'id', 'nombre'), array('id' => "faenaC_id$i", 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
 															<td>
 																<div id="errorFaenaC_id<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
@@ -1156,10 +1156,10 @@ $cs->registerCoreScript('jquery');
 														</tr>
 														<tr>
 															<td><?php echo $form->labelEx($combustible, "tipo_documento", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->dropDownList($combustible, '[' . $i . ']tipo_documento', CHtml::listData(Tools::listarTiposDocumentos(), 'id', 'nombre'), array('disabled' => 'disabled',)); ?></td>
+															<td><?php echo $form->dropDownList($combustible, '[' . $i . ']tipo_documento', CHtml::listData(Tools::listarTiposDocumentos(), 'id', 'nombre'), array('disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
 															<td></td>
 															<td><?php echo $form->labelEx($combustible, "factura", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->textField($combustible, "[$i]factura", array('id' => "factura$i", 'class' => "factura", 'i' => $i, 'disabled' => 'disabled',)); ?></td>
+															<td><?php echo $form->textField($combustible, "[$i]factura", array('id' => "factura$i", 'class' => "factura", 'i' => $i, 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
 															<td>
 																<div id="errorFactura{0}" style="color:red;width:100px;"></div>
 															</td>
@@ -1169,13 +1169,13 @@ $cs->registerCoreScript('jquery');
 
 														<tr>
 															<td><?php echo $form->labelEx($combustible, "rut_proveedor", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->textField($combustible, "[" . $i . "]rut_proveedor", array('id' => "rut_proveedor" . $i, 'class' => 'rut_proveedor', 'i' => $i, 'disabled' => 'disabled')); ?></td>
+															<td><?php echo $form->textField($combustible, "[" . $i . "]rut_proveedor", array('id' => "rut_proveedor" . $i, 'class' => 'rut_proveedor', 'i' => $i, 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
 															<td>
 																<div id="errorRutProveedor<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
 
 															<td><?php echo $form->labelEx($combustible, "nombre_proveedor", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->textField($combustible, "[" . $i . "]nombre_proveedor", array('id' => "nombre_proveedor" . $i, 'class' => 'nombre_proveedor', 'i' => $i, 'disabled' => 'disabled')); ?></td>
+															<td><?php echo $form->textField($combustible, "[" . $i . "]nombre_proveedor", array('id' => "nombre_proveedor" . $i, 'class' => 'nombre_proveedor', 'i' => $i, 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
 															<td>
 																<div id="errorNombreProveedor<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
@@ -1184,13 +1184,13 @@ $cs->registerCoreScript('jquery');
 
 														<tr>
 															<td><?php echo $form->labelEx($combustible, "petroleoLts", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->textField($combustible, "[$i]petroleoLts", array('id' => "petroleoLts$i", 'class' => 'fixedPetroleoLts', 'disabled' => 'disabled',)); ?></td>
+															<td><?php echo $form->textField($combustible, "[$i]petroleoLts", array('id' => "petroleoLts$i", 'class' => 'fixedPetroleoLts', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
 															<td>
 																<div id="errorPetroleoLts<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
 
 															<td><?php echo $form->labelEx($combustible, "kmCarguio", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->textField($combustible, "[$i]kmCarguio", array('id' => "kmCarguio$i", 'class' => 'fixed', 'disabled' => 'disabled',)); ?></td>
+															<td><?php echo $form->textField($combustible, "[$i]kmCarguio", array('id' => "kmCarguio$i", 'class' => 'fixed', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
 															<td>
 																<div id="errorKmCarguio<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
@@ -1200,13 +1200,13 @@ $cs->registerCoreScript('jquery');
 
 														<tr>
 															<td><?php echo $form->labelEx($combustible, "precioUnitario", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->textField($combustible, "[$i]precioUnitario", array('id' => "precioUnitario$i", 'class' => 'fixedPrecio', 'disabled' => 'disabled',)); ?></td>
+															<td><?php echo $form->textField($combustible, "[$i]precioUnitario", array('id' => "precioUnitario$i", 'class' => 'fixedPrecio', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
 															<td>
 																<div id="errorPrecioUnitario<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
 
 															<td><?php echo $form->labelEx($combustible, "valorTotal", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->textField($combustible, "[$i]valorTotal", array('id' => "valorTotal$i", 'class' => 'fixedValor', 'disabled' => 'disabled',)); ?></td>
+															<td><?php echo $form->textField($combustible, "[$i]valorTotal", array('id' => "valorTotal$i", 'class' => 'fixedValor', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
 															<td>
 																<div id="errorValorTotal<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
@@ -1216,13 +1216,13 @@ $cs->registerCoreScript('jquery');
 
 														<tr>
 															<td><?php echo $form->labelEx($combustible, "tipoCombustible_id", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->dropDownList($combustible, "[$i]tipoCombustible_id", CHtml::listData(TipoCombustible::model()->listar(), 'id', 'nombre'), array('id' => "tipoCombustible$i", 'disabled' => 'disabled',)); ?></td>
+															<td><?php echo $form->dropDownList($combustible, "[$i]tipoCombustible_id", CHtml::listData(TipoCombustible::model()->listar(), 'id', 'nombre'), array('id' => "tipoCombustible$i", 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
 															<td>
 																<div id="errorTipoCombustible<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
 
 															<td><?php echo $form->labelEx($combustible, "supervisorCombustible_id", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->dropDownList($combustible, "[$i]supervisorCombustible_id", CHtml::listData(SupervisorCombustible::model()->listar(), 'id', 'nombre'), array('id' => "supervisor$i", 'disabled' => 'disabled',)); ?></td>
+															<td><?php echo $form->dropDownList($combustible, "[$i]supervisorCombustible_id", CHtml::listData(SupervisorCombustible::model()->listar(), 'id', 'nombre'), array('id' => "supervisor$i", 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
 															<td>
 																<div id="errorSupervisor<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
@@ -1232,23 +1232,23 @@ $cs->registerCoreScript('jquery');
 
 														<tr>
 															<td><?php echo $form->labelEx($combustible, "numero", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->textField($combustible, "[$i]numero", array('i' => $i, 'class' => 'nroRendicion', 'id' => "numero$i", 'disabled' => 'disabled',)); ?><div id="errorNumero<?php echo $i; ?>" class="errorMessage errorNumero"></div>
+															<td><?php echo $form->textField($combustible, "[$i]numero", array('i' => $i, 'class' => 'nroRendicion', 'id' => "numero$i", 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?><div id="errorNumero<?php echo $i; ?>" class="errorMessage errorNumero"></div>
 															</td>
 															<td></td>
 
 															<td><?php echo $form->labelEx($combustible, "rut_rinde", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->textField($combustible, "[$i]rut_rinde", array('class' => 'rut_rinde', 'id' => "rut_rinde$i", 'i' => $i, 'disabled' => 'disabled',)); ?></td>
+															<td><?php echo $form->textField($combustible, "[$i]rut_rinde", array('class' => 'rut_rinde', 'id' => "rut_rinde$i", 'i' => $i, 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
 															<td></td>
 															<td></td>
 														</tr>
 
 														<tr>
 															<td><?php echo $form->labelEx($combustible, "fechaRendicion", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->textField($combustible, "[$i]fechaRendicion", array('id' => "fechaRendicion$i", 'readonly' => 'readonly', 'disabled' => 'disabled',)); ?></td>
+															<td><?php echo $form->textField($combustible, "[$i]fechaRendicion", array('id' => "fechaRendicion$i", 'readonly' => 'readonly', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
 															<td></td>
 
 															<td><?php echo $form->labelEx($combustible, "nombre", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->textField($combustible, "[$i]nombre", array('id' => "nombre$i", 'class' => 'nombre_rinde', 'i' => $i, 'disabled' => 'disabled',)); ?></td>
+															<td><?php echo $form->textField($combustible, "[$i]nombre", array('id' => "nombre$i", 'class' => 'nombre_rinde', 'i' => $i, 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
 															<td></td>
 															<td></td>
 														</tr>
@@ -1418,12 +1418,12 @@ $cs->registerCoreScript('jquery');
 													<table style="border:solid 1px silver;padding:10px;">
 														<tr>
 															<td><?php echo $form->labelEx($repuesto, "repuesto", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->textField($repuesto, "[$i]repuesto", array('id' => "repuesto$i", 'class' => 'repuesto', 'disabled' => 'disabled',)); ?></td>
+															<td><?php echo $form->textField($repuesto, "[$i]repuesto", array('id' => "repuesto$i", 'class' => 'repuesto', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
 															<td>
 																<div id="errorRepuesto<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
 															<td><?php echo $form->labelEx($repuesto, "montoNeto", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->textField($repuesto, "[$i]montoNeto", array('id' => "montoNeto$i", 'class' => 'fixedInt', 'disabled' => 'disabled',)); ?></td>
+															<td><?php echo $form->textField($repuesto, "[$i]montoNeto", array('id' => "montoNeto$i", 'class' => 'fixedInt', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
 															<td>
 																<div id="errorMontoNeto<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
@@ -1436,11 +1436,11 @@ $cs->registerCoreScript('jquery');
 														</tr>
 														<tr>
 															<td><?php echo $form->labelEx($repuesto, "tipo_documento", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->dropDownList($repuesto, '[' . $i . ']tipo_documento', CHtml::listData(Tools::listarTiposDocumentos(), 'id', 'nombre'), array('id' => "tipoDocumento$i", 'disabled' => 'disabled',)); ?></td>
+															<td><?php echo $form->dropDownList($repuesto, '[' . $i . ']tipo_documento', CHtml::listData(Tools::listarTiposDocumentos(), 'id', 'nombre'), array('id' => "tipoDocumento$i", 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
 															<td></td>
 
 															<td><?php echo $form->labelEx($repuesto, "factura", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->textField($repuesto, "[$i]factura", array('id' => "factura$i", 'disabled' => 'disabled',)); ?></td>
+															<td><?php echo $form->textField($repuesto, "[$i]factura", array('id' => "factura$i", 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
 															<td></td>
 															<td></td>
 														</tr>
@@ -1476,33 +1476,33 @@ $cs->registerCoreScript('jquery');
 
 														<tr>
 															<td><?php echo $form->labelEx($repuesto, "cantidad", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->textField($repuesto, "[$i]cantidad", array('id' => "cantidadR$i", 'disabled' => 'disabled','class'=>'fixed')); ?><div id="errorCantidadR<?php echo $i; ?>" style="color:red;width:100px;"></div>
+															<td><?php echo $form->textField($repuesto, "[$i]cantidad", array('id' => "cantidadR$i", 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '','class'=>'fixed')); ?><div id="errorCantidadR<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
 															<td></td>
 															<td><?php echo $form->labelEx($repuesto, "unidad", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->dropDownList($repuesto, "[$i]unidad", CHtml::listData(Unidad::model()->findAll(), 'sigla', 'nombre'), array('id' => "unidad$i", 'disabled' => 'disabled',)); ?></td>
+															<td><?php echo $form->dropDownList($repuesto, "[$i]unidad", CHtml::listData(Unidad::model()->findAll(), 'sigla', 'nombre'), array('id' => "unidad$i", 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
 															<td></td>
 															<td></td>
 														</tr>
 
 														<tr>
 															<td><?php echo $form->labelEx($repuesto, "numero", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->textField($repuesto, "[$i]numero", array('id' => "numeroRep$i", 'disabled' => 'disabled',)); ?><div id="errorNumeroRep<?php echo $i; ?>" style="color:red;width:100px;"></div>
+															<td><?php echo $form->textField($repuesto, "[$i]numero", array('id' => "numeroRep$i", 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?><div id="errorNumeroRep<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
 															<td></td>
 
 															<td><?php echo $form->labelEx($repuesto, "rut_rinde"); ?></td>
-															<td><?php echo $form->textField($repuesto, "[$i]rut_rinde", array('style' => 'width:80px;', 'class' => 'rut_rindeR', 'id' => "rut_rindeR$i", 'i' => $i, 'disabled' => 'disabled',)); ?> </td>
+															<td><?php echo $form->textField($repuesto, "[$i]rut_rinde", array('style' => 'width:80px;', 'class' => 'rut_rindeR', 'id' => "rut_rindeR$i", 'i' => $i, 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?> </td>
 															<td></td>
 															<td></td>
 														</tr>
 
 														<tr>
 															<td><?php echo $form->labelEx($repuesto, "nombre", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->textField($repuesto, "[$i]nombre", array('class' => 'nombre_rindeR', 'id' => "nombreR$i", 'i' => $i, 'disabled' => 'disabled',)); ?> </td>
+															<td><?php echo $form->textField($repuesto, "[$i]nombre", array('class' => 'nombre_rindeR', 'id' => "nombreR$i", 'i' => $i, 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?> </td>
 															<td></td>
 															<td><?php echo $form->labelEx($repuesto, "fechaRendicion", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->textField($repuesto, "[$i]fechaRendicion", array('id' => "fechaRendicionRep$i", 'readonly' => 'readonly', 'disabled' => 'disabled',)); ?></td>
+															<td><?php echo $form->textField($repuesto, "[$i]fechaRendicion", array('id' => "fechaRendicionRep$i", 'readonly' => 'readonly', 'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',)); ?></td>
 															<td></td>
 
 

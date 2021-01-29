@@ -1,4 +1,4 @@
-<h1>Registros de Expediciones de Equipos Arrendados</h1>
+<h4>Registros de Expediciones de Equipos Arrendados</h4>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'requipo-arrendado-grid',

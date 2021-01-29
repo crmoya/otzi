@@ -16,7 +16,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Registros de Expediciones de Equipos Arrendados</h1>
+<h4>Registros de Expediciones de Equipos Arrendados</h4>
 
 <?php echo CHtml::link('Búsqueda Avanzada', '#', array('class' => 'search-button')); ?>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

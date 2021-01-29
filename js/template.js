@@ -1183,21 +1183,20 @@ function checkGuia() {
 }
 
 function checkFaena() {
+	var ok = true;
 	for (i = 0; i < nExpediciones; i++) {
-		if ($("#removeExpedicion" + i).attr("validate") == "true") {
-			var valor = $("#faena_id" + i).val();
-			if (valor == "") {
-				$("#faena_id" + i).css('background', 'pink');
-				$("#errorFaena_id" + i).html("Error: Seleccione un Faena");
-				return false;
-			}
-			else {
-				$("#faena_id" + i).css('background', 'white');
-				$("#errorFaena_id" + i).html("");
-			}
+		var valor = $("#faena_id" + i).val();
+		if (valor == "") {
+			$("#faena_id" + i).css('background', 'pink');
+			$("#errorFaena_id" + i).html("Error: Seleccione un Faena");
+			ok = false;
+		}
+		else {
+			$("#faena_id" + i).css('background', 'white');
+			$("#errorFaena_id" + i).html("");
 		}
 	}
-	return true;
+	return ok;
 }
 
 function checkOrigenDestino() {

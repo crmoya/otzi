@@ -1,4 +1,4 @@
-<h1>Registros de Expediciones de Equipos Propios</h1>
+<h4>Registros de Expediciones de Equipos Propios</h4>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'requipo-propio-grid',

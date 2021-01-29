@@ -281,7 +281,7 @@ class REquipoPropioController extends Controller
                     }
 					//end archivos del report
 
-                    if (Yii::app()->user->rol == "administrador") {
+                    //if (Yii::app()->user->rol == "administrador") {
                         foreach ($cargas as $carga) {
                             $valid = $carga->validate() && $valid;
                             $carga->delete();
@@ -290,7 +290,7 @@ class REquipoPropioController extends Controller
                             $valid = $compra->validate() && $valid;
                             $compra->delete();
                         }
-                    }
+                    //}
                     if ($valid) {
                         
                         if (isset($_POST['Expedicionportiempoeq']) && $model->validado == 0) {
@@ -318,17 +318,11 @@ class REquipoPropioController extends Controller
                             foreach ($_POST['CargaCombEquipoPropio'] as $i => $cargaArr) {
                                 $carga = null;
                                 if (isset($cargaArr['id'])) $id = $cargaArr['id'];
-                                if ($id > 0 && Yii::app()->user->rol == "operativo") {
-                                    /*$carga = CargaCombEquipoPropio::model()->findByPk($id);
-                                                                $carga->factura = $cargaArr['factura'];
-                                                                $carga->numero = $cargaArr['numero'];
-                                                                if($carga->validate()){
-                                                                        $carga->save();
-                                                                }*/
-                                    continue;
-                                } else {
+                                //if ($id > 0 && Yii::app()->user->rol == "operativo") {
+                                //   continue;
+                                //} else {
                                     $carga = new CargaCombEquipoPropio();
-                                }
+                                //}
                                 $carga->factura = $cargaArr['factura'];
                                 $carga->faena_id = $cargaArr['faena_id'];
                                 $carga->guia = $cargaArr['guia'];
@@ -364,11 +358,11 @@ class REquipoPropioController extends Controller
                             foreach ($_POST['CompraRepuestoEquipoPropio'] as $i => $compraArr) {
                                 $compra = null;
                                 if (isset($compraArr['id'])) $id = $compraArr['id'];
-                                if ($id > 0 && Yii::app()->user->rol == "operativo") {
-                                    continue;
-                                } else {
+                                //if ($id > 0 && Yii::app()->user->rol == "operativo") {
+                                //    continue;
+                                //} else {
                                     $compra = new CompraRepuestoEquipoPropio();
-                                }
+                                //}
                                 $compra->factura = $compraArr['factura'];
                                 $compra->guia = $compraArr['guia'];
                                 $compra->montoNeto = $compraArr['montoNeto'];

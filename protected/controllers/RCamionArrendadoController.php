@@ -193,7 +193,7 @@ class RCamionArrendadoController extends Controller
 
 		if (isset($_POST['RCamionArrendado'])) {
 			$errores = "";
-			if ($model->validado == 2) {
+			if ($model->validado == 2 ) {
 				return;
 			}
 			if ($model->validado == 0) {
@@ -279,7 +279,8 @@ class RCamionArrendadoController extends Controller
 							$viajeT->delete();
 						}
 					}
-					if (Yii::app()->user->rol == "administrador") {
+					
+					//if (Yii::app()->user->rol == "administrador") {
 						foreach ($cargas as $carga) {
 							$valid = $carga->validate() && $valid;
 							$carga->delete();
@@ -288,7 +289,7 @@ class RCamionArrendadoController extends Controller
 							$valid = $compra->validate() && $valid;
 							$compra->delete();
 						}
-					}
+					//}
 					if ($valid) {
 						if (isset($_POST['ViajeCamionArrendado']) && $model->validado == 0) {
 							foreach ($_POST['ViajeCamionArrendado'] as $i => $viajeArr) {
@@ -341,11 +342,11 @@ class RCamionArrendadoController extends Controller
 							foreach ($_POST['CargaCombCamionArrendado'] as $i => $cargaArr) {
 								$carga = null;
 								if (isset($cargaArr['id'])) $id = $cargaArr['id'];
-								if ($id > 0 && Yii::app()->user->rol == "operativo") {
-									continue;
-								} else {
+								//if ($id > 0 && Yii::app()->user->rol == "operativo") {
+								//	continue;
+								//} else {
 									$carga = new CargaCombCamionArrendado();
-								}
+								//}
 								$carga->factura = $cargaArr['factura'];
 								$carga->faena_id = $cargaArr['faena_id'];
 								$carga->guia = $cargaArr['guia'];
@@ -381,11 +382,11 @@ class RCamionArrendadoController extends Controller
 							foreach ($_POST['CompraRepuestoCamionArrendado'] as $i => $compraArr) {
 								$compra = null;
 								if (isset($compraArr['id'])) $id = $compraArr['id'];
-								if ($id > 0 && Yii::app()->user->rol == "operativo") {
-									continue;
-								} else {
+								//if ($id > 0 && Yii::app()->user->rol == "operativo") {
+								//	continue;
+								//} else {
 									$compra = new CompraRepuestoCamionArrendado();
-								}
+								//}
 								$compra->factura = $compraArr['factura'];
 								$compra->guia = $compraArr['guia'];
 								$compra->montoNeto = $compraArr['montoNeto'];
