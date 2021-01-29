@@ -77,12 +77,12 @@ $(document).ready( function () {
             var api = this.api(), data;
   
             // Remove the formatting to get integer data for summation
-            var intVal = function ( i ) {
+            /*var intVal = function ( i ) {
                 return typeof i === 'string' ?
                     i.replace(/[\$.]/g, '')*1 :
                     typeof i === 'number' ?
                         i : 0;
-            };
+            };*/
 
 			var totales = Array();
 			var totalesParciales = Array();
@@ -103,13 +103,13 @@ $(document).ready( function () {
 
 					if($operacion == "suma"){
 
-						if(substr($extra_dato['format'], 0, 7 ) === "decimal"){
-							echo "// Total over all pages 
+						echo "// Total over all pages 
 							totales[" . $j . "] = api 
 								.column( " . $j . " , { search: 'applied' } ) 
 								.data() 
 								.reduce( function (a, b) { 
-								   return parseFloat(a) + parseFloat(b); 
+									b = b.replace(',','.');
+									return parseFloat(a) + parseFloat(b); 
 								}, 0 );";
 
 							echo "// Total over this page
@@ -117,50 +117,23 @@ $(document).ready( function () {
 										.column(  " . $j . " , { page: 'current'} )
 										.data()
 										.reduce( function (a, b) {
+											b = b.replace(',','.');
 											return parseFloat(a) + parseFloat(b); 
 										}, 0 );
 
-									// Update footer
-									var total = " . $moneda. "new Intl.NumberFormat('es-CL', {
-										minimumFractionDigits: 0,
-										maximumFractionDigits: 3
-									}).format(totales[" . $j . "]);
-									var totalParcial = " . $moneda. "new Intl.NumberFormat('es-CL', {
-										minimumFractionDigits: 0,
-										maximumFractionDigits: 3
-									}).format(totalesParciales[" . $j . "]);
-									var html = totalParcial + '<br/>' + total;
-									$( api.column( " . $j . " ).footer() ).html(html);";
-						}
-						else{
-							echo "// Total over all pages 
-							totales[" . $j . "] = api 
-								.column( " . $j . " , { search: 'applied' } ) 
-								.data() 
-								.reduce( function (a, b) { 
-								   return intVal(a) + intVal(b); 
-								}, 0 );";
 
-							echo "// Total over this page
-									totalesParciales[" . $j . "] = api
-										.column(  " . $j . " , { page: 'current'} )
-										.data()
-										.reduce( function (a, b) {
-											return intVal(a) + intVal(b); 
-										}, 0 );
+								// Update footer
+								var total = " . $moneda. "new Intl.NumberFormat('es-CL', {
+									minimumFractionDigits: 0,
+									maximumFractionDigits: 3
+								}).format(totales[" . $j . "]);
+								var totalParcial = " . $moneda. "new Intl.NumberFormat('es-CL', {
+									minimumFractionDigits: 0,
+									maximumFractionDigits: 3
+								}).format(totalesParciales[" . $j . "]);
 
-									// Update footer
-									var total = " . $moneda. "new Intl.NumberFormat('es-CL', {
-										minimumFractionDigits: 0,
-										maximumFractionDigits: 3
-									}).format(totales[" . $j . "]);
-									var totalParcial = " . $moneda. "new Intl.NumberFormat('es-CL', {
-										minimumFractionDigits: 0,
-										maximumFractionDigits: 3
-									}).format(totalesParciales[" . $j . "]);
-									var html = totalParcial + '<br/>' + total;
-									$( api.column( " . $j . " ).footer() ).html(html);";
-						}
+								var html = totalParcial + '<br/>' + total;
+								$( api.column( " . $j . " ).footer() ).html(html);";
 						
 					}
 				}
