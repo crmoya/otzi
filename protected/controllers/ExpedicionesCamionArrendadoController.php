@@ -53,7 +53,7 @@ class ExpedicionesCamionArrendadoController extends Controller
 		$cabeceras = [
 			['name'=>'Fecha','width'=>'md'],
 			['name'=>'Reporte','width'=>'md'],
-			['name'=>'Reporte','width'=>'md','visible','false'],
+			['name'=>'Reporte','width'=>'md','visible'=>'false'],
 			['name'=>'Obs.','width'=>'sm'],
 			['name'=>'Obs.Obra','width'=>'md'],
 			['name'=>'Camión','width'=>'lg'],
