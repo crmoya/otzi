@@ -1,12 +1,13 @@
 <?php
 
 $cs = Yii::app()->clientScript;
+$cs->registerCoreScript('jquery');
 $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery-ui-1.9.1.custom.js', CClientScript::POS_HEAD);
-$cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery-1.8.2.js', CClientScript::POS_HEAD);
 $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.calculation.min.js', CClientScript::POS_HEAD);
 $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.format.js', CClientScript::POS_HEAD);
 $cs->registerScriptFile(Yii::app()->baseUrl . '/js/template.js', CClientScript::POS_HEAD);
-$cs->registerCoreScript('jquery');
+$cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.MultiFile.min.js', CClientScript::POS_HEAD);
+
 
 ?>
 <script language="javascript" type="text/javascript">
