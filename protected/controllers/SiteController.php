@@ -268,7 +268,9 @@ class SiteController extends Controller
 	*/
 
 	public function actionLoginmovil(){
-		echo Yii::app()->oauth->login();
+		$usuario = Yii::app()->request->getPost('usuario');
+		$clave = Yii::app()->request->getPost('clave');
+		echo Yii::app()->oauth->login($usuario, $clave);
 	}
 
 

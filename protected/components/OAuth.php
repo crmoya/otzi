@@ -2,11 +2,9 @@
 
 class OAuth extends CApplicationComponent
 {
-	public function login()
+	public function login($usuario, $clave)
 	{
 		header('Content-type: application/json');
-		$usuario = Yii::app()->request->getQuery('usuario');
-		$clave = Yii::app()->request->getQuery('clave');
 		$appuser = Usuario::model()->findByAttributes(['user'=>$usuario,'clave'=>sha1($clave)]);
 		if(isset($appuser)){
 			if($appuser->rol == 'operativo'){
