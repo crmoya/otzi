@@ -15,13 +15,15 @@ class ApiController extends Controller
 		$token = Yii::app()->request->getPost('token');
 		if(isset($token) && strlen($token)>3){
 			$usuario = Usuario::model()->findByAttributes(['token'=>$token]);
-			echo CJSON::encode([
-				'status'=>'OK',
-				'email' => $usuario->email,
-				'nombre' => $usuario->nombre,
-				'rol' => $usuario->rol,
-			]);
-			die;
+			if(isset($usuario)){
+				echo CJSON::encode([
+					'status'=>'OK',
+					'email' => $usuario->email,
+					'nombre' => $usuario->nombre,
+					'rol' => $usuario->rol,
+				]);
+				die;
+			}			
 		}
 		echo CJSON::encode(['status'=>'ERROR']);
 	}
