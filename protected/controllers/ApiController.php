@@ -43,6 +43,10 @@ class ApiController extends Controller
 					die;
 				}
 			}
+			else{
+				echo CJSON::encode(['status'=>'ERROR','mensaje'=>'sin usuario asociado']);
+				die;
+			}
 		}
 		echo CJSON::encode(['status'=>'ERROR']);
 	}
