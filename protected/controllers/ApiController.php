@@ -14,7 +14,7 @@ class ApiController extends Controller
 		header('Content-type: application/json');
 		$token = Yii::app()->request->getPost('token');
 		if(isset($token) && strlen($token)>3){
-			$usuario = Usuario::findByAttrbutes(['token'=>$token]);
+			$usuario = Usuario::model()->findByAttributes(['token'=>$token]);
 			return CJSON::encode([
 				'status'=>'OK',
 				'email' => $usuario->email,
@@ -30,7 +30,7 @@ class ApiController extends Controller
 		header('Content-type: application/json');
 		$token = Yii::app()->request->getPost('token');
 		if(isset($token) && strlen($token)>3){
-			$usuario = Usuario::findByAttrbutes(['token'=>$token]);
+			$usuario = Usuario::model()->findByAttributes(['token'=>$token]);
 			if(isset($usuario)){
 				$nombre = Yii::app()->request->getPost('nombre');
 				$telefono = Yii::app()->request->getPost('telefono');
