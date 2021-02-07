@@ -15,14 +15,15 @@ class ApiController extends Controller
 		$token = Yii::app()->request->getPost('token');
 		if(isset($token) && strlen($token)>3){
 			$usuario = Usuario::model()->findByAttributes(['token'=>$token]);
-			return CJSON::encode([
+			echo CJSON::encode([
 				'status'=>'OK',
 				'email' => $usuario->email,
 				'nombre' => $usuario->nombre,
 				'rol' => $usuario->rol,
 			]);
+			die;
 		}
-		return CJSON::encode(['status'=>'ERROR']);
+		echo CJSON::encode(['status'=>'ERROR']);
 	}
 
 	public function actionInsertardatos(){
@@ -37,11 +38,12 @@ class ApiController extends Controller
 				$fecha_nacimiento = Yii::app()->request->getPost('fecha_nacimiento');
 				if(isset($nombre) && isset($telefono) && isset($fecha_nacimiento)){
 					if(strlen($nombre)>1 && (int)$telefono > 0 && strlen($fecha_nacimiento) > 8){
-						return CJSON::encode(['status'=>'OK']);
+						echo CJSON::encode(['status'=>'OK']);
+						die;
 					}
 				}
 			}
 		}
-		return CJSON::encode(['status'=>'ERROR']);
+		echo CJSON::encode(['status'=>'ERROR']);
 	}
 }
