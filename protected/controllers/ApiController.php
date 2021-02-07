@@ -38,11 +38,9 @@ class ApiController extends Controller
 				$nombre = Yii::app()->request->getPost('nombre');
 				$telefono = Yii::app()->request->getPost('telefono');
 				$fecha_nacimiento = Yii::app()->request->getPost('fecha_nacimiento');
-				if(isset($nombre) && isset($telefono)){
-					if(strlen($nombre)>1 && (int)$telefono > 0 && strlen($fecha_nacimiento) > 8){
-						echo CJSON::encode(['status'=>'OK']);
-						die;
-					}
+				if(isset($nombre) && isset($telefono) && isset($fecha_nacimiento)){
+					echo CJSON::encode(['status'=>'OK']);
+					die;
 				}
 			}
 		}
