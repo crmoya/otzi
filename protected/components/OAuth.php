@@ -4,7 +4,6 @@ class OAuth extends CApplicationComponent
 {
 	public function login($usuario, $clave)
 	{
-		header('Content-type: application/json');
 		$appuser = Usuario::model()->findByAttributes(['user'=>$usuario,'clave'=>sha1($clave)]);
 		if(isset($appuser)){
 			if($appuser->rol == 'operativo'){
