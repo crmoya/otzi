@@ -1,6 +1,46 @@
 <script>
 $(document).ready( function () {
 
+
+	Number.prototype.format = function (n, x, s, c) {
+		var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\D' : '$') + ')',
+			num = this.toFixed(Math.max(0, ~~n));
+		return (c ? num.replace('.', c) : num).replace(new RegExp(re, 'g'), '$&' + (s || ','));
+	};
+
+	function format(valor) {
+		valor = parseFloat(valor);
+		return valor.format(0, 3, '.', ',');
+	}
+
+	function decimalAdjust(type, value, exp) {
+		// Si el exp no está definido o es cero...
+		if (typeof exp === 'undefined' || +exp === 0) {
+		return Math[type](value);
+		}
+		value = +value;
+		exp = +exp;
+		// Si el valor no es un número o el exp no es un entero...
+		if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
+		return NaN;
+		}
+		// Shift
+		value = value.toString().split('e');
+		value = Math[type](+(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp)));
+		// Shift back
+		value = value.toString().split('e');
+		return +(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp));
+	}
+
+	// Decimal round
+	if (!Math.round10) {
+		Math.round10 = function(value, exp) {
+		return decimalAdjust('round', value, exp);
+		};
+	}
+	
+	
+
 	// DataTable
 	var table = $('#datos').DataTable({
 		dom: 'Bfrtip',
@@ -86,18 +126,11 @@ $(document).ready( function () {
 		"footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
   
-            // Remove the formatting to get integer data for summation
-            /*var intVal = function ( i ) {
-                return typeof i === 'string' ?
-                    i.replace(/[\$.]/g, '')*1 :
-                    typeof i === 'number' ?
-                        i : 0;
-            };*/
-
 			var totales = Array();
 			var totalesParciales = Array();
 
 			<?php
+			
 			for($j=0; $j<count($extra_datos); $j++){
 				$extra_dato = $extra_datos[$j];
 				echo "totales[" . $j . "] = 0;";
@@ -110,44 +143,45 @@ $(document).ready( function () {
 							$moneda = "'$'+";
 						}
 					}
+					
+					if($operacion == "suma"):
+					?>
+						var decimales = 0;
+						if($('.decimales').val()){
+							decimales = parseInt($('.decimales').val());
+						}
+						for(var i = 0; i < data.length; i++){
+							var numero = data[i][<?=$j?>].replaceAll('$','');
+							numero = numero.replaceAll('.','');
+							numero = numero.replaceAll(',','.');													
+							if(display.indexOf(i)>-1){
+								totalesParciales[<?=$j?>] += parseFloat(numero);
+							}
+							totales[<?=$j?>] += parseFloat(numero);
+							//console.log(data[i][<?=$j?>] + " " + numero + " " + totales[<?=$j?>]);	
+						}
+						var parteDecimalTotales = parseFloat(totales[<?=$j?>]) - parseInt(totales[<?=$j?>]);
+						var decimalesTotales = Math.round10(parteDecimalTotales, -decimales);
+						var parteDecimalTotalesParciales = parseFloat(totalesParciales[<?=$j?>]) - parseInt(totalesParciales[<?=$j?>]);
+						var decimalesTotalesParciales = Math.round10(parteDecimalTotalesParciales, -decimales);
 
-					if($operacion == "suma"){
-
-						echo "// Total over all pages 
-							totales[" . $j . "] = api 
-								.column( " . $j . " , { search: 'applied' } ) 
-								.data() 
-								.reduce( function (a, b) { 
-									b = b.replace(',','.');
-									return parseFloat(a) + parseFloat(b); 
-								}, 0 );";
-
-							echo "// Total over this page
-									totalesParciales[" . $j . "] = api
-										.column(  " . $j . " , { page: 'current'} )
-										.data()
-										.reduce( function (a, b) {
-											b = b.replace(',','.');
-											return parseFloat(a) + parseFloat(b); 
-										}, 0 );
-
-
-								// Update footer
-								var total = " . $moneda. "new Intl.NumberFormat('es-CL', {
-									minimumFractionDigits: 0,
-									maximumFractionDigits: 3
-								}).format(totales[" . $j . "]);
-								var totalParcial = " . $moneda. "new Intl.NumberFormat('es-CL', {
-									minimumFractionDigits: 0,
-									maximumFractionDigits: 3
-								}).format(totalesParciales[" . $j . "]);
-
-								var html = totalParcial + '<br/>' + total;
-								$( api.column( " . $j . " ).footer() ).html(html);";
+						totales[<?=$j?>] = format((totales[<?=$j?>] + "").replaceAll('.',','));
+						if(parteDecimalTotales > 0){
+							totales[<?=$j?>] = totales[<?=$j?>] + "," + (decimalesTotales + "").substr(2);
+						}
+						totalesParciales[<?=$j?>] = format((totalesParciales[<?=$j?>] + "").replaceAll('.',','));
+						if(parteDecimalTotalesParciales > 0){
+							totalesParciales[<?=$j?>] = totalesParciales[<?=$j?>] + "," + (decimalesTotalesParciales + "").substr(2);
+						}
 						
-					}
+					<?php 
+					endif; 
+					echo 	"var html = " . $moneda. "totalesParciales[" . $j . "] + '<br/>' + " . $moneda. "totales[" . $j . "];" . 
+							"$( api.column( " . $j . " ).footer() ).html(html);";
 				}
+				
 			}
+			
 			?>
   
 			
@@ -217,6 +251,7 @@ $(document).ready( function () {
 	$('.validar-1').attr('title','validar');
 	$('.validar-2').attr('title','realizar segunda validación');
 	$('.full-validado').attr('title','');
+
 
 	
 });

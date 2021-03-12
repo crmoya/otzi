@@ -82,7 +82,7 @@
 	</td>
 	<td>
 		<?php echo $form->labelEx($model,'decimales'); ?>
-	    <?php echo $form->dropDownList($model,'decimales', CHtml::listData(array(array('id'=>'0'),array('id'=>'1'),array('id'=>'2'),array('id'=>'3')), 'id', 'id')); ?>
+	    <?php echo $form->dropDownList($model,'decimales', CHtml::listData(array(array('id'=>'0'),array('id'=>'1'),array('id'=>'2'),array('id'=>'3')), 'id', 'id'),['class'=>'decimales']); ?>
 	</td>
 	<td>
 		<?php echo CHtml::submitButton('Filtrar',['class'=>'btn btn-primary']); ?>
