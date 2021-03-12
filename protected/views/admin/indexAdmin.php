@@ -21,7 +21,9 @@ foreach($faenas as $faena){
 $noVinculadosTC = [];
 $criteria = new CDbCriteria;
 $criteria->select = 'DISTINCT category_code';
-$criteria->condition = "not exists (select * from tipocombustible_rindegasto where tipocombustible = t.category_code) and category_code != ''";
+$criteria->condition = "not exists (select * from tipocombustible_rindegasto where tipocombustible = t.category_code) and category_code != '' and expense_policy_id = :fuel_policy";
+$params[':fuel_policy'] = GastoCompleta::POLICY_COMBUSTIBLES;
+$criteria->params = $params;
 $tipos = Gasto::model()->findAll($criteria);
 foreach($tipos as $tipo){
     $noVinculadosTC[] = ['category_code'=>$tipo['category_code']];
