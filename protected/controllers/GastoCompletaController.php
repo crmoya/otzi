@@ -208,7 +208,7 @@ class GastoCompletaController extends Controller
 			$gastoNombre = "COMBUSTIBLES";
 			$cabeceras = [
 				['name'=>'Proveedor','width'=>'md'],
-				['name'=>'Fecha','width'=>'sm', 'format'=>'date'],
+				['name'=>'Fecha','width'=>'md', 'format'=>'date'],
 				['name'=>'Imp. Esp.','width'=>'xs'],
 				['name'=>'IVA','width'=>'xs'],
 				['name'=>'Neto','width'=>'xs'],
@@ -242,7 +242,7 @@ class GastoCompletaController extends Controller
 	
 			$extra_datos = [
 				['campo'=>'comercio','exportable','dots'=>"md"],
-				['campo'=>'fecha','exportable','dots'=>'sm'],
+				['campo'=>'fecha','exportable','dots'=>'md'],
 				['campo'=>'impuesto_especifico','exportable', 'format'=>'money','acumulado'=>'suma'],
 				['campo'=>'iva','exportable', 'format'=>'money','acumulado'=>'suma'],
 				['campo'=>'neto','exportable', 'format'=>'money','acumulado'=>'suma'],

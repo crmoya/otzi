@@ -47,16 +47,6 @@ class Carga{
 						$combustible->tipoCombustible_id = $tipoCombustibleRG->tipoCombustible_id;
 					}
 
-					/*
-					echo "<pre>";
-					if($gasto->id == 1674088){
-						print_r($gasto);
-						print_r($combustible);
-						print_r($tipoCombustibleRG);
-						die;
-					}
-*/
-
 					$tipo_report = "";
 					if(isset($vehiculoRG)){
 						if($vehiculoRG->camionpropio_id != null){
@@ -100,7 +90,12 @@ class Carga{
 						else{
 							$cargaComb->faena_id = 0;
 						}
-						$cargaComb->tipoCombustible_id = 0;
+						if(isset($faenaRG)){
+							$cargaComb->tipoCombustible_id = $tipoCombustibleRG->tipoCombustible_id;
+						}
+						else{
+							$cargaComb->tipoCombustible_id = 0;
+						}
 						$cargaComb->supervisorCombustible_id = 0;
 						if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
 							$cargaComb->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
@@ -192,7 +187,12 @@ class Carga{
 						$cargaComb->rut_proveedor = $gastoCompleta->rut_proveedor;
 						$cargaComb->observaciones = "Registro de Rindegastos";
 						$cargaComb->tipo_documento = Tools::traducirTipoDocumento($gastoCompleta->tipo_documento);
-						$cargaComb->tipoCombustible_id = 0;
+						if(isset($faenaRG)){
+							$cargaComb->tipoCombustible_id = $tipoCombustibleRG->tipoCombustible_id;
+						}
+						else{
+							$cargaComb->tipoCombustible_id = 0;
+						}
 						$cargaComb->supervisorCombustible_id = 0;	
 						$cargaComb->rindegastos = 1;
 
@@ -262,7 +262,12 @@ class Carga{
 						else{
 							$cargaComb->faena_id = 0;
 						}
-						$cargaComb->tipoCombustible_id = 0;
+						if(isset($faenaRG)){
+							$cargaComb->tipoCombustible_id = $tipoCombustibleRG->tipoCombustible_id;
+						}
+						else{
+							$cargaComb->tipoCombustible_id = 0;
+						}
 						$cargaComb->supervisorCombustible_id = 0;
 						if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
 							$cargaComb->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
@@ -345,7 +350,12 @@ class Carga{
 						else{
 							$cargaComb->faena_id = 0;
 						}
-						$cargaComb->tipoCombustible_id = 0;
+						if(isset($faenaRG)){
+							$cargaComb->tipoCombustible_id = $tipoCombustibleRG->tipoCombustible_id;
+						}
+						else{
+							$cargaComb->tipoCombustible_id = 0;
+						}
 						$cargaComb->supervisorCombustible_id = 0;
 						if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
 							$cargaComb->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
