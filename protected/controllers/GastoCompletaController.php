@@ -277,7 +277,7 @@ class GastoCompletaController extends Controller
 		else{
 			$cabeceras = [
 				['name'=>'Comercio','width'=>'md'],
-				['name'=>'Fecha','width'=>'sm', 'format'=>'date'],
+				['name'=>'Fecha','width'=>'md', 'format'=>'date'],
 				['name'=>'Neto','width'=>'xs'],
 				['name'=>'IVA','width'=>'xs'],
 				['name'=>'Total','width'=>'xs'],
@@ -307,7 +307,7 @@ class GastoCompletaController extends Controller
 	
 			$extra_datos = [
 				['campo'=>'comercio','exportable','dots'=>"md"],
-				['campo'=>'fecha','exportable','dots'=>'sm'],
+				['campo'=>'fecha','exportable','dots'=>'md'],
 				['campo'=>'neto','exportable', 'format'=>'money','acumulado'=>'suma'],
 				['campo'=>'iva','exportable', 'format'=>'money','acumulado'=>'suma'],
 				['campo'=>'total','exportable', 'format'=>'money','acumulado'=>'suma'],

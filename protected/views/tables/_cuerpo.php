@@ -177,10 +177,7 @@
 									$params .= $param . "=" . $fila->$param . "&";
 								}
 							}
-							$fuente = "fuente";
-							if($fila->$fuente == "RindeGastos"){
-								$valor = '<a href="' . CController::createUrl($extra_dato['url']) . '?' . $params .'">' . $valor . '</a>';
-							}
+							$valor = '<a target="_blank" href="' . CController::createUrl($extra_dato['url']) . '?' . $params .'">' . $valor . '</a>';
 						}
 						if($extra_dato['format'] == "enlace-ver"){
 							$params = "";

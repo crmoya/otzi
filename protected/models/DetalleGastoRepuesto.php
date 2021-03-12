@@ -18,5 +18,8 @@ class DetalleGastoRepuesto{
     public $fuente;
     public $rut_rinde;
     public $nombre_proveedor;
-
+    public $report_id;
+    public $report_tipo;
+    public $folio;
+    public $gasto_id;
 }

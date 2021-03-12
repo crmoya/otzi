@@ -119,18 +119,18 @@ class GastoRepuestoController extends Controller
 		$cabeceras = [
 			['name'=>'Fecha','width'=>'sm'],
 			['name'=>'Reporte','width'=>'sm'],
-			['name'=>'Fuente','width'=>'sm'],
-			['name'=>'Operador','width'=>'md'],
+			//['name'=>'Fuente','width'=>'sm'],
+			//['name'=>'Operador','width'=>'md'],
 			['name'=>'Máquina','width'=>'md'],
-			['name'=>'Repuesto','width'=>'md'],
-			['name'=>'Guía','width'=>'sm'],
+			['name'=>'Repuesto','width'=>'lg'],
+			//['name'=>'Guía','width'=>'sm'],
 			['name'=>'Factura','width'=>'sm'],
-			['name'=>'Cantidad','width'=>'sm'],
+			//['name'=>'Cantidad','width'=>'sm'],
 			['name'=>'Neto','width'=>'md'],
 			['name'=>'Faena','width'=>'md'],
-			['name'=>'Supervisor','width'=>'md'],
+			//['name'=>'Supervisor','width'=>'md'],
 			['name'=>'Proveedor','width'=>'md'],
-			['name'=>'RUT rendidor','width'=>'md'],
+			//['name'=>'RUT rendidor','width'=>'md'],
 			['name'=>'Nombre','width'=>'md'],
 			['name'=>'Número','width'=>'sm'],
 			['name'=>'Ver','width'=>'sm', 'filtro'=>'false'],
@@ -138,21 +138,21 @@ class GastoRepuestoController extends Controller
 
 		$extra_datos = [
 			['campo'=>'fecha','exportable', 'format'=>'date', 'dots'=>"sm"],
-			['campo'=>'reporte','format'=> 'enlace_rg', 'url'=>"//gastoRepuesto/redirect", 'params'=>['id','reporte','fuente']],
-			['campo'=>'fuente','exportable', 'dots'=>"sm"],
-			['campo'=>'operador','exportable', 'dots'=>"md"],
+			['campo'=>'reporte','format'=> 'enlace_rg', 'url'=>"//gastoRepuesto/redirect", 'params'=>['report_id','report_tipo']],
+			//['campo'=>'fuente','exportable', 'dots'=>"sm"],
+			//['campo'=>'operador','exportable', 'dots'=>"md"],
 			['campo'=>'maquina','exportable', 'dots'=>"md"],
-			['campo'=>'repuesto','exportable', 'format'=>'number','acumulado'=>'suma'],
-			['campo'=>'guia','exportable', 'dots'=>"sm"],
+			['campo'=>'repuesto','exportable', 'dots'=>'lg', 'acumulado'=>'suma'],
+			//['campo'=>'guia','exportable', 'dots'=>"sm"],
 			['campo'=>'factura','exportable', 'dots'=>"sm"],
-			['campo'=>'cantidad','exportable', 'format'=>'number','acumulado'=>'suma'],
+			//['campo'=>'cantidad','exportable', 'format'=>'number','acumulado'=>'suma'],
 			['campo'=>'neto','exportable', 'format'=>'money','acumulado'=>'suma'],
 			['campo'=>'centro_gestion','exportable', 'dots'=>"md"],
-			['campo'=>'supervisor','exportable', 'dots'=>"md"],
+			//['campo'=>'supervisor','exportable', 'dots'=>"md"],
 			['campo'=>'nombre_proveedor','exportable', 'dots'=>"md"],
-			['campo'=>'rut_rinde','exportable', 'dots'=>"md"],
+			//['campo'=>'rut_rinde','exportable', 'dots'=>"md"],
 			['campo'=>'nombre','exportable', 'dots'=>"md"],
-			['campo'=>'numero','exportable', 'dots'=>"sm"],
+			['campo'=>'numero','format'=> 'enlace_rg', 'url'=>"//informeGasto/view", 'params'=>['folio','gasto_id']],
 			['campo'=>'imagen','format'=>'imagen-gasto'],
 		];
 
@@ -184,19 +184,27 @@ class GastoRepuestoController extends Controller
 				$compra = null;
 				if($tipo_maquina == "CP"){
 					$report = RCamionPropio::model()->findByPk($id);
-					$carga = CompraRepuestoCamionPropio::model()->findByAttributes(['rCamionPropio_id'=>$id]);
+					$compra = CompraRepuestoCamionPropio::model()->findByAttributes(['rCamionPropio_id'=>$id]);
+					$detalleGastoRepuesto->report_id = $id;
+					$detalleGastoRepuesto->report_tipo = "CP";
 				}
 				if($tipo_maquina == "CA"){
 					$report = RCamionArrendado::model()->findByPk($id);
 					$compra = CompraRepuestoCamionArrendado::model()->findByAttributes(['rCamionArrendado_id'=>$id]);
+					$detalleGastoRepuesto->report_id = $id;
+					$detalleGastoRepuesto->report_tipo = "CA";
 				}
 				if($tipo_maquina == "EP"){
 					$report = REquipoPropio::model()->findByPk($id);
 					$compra = CompraRepuestoEquipoPropio::model()->findByAttributes(['rEquipoPropio_id'=>$id]);
+					$detalleGastoRepuesto->report_id = $id;
+					$detalleGastoRepuesto->report_tipo = "EP";
 				}
 				if($tipo_maquina == "EA"){
 					$report = REquipoArrendado::model()->findByPk($id);
 					$compra = CompraRepuestoEquipoArrendado::model()->findByAttributes(['rEquipoArrendado_id'=>$id]);
+					$detalleGastoRepuesto->report_id = $id;
+					$detalleGastoRepuesto->report_tipo = "EA";
 				}
 				if(isset($report)){
 					$detalleGastoRepuesto->reporte = $report->reporte;
@@ -206,22 +214,21 @@ class GastoRepuestoController extends Controller
 					$detalleGastoRepuesto->factura = $compra->factura;
 					$detalleGastoRepuesto->repuesto = $compra->repuesto;
 					$detalleGastoRepuesto->nombre = $compra->nombre;
-					$detalleGastoRepuesto->numero = $compra->numero;
 					$detalleGastoRepuesto->rut_rinde = $compra->rut_rinde;
 					$detalleGastoRepuesto->nombre_proveedor = $compra->nombre_proveedor;
+
 				}
 				$detalleGastoRepuesto->fuente = "SAM";
 			}
-			if($tipo == "RG"){
-				if(isset($gastoCompleta)){
-					if(isset($gastoCompleta->gasto)){
-						$informeGasto = InformeGasto::model()->findByPk($gastoCompleta->gasto->report_id);
-						if(isset($informeGasto)){
-							$detalleGastoRepuesto->reporte = $informeGasto->numero;
-						}
+			if(isset($gastoCompleta)){
+				if(isset($gastoCompleta->gasto)){
+					$informeGasto = InformeGasto::model()->findByPk($gastoCompleta->gasto->report_id);
+					if(isset($informeGasto)){
+						$detalleGastoRepuesto->numero = $informeGasto->numero;
+						$detalleGastoRepuesto->folio = $informeGasto->numero;
+						$detalleGastoRepuesto->gasto_id = $gastoCompleta->gasto->id;
 					}
 				}
-				$detalleGastoRepuesto->fuente = "RindeGastos";
 			}
 			$detalleGastoRepuesto->imagen = "";
 			if(isset($gastoCompleta)){
@@ -250,13 +257,18 @@ class GastoRepuestoController extends Controller
 	}
 
 
-	public function actionRedirect($id, $reporte, $fuente){
-		if($fuente == "SAM"){
-			$this->redirect(['','id'=>$model->id]);
+	public function actionRedirect($report_id, $report_tipo){
+		if($report_tipo == "CA"){
+			$this->redirect(['rCamionArrendado/view','id'=>$report_id]);
 		}
-		if($fuente == "RindeGastos"){
-			$this->redirect(['informeGasto/view','folio'=>$reporte,'gasto_id'=>$id]);
+		if($report_tipo == "CP"){
+			$this->redirect(['rCamionPropio/view','id'=>$report_id]);
+		}
+		if($report_tipo == "EA"){
+			$this->redirect(['rEquipoArrendado/view','id'=>$report_id]);
+		}
+		if($report_tipo == "EP"){
+			$this->redirect(['rEquipoPropio/view','id'=>$report_id]);
 		}
 	}
-
 }
