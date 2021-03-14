@@ -151,7 +151,7 @@ $(document).ready( function () {
 							var numero = data[i][indice].replaceAll('$','');
 							numero = numero.replaceAll('.','');
 							numero = numero.replaceAll(',','.');													
-							if(display.indexOf(i)>-1){
+							if(display.indexOf(i)>-1 && i >= start && i < end){
 								totalesParciales[indice] += parseFloat(numero);
 							}
 							totales[indice] += parseFloat(numero);
