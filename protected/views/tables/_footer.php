@@ -147,15 +147,26 @@ $(document).ready( function () {
 						if($('.decimales').val()){
 							decimales = parseInt($('.decimales').val());
 						}
-						for(var i = 0; i < data.length; i++){
-							var numero = data[i][indice].replaceAll('$','');
-							numero = numero.replaceAll('.','');
-							numero = numero.replaceAll(',','.');													
-							if(display.indexOf(i)>-1 && i >= start && i < end){
+						var api = this.api();
+						api.column( indice, { page: 'current'} )
+							.data()
+							.each(function(data){
+								var numero = data.replaceAll('$','');
+								numero = numero.replaceAll('.','');
+								numero = numero.replaceAll(',','.');
 								totalesParciales[indice] += parseFloat(numero);
-							}
-							totales[indice] += parseFloat(numero);
-						}
+							} );
+
+						api.column( indice)
+							.data()
+							.each(function(data){
+								var numero = data.replaceAll('$','');
+								numero = numero.replaceAll('.','');
+								numero = numero.replaceAll(',','.');
+								totales[indice] += parseFloat(numero);
+							} );
+
+
 						var parteDecimalTotales = parseFloat(totales[indice]) - parseInt(totales[indice]);
 						var decimalesTotales = Math.round10(parteDecimalTotales, -decimales);
 						var parteDecimalTotalesParciales = parseFloat(totalesParciales[indice]) - parseInt(totalesParciales[indice]);
