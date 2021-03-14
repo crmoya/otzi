@@ -96,7 +96,83 @@ class ExpedicionesCamionPropioController extends Controller
 			['campo'=>'id','format'=> 'enlace-imagen', 'new-page'=>'true', 'url'=>"//rCamionPropio/verHistorial", 'params'=>['id'],'ordenable'=>'false'],
 		];
 
-		$datos = ExpedicionesCamionPropio::model()->findAll($model->search());
+		$reports = ExpedicionesCamionPropio::model()->findAll($model->search());
+
+		$datos = [];
+		foreach($reports as $report){
+			
+			$faenas = [];
+			
+			$producciones = [];
+			$combustibles = [];
+			$repuestos = [];
+
+			//producción
+			//producción por volumen:
+			$viajes = ViajeCamionPropio::model()->findAllByAttributes(['rCamionPropio_id'=>$report['id']]);
+			foreach($viajes as $viaje){
+				$producciones[$viaje->faena_id] += $viaje->total;	
+				if(!in_array($viaje->faena_id,$faenas)){
+					$faenas[] = $viaje->faena_id;
+				}			
+			}
+			//producción por tiempo:
+			$expediciones = Expedicionportiempo::model()->findAllByAttributes(['rcamionpropio_id'=>$report['id']]);
+			foreach($expediciones as $expedicion){
+				$producciones[$expedicion->faena_id] += $expedicion->total;	
+				if(!in_array($expedicion->faena_id,$faenas)){
+					$faenas[] = $expedicion->faena_id;
+				}	
+			}
+
+			//combustible
+			$cargas = CargaCombCamionPropio::model()->findAllByAttributes(['rCamionPropio_id'=>$report['id']]);
+			foreach($cargas as $carga){
+				$combustibles[$carga->faena_id] += $carga->petroleoLts;
+				if(!in_array($carga->faena_id,$faenas)){
+					$faenas[] = $carga->faena_id;
+				}	
+			}
+
+			//repuesto
+			$compras = CompraRepuestoCamionPropio::model()->findAllByAttributes(['rCamionPropio_id'=>$report['id']]);
+			foreach($compras as $compra){
+				$repuestos[$compra->faena_id] += $compra->montoNeto;
+				if(!in_array($compra->faena_id,$faenas)){
+					$faenas[] = $compra->faena_id;
+				}
+			}
+
+			foreach($faenas as $faena_id){
+				$dato['tipo'] = $report['tipo'];
+				$dato['fecha'] = $report['fecha'];
+				$dato['reporte'] = $report['reporte'];
+				$dato['observaciones'] = $report['observaciones'];
+				$dato['observaciones_obra'] = $report['observaciones_obra'];
+				$dato['camion'] = $report['camion'];
+				$dato['camion_codigo'] = $report['camion_codigo'];
+				$dato['km_recorridos'] = $report['km_recorridos'];
+				$dato['km_gps'] = $report['km_gps'];
+				$dato['horas'] = $report['horas'];
+				$dato['panne'] = $report['panne'];
+				$dato['horas_panne'] = $report['horas_panne'];
+				$dato['validado'] = $report['validado'];
+				$dato['validador'] = $report['validador'];
+				$dato['id'] = $report['id'];
+				$dato['faena_id'] = $faena_id;
+				$faena = Faena::model()->findByPk($faena_id);
+				if(isset($faena)){
+					$dato['faena'] = $faena->nombre;
+				}
+				else{
+					$dato['faena'] = " -- NO ASIGNADA -- ";
+				}
+				$dato['produccion'] = $producciones[$faena_id];
+				$dato['combustible'] = $combustibles[$faena_id];
+				$dato['repuesto'] = $repuestos[$faena_id];
+				$datos[] = (object)$dato;
+			}
+		}
 
 		$this->render("admin",array(
 			'model'=>$model,
