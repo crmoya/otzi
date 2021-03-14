@@ -68,15 +68,6 @@ $(document).ready( function () {
 				footer: true,
 				enabled: true,
 				action: function(e, dt, button, config) {
-					/*var before = $('#datos thead').html();
-					
-					var footerBefore = $('#datos tfoot').html();
-					
-					
-					$('#datos thead').html(before);
-					$('#datos tfoot').html(footerBefore);
-					
-					*/
 					$('#datos thead th input').each( function () {
 						var title = $(this).attr('placeholder');
 						$(this).parent().html( title );
@@ -98,7 +89,6 @@ $(document).ready( function () {
 					format: {
 						body: function(data, row, column, node) {
 							data = data.replace("$","");
-							//data = data.replace(",",".");
 							var numero = data.replace(".","");
 							numero = numero.replace(",","");
 							if($.isNumeric(numero)){
@@ -130,11 +120,18 @@ $(document).ready( function () {
 			var totalesParciales = Array();
 
 			<?php
-			
+			$noVisibles = 0;
 			for($j=0; $j<count($extra_datos); $j++){
+				echo "totales[".$j."] = 0;";
+				echo "totalesParciales[".$j."] = 0;";
 				$extra_dato = $extra_datos[$j];
-				echo "totales[" . $j . "] = 0;";
-				echo "totalesParciales[" . $j . "] = 0;";
+
+				if(isset($extra_dato['visible'])){
+					if($extra_dato['visible']=="false"){
+						$noVisibles++;
+					}
+				}
+
 				if(isset($extra_dato['acumulado'])){
 					$operacion = $extra_dato['acumulado'];
 					$moneda = "";
@@ -143,41 +140,40 @@ $(document).ready( function () {
 							$moneda = "'$'+";
 						}
 					}
-					
 					if($operacion == "suma"):
 					?>
+						var indice = <?=$j?>;
 						var decimales = 0;
 						if($('.decimales').val()){
 							decimales = parseInt($('.decimales').val());
 						}
 						for(var i = 0; i < data.length; i++){
-							var numero = data[i][<?=$j?>].replaceAll('$','');
+							var numero = data[i][indice].replaceAll('$','');
 							numero = numero.replaceAll('.','');
 							numero = numero.replaceAll(',','.');													
 							if(display.indexOf(i)>-1){
-								totalesParciales[<?=$j?>] += parseFloat(numero);
+								totalesParciales[indice] += parseFloat(numero);
 							}
-							totales[<?=$j?>] += parseFloat(numero);
-							//console.log(data[i][<?=$j?>] + " " + numero + " " + totales[<?=$j?>]);	
+							totales[indice] += parseFloat(numero);
 						}
-						var parteDecimalTotales = parseFloat(totales[<?=$j?>]) - parseInt(totales[<?=$j?>]);
+						var parteDecimalTotales = parseFloat(totales[indice]) - parseInt(totales[indice]);
 						var decimalesTotales = Math.round10(parteDecimalTotales, -decimales);
-						var parteDecimalTotalesParciales = parseFloat(totalesParciales[<?=$j?>]) - parseInt(totalesParciales[<?=$j?>]);
+						var parteDecimalTotalesParciales = parseFloat(totalesParciales[indice]) - parseInt(totalesParciales[indice]);
 						var decimalesTotalesParciales = Math.round10(parteDecimalTotalesParciales, -decimales);
 
-						totales[<?=$j?>] = format((totales[<?=$j?>] + "").replaceAll('.',','));
+						totales[indice] = format((totales[indice] + "").replaceAll('.',','));
 						if(parteDecimalTotales > 0){
-							totales[<?=$j?>] = totales[<?=$j?>] + "," + (decimalesTotales + "").substr(2);
+							totales[indice] = totales[indice] + "," + (decimalesTotales + "").substr(2);
 						}
-						totalesParciales[<?=$j?>] = format((totalesParciales[<?=$j?>] + "").replaceAll('.',','));
+						totalesParciales[indice] = format((totalesParciales[indice] + "").replaceAll('.',','));
 						if(parteDecimalTotalesParciales > 0){
-							totalesParciales[<?=$j?>] = totalesParciales[<?=$j?>] + "," + (decimalesTotalesParciales + "").substr(2);
+							totalesParciales[indice] = totalesParciales[indice] + "," + (decimalesTotalesParciales + "").substr(2);
 						}
 						
 					<?php 
 					endif; 
-					echo 	"var html = " . $moneda. "totalesParciales[" . $j . "] + '<br/>' + " . $moneda. "totales[" . $j . "];" . 
-							"$( api.column( " . $j . " ).footer() ).html(html);";
+					echo 	"var html = " . $moneda. "totalesParciales[indice] + '<br/>' + " . $moneda. "totales[indice];" . 
+							"$( api.column(indice-".$noVisibles.").footer() ).html(html);";
 				}
 				
 			}

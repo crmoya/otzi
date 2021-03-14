@@ -138,7 +138,7 @@
 									$newpage = "target ='_blank'";
 								}
 							}
-							$valor = '<a ' . $newpage . ' href="' . CController::createUrl($extra_dato['url']) . '?' . $params .'">' . $valor . '</a>';
+							$valor = '<a valor="' . $valor . '" ' . $newpage . ' href="' . CController::createUrl($extra_dato['url']) . '?' . $params .'">' . $valor . '</a>';
 						}
 						if($extra_dato['format'] == "enlace-documento"){
 							$params = "";
