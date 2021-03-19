@@ -36,13 +36,9 @@ class ExpedicionesEquipoPropio extends CActiveRecord
 
 		$criteria->compare('reporte',$this->reporte,true);
 		$criteria->compare('equipo_id',$this->equipo_id);
-		$criteria->compare('faena_id',$this->faena_id);
 		
 		$criteria->addCondition("tipo = 'equipos_propios'");
 		
-		$criteria->select = 'tipo,id,fecha,reporte,observaciones,observaciones_obra,equipo,equipo_id,faena_id,faena,sum(horas_reales) as horas_reales,sum(horas_gps) as horas_gps,sum(produccion) as produccion,sum(combustible) as combustible, sum(repuestos) as repuestos, sum(horas_panne) as horas_panne, panne,validado,validador';
-		$criteria->group = 'tipo,id,fecha,reporte,observaciones,observaciones_obra,equipo,equipo_id,faena_id,faena,panne,validado,validador';
-
 		return $criteria;
 	}
 
@@ -54,7 +50,7 @@ class ExpedicionesEquipoPropio extends CActiveRecord
 
 	public function tableName()
 	{
-		return 'vexpedicionesequipo';
+		return 'vreportmaquinarias';
 	}
 
 	public function relations()
