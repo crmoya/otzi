@@ -34,11 +34,6 @@ class ExpedicionesCamion extends CActiveRecord
 			$criteria->params[':fecha_fin'] = $this->fecha_fin;
 		}
 
-		if(isset($this->tipoCombustible_id) && $this->tipoCombustible_id != ""){
-			$criteria->addCondition('(tipo_combustible = :combustible or tipo_combustible = -1)');
-			$criteria->params[':combustible'] = $this->tipoCombustible_id;
-		}
-
 		if(isset($this->propiosOArrendados) && $this->propiosOArrendados != "TODOS"){
 			if($this->propiosOArrendados == "CA"){
 				$criteria->addCondition('tipo = :tipo');
@@ -49,6 +44,7 @@ class ExpedicionesCamion extends CActiveRecord
 				$criteria->params[':tipo'] = 'camiones_propios';
 			}
 		}
+
 		return $criteria;
 	}
 

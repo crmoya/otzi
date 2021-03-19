@@ -90,40 +90,189 @@ class ConsumoCamionesController extends Controller
 		$reports = ExpedicionesCamion::model()->findAll($model->search());
 
 		$datos = [];
-		foreach($reports as $report){
-			
-			$litros = 0;
-			$kms_litro = 0;
-			$kms_litro_gps = 0;
-			
-			$cargas = [];
-			//combustible
-			if($report['tipo'] == 'camiones_propios'){
-				$cargas = CargaCombCamionPropio::model()->findAllByAttributes(['rCamionPropio_id'=>$report['id']]);
-			}
-			if($report['tipo'] == 'camiones_arrendados'){
-				$cargas = CargaCombCamionArrendado::model()->findAllByAttributes(['rCamionArrendado_id'=>$report['id']]);
-			}
-			
-			foreach($cargas as $carga){
-				$litros += $carga->petroleoLts;
-			}
-			if($litros > 0){
-				$kms_litro = ((float)$report['km_recorridos'])/$litros;
-				$kms_litro_gps = ((float)$report['km_gps'])/$litros;
-			}
+		if(isset($model->agruparPor) && $model->agruparPor != "NINGUNO"){
+			if($model->agruparPor == "MAQUINA"){
+				$camiones = [];
+				foreach($reports as $report){						
+					$cargas = [];
+					//combustible
+					if($report['tipo'] == 'camiones_propios'){
+						$cargas = CargaCombCamionPropio::model()->findAllByAttributes(['rCamionPropio_id'=>$report['id']]);
+					}
+					if($report['tipo'] == 'camiones_arrendados'){
+						$cargas = CargaCombCamionArrendado::model()->findAllByAttributes(['rCamionArrendado_id'=>$report['id']]);
+					}
+					
+					$litros = 0;
+					foreach($cargas as $carga){
+						if(isset($model->tipoCombustible_id) && $model->tipoCombustible_id != ""){
+							if($model->tipoCombustible_id != $carga->tipoCombustible_id){
+								continue;
+							}
+						}
+						$litros += $carga->petroleoLts;
+					}
 
-			$dato['camion'] = $report['camion'];
-			$dato['chofer'] = $report['chofer'];
-			$dato['km_recorridos'] = $report['km_recorridos'];
-			$dato['km_gps'] = $report['km_gps'];
-			$dato['litros'] = $litros;
-			$dato['km_litro'] = $kms_litro;
-			$dato['km_litro_gps'] = $kms_litro_gps;
-			$dato['consumo_esperado'] = $report['consumo_esperado'];
-			
-			$datos[] = (object)$dato;	
-			
+					$kms = 0;
+					$kms_gps = 0;
+					$kms_litro = 0;
+					$kms_litro_gps = 0;
+					$sum_consumo_esperado = 0;
+					if(array_key_exists($report['camion'],$camiones)){
+						$valores = $camiones[$report['camion']];
+						$kms = (float)$valores['km_recorridos'] + (float)$report['km_recorridos'];
+						$kms_gps = (float)$valores['km_gps'] + (float)$report['km_gps'];
+						$litros = (float)$valores['litros'] + $litros;
+						$sum_consumo_esperado = (float)$valores['sum_consumo_esperado'] + (float)$report['consumo_esperado'];
+					}
+					else{
+						$kms = (float)$report['km_recorridos'];
+						$kms_gps = (float)$report['km_gps'];
+						$sum_consumo_esperado = (float)$report['consumo_esperado'];
+					}
+					if($litros > 0){
+						$kms_litro = $kms/$litros;
+						$kms_litro_gps = $kms_gps/$litros;
+					}
+					
+					$count = count($camiones);
+					if($count == 0){
+						$count = 1;
+					}
+					$camiones[$report['camion']] = [
+						'km_recorridos' => $kms,
+						'km_gps' => $kms_gps,
+						'litros' => $litros,
+						'km_litro' => $kms_litro,
+						'km_litro_gps' => $kms_litro_gps,
+						'consumo_esperado' => $sum_consumo_esperado / $count,
+						'sum_consumo_esperado' => $sum_consumo_esperado,
+					];		
+				}
+
+				foreach($camiones as $camion => $valores){
+					$dato['camion'] = $camion;
+					$dato['km_recorridos'] = $valores['km_recorridos'];
+					$dato['km_gps'] = $valores['km_gps'];
+					$dato['litros'] = $valores['litros'];
+					$dato['km_litro'] = $valores['km_litro'];
+					$dato['km_litro_gps'] = $valores['km_litro_gps'];
+					$dato['consumo_esperado'] = $valores['consumo_esperado'];
+					$dato['chofer'] = '';
+					$datos[] = (object)$dato;
+				}	
+			}
+			if($model->agruparPor == "OPERADOR"){
+				$choferes = [];
+				foreach($reports as $report){						
+					$cargas = [];
+					//combustible
+					if($report['tipo'] == 'camiones_propios'){
+						$cargas = CargaCombCamionPropio::model()->findAllByAttributes(['rCamionPropio_id'=>$report['id']]);
+					}
+					if($report['tipo'] == 'camiones_arrendados'){
+						$cargas = CargaCombCamionArrendado::model()->findAllByAttributes(['rCamionArrendado_id'=>$report['id']]);
+					}
+					
+					$litros = 0;
+					foreach($cargas as $carga){
+						if(isset($model->tipoCombustible_id) && $model->tipoCombustible_id != ""){
+							if($model->tipoCombustible_id != $carga->tipoCombustible_id){
+								continue;
+							}
+						}
+						$litros += $carga->petroleoLts;
+					}
+
+					$kms = 0;
+					$kms_gps = 0;
+					$kms_litro = 0;
+					$kms_litro_gps = 0;
+					$sum_consumo_esperado = 0;
+					if(array_key_exists($report['chofer'],$choferes)){
+						$valores = $choferes[$report['chofer']];
+						$kms = (float)$valores['km_recorridos'] + (float)$report['km_recorridos'];
+						$kms_gps = (float)$valores['km_gps'] + (float)$report['km_gps'];
+						$litros = (float)$valores['litros'] + $litros;
+						$sum_consumo_esperado = (float)$valores['sum_consumo_esperado'] + (float)$report['consumo_esperado'];
+					}
+					else{
+						$kms = (float)$report['km_recorridos'];
+						$kms_gps = (float)$report['km_gps'];
+						$sum_consumo_esperado = (float)$report['consumo_esperado'];
+					}
+					if($litros > 0){
+						$kms_litro = $kms/$litros;
+						$kms_litro_gps = $kms_gps/$litros;
+					}
+					
+					$count = count($choferes);
+					if($count == 0){
+						$count = 1;
+					}
+					$choferes[$report['chofer']] = [
+						'km_recorridos' => $kms,
+						'km_gps' => $kms_gps,
+						'litros' => $litros,
+						'km_litro' => $kms_litro,
+						'km_litro_gps' => $kms_litro_gps,
+						'consumo_esperado' => $sum_consumo_esperado / $count,
+						'sum_consumo_esperado' => $sum_consumo_esperado,
+					];		
+				}
+
+				foreach($choferes as $chofer => $valores){
+					$dato['chofer'] = $chofer;
+					$dato['km_recorridos'] = $valores['km_recorridos'];
+					$dato['km_gps'] = $valores['km_gps'];
+					$dato['litros'] = $valores['litros'];
+					$dato['km_litro'] = $valores['km_litro'];
+					$dato['km_litro_gps'] = $valores['km_litro_gps'];
+					$dato['consumo_esperado'] = $valores['consumo_esperado'];
+					$dato['camion'] = '';
+					$datos[] = (object)$dato;
+				}	
+			}
+		}
+		else{
+			foreach($reports as $report){						
+				$cargas = [];
+				//combustible
+				if($report['tipo'] == 'camiones_propios'){
+					$cargas = CargaCombCamionPropio::model()->findAllByAttributes(['rCamionPropio_id'=>$report['id']]);
+				}
+				if($report['tipo'] == 'camiones_arrendados'){
+					$cargas = CargaCombCamionArrendado::model()->findAllByAttributes(['rCamionArrendado_id'=>$report['id']]);
+				}
+				
+				$litros = 0;
+				foreach($cargas as $carga){
+					if(isset($model->tipoCombustible_id) && $model->tipoCombustible_id != ""){
+						if($model->tipoCombustible_id != $carga->tipoCombustible_id){
+							continue;
+						}
+					}
+					$litros += $carga->petroleoLts;
+				}
+
+				$kms_litro = 0;
+				$kms_litro_gps = 0;
+				$kms = (float)$report['km_recorridos'];
+				$kms_gps = (float)$report['km_gps'];
+				if($litros > 0){
+					$kms_litro = $kms/$litros;
+					$kms_litro_gps = $kms_gps/$litros;
+				}
+				$dato['camion'] = $report['camion'];
+				$dato['km_recorridos'] = $kms;
+				$dato['km_gps'] = $kms_gps;
+				$dato['litros'] = $litros;
+				$dato['km_litro'] = $kms_litro;
+				$dato['km_litro_gps'] = $kms_litro_gps;
+				$dato['consumo_esperado'] = $report['consumo_esperado'];
+				$dato['chofer'] = $report['chofer'];
+				$datos[] = (object)$dato;	
+			}
 		}
 
 		$this->render("admin",array(
