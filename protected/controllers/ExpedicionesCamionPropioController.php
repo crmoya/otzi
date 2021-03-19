@@ -109,35 +109,58 @@ class ExpedicionesCamionPropioController extends Controller
 
 			//producción
 			//producción por volumen:
+			
 			$viajes = ViajeCamionPropio::model()->findAllByAttributes(['rCamionPropio_id'=>$report['id']]);
 			foreach($viajes as $viaje){
-				$producciones[$viaje->faena_id] += $viaje->total;	
+				if(array_key_exists($viaje->faena_id,$producciones)){
+					$producciones[$viaje->faena_id] += $viaje->total;	
+				}
+				else{
+					$producciones[$viaje->faena_id] = $viaje->total;	
+				}
 				if(!in_array($viaje->faena_id,$faenas)){
 					$faenas[] = $viaje->faena_id;
-				}			
+				}		
 			}
+			
 			//producción por tiempo:
 			$expediciones = Expedicionportiempo::model()->findAllByAttributes(['rcamionpropio_id'=>$report['id']]);
 			foreach($expediciones as $expedicion){
-				$producciones[$expedicion->faena_id] += $expedicion->total;	
+				if(array_key_exists($expedicion->faena_id,$producciones)){
+					$producciones[$expedicion->faena_id] += $expedicion->total;
+				}
+				else{
+					$producciones[$expedicion->faena_id] = $expedicion->total;
+				}
 				if(!in_array($expedicion->faena_id,$faenas)){
 					$faenas[] = $expedicion->faena_id;
-				}	
+				}
 			}
 
 			//combustible
 			$cargas = CargaCombCamionPropio::model()->findAllByAttributes(['rCamionPropio_id'=>$report['id']]);
 			foreach($cargas as $carga){
-				$combustibles[$carga->faena_id] += $carga->petroleoLts;
+				if(array_key_exists($carga->faena_id,$combustibles)){
+					$combustibles[$carga->faena_id] += $carga->petroleoLts;
+				}
+				else{
+					$combustibles[$carga->faena_id] = $carga->petroleoLts;
+				}
 				if(!in_array($carga->faena_id,$faenas)){
 					$faenas[] = $carga->faena_id;
-				}	
+				}
 			}
-
+			
+			
 			//repuesto
 			$compras = CompraRepuestoCamionPropio::model()->findAllByAttributes(['rCamionPropio_id'=>$report['id']]);
 			foreach($compras as $compra){
-				$repuestos[$compra->faena_id] += $compra->montoNeto;
+				if(array_key_exists($compra->faena_id,$repuestos)){
+					$repuestos[$compra->faena_id] += $compra->montoNeto;
+				}
+				else{
+					$repuestos[$compra->faena_id] = $compra->montoNeto;
+				}
 				if(!in_array($compra->faena_id,$faenas)){
 					$faenas[] = $compra->faena_id;
 				}
@@ -167,9 +190,25 @@ class ExpedicionesCamionPropioController extends Controller
 				else{
 					$dato['faena'] = " -- NO ASIGNADA -- ";
 				}
-				$dato['produccion'] = $producciones[$faena_id];
-				$dato['combustible'] = $combustibles[$faena_id];
-				$dato['repuesto'] = $repuestos[$faena_id];
+				if(array_key_exists($faena_id,$producciones)){
+					$dato['produccion'] = $producciones[$faena_id];
+				}
+				else{
+					$dato['produccion'] = 0;
+				}
+				if(array_key_exists($faena_id,$combustibles)){
+					$dato['combustible'] = $combustibles[$faena_id];
+				}
+				else{
+					$dato['combustible'] = 0;
+				}
+				if(array_key_exists($faena_id,$repuestos)){
+					$dato['repuestos'] = $repuestos[$faena_id];
+				}
+				else{
+					$dato['repuestos'] = 0;
+				}
+				
 				$datos[] = (object)$dato;
 			}
 		}
