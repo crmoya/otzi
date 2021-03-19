@@ -42,18 +42,18 @@ class ConsumoCamionesController extends Controller
 		
 		$this->pageTitle = "";
 
-		$model=new ConsumoCamiones('search');
+		$model=new ExpedicionesCamion('search');
 		$model->fecha_inicio = date("Y-m-01");
 		$model->fecha_fin = date("Y-m-t");
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['ConsumoCamiones'])){
-			$model->attributes=$_GET['ConsumoCamiones'];
+		if(isset($_GET['ExpedicionesCamion'])){
+			$model->attributes=$_GET['ExpedicionesCamion'];
 		}
 
 	
 		$cabeceras = [
-			['name'=>'Vehículo','width'=>'lg'],
-			['name'=>'Operador','width'=>'lg'],
+			['name'=>'Camión','width'=>'lg'],
+			['name'=>'Chofer','width'=>'lg'],
 			['name'=>'Lts.Físicos','width'=>'md'],
 			['name'=>'Km.Físicos','width'=>'md'],
 			['name'=>'Km.GPS','width'=>'md'],
@@ -64,30 +64,67 @@ class ConsumoCamionesController extends Controller
 
 		if($model->decimales != 0){
 			$extra_datos = [
-				['campo'=>'maquina','exportable','dots'=>"md"],
-				['campo'=>'operador','exportable','dots'=>'md'],
+				['campo'=>'camion','exportable','dots'=>"md"],
+				['campo'=>'chofer','exportable','dots'=>'md'],
 				['campo'=>'litros','exportable', 'format'=>'decimal'.$model->decimales,'acumulado'=>'suma'],
-				['campo'=>'kms','exportable', 'format'=>'decimal'.$model->decimales,'acumulado'=>'suma'],
-				['campo'=>'kms_gps','exportable', 'format'=>'decimal'.$model->decimales,'acumulado'=>'suma'],
-				['campo'=>'kms_litro','exportable', 'format'=>'decimal'.$model->decimales,'acumulado'=>'suma'],
-				['campo'=>'kms_litro_gps','exportable', 'format'=>'decimal'.$model->decimales,'acumulado'=>'suma'],
+				['campo'=>'km_recorridos','exportable', 'format'=>'decimal'.$model->decimales,'acumulado'=>'suma'],
+				['campo'=>'km_gps','exportable', 'format'=>'decimal'.$model->decimales,'acumulado'=>'suma'],
+				['campo'=>'km_litro','exportable', 'format'=>'decimal'.$model->decimales,'acumulado'=>'suma'],
+				['campo'=>'km_litro_gps','exportable', 'format'=>'decimal'.$model->decimales,'acumulado'=>'suma'],
 				['campo'=>'consumo_esperado','exportable', 'format'=>'decimal'.$model->decimales,'acumulado'=>'suma'],
 			];
 		}
 		else{
 			$extra_datos = [
-				['campo'=>'maquina','exportable','dots'=>"md"],
-				['campo'=>'operador','exportable','dots'=>'md'],
+				['campo'=>'camion','exportable','dots'=>"md"],
+				['campo'=>'chofer','exportable','dots'=>'md'],
 				['campo'=>'litros','exportable', 'format'=>'number','acumulado'=>'suma'],
-				['campo'=>'kms','exportable', 'format'=>'number','acumulado'=>'suma'],
-				['campo'=>'kms_gps','exportable', 'format'=>'number','acumulado'=>'suma'],
-				['campo'=>'kms_litro','exportable', 'format'=>'number','acumulado'=>'suma'],
-				['campo'=>'kms_litro_gps','exportable', 'format'=>'number','acumulado'=>'suma'],
+				['campo'=>'km_recorridos','exportable', 'format'=>'number','acumulado'=>'suma'],
+				['campo'=>'km_gps','exportable', 'format'=>'number','acumulado'=>'suma'],
+				['campo'=>'km_litro','exportable', 'format'=>'number','acumulado'=>'suma'],
+				['campo'=>'km_litro_gps','exportable', 'format'=>'number','acumulado'=>'suma'],
 				['campo'=>'consumo_esperado','exportable', 'format'=>'number','acumulado'=>'suma'],
 			];
 		}
 
-		$datos = ConsumoCamiones::model()->findAll($model->search());
+		$reports = ExpedicionesCamion::model()->findAll($model->search());
+
+		$datos = [];
+		foreach($reports as $report){
+			
+			$litros = 0;
+			$kms_litro = 0;
+			$kms_litro_gps = 0;
+			
+			$cargas = [];
+			//combustible
+			if($report['tipo'] == 'camiones_propios'){
+				$cargas = CargaCombCamionPropio::model()->findAllByAttributes(['rCamionPropio_id'=>$report['id']]);
+			}
+			if($report['tipo'] == 'camiones_arrendados'){
+				$cargas = CargaCombCamionArrendado::model()->findAllByAttributes(['rCamionArrendado_id'=>$report['id']]);
+			}
+			
+			foreach($cargas as $carga){
+				$litros += $carga->petroleoLts;
+			}
+			if($litros > 0){
+				$kms_litro = ((float)$report['km_recorridos'])/$litros;
+				$kms_litro_gps = ((float)$report['km_gps'])/$litros;
+			}
+
+			$dato['camion'] = $report['camion'];
+			$dato['chofer'] = $report['chofer'];
+			$dato['km_recorridos'] = $report['km_recorridos'];
+			$dato['km_gps'] = $report['km_gps'];
+			$dato['litros'] = $litros;
+			$dato['km_litro'] = $kms_litro;
+			$dato['km_litro_gps'] = $kms_litro_gps;
+			$dato['consumo_esperado'] = $report['consumo_esperado'];
+			
+			$datos[] = (object)$dato;	
+			
+		}
 
 		$this->render("admin",array(
 			'model'=>$model,
