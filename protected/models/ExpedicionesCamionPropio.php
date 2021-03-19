@@ -12,7 +12,7 @@ class ExpedicionesCamionPropio extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fecha_inicio, fecha_fin, camion_id, faena_id, reporte', 'safe', 'on'=>'search'),
+			array('fecha_inicio, fecha_fin, camion_id, reporte, faena_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -36,7 +36,6 @@ class ExpedicionesCamionPropio extends CActiveRecord
 
 		$criteria->compare('reporte',$this->reporte,true);
 		$criteria->compare('camion_id',$this->camion_id);
-		//$criteria->compare('faena_id',$this->faena_id);
 		
 		$criteria->addCondition("tipo = 'camiones_propios'");
 		

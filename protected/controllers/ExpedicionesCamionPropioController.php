@@ -167,6 +167,12 @@ class ExpedicionesCamionPropioController extends Controller
 			}
 
 			foreach($faenas as $faena_id){
+				if($model->faena_id != "" && $model->faena_id != null){
+					if($model->faena_id != $faena_id){
+						continue;
+					}
+				}		
+				
 				$dato['tipo'] = $report['tipo'];
 				$dato['fecha'] = $report['fecha'];
 				$dato['reporte'] = $report['reporte'];
@@ -209,7 +215,7 @@ class ExpedicionesCamionPropioController extends Controller
 					$dato['repuestos'] = 0;
 				}
 				
-				$datos[] = (object)$dato;
+				$datos[] = (object)$dato;	
 			}
 		}
 
