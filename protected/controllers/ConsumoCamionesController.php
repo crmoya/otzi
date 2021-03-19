@@ -235,6 +235,7 @@ class ConsumoCamionesController extends Controller
 			}
 		}
 		else{
+			$registros = [];
 			foreach($reports as $report){						
 				$cargas = [];
 				//combustible
@@ -255,24 +256,56 @@ class ConsumoCamionesController extends Controller
 					$litros += $carga->petroleoLts;
 				}
 
+				$kms = 0;
+				$kms_gps = 0;
 				$kms_litro = 0;
 				$kms_litro_gps = 0;
-				$kms = (float)$report['km_recorridos'];
-				$kms_gps = (float)$report['km_gps'];
+				$sum_consumo_esperado = 0;
+				if(array_key_exists($report['camion_id']."-".$report['chofer_id'],$registros)){
+					$valores = $registros[$report['camion_id']."-".$report['chofer_id']];
+					$kms = (float)$valores['km_recorridos'] + (float)$report['km_recorridos'];
+					$kms_gps = (float)$valores['km_gps'] + (float)$report['km_gps'];
+					$litros = (float)$valores['litros'] + $litros;
+					$sum_consumo_esperado = (float)$valores['sum_consumo_esperado'] + (float)$report['consumo_esperado'];
+				}
+				else{
+					$kms = (float)$report['km_recorridos'];
+					$kms_gps = (float)$report['km_gps'];
+					$sum_consumo_esperado = (float)$report['consumo_esperado'];
+				}
 				if($litros > 0){
 					$kms_litro = $kms/$litros;
 					$kms_litro_gps = $kms_gps/$litros;
 				}
-				$dato['camion'] = $report['camion'];
-				$dato['km_recorridos'] = $kms;
-				$dato['km_gps'] = $kms_gps;
-				$dato['litros'] = $litros;
-				$dato['km_litro'] = $kms_litro;
-				$dato['km_litro_gps'] = $kms_litro_gps;
-				$dato['consumo_esperado'] = $report['consumo_esperado'];
-				$dato['chofer'] = $report['chofer'];
-				$datos[] = (object)$dato;	
+				
+				$count = count($registros);
+				if($count == 0){
+					$count = 1;
+				}
+				$registros[$report['camion_id']."-".$report['chofer_id']] = [
+					'km_recorridos' => $kms,
+					'km_gps' => $kms_gps,
+					'litros' => $litros,
+					'km_litro' => $kms_litro,
+					'km_litro_gps' => $kms_litro_gps,
+					'consumo_esperado' => $sum_consumo_esperado / $count,
+					'sum_consumo_esperado' => $sum_consumo_esperado,
+					'camion' => $report['camion'],
+					'chofer' => $report['chofer'],
+				];		
 			}
+
+			foreach($registros as $valores){
+				$dato['chofer'] = $valores['chofer'];
+				$dato['km_recorridos'] = $valores['km_recorridos'];
+				$dato['km_gps'] = $valores['km_gps'];
+				$dato['litros'] = $valores['litros'];
+				$dato['km_litro'] = $valores['km_litro'];
+				$dato['km_litro_gps'] = $valores['km_litro_gps'];
+				$dato['consumo_esperado'] = $valores['consumo_esperado'];
+				$dato['camion'] = $valores['camion'];
+				$datos[] = (object)$dato;
+			}	
 		}
 
 		$this->render("admin",array(
