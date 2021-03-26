@@ -722,9 +722,10 @@ function checkRutProveedor() {
 		if ($("#removeRepuesto" + i).attr("validate") == "true") {
 			var valor = $("#rut_proveedorR" + i).val();
 			if (valor == "") {
-				$("#rut_proveedorR" + i).css('background', 'pink');
+				/*$("#rut_proveedorR" + i).css('background', 'pink');
 				$("#errorRutProveedorR" + i).html("Error: No puede ser blanco");
-				return false;
+				return false;*/
+				return true;
 			}
 			else {
 				valor = replaceAll(valor, '.', '');
