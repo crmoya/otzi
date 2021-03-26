@@ -40,75 +40,103 @@ class ProduccionCamiones extends CActiveRecord
 		}
 
 		$inicioAgrupacion = "	camion,
+								camion_id,
 								chofer,
+								chofer_id,
 								centro_gestion,
+								faena_id,
+								tipo_camion,
 								sum(total_transportado) as total_transportado,
 								sum(produccion_contratada) as produccion_contratada,
 								sum(produccion_real) as produccion_real,
 								GREATEST(sum(produccion_contratada) - sum(produccion_real),0) as produccion_diferencia";
 
-		$finAgrupacion = "		camion,chofer,centro_gestion";
+		$finAgrupacion = "		camion,camion_id,chofer,chofer_id,centro_gestion,faena_id,tipo_camion";
 
 		if(isset($this->agruparPor) && $this->agruparPor != "NINGUNO"){
 			if($this->agruparPor == "CAMION"){
 				$inicioAgrupacion = "	camion,
+										camion_id,
 										'' as chofer,
+										'' as chofer_id,
 										'' as centro_gestion,
+										'' as faena_id,
+										tipo_camion,
 										sum(total_transportado) as total_transportado,
 										sum(produccion_contratada) as produccion_contratada,
 										sum(produccion_real) as produccion_real,
 										GREATEST(sum(produccion_contratada) - sum(produccion_real),0) as produccion_diferencia";
-				$finAgrupacion = "		camion";
+				$finAgrupacion = "		camion,camion_id,tipo_camion";
 			}
 			if($this->agruparPor == "CHOFER"){
 				$inicioAgrupacion = "	'' as camion,
+										'' as camion_id,
 										chofer,
+										chofer_id,
 										'' as centro_gestion,
+										'' as faena_id,
+										'' as tipo_camion,
 										sum(total_transportado) as total_transportado,
 										sum(produccion_contratada) as produccion_contratada,
 										sum(produccion_real) as produccion_real,
 										GREATEST(sum(produccion_contratada) - sum(produccion_real),0) as produccion_diferencia";
-				$finAgrupacion = "		chofer";
+				$finAgrupacion = "		chofer,chofer_id";
 			}
 			if($this->agruparPor == "CENTROGESTION"){
 				$inicioAgrupacion = "	'' as camion,
+										'' as camion_id,
 										'' as chofer,
+										'' as chofer_id,
 										centro_gestion,
+										faena_id,
+										'' as tipo_camion,
 										sum(total_transportado) as total_transportado,
 										sum(produccion_contratada) as produccion_contratada,
 										sum(produccion_real) as produccion_real,
 										GREATEST(sum(produccion_contratada) - sum(produccion_real),0) as produccion_diferencia";
-				$finAgrupacion = "		centro_gestion";
+				$finAgrupacion = "		centro_gestion,faena_id";
 			}
 			if($this->agruparPor == "CENTROCAMION"){
 				$inicioAgrupacion = "	camion,
+										camion_id,
 										'' as chofer,
+										'' as chofer_id,
 										centro_gestion,
+										faena_id,
+										tipo_camion,
 										sum(total_transportado) as total_transportado,
 										sum(produccion_contratada) as produccion_contratada,
 										sum(produccion_real) as produccion_real,
 										GREATEST(sum(produccion_contratada) - sum(produccion_real),0) as produccion_diferencia";
-				$finAgrupacion = "		camion,centro_gestion";
+				$finAgrupacion = "		camion,camion_id,centro_gestion,faena_id,tipo_camion";
 			}
 			if($this->agruparPor == "CENTROCHOFER"){
 				$inicioAgrupacion = "	'' as camion,
+										'' as camion_id,
 										chofer,
+										chofer_id,
 										centro_gestion,
+										faena_id,
+										'' as tipo_camion,
 										sum(total_transportado) as total_transportado,
 										sum(produccion_contratada) as produccion_contratada,
 										sum(produccion_real) as produccion_real,
 										GREATEST(sum(produccion_contratada) - sum(produccion_real),0) as produccion_diferencia";
-				$finAgrupacion = "		chofer,centro_gestion";
+				$finAgrupacion = "		chofer,chofer_id,centro_gestion,faena_id";
 			}
 			if($this->agruparPor == "CHOFERCAMION"){
 				$inicioAgrupacion = "	camion,
+										camion_id,
 										chofer,
+										chofer_id,
 										'' as centro_gestion,
+										'' as faena_id,
+										tipo_camion,
 										sum(total_transportado) as total_transportado,
 										sum(produccion_contratada) as produccion_contratada,
 										sum(produccion_real) as produccion_real,
 										GREATEST(sum(produccion_contratada) - sum(produccion_real),0) as produccion_diferencia";
-				$finAgrupacion = "		camion,chofer";
+				$finAgrupacion = "		camion,camion_id,chofer,chofer_id,tipo_camion";
 			}
 		}
 

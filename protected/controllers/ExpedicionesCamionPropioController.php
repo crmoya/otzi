@@ -103,19 +103,50 @@ class ExpedicionesCamionPropioController extends Controller
 			$combustible = 0;
 			$repuestos = 0;
 
+			if($model->camion_id != null && $model->camion_id != ""){
+				if($model->camion_id != $report['camion_id']){
+					continue;
+				}
+			}
+			if($model->chofer_id != null && $model->chofer_id != ""){
+				if($model->chofer_id != $report['chofer_id']){
+					continue;
+				}
+			}
+
+			$continue = false;
 			//producción
 			//producción por volumen:
 			
 			$viajes = ViajeCamionPropio::model()->findAllByAttributes(['rCamionPropio_id'=>$report['id']]);
 			foreach($viajes as $viaje){
 				$produccion += $viaje->total;
+				if($model->faena_id != null && $model->faena_id != ""){
+					if($model->faena_id != $viaje->faena_id){
+						$continue = true;
+					}
+				}
+			}
+
+			if($continue){
+				continue;
 			}
 			
 			//producción por tiempo:
 			$expediciones = Expedicionportiempo::model()->findAllByAttributes(['rcamionpropio_id'=>$report['id']]);
 			foreach($expediciones as $expedicion){
 				$produccion += $expedicion->total;
+				if($model->faena_id != null && $model->faena_id != ""){
+					if($model->faena_id != $expedicion->faena_id){
+						$continue = true;
+					}
+				}
 			}
+
+			if($continue){
+				continue;
+			}
+
 
 			//combustible
 			$cargas = CargaCombCamionPropio::model()->findAllByAttributes(['rCamionPropio_id'=>$report['id']]);

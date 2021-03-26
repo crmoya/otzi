@@ -24,7 +24,7 @@ class ProduccionCamionesController extends Controller
 		return array(
 			array(
 				'allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions' => array('index', 'view', 'create', 'update', 'admin', 'delete', 'exportar', 'export'),
+				'actions' => array('index', 'view', 'create', 'update', 'admin', 'delete', 'exportar', 'export', 'redirect'),
 				'roles' => array('gerencia'),
 			),
 			array(
@@ -58,6 +58,7 @@ class ProduccionCamionesController extends Controller
 			['name'=>'Prod. Contratada','width'=>'md'],
 			['name'=>'Prod. Real','width'=>'md'],
 			['name'=>'Diferencia','width'=>'md'],
+			['name'=>'Detalles', 'filtro'=>'false'],
 		];
 
 		$extra_datos = [
@@ -68,6 +69,7 @@ class ProduccionCamionesController extends Controller
 			['campo'=>'produccion_contratada','exportable', 'format'=>'money','acumulado'=>'suma'],
 			['campo'=>'produccion_real','exportable', 'format'=>'money','acumulado'=>'suma'],
 			['campo'=>'produccion_diferencia','exportable', 'format'=>'money','acumulado'=>'suma'],
+			['campo'=>'camion_id','format'=> 'enlace-imagen', 'new-page'=>'true', 'url'=>"//produccionCamiones/redirect", 'params'=>['camion_id','chofer_id','faena_id','tipo_camion'], 'fecha_inicio'=>$model->fecha_inicio,'fecha_fin'=>$model->fecha_fin, 'ordenable'=>'false'],
 		];
 
 		$datos = ProduccionCamiones::model()->findAll($model->search());
@@ -78,5 +80,25 @@ class ProduccionCamionesController extends Controller
 			'cabeceras' => $cabeceras,
 			'extra_datos' => $extra_datos,
 		));
+	}
+
+	
+	public function actionRedirect($camion_id, $chofer_id, $faena_id, $tipo_camion, $fecha_inicio, $fecha_fin){
+		if($tipo_camion == "CA"){
+			return $this->redirect(["//expedicionesCamionArrendado/admin?".
+										"ExpedicionesCamionArrendado[camion_id]=$camion_id&".
+										"ExpedicionesCamionArrendado[chofer_id]=$chofer_id&".
+										"ExpedicionesCamionArrendado[faena_id]=$faena_id&".
+										"ExpedicionesCamionArrendado[fecha_inicio]=$fecha_inicio&".
+										"ExpedicionesCamionArrendado[fecha_fin]=$fecha_fin"]);
+		}
+		if($tipo_camion == "CP"){
+			return $this->redirect(["//expedicionesCamionPropio/admin?".
+										"ExpedicionesCamionPropio[camion_id]=$camion_id&".
+										"ExpedicionesCamionPropio[chofer_id]=$chofer_id&".
+										"ExpedicionesCamionPropio[faena_id]=$faena_id&".
+										"ExpedicionesCamionPropio[fecha_inicio]=$fecha_inicio&".
+										"ExpedicionesCamionPropio[fecha_fin]=$fecha_fin"]);
+		}
 	}
 }
