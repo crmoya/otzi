@@ -88,18 +88,18 @@ class ProduccionMaquinariaController extends Controller
 		if($tipo_maquina == "EA"){
 			return $this->redirect(["//expedicionesEquipoArrendado/admin?".
 										"ExpedicionesEquipoArrendado[equipo_id]=$maquina_id&".
-										"ExpedicionesEquipoArrendado[equipo_id]=$operador_id&".
-										"ExpedicionesEquipoArrendado[equipo_id]=$faena_id&".
+										"ExpedicionesEquipoArrendado[operador_id]=$operador_id&".
+										"ExpedicionesEquipoArrendado[faena_id]=$faena_id&".
 										"ExpedicionesEquipoArrendado[fecha_inicio]=$fecha_inicio&".
 										"ExpedicionesEquipoArrendado[fecha_fin]=$fecha_fin"]);
 		}
 		if($tipo_maquina == "EP"){
 			return $this->redirect(["//expedicionesEquipoPropio/admin?".
-										"ExpedicionesEquipoArrendado[equipo_id]=$maquina_id&".
-										"ExpedicionesEquipoArrendado[equipo_id]=$operador_id&".
-										"ExpedicionesEquipoArrendado[equipo_id]=$faena_id&".
-										"ExpedicionesEquipoArrendado[fecha_inicio]=$fecha_inicio&".
-										"ExpedicionesEquipoArrendado[fecha_fin]=$fecha_fin"]);
+										"ExpedicionesEquipoPropio[equipo_id]=$maquina_id&".
+										"ExpedicionesEquipoPropio[operador_id]=$operador_id&".
+										"ExpedicionesEquipoPropio[faena_id]=$faena_id&".
+										"ExpedicionesEquipoPropio[fecha_inicio]=$fecha_inicio&".
+										"ExpedicionesEquipoPropio[fecha_fin]=$fecha_fin"]);
 		}
 	}
 }

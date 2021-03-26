@@ -95,14 +95,34 @@ class ExpedicionesEquipoPropioController extends Controller
 		$datos = [];
 		foreach($reports as $report){
 			
+			if($model->equipo_id != null && $model->equipo_id != ""){
+				if($model->equipo_id != $report['equipo_id']){
+					continue;
+				}
+			}
+			if($model->operador_id != null && $model->operador_id != ""){
+				if($model->operador_id != $report['operador_id']){
+					continue;
+				}
+			}
+
 			$produccion = 0;
 			$combustible = 0;
 			$repuestos = 0;
 
+			$continue = false;
 			//producción	
 			$expediciones = Expedicionportiempoeq::model()->findAllByAttributes(['requipopropio_id'=>$report['id']]);
 			foreach($expediciones as $expedicion){
 				$produccion += $expedicion->total;
+				if($model->faena_id != null && $model->faena_id != ""){
+					if($model->faena_id != $expedicion->faena_id){
+						$continue = true;
+					}
+				}
+			}
+			if($continue){
+				continue;
 			}
 
 			//combustible
