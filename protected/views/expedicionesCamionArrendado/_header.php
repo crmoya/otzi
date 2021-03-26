@@ -78,10 +78,6 @@
 	    <?php echo $form->dropDownList($model,'camion_id', CHtml::listData(CamionArrendado::model()->listarTodos(), 'id', 'nombre')); ?>
 	</td>
 	<td>
-		<?php echo $form->labelEx($model,'faena_id'); ?><br/>
-	    <?php echo $form->dropDownList($model,'faena_id', CHtml::listData(Faena::model()->listarTodas(), 'id', 'nombre')); ?>
-	</td>
-	<td>
 		<?php echo CHtml::submitButton('Filtrar',['class'=>'btn btn-primary']); ?>
 	</td>
 	<td><div class="btn btn-info exportar-adjuntos">Exportar adjuntos</div></td>

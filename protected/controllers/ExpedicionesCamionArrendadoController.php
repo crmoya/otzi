@@ -57,7 +57,6 @@ class ExpedicionesCamionArrendadoController extends Controller
 			['name'=>'Obs.','width'=>'sm'],
 			['name'=>'Obs.Obra','width'=>'md'],
 			['name'=>'Camión','width'=>'lg'],
-			['name'=>'Faena','width'=>'lg'],
 			['name'=>'KMs.','width'=>'sm'],
 			['name'=>'KMs.GPS','width'=>'sm'],
 			['name'=>'Hrs.','width'=>'sm'],
@@ -79,7 +78,6 @@ class ExpedicionesCamionArrendadoController extends Controller
 			['campo'=>'observaciones','exportable','dots'=>'md'],
 			['campo'=>'observaciones_obra','exportable', 'dots'=>'md'],
 			['campo'=>'camion','exportable', 'dots'=>'md'],
-			['campo'=>'faena','exportable', 'dots'=>'md'],
 			['campo'=>'km_recorridos','exportable', 'format'=>'number','acumulado'=>'suma'],
 			['campo'=>'km_gps','exportable', 'format'=>'number','acumulado'=>'suma'],
 			['campo'=>'horas','exportable', 'format'=>'number','acumulado'=>'suma'],
@@ -99,121 +97,56 @@ class ExpedicionesCamionArrendadoController extends Controller
 		$datos = [];
 		foreach($reports as $report){
 			
-			$faenas = [];
-			
-			$producciones = [];
-			$combustibles = [];
-			$repuestos = [];
+			$produccion = 0;
+			$combustible = 0;
+			$repuestos = 0;
 
 			//producción
 			//producción por volumen:
 			
 			$viajes = ViajeCamionArrendado::model()->findAllByAttributes(['rCamionArrendado_id'=>$report['id']]);
 			foreach($viajes as $viaje){
-				if(array_key_exists($viaje->faena_id,$producciones)){
-					$producciones[$viaje->faena_id] += $viaje->total;	
-				}
-				else{
-					$producciones[$viaje->faena_id] = $viaje->total;	
-				}
-				if(!in_array($viaje->faena_id,$faenas)){
-					$faenas[] = $viaje->faena_id;
-				}		
+				$produccion += $viaje->total;		
 			}
 			
 			//producción por tiempo:
 			$expediciones = Expedicionportiempoarr::model()->findAllByAttributes(['rcamionarrendado_id'=>$report['id']]);
 			foreach($expediciones as $expedicion){
-				if(array_key_exists($expedicion->faena_id,$producciones)){
-					$producciones[$expedicion->faena_id] += $expedicion->total;
-				}
-				else{
-					$producciones[$expedicion->faena_id] = $expedicion->total;
-				}
-				if(!in_array($expedicion->faena_id,$faenas)){
-					$faenas[] = $expedicion->faena_id;
-				}
+				$produccion += $expedicion->total;
 			}
 
 			//combustible
 			$cargas = CargaCombCamionArrendado::model()->findAllByAttributes(['rCamionArrendado_id'=>$report['id']]);
 			foreach($cargas as $carga){
-				if(array_key_exists($carga->faena_id,$combustibles)){
-					$combustibles[$carga->faena_id] += $carga->petroleoLts;
-				}
-				else{
-					$combustibles[$carga->faena_id] = $carga->petroleoLts;
-				}
-				if(!in_array($carga->faena_id,$faenas)){
-					$faenas[] = $carga->faena_id;
-				}
+				$combustible += $carga->petroleoLts;
 			}
 			
 			
 			//repuesto
 			$compras = CompraRepuestoCamionArrendado::model()->findAllByAttributes(['rCamionArrendado_id'=>$report['id']]);
 			foreach($compras as $compra){
-				if(array_key_exists($compra->faena_id,$repuestos)){
-					$repuestos[$compra->faena_id] += $compra->montoNeto;
-				}
-				else{
-					$repuestos[$compra->faena_id] = $compra->montoNeto;
-				}
-				if(!in_array($compra->faena_id,$faenas)){
-					$faenas[] = $compra->faena_id;
-				}
+				$repuestos += $compra->montoNeto;
 			}
 
-			foreach($faenas as $faena_id){
-				if($model->faena_id != "" && $model->faena_id != null){
-					if($model->faena_id != $faena_id){
-						continue;
-					}
-				}		
-				
-				$dato['tipo'] = $report['tipo'];
-				$dato['fecha'] = $report['fecha'];
-				$dato['reporte'] = $report['reporte'];
-				$dato['observaciones'] = $report['observaciones'];
-				$dato['observaciones_obra'] = $report['observaciones_obra'];
-				$dato['camion'] = $report['camion'];
-				$dato['km_recorridos'] = $report['km_recorridos'];
-				$dato['km_gps'] = $report['km_gps'];
-				$dato['horas'] = $report['horas'];
-				$dato['panne'] = $report['panne'];
-				$dato['horas_panne'] = $report['horas_panne'];
-				$dato['validado'] = $report['validado'];
-				$dato['validador'] = $report['validador'];
-				$dato['id'] = $report['id'];
-				$dato['faena_id'] = $faena_id;
-				$faena = Faena::model()->findByPk($faena_id);
-				if(isset($faena)){
-					$dato['faena'] = $faena->nombre;
-				}
-				else{
-					$dato['faena'] = " -- NO ASIGNADA -- ";
-				}
-				if(array_key_exists($faena_id,$producciones)){
-					$dato['produccion'] = $producciones[$faena_id];
-				}
-				else{
-					$dato['produccion'] = 0;
-				}
-				if(array_key_exists($faena_id,$combustibles)){
-					$dato['combustible'] = $combustibles[$faena_id];
-				}
-				else{
-					$dato['combustible'] = 0;
-				}
-				if(array_key_exists($faena_id,$repuestos)){
-					$dato['repuestos'] = $repuestos[$faena_id];
-				}
-				else{
-					$dato['repuestos'] = 0;
-				}
-				
-				$datos[] = (object)$dato;	
-			}
+			$dato['tipo'] = $report['tipo'];
+			$dato['fecha'] = $report['fecha'];
+			$dato['reporte'] = $report['reporte'];
+			$dato['observaciones'] = $report['observaciones'];
+			$dato['observaciones_obra'] = $report['observaciones_obra'];
+			$dato['camion'] = $report['camion'];
+			$dato['km_recorridos'] = $report['km_recorridos'];
+			$dato['km_gps'] = $report['km_gps'];
+			$dato['horas'] = $report['horas'];
+			$dato['panne'] = $report['panne'];
+			$dato['horas_panne'] = $report['horas_panne'];
+			$dato['validado'] = $report['validado'];
+			$dato['validador'] = $report['validador'];
+			$dato['id'] = $report['id'];
+			$dato['produccion'] = $produccion;
+			$dato['combustible'] = $combustible;
+			$dato['repuestos'] = $repuestos;
+			$datos[] = (object)$dato;
+
 		}
 		$this->render("admin",array(
 			'model'=>$model,
