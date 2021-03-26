@@ -24,7 +24,7 @@ class ProduccionMaquinariaController extends Controller
 		return array(
 			array(
 				'allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions' => array('index', 'view', 'create', 'update', 'admin', 'delete', 'exportar', 'export'),
+				'actions' => array('index', 'view', 'create', 'update', 'admin', 'delete', 'exportar', 'export','redirect'),
 				'roles' => array('gerencia'),
 			),
 			array(
@@ -59,6 +59,7 @@ class ProduccionMaquinariaController extends Controller
 			['name'=>'Hrs. Contratadas','width'=>'sm'],
 			['name'=>'Producción Física','width'=>'md'],
 			['name'=>'Producción Contratada','width'=>'md'],
+			['name'=>'Detalles', 'filtro'=>'false'],
 		];
 
 		$extra_datos = [
@@ -70,6 +71,7 @@ class ProduccionMaquinariaController extends Controller
 			['campo'=>'horas_contratadas','exportable', 'format'=>'number','acumulado'=>'suma'],
 			['campo'=>'produccion_fisica','exportable', 'format'=>'money','acumulado'=>'suma'],
 			['campo'=>'produccion_contratada','exportable', 'format'=>'money','acumulado'=>'suma'],
+			['campo'=>'maquina_id','format'=> 'enlace-imagen', 'new-page'=>'true', 'url'=>"//produccionMaquinaria/redirect", 'params'=>['maquina_id','operador_id','faena_id','tipo_maquina'], 'fecha_inicio'=>$model->fecha_inicio,'fecha_fin'=>$model->fecha_fin, 'ordenable'=>'false'],
 		];
 
 		$datos = ProduccionMaquinaria::model()->findAll($model->search());
@@ -80,5 +82,24 @@ class ProduccionMaquinariaController extends Controller
 			'cabeceras' => $cabeceras,
 			'extra_datos' => $extra_datos,
 		));
+	}
+
+	public function actionRedirect($maquina_id, $operador_id, $faena_id, $tipo_maquina, $fecha_inicio, $fecha_fin){
+		if($tipo_maquina == "EA"){
+			return $this->redirect(["//expedicionesEquipoArrendado/admin?".
+										"ExpedicionesEquipoArrendado[equipo_id]=$maquina_id&".
+										"ExpedicionesEquipoArrendado[equipo_id]=$operador_id&".
+										"ExpedicionesEquipoArrendado[equipo_id]=$faena_id&".
+										"ExpedicionesEquipoArrendado[fecha_inicio]=$fecha_inicio&".
+										"ExpedicionesEquipoArrendado[fecha_fin]=$fecha_fin"]);
+		}
+		if($tipo_maquina == "EP"){
+			return $this->redirect(["//expedicionesEquipoPropio/admin?".
+										"ExpedicionesEquipoArrendado[equipo_id]=$maquina_id&".
+										"ExpedicionesEquipoArrendado[equipo_id]=$operador_id&".
+										"ExpedicionesEquipoArrendado[equipo_id]=$faena_id&".
+										"ExpedicionesEquipoArrendado[fecha_inicio]=$fecha_inicio&".
+										"ExpedicionesEquipoArrendado[fecha_fin]=$fecha_fin"]);
+		}
 	}
 }

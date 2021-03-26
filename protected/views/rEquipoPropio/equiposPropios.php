@@ -545,7 +545,7 @@ $cs->registerCoreScript('jquery');
 			valid = valid && checkNumero();
 
 			valid = valid && checkUnidades();
-
+			valid = valid && checkDiffFaenas();
 
 			return valid;
 		});
@@ -834,7 +834,7 @@ $cs->registerCoreScript('jquery');
 															<td><?php echo $form->textField($expedicion, "[{0}]cantidad", array('id' => "cantidad{0}", 'class' => 'cantidad fixed')); ?></td>
 															<td><div id="errorCantidad{0}" style="color:red;width:100px;"></div></td>
 															<td><label><b>PU</b></label></td>
-															<td><input class="labelPUt" id="labelPUt{0}" type="text" value="0.00" readonly="readonly" enabled="disabled"/></td>
+															<td><input class="labelPUt" id="labelPUt{0}" type="text" value="0.00" readonly="readonly"/></td>
 															<td></td>
 														</tr>
 														<tr>

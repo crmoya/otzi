@@ -316,15 +316,9 @@ class REquipoPropioController extends Controller
 
                         if (isset($_POST['CargaCombEquipoPropio'])) {
                             foreach ($_POST['CargaCombEquipoPropio'] as $i => $cargaArr) {
-                                $carga = null;
-                                if (isset($cargaArr['id'])) $id = $cargaArr['id'];
-                                //if ($id > 0 && Yii::app()->user->rol == "operativo") {
-                                //   continue;
-                                //} else {
-                                    $carga = new CargaCombEquipoPropio();
-                                //}
+                                $carga = new CargaCombEquipoPropio();
                                 $carga->factura = $cargaArr['factura'];
-                                $carga->faena_id = $cargaArr['faena_id'];
+                                $carga->faena_id = $cargaArr['faena_id'];                                
                                 $carga->guia = $cargaArr['guia'];
                                 $carga->hCarguio = $cargaArr['hCarguio'];
                                 $carga->petroleoLts = $cargaArr['petroleoLts'];
@@ -356,13 +350,7 @@ class REquipoPropioController extends Controller
                         }
                         if (isset($_POST['CompraRepuestoEquipoPropio'])) {
                             foreach ($_POST['CompraRepuestoEquipoPropio'] as $i => $compraArr) {
-                                $compra = null;
-                                if (isset($compraArr['id'])) $id = $compraArr['id'];
-                                //if ($id > 0 && Yii::app()->user->rol == "operativo") {
-                                //    continue;
-                                //} else {
-                                    $compra = new CompraRepuestoEquipoPropio();
-                                //}
+                                $compra = new CompraRepuestoEquipoPropio();
                                 $compra->factura = $compraArr['factura'];
                                 $compra->guia = $compraArr['guia'];
                                 $compra->montoNeto = $compraArr['montoNeto'];

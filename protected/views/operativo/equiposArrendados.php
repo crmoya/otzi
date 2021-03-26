@@ -476,8 +476,8 @@ $cs->registerCoreScript('jquery');
 			valid = valid && checkTipoCombustible();
 			valid = valid && checkSupervisor();
 			valid = valid && checkGuia();
-                        valid = valid && checkNombreProveedor();
-                        valid = valid && checkRutProveedor();
+			valid = valid && checkNombreProveedor();
+			valid = valid && checkRutProveedor();
 
 			valid = valid && checkRepuesto();
 			valid = valid && checkCantidad();
@@ -489,6 +489,8 @@ $cs->registerCoreScript('jquery');
 			valid = valid && checkPanne();
 
 			valid = valid && checkUnidades();
+
+			valid = valid && checkDiffFaenas();
 
 			
 			return valid;

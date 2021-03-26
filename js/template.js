@@ -543,7 +543,22 @@ function getFecha(fecha) {
 	}
 }
 
-
+function checkDiffFaenas(){
+	var faena_anterior = undefined;
+	var ok = true;
+	$(this).css('background','white');
+	$('.faenaT').each(function(e){
+		if(faena_anterior == undefined){
+			faena_anterior = $(this).val();
+		}
+		if(faena_anterior != $(this).val()){
+			alert('ERROR: No se pueden ingresar expediciones con faenas distintas en el mismo report.')
+			$(this).css('background','pink');
+			ok = false;
+		}
+	});
+	return ok;
+}
 
 function checkCompareFechas() {
 	$("#errorFecha").attr("style", "display:none;");

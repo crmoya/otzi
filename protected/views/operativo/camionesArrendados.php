@@ -626,6 +626,8 @@ $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.MultiFile.min.js', CCl
 			
 			valid = valid && checkHoras();
 
+			valid = valid && checkDiffFaenas();
+
 			return valid;
 		});
 

@@ -165,6 +165,12 @@
 									$params .= $param . "=" . $fila->$param . "&";
 								}
 							}
+							if(isset($extra_dato['fecha_inicio'])){
+								$params .=  "fecha_inicio=" . $extra_dato['fecha_inicio'] . "&";
+							}
+							if(isset($extra_dato['fecha_fin'])){
+								$params .=  "fecha_fin=" . $extra_dato['fecha_fin'] . "&";
+							}
 							$newpage = "";
 							if(isset($extra_dato['new-page'])){
 								if($extra_dato['new-page'] == 'true'){

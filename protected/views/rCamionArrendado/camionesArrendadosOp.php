@@ -660,6 +660,8 @@ $cs->registerCoreScript('jquery');
 			valid = valid && checkUnidades();
 
 			valid = valid && checkHoras();
+			valid = valid && checkDiffFaenas();
+			
 			return valid;
 		});
 

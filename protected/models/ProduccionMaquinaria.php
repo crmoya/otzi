@@ -39,9 +39,13 @@ class ProduccionMaquinaria extends CActiveRecord
 			}
 		}
 
-		$inicioAgrupacion = "	maquina,
+		$inicioAgrupacion = "	tipo_maquina,
+								maquina,
 								operador,
 								centro_gestion,
+								maquina_id,
+								operador_id,
+								faena_id,
 								CASE
 									WHEN min(pu) = max(pu) THEN min(pu)
 									WHEN min(pu) <> max(pu) THEN ''
@@ -51,13 +55,17 @@ class ProduccionMaquinaria extends CActiveRecord
 								sum(produccion_fisica) as produccion_fisica,
 								sum(produccion_contratada) as produccion_contratada";
 
-		$finAgrupacion = "		maquina,operador,centro_gestion";
+		$finAgrupacion = "		tipo_maquina,maquina,operador,centro_gestion,maquina_id,operador_id,faena_id";
 
 		if(isset($this->agruparPor) && $this->agruparPor != "NINGUNO"){
 			if($this->agruparPor == "MAQUINA"){
-				$inicioAgrupacion = "	maquina,
+				$inicioAgrupacion = "	tipo_maquina,
+										maquina,
+										maquina_id,
 										'' as operador,
+										'' as operador_id,
 										'' as centro_gestion,
+										'' as faena_id,
 										CASE
 											WHEN min(pu) = max(pu) THEN min(pu)
 											WHEN min(pu) <> max(pu) THEN ''
@@ -66,12 +74,16 @@ class ProduccionMaquinaria extends CActiveRecord
 										sum(horas_contratadas) as horas_contratadas,
 										sum(produccion_fisica) as produccion_fisica,
 										sum(produccion_contratada) as produccion_contratada";
-				$finAgrupacion = "		maquina";
+				$finAgrupacion = "		tipo_maquina,maquina,maquina_id";
 			}
 			if($this->agruparPor == "OPERADOR"){
-				$inicioAgrupacion = "	'' as maquina,
+				$inicioAgrupacion = "	'' as tipo_maquina,
+										'' as maquina,
+										'' as maquina_id,
 										operador,
+										operador_id,
 										'' as centro_gestion,
+										'' as faena_id,
 										CASE
 											WHEN min(pu) = max(pu) THEN min(pu)
 											WHEN min(pu) <> max(pu) THEN ''
@@ -80,12 +92,16 @@ class ProduccionMaquinaria extends CActiveRecord
 										sum(horas_contratadas) as horas_contratadas,
 										sum(produccion_fisica) as produccion_fisica,
 										sum(produccion_contratada) as produccion_contratada";
-				$finAgrupacion = "		operador";
+				$finAgrupacion = "		operador,operador_id";
 			}
 			if($this->agruparPor == "CENTROGESTION"){
-				$inicioAgrupacion = "	'' as maquina,
+				$inicioAgrupacion = "	'' as tipo_maquina,
+										'' as maquina,
+										'' as maquina_id,
 										'' as operador,
+										'' as operador_id,
 										centro_gestion,
+										faena_id,
 										CASE
 											WHEN min(pu) = max(pu) THEN min(pu)
 											WHEN min(pu) <> max(pu) THEN ''
@@ -94,12 +110,16 @@ class ProduccionMaquinaria extends CActiveRecord
 										sum(horas_contratadas) as horas_contratadas,
 										sum(produccion_fisica) as produccion_fisica,
 										sum(produccion_contratada) as produccion_contratada";
-				$finAgrupacion = "		centro_gestion";
+				$finAgrupacion = "		centro_gestion, faena_id";
 			}
 			if($this->agruparPor == "CENTROMAQUINA"){
-				$inicioAgrupacion = "	maquina,
+				$inicioAgrupacion = "	tipo_maquina,
+										maquina,
+										maquina_id,
 										'' as operador,
+										'' as operador_id,
 										centro_gestion,
+										faena_id,
 										CASE
 											WHEN min(pu) = max(pu) THEN min(pu)
 											WHEN min(pu) <> max(pu) THEN ''
@@ -108,12 +128,16 @@ class ProduccionMaquinaria extends CActiveRecord
 										sum(horas_contratadas) as horas_contratadas,
 										sum(produccion_fisica) as produccion_fisica,
 										sum(produccion_contratada) as produccion_contratada";
-				$finAgrupacion = "		maquina,centro_gestion";
+				$finAgrupacion = "		tipo_maquina,maquina,maquina_id,centro_gestion,faena_id";
 			}
 			if($this->agruparPor == "CENTROOPERADOR"){
-				$inicioAgrupacion = "	'' as maquina,
+				$inicioAgrupacion = "	'' as tipo_maquina,
+										'' as maquina,
+										'' as maquina_id,
 										operador,
+										operador_id,
 										centro_gestion,
+										faena_id,
 										CASE
 											WHEN min(pu) = max(pu) THEN min(pu)
 											WHEN min(pu) <> max(pu) THEN ''
@@ -122,12 +146,16 @@ class ProduccionMaquinaria extends CActiveRecord
 										sum(horas_contratadas) as horas_contratadas,
 										sum(produccion_fisica) as produccion_fisica,
 										sum(produccion_contratada) as produccion_contratada";
-				$finAgrupacion = "		operador,centro_gestion";
+				$finAgrupacion = "		operador,operador_id,centro_gestion,faena_id";
 			}
 			if($this->agruparPor == "OPERADORMAQUINA"){
-				$inicioAgrupacion = "	maquina,
+				$inicioAgrupacion = "	tipo_maquina,
+										maquina,
+										maquina_id,
 										operador,
+										operador_id,
 										'' as centro_gestion,
+										'' as faena_id,
 										CASE
 											WHEN min(pu) = max(pu) THEN min(pu)
 											WHEN min(pu) <> max(pu) THEN ''
@@ -136,7 +164,7 @@ class ProduccionMaquinaria extends CActiveRecord
 										sum(horas_contratadas) as horas_contratadas,
 										sum(produccion_fisica) as produccion_fisica,
 										sum(produccion_contratada) as produccion_contratada";
-				$finAgrupacion = "		maquina,operador";
+				$finAgrupacion = "		tipo_maquina,maquina,maquina_id,operador,operador_id";
 			}
 		}
 

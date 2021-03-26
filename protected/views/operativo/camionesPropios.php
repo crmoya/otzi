@@ -615,6 +615,7 @@ $cs->registerCoreScript('jquery');
 			valid = valid && checkPanne();
 			valid = valid && checkNumero();
 			valid = valid && checkExpediciones();
+			valid = valid && checkDiffFaenas();
 
 			
 			valid = valid && checkUnidades();

@@ -538,7 +538,7 @@ $cs->registerCoreScript('jquery');
 			valid = valid && checkNumero();
 
 			valid = valid && checkUnidades();
-
+			valid = valid && checkDiffFaenas();
 
 			return valid;
 		});
