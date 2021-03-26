@@ -23,6 +23,9 @@
 							case 'lg':
 								$ancho = Tools::$LG_CELL;
 								break;
+							case 'xl':
+								$ancho = Tools::$XL_CELL;
+								break;
 							default:
 								break;
 						}

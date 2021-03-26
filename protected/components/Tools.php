@@ -5,6 +5,7 @@ class Tools
 	public static $SM_CELL = 50;
 	public static $MD_CELL = 100;
 	public static $LG_CELL = 240;
+	public static $XL_CELL = 350;
 
 	const FACTOR_KMS_MILLAS = 1.60934;
 

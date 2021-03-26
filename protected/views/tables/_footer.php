@@ -268,6 +268,12 @@ $(document).ready( function () {
 	background: transparent !important;
     border: none !important;
 }
+.dots-xl{
+    max-width: <?=Tools::$XL_CELL?>px !important;
+    overflow:hidden; 
+    white-space:nowrap; 
+    text-overflow: ellipsis;
+}
 .dots-lg{
     max-width: <?=Tools::$LG_CELL?>px !important;
     overflow:hidden; 
