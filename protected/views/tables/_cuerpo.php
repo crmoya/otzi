@@ -206,7 +206,7 @@
 		</tbody>
 		<tfoot>
 			<tr>
-				<th>Total página:<br/>Total general:</th>
+				<th>Total filtrado:<br/>Total general:</th>
 				<?php for($i = 1; $i < count($extra_datos); $i++):?>
 					<th style="text-align:right;"></th>
 				<?php endfor;?>

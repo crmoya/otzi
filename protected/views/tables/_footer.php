@@ -148,7 +148,7 @@ $(document).ready( function () {
 							decimales = parseInt($('.decimales').val());
 						}
 						var api = this.api();
-						api.column( indice, { page: 'current'} )
+						api.column(indice, { search: 'applied' } )
 							.data()
 							.each(function(data){
 								var numero = data.replaceAll('$','');
@@ -157,7 +157,7 @@ $(document).ready( function () {
 								totalesParciales[indice] += parseFloat(numero);
 							} );
 
-						api.column( indice)
+						api.column(indice)
 							.data()
 							.each(function(data){
 								var numero = data.replaceAll('$','');
