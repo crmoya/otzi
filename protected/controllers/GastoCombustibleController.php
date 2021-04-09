@@ -127,7 +127,7 @@ class GastoCombustibleController extends Controller
 		$cabeceras = [
 			['name'=>'Fecha','width'=>'sm'],
 			['name'=>'Reporte','width'=>'sm'],
-			['name'=>'Fuente','width'=>'sm'],
+			//['name'=>'Fuente','width'=>'sm'],
 			['name'=>'Operador','width'=>'md'],
 			['name'=>'Máquina','width'=>'md'],
 			['name'=>'Consumo (Lts)','width'=>'md'],
@@ -145,8 +145,8 @@ class GastoCombustibleController extends Controller
 
 		$extra_datos = [
 			['campo'=>'fecha','exportable', 'format'=>'date', 'dots'=>"sm"],
-			['campo'=>'reporte','format'=> 'enlace_rg', 'url'=>"//gastoCombustible/redirect", 'params'=>['id','reporte','fuente']],
-			['campo'=>'fuente','exportable', 'dots'=>"sm"],
+			['campo'=>'reporte','format'=> 'enlace_rg', 'url'=>"//gastoCombustible/redirect", 'params'=>['report_id','report_tipo']],
+			//['campo'=>'fuente','exportable', 'dots'=>"sm"],
 			['campo'=>'operador','exportable', 'dots'=>"md"],
 			['campo'=>'maquina','exportable', 'dots'=>"md"],
 			['campo'=>'litros','exportable', 'format'=>'number','acumulado'=>'suma'],
@@ -188,18 +188,26 @@ class GastoCombustibleController extends Controller
 				if($tipo_maquina == "CP"){
 					$report = RCamionPropio::model()->findByPk($id);
 					$carga = CargaCombCamionPropio::model()->findByAttributes(['rCamionPropio_id'=>$id]);
+					$detalleGastoCombustible->report_id = $id;
+					$detalleGastoCombustible->report_tipo = "CP";
 				}
 				if($tipo_maquina == "CA"){
 					$report = RCamionArrendado::model()->findByPk($id);
 					$carga = CargaCombCamionArrendado::model()->findByAttributes(['rCamionArrendado_id'=>$id]);
+					$detalleGastoCombustible->report_id = $id;
+					$detalleGastoCombustible->report_tipo = "CA";
 				}
 				if($tipo_maquina == "EP"){
 					$report = REquipoPropio::model()->findByPk($id);
 					$carga = CargaCombEquipoPropio::model()->findByAttributes(['rEquipoPropio_id'=>$id]);
+					$detalleGastoCombustible->report_id = $id;
+					$detalleGastoCombustible->report_tipo = "EP";
 				}
 				if($tipo_maquina == "EA"){
 					$report = REquipoArrendado::model()->findByPk($id);
 					$carga = CargaCombEquipoArrendado::model()->findByAttributes(['rEquipoArrendado_id'=>$id]);
+					$detalleGastoCombustible->report_id = $id;
+					$detalleGastoCombustible->report_tipo = "EA";
 				}
 				if(isset($report)){
 					$detalleGastoCombustible->reporte = $report->reporte;
@@ -253,7 +261,6 @@ class GastoCombustibleController extends Controller
 		}
 
 
-
 		$this->render("view",array(
 			'datos' => $datos,
 			'cabeceras' => $cabeceras,
@@ -268,12 +275,19 @@ class GastoCombustibleController extends Controller
 		));
 	}
 
-	public function actionRedirect($id, $reporte, $fuente){
-		if($fuente == "SAM"){
-			$this->redirect(['','id'=>$model->id]);
+	
+	public function actionRedirect($report_id, $report_tipo){
+		if($report_tipo == "CA"){
+			$this->redirect(['rCamionArrendado/view','id'=>$report_id]);
 		}
-		if($fuente == "RindeGastos"){
-			$this->redirect(['informeGasto/view','folio'=>$reporte,'gasto_id'=>$id]);
+		if($report_tipo == "CP"){
+			$this->redirect(['rCamionPropio/view','id'=>$report_id]);
+		}
+		if($report_tipo == "EA"){
+			$this->redirect(['rEquipoArrendado/view','id'=>$report_id]);
+		}
+		if($report_tipo == "EP"){
+			$this->redirect(['rEquipoPropio/view','id'=>$report_id]);
 		}
 	}
 

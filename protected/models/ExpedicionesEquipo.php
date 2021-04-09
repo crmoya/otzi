@@ -54,6 +54,7 @@ class ExpedicionesEquipo extends CActiveRecord
 	public $agruparPor;
 	public $tipoCombustible_id;
 	public $decimales;
+	public $faena_id;
 
 	public function tableName()
 	{

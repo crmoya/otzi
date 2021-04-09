@@ -55,10 +55,10 @@ class ProduccionCamionesController extends Controller
 			['name'=>'Chofer','width'=>'lg'],
 			['name'=>'Centro Gestión','width'=>'lg'],
 			['name'=>'Transportado','width'=>'sm'],
-			['name'=>'Prod. Contratada','width'=>'md'],
+			//['name'=>'Prod. Contratada','width'=>'md'],
 			['name'=>'Prod. Real','width'=>'md'],
-			['name'=>'Diferencia','width'=>'md'],
-			['name'=>'Detalles', 'filtro'=>'false'],
+			//['name'=>'Diferencia','width'=>'md'],
+			['name'=>'ver', 'filtro'=>'false'],
 		];
 
 		$extra_datos = [
@@ -66,9 +66,9 @@ class ProduccionCamionesController extends Controller
 			['campo'=>'chofer','exportable','dots'=>'md'],
 			['campo'=>'centro_gestion','exportable','dots'=>'md'],
 			['campo'=>'total_transportado','exportable', 'format'=>'number','acumulado'=>'suma'],
-			['campo'=>'produccion_contratada','exportable', 'format'=>'money','acumulado'=>'suma'],
+			//['campo'=>'produccion_contratada','exportable', 'format'=>'money','acumulado'=>'suma'],
 			['campo'=>'produccion_real','exportable', 'format'=>'money','acumulado'=>'suma'],
-			['campo'=>'produccion_diferencia','exportable', 'format'=>'money','acumulado'=>'suma'],
+			//['campo'=>'produccion_diferencia','exportable', 'format'=>'money','acumulado'=>'suma'],
 			['campo'=>'camion_id','format'=> 'enlace-imagen', 'new-page'=>'true', 'url'=>"//produccionCamiones/redirect", 'params'=>['camion_id','chofer_id','faena_id','tipo_camion'], 'fecha_inicio'=>$model->fecha_inicio,'fecha_fin'=>$model->fecha_fin, 'ordenable'=>'false'],
 		];
 
