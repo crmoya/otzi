@@ -51,10 +51,10 @@ class ProduccionCamionesController extends Controller
 		}
 
 		$cabeceras = [
-			['name'=>'Camión','width'=>'lg'],
+			['name'=>'Camión','width'=>'xl'],
 			['name'=>'Chofer','width'=>'lg'],
 			['name'=>'Centro Gestión','width'=>'lg'],
-			['name'=>'Transportado','width'=>'sm'],
+			//['name'=>'Transportado','width'=>'sm'],
 			//['name'=>'Prod. Contratada','width'=>'md'],
 			['name'=>'Prod. Real','width'=>'md'],
 			//['name'=>'Diferencia','width'=>'md'],
@@ -62,10 +62,10 @@ class ProduccionCamionesController extends Controller
 		];
 
 		$extra_datos = [
-			['campo'=>'camion','exportable','dots'=>"md"],
-			['campo'=>'chofer','exportable','dots'=>'md'],
-			['campo'=>'centro_gestion','exportable','dots'=>'md'],
-			['campo'=>'total_transportado','exportable', 'format'=>'number','acumulado'=>'suma'],
+			['campo'=>'camion','exportable','dots'=>"xl"],
+			['campo'=>'chofer','exportable','dots'=>'lg'],
+			['campo'=>'centro_gestion','exportable','dots'=>'lg'],
+			//['campo'=>'total_transportado','exportable', 'format'=>'number','acumulado'=>'suma'],
 			//['campo'=>'produccion_contratada','exportable', 'format'=>'money','acumulado'=>'suma'],
 			['campo'=>'produccion_real','exportable', 'format'=>'money','acumulado'=>'suma'],
 			//['campo'=>'produccion_diferencia','exportable', 'format'=>'money','acumulado'=>'suma'],

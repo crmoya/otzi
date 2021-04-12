@@ -51,11 +51,11 @@ class ProduccionMaquinariaController extends Controller
 		}
 
 		$cabeceras = [
-			['name'=>'Máquina','width'=>'lg'],
+			['name'=>'Máquina','width'=>'xl'],
 			['name'=>'Operador','width'=>'lg'],
 			['name'=>'Centro Gestión','width'=>'lg'],
-			['name'=>'PU','width'=>'sm'],
-			['name'=>'Hrs. Físicas','width'=>'sm'],
+			//['name'=>'PU','width'=>'sm'],
+			//['name'=>'Hrs. Físicas','width'=>'sm'],
 			//['name'=>'Hrs. Contratadas','width'=>'sm'],
 			['name'=>'Producción Física','width'=>'md'],
 			//['name'=>'Producción Contratada','width'=>'md'],
@@ -63,11 +63,11 @@ class ProduccionMaquinariaController extends Controller
 		];
 
 		$extra_datos = [
-			['campo'=>'maquina','exportable','dots'=>"md"],
+			['campo'=>'maquina','exportable','dots'=>"xl"],
 			['campo'=>'operador','exportable','dots'=>'md'],
 			['campo'=>'centro_gestion','exportable','dots'=>'md'],
-			['campo'=>'pu','exportable', 'format'=>'money','acumulado'=>'suma'],
-			['campo'=>'horas_fisicas','exportable', 'format'=>'number','acumulado'=>'suma'],
+			//['campo'=>'pu','exportable', 'format'=>'money','acumulado'=>'suma'],
+			//['campo'=>'horas_fisicas','exportable', 'format'=>'number','acumulado'=>'suma'],
 			//['campo'=>'horas_contratadas','exportable', 'format'=>'number','acumulado'=>'suma'],
 			['campo'=>'produccion_fisica','exportable', 'format'=>'money','acumulado'=>'suma'],
 			//['campo'=>'produccion_contratada','exportable', 'format'=>'money','acumulado'=>'suma'],
