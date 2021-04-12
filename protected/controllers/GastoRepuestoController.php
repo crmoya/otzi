@@ -102,19 +102,22 @@ class GastoRepuestoController extends Controller
 			$criteria->addCondition('tipo_maquina = :tipo_maquina');
 			$criteria->params[':tipo_maquina'] = $propiosOArrendados;
 		}
-
-		if($maquina != ''){
-			$criteria->addCondition('maquina = :maquina');
-			$criteria->params[':maquina'] = $maquina;
-		}
-		if($operador != ''){
-			$criteria->addCondition('operador = :operador');
-			$criteria->params[':operador'] = $operador;
-		}
+		
+		
 		if($centro_gestion != ''){
 			$criteria->addCondition('centro_gestion = :centro_gestion');
 			$criteria->params[':centro_gestion'] = $centro_gestion;
 		}
+		
+		if($operador != ''){
+			$criteria->addCondition('operador = :operador');
+			$criteria->params[':operador'] = $operador;
+		}
+		if($maquina != ''){
+			$criteria->addCondition('maquina = :maquina');
+			$criteria->params[':maquina'] = $maquina;
+		}
+		
 
 		$cabeceras = [
 			['name'=>'Fecha','width'=>'sm'],
