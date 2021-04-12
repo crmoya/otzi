@@ -75,17 +75,15 @@ class GastoRepuesto extends CActiveRecord
 		}
 
 
-		$inicioAgrupacion = "	id,
-								maquina,
+		$inicioAgrupacion = "	maquina,
 								operador,
 								centro_gestion,
 								sum(total) as total";
-		$finAgrupacion = "		id,operador,maquina,centro_gestion";
+		$finAgrupacion = "		operador,maquina,centro_gestion";
 
 		if(isset($this->agruparPor) && $this->agruparPor != "NINGUNO"){
 			if($this->agruparPor == "MAQUINA"){
 				$inicioAgrupacion = "
-				'' as id,
 				maquina,
 				'' as operador,
 				'' as centro_gestion,
@@ -95,7 +93,6 @@ class GastoRepuesto extends CActiveRecord
 			}
 			if($this->agruparPor == "OPERADOR"){
 				$inicioAgrupacion = "
-				'' as id,
 				'' as maquina,
 				operador,
 				'' as centro_gestion,
@@ -105,7 +102,6 @@ class GastoRepuesto extends CActiveRecord
 			}
 			if($this->agruparPor == "CENTROGESTION"){
 				$inicioAgrupacion = "
-				'' as id,
 				'' as maquina,
 				'' as operador,
 				centro_gestion,
@@ -115,7 +111,6 @@ class GastoRepuesto extends CActiveRecord
 			}
 			if($this->agruparPor == "CENTROMAQUINA"){
 				$inicioAgrupacion = "
-				'' as id,
 				maquina,
 				'' as operador,
 				centro_gestion,
@@ -126,7 +121,6 @@ class GastoRepuesto extends CActiveRecord
 			}
 			if($this->agruparPor == "CENTROOPERADOR"){
 				$inicioAgrupacion = "
-				'' as id,
 				'' as maquina,
 				operador,
 				centro_gestion,
@@ -136,7 +130,6 @@ class GastoRepuesto extends CActiveRecord
 			}
 			if($this->agruparPor == "OPERADORMAQUINA"){
 				$inicioAgrupacion = "
-				'' as id,
 				maquina,
 				operador,
 				'' as centro_gestion,

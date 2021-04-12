@@ -142,7 +142,7 @@ class GastoRepuestoController extends Controller
 			//['campo'=>'fuente','exportable', 'dots'=>"sm"],
 			//['campo'=>'operador','exportable', 'dots'=>"md"],
 			['campo'=>'maquina','exportable', 'dots'=>"md"],
-			['campo'=>'repuesto','exportable', 'dots'=>'xl', 'acumulado'=>'suma'],
+			['campo'=>'repuesto','exportable', 'dots'=>'xl',],
 			//['campo'=>'guia','exportable', 'dots'=>"sm"],
 			['campo'=>'factura','exportable', 'dots'=>"sm"],
 			//['campo'=>'cantidad','exportable', 'format'=>'number','acumulado'=>'suma'],
