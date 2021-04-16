@@ -163,11 +163,12 @@ class GastoRepuestoController extends Controller
 		$datos = [];
 		foreach($gastos as $gasto){
 			$partes = explode("-",$gasto->id);
-			$id = (int)$partes[0];
+			$report_id = (int)$partes[0];
+			$compra_id = (int)$partes[3];
 			$tipo = $partes[1];
 			$tipo_maquina = $partes[2];
 			$detalleGastoRepuesto = new DetalleGastoRepuesto;
-			$detalleGastoRepuesto->id = $id;
+			$detalleGastoRepuesto->id = $report_id;
 			$detalleGastoRepuesto->fecha = $gasto->fecha;
 			$detalleGastoRepuesto->repuesto = "";
 			$detalleGastoRepuesto->guia = "";
@@ -186,27 +187,27 @@ class GastoRepuestoController extends Controller
 				$report = null;
 				$compra = null;
 				if($tipo_maquina == "CP"){
-					$report = RCamionPropio::model()->findByPk($id);
-					$compra = CompraRepuestoCamionPropio::model()->findByAttributes(['rCamionPropio_id'=>$id]);
-					$detalleGastoRepuesto->report_id = $id;
+					$report = RCamionPropio::model()->findByPk($report_id);
+					$compra = CompraRepuestoCamionPropio::model()->findByPk($compra_id);
+					$detalleGastoRepuesto->report_id = $report_id;
 					$detalleGastoRepuesto->report_tipo = "CP";
 				}
 				if($tipo_maquina == "CA"){
-					$report = RCamionArrendado::model()->findByPk($id);
-					$compra = CompraRepuestoCamionArrendado::model()->findByAttributes(['rCamionArrendado_id'=>$id]);
-					$detalleGastoRepuesto->report_id = $id;
+					$report = RCamionArrendado::model()->findByPk($report_id);
+					$compra = CompraRepuestoCamionArrendado::model()->findByPk($compra_id);
+					$detalleGastoRepuesto->report_id = $report_id;
 					$detalleGastoRepuesto->report_tipo = "CA";
 				}
 				if($tipo_maquina == "EP"){
-					$report = REquipoPropio::model()->findByPk($id);
-					$compra = CompraRepuestoEquipoPropio::model()->findByAttributes(['rEquipoPropio_id'=>$id]);
-					$detalleGastoRepuesto->report_id = $id;
+					$report = REquipoPropio::model()->findByPk($report_id);
+					$compra = CompraRepuestoEquipoPropio::model()->findByPk($compra_id);
+					$detalleGastoRepuesto->report_id = $report_id;
 					$detalleGastoRepuesto->report_tipo = "EP";
 				}
 				if($tipo_maquina == "EA"){
-					$report = REquipoArrendado::model()->findByPk($id);
-					$compra = CompraRepuestoEquipoArrendado::model()->findByAttributes(['rEquipoArrendado_id'=>$id]);
-					$detalleGastoRepuesto->report_id = $id;
+					$report = REquipoArrendado::model()->findByPk($report_id);
+					$compra = CompraRepuestoEquipoArrendado::model()->findByPk($compra_id);
+					$detalleGastoRepuesto->report_id = $report_id;
 					$detalleGastoRepuesto->report_tipo = "EA";
 				}
 				if(isset($report)){
