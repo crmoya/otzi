@@ -1,3 +1,86 @@
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+Columnas del informe: <i class="toggle icon-plus-sign open-columns"></i>
+<div class="columns">
+<?php 
+$params = CHttpRequest::getQueryString();
+$columns = CHttpRequest::getParam('columns');
+$i = 0;
+foreach ($cabeceras as $th):
+	$checked = "checked";
+	if(isset($columns) && $columns != ""){
+		$column = charAt($columns, $i);
+		$checked = $column == "1"?"checked":"";
+	}
+	$i++;
+?>
+	<div class='column-wrapper'><input i='' class='column-check' type='checkbox' <?=$checked?> name="<?=$th['name']?>">&nbsp;&nbsp;<?=$th['name']?></div>
+<?php 
+endforeach; ?>
+<?php
+function charAt($string, $i){
+	return substr($string, $i, 1);
+}
+?>
+</div>
+<?php 
+$index = strpos($params, '&columns=');
+if($index !== false){
+	$params = substr($params, 0, $index);
+}
+?>
+<script>
+$(document).ready(function(e){
+	String.prototype.replaceAt = function(index, replacement) {
+		return this.substr(0, index) + replacement + this.substr(index + replacement.length);
+	}
+	let open = false;
+	function toggle(){
+		if(!open){
+			$('.columns').fadeIn();
+			$('.toggle').removeClass('icon-plus-sign');
+			$('.toggle').addClass('icon-minus-sign');
+		}
+		else{
+			$('.columns').fadeOut();
+			$('.toggle').removeClass('icon-minus-sign');
+			$('.toggle').addClass('icon-plus-sign');
+		}
+		open = !open;
+	}
+	$('.open-columns').click(()=>{
+		toggle();
+	});
+	let columns = '';
+	let i = 0;
+	$('.column-check').each(function(e){
+		columns += $(this).prop('checked')?'1':'0';
+		$(this).attr('i',i++);
+	});
+	$('.column-check').change(function(e){
+		var checked = $(this).prop('checked')?'1':'0';
+		var i = parseInt($(this).attr('i'));
+		columns = columns.replaceAt(i, checked);
+		//console.log(window.location + '<?=$params?>&columns=' + columns);
+		window.location = '<?=CController::createUrl(Yii::app()->controller->id."/".Yii::app()->controller->action->id)."?".$params?>&columns=' + columns;
+	});
+});
+</script>
+<style>
+.column-wrapper{
+	width: 250px;
+	display: inline-block;
+}
+.open-columns:hover{
+	cursor: pointer;
+}
+.columns{
+	display: inline-block;
+	border: 1px solid silver;
+	border-radius: 10px;
+	padding: 10px;
+	display: none;
+}
+</style>
 <div class="wrapper">
 	<img class="loading" src="<?php echo Yii::app()->request->baseUrl; ?>/images/Gear.gif"/>
 	<table id="datos" class='display nowrap' data-order='[[ 1, "desc" ]]' style="width:100%;height:100%;display:none">
