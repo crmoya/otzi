@@ -5,8 +5,8 @@
 Columnas del informe: <i class="toggle icon-plus-sign open-columns"></i>
 <div class="columns">
 <?php 
-$params = CHttpRequest::getQueryString();
-$columns = CHttpRequest::getParam('columns');
+$params = Yii::app()->request->getQueryString();
+$columns = Yii::app()->request->getParam('columns');
 $i = 0;
 foreach ($esquema as $th):
 	$checked = "checked";
