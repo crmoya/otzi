@@ -50,27 +50,39 @@ class ProduccionCamionesController extends Controller
 			$model->attributes=$_GET['ProduccionCamiones'];
 		}
 
-		$cabeceras = [
-			['name'=>'Camión','width'=>'xl'],
-			['name'=>'Chofer','width'=>'lg'],
-			['name'=>'Centro Gestión','width'=>'lg'],
-			//['name'=>'Transportado','width'=>'sm'],
-			//['name'=>'Prod. Contratada','width'=>'md'],
-			['name'=>'Prod. Real','width'=>'md'],
-			//['name'=>'Diferencia','width'=>'md'],
-			['name'=>'ver', 'filtro'=>'false'],
-		];
+		$esquema = ["Camión", "Chofer", "Centro Gestión", "Producción Real", "Ver"];
 
-		$extra_datos = [
-			['campo'=>'camion','exportable','dots'=>"xl"],
-			['campo'=>'chofer','exportable','dots'=>'lg'],
-			['campo'=>'centro_gestion','exportable','dots'=>'lg'],
-			//['campo'=>'total_transportado','exportable', 'format'=>'number','acumulado'=>'suma'],
-			//['campo'=>'produccion_contratada','exportable', 'format'=>'money','acumulado'=>'suma'],
-			['campo'=>'produccion_real','exportable', 'format'=>'money','acumulado'=>'suma'],
-			//['campo'=>'produccion_diferencia','exportable', 'format'=>'money','acumulado'=>'suma'],
-			['campo'=>'camion_id','format'=> 'enlace-imagen', 'new-page'=>'true', 'url'=>"//produccionCamiones/redirect", 'params'=>['camion_id','chofer_id','faena_id','tipo_camion'], 'fecha_inicio'=>$model->fecha_inicio,'fecha_fin'=>$model->fecha_fin, 'ordenable'=>'false'],
-		];
+		$columns = "";
+		if(isset($_GET['columns'])){
+			$columns = $_GET['columns'];
+		}
+		if($columns == ""){
+			for($i=0;$i<count($esquema);$i++){
+				$columns .= "1";
+			}
+		}
+		$cabeceras = [];
+		$extra_datos = [];
+		if(Tools::charAt($columns,0) == "1"){
+			$cabeceras[] = ['name'=>'Camión','width'=>'xl'];
+			$extra_datos[] = ['campo'=>'camion','exportable','dots'=>"xl"];
+		}
+		if(Tools::charAt($columns,1) == "1"){
+			$cabeceras[] = ['name'=>'Chofer','width'=>'lg'];
+			$extra_datos[] = ['campo'=>'chofer','exportable','dots'=>'lg'];
+		}
+		if(Tools::charAt($columns,2) == "1"){
+			$cabeceras[] = ['name'=>'Centro Gestión','width'=>'lg'];
+			$extra_datos[] = ['campo'=>'centro_gestion','exportable','dots'=>'lg'];
+		}
+		if(Tools::charAt($columns,3) == "1"){
+			$cabeceras[] = ['name'=>'Prod. Real','width'=>'md'];
+			$extra_datos[] = ['campo'=>'produccion_real','exportable', 'format'=>'money','acumulado'=>'suma'];
+		}
+		if(Tools::charAt($columns,4) == "1"){
+			$cabeceras[] = ['name'=>'ver', 'filtro'=>'false'];
+			$extra_datos[] = ['campo'=>'camion_id','format'=> 'enlace-imagen', 'new-page'=>'true', 'url'=>"//produccionCamiones/redirect", 'params'=>['camion_id','chofer_id','faena_id','tipo_camion'], 'fecha_inicio'=>$model->fecha_inicio,'fecha_fin'=>$model->fecha_fin, 'ordenable'=>'false'];
+		}
 
 		$datos = ProduccionCamiones::model()->findAll($model->search());
 
@@ -79,6 +91,7 @@ class ProduccionCamionesController extends Controller
 			'datos' => $datos,
 			'cabeceras' => $cabeceras,
 			'extra_datos' => $extra_datos,
+			'esquema' => $esquema,
 		));
 	}
 

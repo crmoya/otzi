@@ -1,32 +1,31 @@
+<?php if(isset($esquema)):?>
+
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 Columnas del informe: <i class="toggle icon-plus-sign open-columns"></i>
 <div class="columns">
 <?php 
 $params = CHttpRequest::getQueryString();
 $columns = CHttpRequest::getParam('columns');
 $i = 0;
-foreach ($cabeceras as $th):
+foreach ($esquema as $th):
 	$checked = "checked";
 	if(isset($columns) && $columns != ""){
-		$column = charAt($columns, $i);
+		$column = Tools::charAt($columns, $i);
 		$checked = $column == "1"?"checked":"";
 	}
 	$i++;
 ?>
-	<div class='column-wrapper'><input i='' class='column-check' type='checkbox' <?=$checked?> name="<?=$th['name']?>">&nbsp;&nbsp;<?=$th['name']?></div>
+	<div class='column-wrapper'><input i='' class='column-check' type='checkbox' <?=$checked?> name="<?=$th?>">&nbsp;&nbsp;<?=$th?></div>
 <?php 
 endforeach; ?>
-<?php
-function charAt($string, $i){
-	return substr($string, $i, 1);
-}
-?>
 </div>
 <?php 
 $index = strpos($params, '&columns=');
 if($index !== false){
 	$params = substr($params, 0, $index);
 }
+
 ?>
 <script>
 $(document).ready(function(e){
@@ -58,13 +57,33 @@ $(document).ready(function(e){
 	});
 	$('.column-check').change(function(e){
 		var checked = $(this).prop('checked')?'1':'0';
+		if(countChecked() < 2 && checked == "0"){
+			$(this).prop('checked','checked');
+			Swal.fire({
+				title: 'Error!',
+				text: 'No es posible mostrar menos de 2 columnas del informe',
+				icon: 'error',
+				confirmButtonText: 'OK'
+			});
+			return false;
+		}
 		var i = parseInt($(this).attr('i'));
 		columns = columns.replaceAt(i, checked);
-		//console.log(window.location + '<?=$params?>&columns=' + columns);
 		window.location = '<?=CController::createUrl(Yii::app()->controller->id."/".Yii::app()->controller->action->id)."?".$params?>&columns=' + columns;
 	});
+
+	function countChecked(){
+		var checked = 0;
+		$('.column-check').each(function(e){
+			if($(this).prop('checked')){
+				checked++;
+			}
+		});
+		return checked;
+	}
 });
 </script>
+<?php endif;?>
 <style>
 .column-wrapper{
 	width: 250px;

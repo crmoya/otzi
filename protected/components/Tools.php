@@ -9,6 +9,11 @@ class Tools
 
 	const FACTOR_KMS_MILLAS = 1.60934;
 
+
+	public static function charAt($string, $i){
+		return substr($string, $i, 1);
+	}
+
 	public static $UNIDADES_TIEMPO = [
 		['id'=>1, 'nombre'=>'HORAS',],
 		['id'=>2, 'nombre'=>'DÍAS',],
