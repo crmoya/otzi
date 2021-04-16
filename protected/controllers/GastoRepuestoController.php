@@ -180,8 +180,10 @@ class GastoRepuestoController extends Controller
 			$detalleGastoRepuesto->nombre = "";
 			$detalleGastoRepuesto->rut_rinde = "";
 			$detalleGastoRepuesto->nombre_proveedor = "";
+			
 
 			$gastoCompleta = $gasto->gastoCompleta;
+			
 			
 			if($tipo == "R"){
 				$report = null;

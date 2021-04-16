@@ -176,23 +176,25 @@ class GastoRepuesto extends CActiveRecord
 	}
 
 	public function getGastoCompleta(){
-		$partes = explode("-",$this->id);;
-		$id = (int)$partes[0];
+		$partes = explode("-",$this->id);
+		$report_id = (int)$partes[0];
 		$tipo = $partes[1];
 		$tipo_maquina = $partes[2];
+		$compra_id = $partes[3];
+		
 		if($tipo == "RG"){
-			return GastoCompleta::model()->findByAttributes(['id'=>$id]);
+			return GastoCompleta::model()->findByAttributes(['id'=>$report_id]);
 		}
 		if($tipo == "R"){
 			$report = null;
 			$compra = null;
 			$nocombustibleRG = null;
 			if($tipo_maquina == "CP"){
-				$report = RCamionPropio::model()->findByPk($id);
+				$report = RCamionPropio::model()->findByPk($report_id);
 				if(isset($report)){
-					$compra = CompraRepuestoCamionPropio::model()->findByAttributes(['rCamionPropio_id'=>$report->id, 'rindegastos'=>1]);
+					$compra = CompraRepuestoCamionPropio::model()->findByPk($compra_id);
 					if(isset($compra)){
-						$nocombustibleRG = NocombustibleRindegasto::model()->findByAttributes(['compra_id'=>$compra->id, 'camionpropio_id'=>$report->camionPropio_id,'status'=>1]);
+						$nocombustibleRG = NocombustibleRindegasto::model()->findByAttributes(['compra_id'=>$compra_id, 'camionpropio_id'=>$report->camionPropio_id,'status'=>1]);
 						if(isset($nocombustibleRG)){
 							return GastoCompleta::model()->findByPk($nocombustibleRG->gasto_completa_id);
 						}
@@ -200,11 +202,11 @@ class GastoRepuesto extends CActiveRecord
 				}				
 			}
 			if($tipo_maquina == "CA"){
-				$report = RCamionArrendado::model()->findByPk($id);
+				$report = RCamionArrendado::model()->findByPk($report_id);
 				if(isset($report)){
-					$compra = CompraRepuestoCamionArrendado::model()->findByAttributes(['rCamionArrendado_id'=>$report->id, 'rindegastos'=>1]);
+					$compra = CompraRepuestoCamionArrendado::model()->findByPk($compra_id);
 					if(isset($compra)){
-						$nocombustibleRG = NocombustibleRindegasto::model()->findByAttributes(['compra_id'=>$compra->id, 'camionarrendado_id'=>$report->camionArrendado_id,'status'=>1]);
+						$nocombustibleRG = NocombustibleRindegasto::model()->findByAttributes(['compra_id'=>$compra_id, 'camionarrendado_id'=>$report->camionArrendado_id,'status'=>1]);
 						if(isset($nocombustibleRG)){
 							return GastoCompleta::model()->findByPk($nocombustibleRG->gasto_completa_id);
 						}
@@ -212,11 +214,11 @@ class GastoRepuesto extends CActiveRecord
 				}	
 			}
 			if($tipo_maquina == "EP"){
-				$report = REquipoPropio::model()->findByPk($id);
+				$report = REquipoPropio::model()->findByPk($report_id);
 				if(isset($report)){
-					$compra = CompraRepuestoEquipoPropio::model()->findByAttributes(['rEquipoPropio_id'=>$report->id, 'rindegastos'=>1]);
+					$compra = CompraRepuestoEquipoPropio::model()->findByPk($compra_id);
 					if(isset($compra)){
-						$nocombustibleRG = NocombustibleRindegasto::model()->findByAttributes(['compra_id'=>$compra->id, 'equipopropio_id'=>$report->equipoPropio_id,'status'=>1]);
+						$nocombustibleRG = NocombustibleRindegasto::model()->findByAttributes(['compra_id'=>$compra_id, 'equipopropio_id'=>$report->equipoPropio_id,'status'=>1]);
 						if(isset($nocombustibleRG)){
 							return GastoCompleta::model()->findByPk($nocombustibleRG->gasto_completa_id);
 						}
@@ -224,11 +226,11 @@ class GastoRepuesto extends CActiveRecord
 				}	
 			}
 			if($tipo_maquina == "EA"){
-				$report = REquipoArrendado::model()->findByPk($id);
+				$report = REquipoArrendado::model()->findByPk($report_id);
 				if(isset($report)){
-					$compra = CompraRepuestoEquipoArrendado::model()->findByAttributes(['rEquipoArrendado_id'=>$report->id, 'rindegastos'=>1]);
+					$compra = CompraRepuestoEquipoArrendado::model()->findByPk($compra_id);
 					if(isset($compra)){
-						$nocombustibleRG = NocombustibleRindegasto::model()->findByAttributes(['compra_id'=>$compra->id, 'equipoarrendado_id'=>$report->equipoArrendado_id,'status'=>1]);
+						$nocombustibleRG = NocombustibleRindegasto::model()->findByAttributes(['compra_id'=>$compra_id, 'equipoarrendado_id'=>$report->equipoArrendado_id,'status'=>1]);
 						if(isset($nocombustibleRG)){
 							return GastoCompleta::model()->findByPk($nocombustibleRG->gasto_completa_id);
 						}
