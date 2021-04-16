@@ -4,22 +4,30 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 Columnas del informe: <i class="toggle icon-plus-sign open-columns"></i>
 <div class="columns">
-<?php 
-$params = Yii::app()->request->getQueryString();
-$columns = Yii::app()->request->getParam('columns');
-$i = 0;
-foreach ($esquema as $th):
-	$checked = "checked";
-	if(isset($columns) && $columns != ""){
-		$column = Tools::charAt($columns, $i);
-		$checked = $column == "1"?"checked":"";
-	}
-	$i++;
-?>
-	<div class='column-wrapper'><input i='' class='column-check' type='checkbox' <?=$checked?> name="<?=$th?>">&nbsp;&nbsp;<?=$th?></div>
-<?php 
-endforeach; ?>
+	<div class="row">
+		<div class="col-md-10">
+		<?php 
+		$params = Yii::app()->request->getQueryString();
+		$columns = Yii::app()->request->getParam('columns');
+		$i = 0;
+		foreach ($esquema as $th):
+			$checked = "checked";
+			if(isset($columns) && $columns != ""){
+				$column = Tools::charAt($columns, $i);
+				$checked = $column == "1"?"checked":"";
+			}
+			$i++;
+		?>
+			<div class='column-wrapper'><input i='' class='column-check' type='checkbox' <?=$checked?> name="<?=$th?>">&nbsp;&nbsp;<?=$th?></div>
+		<?php 
+		endforeach; ?>
+		</div>
+		<div class="col-md-2">
+			<div class="btn btn-info filtro-columnas">Aceptar</div>
+		</div>
+	</div>
 </div>
+
 <?php 
 $index = strpos($params, '&columns=');
 if($index !== false){
@@ -69,6 +77,9 @@ $(document).ready(function(e){
 		}
 		var i = parseInt($(this).attr('i'));
 		columns = columns.replaceAt(i, checked);
+	});
+
+	$('.filtro-columnas').click(function(e){
 		window.location = '<?=CController::createUrl(Yii::app()->controller->id."/".Yii::app()->controller->action->id)."?".$params?>&columns=' + columns;
 	});
 
