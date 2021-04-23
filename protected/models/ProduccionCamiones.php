@@ -39,6 +39,7 @@ class ProduccionCamiones extends CActiveRecord
 			}
 		}
 
+		/*
 		$inicioAgrupacion = "	camion,
 								camion_id,
 								chofer,
@@ -50,7 +51,15 @@ class ProduccionCamiones extends CActiveRecord
 								sum(produccion_contratada) as produccion_contratada,
 								sum(produccion_real) as produccion_real,
 								GREATEST(sum(produccion_contratada) - sum(produccion_real),0) as produccion_diferencia";
-
+		*/
+		$inicioAgrupacion = "	camion,
+								camion_id,
+								chofer,
+								chofer_id,
+								centro_gestion,
+								faena_id,
+								tipo_camion,
+								sum(produccion_real) as produccion_real";
 		$finAgrupacion = "		camion,camion_id,chofer,chofer_id,centro_gestion,faena_id,tipo_camion";
 
 		if(isset($this->agruparPor) && $this->agruparPor != "NINGUNO"){
@@ -62,10 +71,7 @@ class ProduccionCamiones extends CActiveRecord
 										'' as centro_gestion,
 										'' as faena_id,
 										tipo_camion,
-										sum(total_transportado) as total_transportado,
-										sum(produccion_contratada) as produccion_contratada,
-										sum(produccion_real) as produccion_real,
-										GREATEST(sum(produccion_contratada) - sum(produccion_real),0) as produccion_diferencia";
+										sum(produccion_real) as produccion_real";
 				$finAgrupacion = "		camion,camion_id,tipo_camion";
 			}
 			if($this->agruparPor == "CHOFER"){
@@ -76,10 +82,7 @@ class ProduccionCamiones extends CActiveRecord
 										'' as centro_gestion,
 										'' as faena_id,
 										'' as tipo_camion,
-										sum(total_transportado) as total_transportado,
-										sum(produccion_contratada) as produccion_contratada,
-										sum(produccion_real) as produccion_real,
-										GREATEST(sum(produccion_contratada) - sum(produccion_real),0) as produccion_diferencia";
+										sum(produccion_real) as produccion_real";
 				$finAgrupacion = "		chofer,chofer_id";
 			}
 			if($this->agruparPor == "CENTROGESTION"){
@@ -90,10 +93,7 @@ class ProduccionCamiones extends CActiveRecord
 										centro_gestion,
 										faena_id,
 										'' as tipo_camion,
-										sum(total_transportado) as total_transportado,
-										sum(produccion_contratada) as produccion_contratada,
-										sum(produccion_real) as produccion_real,
-										GREATEST(sum(produccion_contratada) - sum(produccion_real),0) as produccion_diferencia";
+										sum(produccion_real) as produccion_real";
 				$finAgrupacion = "		centro_gestion,faena_id";
 			}
 			if($this->agruparPor == "CENTROCAMION"){
@@ -104,10 +104,7 @@ class ProduccionCamiones extends CActiveRecord
 										centro_gestion,
 										faena_id,
 										tipo_camion,
-										sum(total_transportado) as total_transportado,
-										sum(produccion_contratada) as produccion_contratada,
-										sum(produccion_real) as produccion_real,
-										GREATEST(sum(produccion_contratada) - sum(produccion_real),0) as produccion_diferencia";
+										sum(produccion_real) as produccion_real";
 				$finAgrupacion = "		camion,camion_id,centro_gestion,faena_id,tipo_camion";
 			}
 			if($this->agruparPor == "CENTROCHOFER"){
@@ -118,10 +115,7 @@ class ProduccionCamiones extends CActiveRecord
 										centro_gestion,
 										faena_id,
 										'' as tipo_camion,
-										sum(total_transportado) as total_transportado,
-										sum(produccion_contratada) as produccion_contratada,
-										sum(produccion_real) as produccion_real,
-										GREATEST(sum(produccion_contratada) - sum(produccion_real),0) as produccion_diferencia";
+										sum(produccion_real) as produccion_real";
 				$finAgrupacion = "		chofer,chofer_id,centro_gestion,faena_id";
 			}
 			if($this->agruparPor == "CHOFERCAMION"){
@@ -132,10 +126,7 @@ class ProduccionCamiones extends CActiveRecord
 										'' as centro_gestion,
 										'' as faena_id,
 										tipo_camion,
-										sum(total_transportado) as total_transportado,
-										sum(produccion_contratada) as produccion_contratada,
-										sum(produccion_real) as produccion_real,
-										GREATEST(sum(produccion_contratada) - sum(produccion_real),0) as produccion_diferencia";
+										sum(produccion_real) as produccion_real";
 				$finAgrupacion = "		camion,camion_id,chofer,chofer_id,tipo_camion";
 			}
 		}
