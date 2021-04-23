@@ -285,6 +285,7 @@ class ConsumoMaquinariaController extends Controller
 					$horas_gps = (float)$report['horas_gps'];
 					$sum_litros_hora_esperado = (float)$report['consumo_esperado'];
 				}
+				
 				if($horas_reales > 0){
 					$litros_hora = $litros/$horas_reales;
 				}
@@ -296,18 +297,18 @@ class ConsumoMaquinariaController extends Controller
 				if($count == 0){
 					$count = 1;
 				}
+				
 				$registros[$report['equipo_id']."-".$report['operador_id']] = [
 					'litros' => $litros,
 					'horas_reales' => $horas_reales,
 					'horas_gps' => $horas_gps,
-					'litros_hora_esperado' => $litros_hora_esperado,
+					'litros_hora_esperado' => $sum_litros_hora_esperado / $count,
 					'litros_hora' => $litros_hora,
 					'litros_hora_gps' => $litros_hora_gps,
-					'consumo_esperado' => $sum_litros_hora_esperado / $count,
 					'sum_litros_hora_esperado' => $sum_litros_hora_esperado,
 					'equipo' => $report['equipo'],
 					'operador' => $report['operador'],
-				];	
+				];
 			}
 			
 			foreach($registros as $valores){
