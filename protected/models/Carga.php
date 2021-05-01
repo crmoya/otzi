@@ -114,15 +114,28 @@ class Carga{
 						//busco un report al que asociar la carga:
 						//inicio buscando para la fecha del gasto
 						$fecha = new DateTime($gasto->issue_date);
+						$ultimoDiaMes = date("Y-m-t",strtotime($gasto->issue_date));
 						$report = RCamionPropio::model()->findByAttributes(['fecha'=>$gasto->issue_date, 'camionPropio_id'=>$vehiculoRG->camionpropio_id]);
 						while($report == null){
-							$dow = date('w',strtotime($fecha->format("Y-m-d")));
 							//si no hay report busco para el día siguiente,
 							//sino para el subsiguiente, hasta llegar al día sábado, si no hay para el sábado
 							//creo un report para el sábado y asocio la compra a ese
 							//el día posterior, hasta el sábado de esa semana.
-							if($dow == 6){
-								//sábado
+							//pero si llega al fin de mes, lo agrego al fin de mes
+							$dow = date('w',strtotime($fecha->format("Y-m-d")));
+							if($dow == 6 || $ultimoDiaMes == $fecha->format("Y-m-d")){
+								//sábado o fin de mes
+								$report = RCamionPropio::model()->findByAttributes([
+									'reporte' => "*".$gasto->id,
+									'observaciones' => "Report creado automáticamente para asociación con RindeGastos",
+								]);
+								if(isset($report)){
+									//si ya había sido creado un report con ese campo reporte, lo traslado a fin de mes (que sería anterior)	
+									//fix fin de mes
+									$report->fecha = $fecha->format('Y-m-d');
+									$report->save();
+									break;
+								}
 								$report = RCamionPropio::model()->findByAttributes([
 									'fecha' => $fecha->format('Y-m-d'),
 									'reporte' => "*".$gasto->id,
@@ -201,13 +214,25 @@ class Carga{
 						$fecha = new DateTime($gasto->issue_date);
 						$report = RCamionArrendado::model()->findByAttributes(['fecha'=>$gasto->issue_date, 'camionArrendado_id'=>$vehiculoRG->camionarrendado_id]);
 						while($report == null){
-							$dow = date('w',strtotime($fecha->format("Y-m-d")));
 							//si no hay report busco para el día siguiente,
 							//sino para el subsiguiente, hasta llegar al día sábado, si no hay para el sábado
 							//creo un report para el sábado y asocio la compra a ese
 							//el día posterior, hasta el sábado de esa semana.
-							if($dow == 6){
-								//sábado
+							//pero si llega al fin de mes, lo agrego al fin de mes
+							$dow = date('w',strtotime($fecha->format("Y-m-d")));
+							if($dow == 6 || $ultimoDiaMes == $fecha->format("Y-m-d")){
+								//sábado o fin de mes
+								$report = RCamionArrendado::model()->findByAttributes([
+									'reporte' => "*".$gasto->id,
+									'observaciones' => "Report creado automáticamente para asociación con RindeGastos",
+								]);
+								if(isset($report)){
+									//si ya había sido creado un report con ese campo reporte, lo traslado a fin de mes (que sería anterior)	
+									//fix fin de mes
+									$report->fecha = $fecha->format('Y-m-d');
+									$report->save();
+									break;
+								}
 								$report = RCamionArrendado::model()->findByAttributes([
 									'fecha' => $fecha->format('Y-m-d'),
 									'reporte' => "*".$gasto->id,
@@ -288,13 +313,25 @@ class Carga{
 						$fecha = new DateTime($gasto->issue_date);
 						$report = REquipoPropio::model()->findByAttributes(['fecha'=>$gasto->issue_date, 'equipoPropio_id'=>$vehiculoRG->equipopropio_id]);
 						while($report == null){
-							$dow = date('w',strtotime($fecha->format("Y-m-d")));
 							//si no hay report busco para el día siguiente,
 							//sino para el subsiguiente, hasta llegar al día sábado, si no hay para el sábado
 							//creo un report para el sábado y asocio la compra a ese
 							//el día posterior, hasta el sábado de esa semana.
-							if($dow == 6){
-								//sábado
+							//pero si llega al fin de mes, lo agrego al fin de mes
+							$dow = date('w',strtotime($fecha->format("Y-m-d")));
+							if($dow == 6 || $ultimoDiaMes == $fecha->format("Y-m-d")){
+								//sábado o fin de mes
+								$report = REquipoPropio::model()->findByAttributes([
+									'reporte' => "*".$gasto->id,
+									'observaciones' => "Report creado automáticamente para asociación con RindeGastos",
+								]);
+								if(isset($report)){
+									//si ya había sido creado un report con ese campo reporte, lo traslado a fin de mes (que sería anterior)	
+									//fix fin de mes
+									$report->fecha = $fecha->format('Y-m-d');
+									$report->save();
+									break;
+								}
 								$report = REquipoPropio::model()->findByAttributes([
 									'fecha' => $fecha->format('Y-m-d'),
 									'reporte' => "*".$gasto->id,
@@ -376,13 +413,25 @@ class Carga{
 						$fecha = new DateTime($gasto->issue_date);
 						$report = REquipoArrendado::model()->findByAttributes(['fecha'=>$gasto->issue_date, 'equipoArrendado_id'=>$vehiculoRG->equipoarrendado_id]);
 						while($report == null){
-							$dow = date('w',strtotime($fecha->format("Y-m-d")));
 							//si no hay report busco para el día siguiente,
 							//sino para el subsiguiente, hasta llegar al día sábado, si no hay para el sábado
 							//creo un report para el sábado y asocio la compra a ese
 							//el día posterior, hasta el sábado de esa semana.
-							if($dow == 6){
-								//sábado
+							//pero si llega al fin de mes, lo agrego al fin de mes
+							$dow = date('w',strtotime($fecha->format("Y-m-d")));
+							if($dow == 6 || $ultimoDiaMes == $fecha->format("Y-m-d")){
+								//sábado o fin de mes
+								$report = REquipoArrendado::model()->findByAttributes([
+									'reporte' => "*".$gasto->id,
+									'observaciones' => "Report creado automáticamente para asociación con RindeGastos",
+								]);
+								if(isset($report)){
+									//si ya había sido creado un report con ese campo reporte, lo traslado a fin de mes (que sería anterior)	
+									//fix fin de mes
+									$report->fecha = $fecha->format('Y-m-d');
+									$report->save();
+									break;
+								}
 								$report = REquipoArrendado::model()->findByAttributes([
 									'fecha' => $fecha->format('Y-m-d'),
 									'reporte' => "*".$gasto->id,
@@ -520,12 +569,13 @@ class Carga{
 						$fecha = new DateTime($gasto->issue_date);
 						$report = RCamionPropio::model()->findByAttributes(['fecha'=>$gasto->issue_date, 'camionPropio_id'=>$vehiculoRG->camionpropio_id]);
 						while($report == null){
-							$dow = date('w',strtotime($fecha->format("Y-m-d")));
 							//si no hay report busco para el día siguiente,
 							//sino para el subsiguiente, hasta llegar al día sábado, si no hay para el sábado
 							//creo un report para el sábado y asocio la compra a ese
 							//el día posterior, hasta el sábado de esa semana.
-							if($dow == 6){
+							//pero si llega al fin de mes, lo agrego al fin de mes
+							$dow = date('w',strtotime($fecha->format("Y-m-d")));
+							if($dow == 6 || $ultimoDiaMes == $fecha->format("Y-m-d")){
 								//sábado
 								$report = new RCamionPropio();
 								$report->fecha = $fecha->format('Y-m-d');
@@ -600,12 +650,13 @@ class Carga{
 						$fecha = new DateTime($gasto->issue_date);
 						$report = RCamionArrendado::model()->findByAttributes(['fecha'=>$gasto->issue_date, 'camionArrendado_id'=>$vehiculoRG->camionarrendado_id]);
 						while($report == null){
-							$dow = date('w',strtotime($fecha->format("Y-m-d")));
 							//si no hay report busco para el día siguiente,
 							//sino para el subsiguiente, hasta llegar al día sábado, si no hay para el sábado
 							//creo un report para el sábado y asocio la compra a ese
 							//el día posterior, hasta el sábado de esa semana.
-							if($dow == 6){
+							//pero si llega al fin de mes, lo agrego al fin de mes
+							$dow = date('w',strtotime($fecha->format("Y-m-d")));
+							if($dow == 6 || $ultimoDiaMes == $fecha->format("Y-m-d")){
 								//sábado
 								$report = new RCamionArrendado();
 								$report->fecha = $fecha->format('Y-m-d');
@@ -681,12 +732,13 @@ class Carga{
 						$fecha = new DateTime($gasto->issue_date);
 						$report = REquipoPropio::model()->findByAttributes(['fecha'=>$gasto->issue_date, 'equipoPropio_id'=>$vehiculoRG->equipopropio_id]);
 						while($report == null){
-							$dow = date('w',strtotime($fecha->format("Y-m-d")));
 							//si no hay report busco para el día siguiente,
 							//sino para el subsiguiente, hasta llegar al día sábado, si no hay para el sábado
 							//creo un report para el sábado y asocio la compra a ese
 							//el día posterior, hasta el sábado de esa semana.
-							if($dow == 6){
+							//pero si llega al fin de mes, lo agrego al fin de mes
+							$dow = date('w',strtotime($fecha->format("Y-m-d")));
+							if($dow == 6 || $ultimoDiaMes == $fecha->format("Y-m-d")){
 								//sábado
 								$report = new REquipoPropio();
 								$report->fecha = $fecha->format('Y-m-d');
@@ -763,12 +815,13 @@ class Carga{
 						$fecha = new DateTime($gasto->issue_date);
 						$report = REquipoArrendado::model()->findByAttributes(['fecha'=>$gasto->issue_date, 'equipoArrendado_id'=>$vehiculoRG->equipoarrendado_id]);
 						while($report == null){
-							$dow = date('w',strtotime($fecha->format("Y-m-d")));
 							//si no hay report busco para el día siguiente,
 							//sino para el subsiguiente, hasta llegar al día sábado, si no hay para el sábado
 							//creo un report para el sábado y asocio la compra a ese
 							//el día posterior, hasta el sábado de esa semana.
-							if($dow == 6){
+							//pero si llega al fin de mes, lo agrego al fin de mes
+							$dow = date('w',strtotime($fecha->format("Y-m-d")));
+							if($dow == 6 || $ultimoDiaMes == $fecha->format("Y-m-d")){
 								//sábado
 								$report = new REquipoArrendado();
 								$report->fecha = $fecha->format('Y-m-d');
