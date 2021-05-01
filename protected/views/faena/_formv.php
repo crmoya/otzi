@@ -170,7 +170,7 @@ $cs->registerCoreScript('jquery');
 											</td>
 											<td>
 												<?php
-												echo $form->dropDownList($u, "[$i]unidad", CHtml::listData(Unidadfaena::listar(), 'id', 'nombre'), array('style' => 'width:100px'));
+												echo $form->dropDownList($u, "[$i]unidad", CHtml::listData(Unidadfaena::listar(), 'id', 'nombre'), array('style' => 'width:100px','class'=>'unidad'));
 												?>
 											</td>
 											<td>
@@ -224,13 +224,13 @@ $cs->registerCoreScript('jquery');
 													</table>													
 												</td>
 												<td width="100px">	
-													<?php echo CHtml::dropDownList('Unidadfaena[{0}][unidad]', '', CHtml::listData(Unidadfaena::listar(), 'id', 'nombre'), array('style' => 'width:100px','id'=>'unidadc{0}')); ?>
+													<?php echo CHtml::dropDownList('Unidadfaena[{0}][unidad]', '', CHtml::listData(Unidadfaena::listar(), 'id', 'nombre'), array('style' => 'width:100px','id'=>'unidadc{0}','class'=>'unidad')); ?>
 												</td>
 												<td width="100px">
-													<?php echo CHtml::textField('Unidadfaena[{0}][pu]', '', array('style' => 'width:100px', 'class' => 'fixed unidad','id'=>'puc{0}')); ?>
+													<?php echo CHtml::textField('Unidadfaena[{0}][pu]', '', array('style' => 'width:100px', 'class' => 'fixed','id'=>'puc{0}')); ?>
 												</td>
 												<td width="100px">
-													<?php echo CHtml::textField('Unidadfaena[{0}][produccion_minima]', '', array('style' => 'width:100px', 'class' => 'fixed unidad','id'=>'produccion{0}')); ?>
+													<?php echo CHtml::textField('Unidadfaena[{0}][produccion_minima]', '', array('style' => 'width:100px', 'class' => 'fixed','id'=>'produccion{0}')); ?>
 												</td>
 												<td>
 													<input type="hidden" class="rowIndex" value="{0}" />
@@ -305,7 +305,7 @@ $cs->registerCoreScript('jquery');
 											</td>
 											<td>
 												<?php
-												echo $form->dropDownList($ue, "[$i]unidad", CHtml::listData(UnidadfaenaEquipo::listar(), 'id', 'nombre'), array('style' => 'width:100px'));
+												echo $form->dropDownList($ue, "[$i]unidad", CHtml::listData(UnidadfaenaEquipo::listar(), 'id', 'nombre'), array('style' => 'width:100px','class'=>'unidad'));
 												?>
 											</td>
 											<td>
@@ -319,7 +319,7 @@ $cs->registerCoreScript('jquery');
 												if (!isset($equipo)) {
 													$equipo = EquipoArrendado::model()->findByPk($ue->equipoarrendado_id);
 												}
-												echo $form->textField($ue, "[$i]horas_minimas", array('style' => 'width:100px', 'class' => 'fixed unidad horas_minimas', 'id' => 'horas' . $i, 'horas_equipo' => $equipo->horasMin, 'i' => $i));
+												echo $form->textField($ue, "[$i]horas_minimas", array('style' => 'width:100px', 'class' => 'fixed horas_minimas', 'id' => 'horas' . $i, 'horas_equipo' => $equipo->horasMin, 'i' => $i));
 												?>
 												<div style="color:red" id="errorHoras<?= $i ?>"></div>
 											</td>
@@ -365,13 +365,13 @@ $cs->registerCoreScript('jquery');
 													
 												</td>
 												<td width="100px">	
-													<?php echo CHtml::dropDownList('UnidadfaenaEquipo[{0}][unidad]', '', CHtml::listData(UnidadfaenaEquipo::listar(), 'id', 'nombre'), array('style' => 'width:100px')); ?>
+													<?php echo CHtml::dropDownList('UnidadfaenaEquipo[{0}][unidad]', '', CHtml::listData(UnidadfaenaEquipo::listar(), 'id', 'nombre'), array('style' => 'width:100px','class'=>'unidad')); ?>
 												</td>
 												<td width="100px">
-													<?php echo CHtml::textField('UnidadfaenaEquipo[{0}][pu]', '', array('style' => 'width:100px','id'=>'pu_unidad{0}', 'class' => 'fixed unidad')); ?>
+													<?php echo CHtml::textField('UnidadfaenaEquipo[{0}][pu]', '', array('style' => 'width:100px','id'=>'pu_unidad{0}', 'class' => 'fixed')); ?>
 												</td>
 												<td width="100px">
-													<?php echo CHtml::textField('UnidadfaenaEquipo[{0}][horas_minimas]', '', array('style' => 'width:100px', 'class' => 'fixed unidad horas_minimas', 'id' => 'horas{0}', 'horas_equipo' => '0', 'i' => '{0}')); ?>
+													<?php echo CHtml::textField('UnidadfaenaEquipo[{0}][horas_minimas]', '', array('style' => 'width:100px', 'class' => 'fixed horas_minimas', 'id' => 'horas{0}', 'horas_equipo' => '0', 'i' => '{0}')); ?>
 													<div style="color:red" id="errorHoras{0}"></div>
 												</td>
 												<td>
@@ -521,6 +521,7 @@ $cs->registerCoreScript('jquery');
 		});
 
 		$('#guardar').click(function(e) {
+			
 			var ok = true;
 			$('.unidad').each(function(e) {
 				$(this).css('background', 'white');
@@ -530,6 +531,7 @@ $cs->registerCoreScript('jquery');
 				}
 			});
 
+			console.log("1" + ok);
 			$('.horas_minimas').each(function(e){
 				$(this).css('background', 'white');
 				var i = $(this).attr('i');
@@ -548,6 +550,7 @@ $cs->registerCoreScript('jquery');
 					$("#errorHoras" + i).html("Horas Mínimas debe ser un número");
 				}
 			});
+			console.log("2" + ok);
 
 			$('.tipo_camion').each(function(e) {
 				var i = $(this).attr('i');
@@ -569,6 +572,7 @@ $cs->registerCoreScript('jquery');
 					}
 				}
 			});
+			console.log("3" + ok);
 
 			$('.tipo_equipo').each(function(e) {
 				var i = $(this).attr('i');
@@ -590,6 +594,7 @@ $cs->registerCoreScript('jquery');
 					}
 				}
 			});
+			console.log("4" + ok);
 			return ok;
 		});
 	});
