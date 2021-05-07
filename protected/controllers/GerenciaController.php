@@ -28,7 +28,7 @@ class GerenciaController extends Controller
 		// They can be accessed via: index.php?r=site/page&view=FileName
 			'page'=>array(
 				'class'=>'CViewAction',
-		),
+			),
 		);
 	}
 
@@ -169,7 +169,36 @@ class GerenciaController extends Controller
 	}
 
 	public function actionGenerapdf($ids,$tipo){
-		require_once __DIR__ . '../../../vendor/autoload.php';
+
+		$html = "";
+		$ids = explode('*__*',$ids);
+		$html .= "<center>";
+		foreach($ids as $archivoArr){
+			$archivo = explode("_!!_",$archivoArr);
+			$path_tipo = "";
+			if($tipo == "CA"){
+				$path_tipo = "camiones_arrendados";
+			}
+			if($tipo == "CP"){
+				$path_tipo = "camiones_propios";
+			}
+			if($tipo == "EA"){
+				$path_tipo = "equipos_arrendados";
+			}
+			if($tipo == "EP"){
+				$path_tipo = "equipos_propios";
+			}
+			$path = __DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . 'archivos' . DIRECTORY_SEPARATOR . $path_tipo . DIRECTORY_SEPARATOR . $archivo[0] . DIRECTORY_SEPARATOR . $archivo[1];
+			$image = Yii::app()->assetManager->publish($path);
+			$extension = strtolower(pathinfo($path)['extension']);
+			
+			if($extension == 'png' || $extension == 'jpg' || $extension == 'jpeg'){
+				$html .= "<img width='80%' src='" . $image . "'/><br/><br/>";
+			}
+		}
+		$this->render("imprimir",['html'=>$html]);
+
+		/*require_once __DIR__ . '../../../vendor/autoload.php';
 
 		$mpdf = new \Mpdf\Mpdf();
 		$ids = explode('*__*',$ids);
@@ -197,6 +226,7 @@ class GerenciaController extends Controller
 		}
 		$mpdf->WriteHTML($html);
 		$mpdf->Output();
+		*/
 	}
 
 	public function actionAdjuntos($ids,$tipo){
