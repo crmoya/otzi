@@ -9,22 +9,6 @@ class Tools
 
 	const FACTOR_KMS_MILLAS = 1.60934;
 
-	public static $UNIDADES_TIEMPO = [
-		['id'=>1, 'nombre'=>'HORAS',],
-		['id'=>2, 'nombre'=>'DÍAS',],
-		['id'=>3, 'nombre'=>'SEMANAS',],
-		['id'=>4, 'nombre'=>'MINUTOS',],
-		['id'=>5, 'nombre'=>'MESES',],
-	];
-
-	public static function getUnidadTiempo($id){
-		foreach(Tools::$UNIDADES_TIEMPO as $unidad){
-			if($unidad['id']==$id){
-				return $unidad['nombre'];
-			}
-		}
-	}
-
 	public static function removerApostrofes($text){
 		$text = htmlspecialchars($text);
 		$text = str_replace("'","",$text);

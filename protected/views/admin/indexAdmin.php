@@ -48,6 +48,7 @@ Bienvenido <?php echo CHtml::encode($nombre);?>, por favor seleccione una de las
  <li><?php echo CHtml::link("Administrar supervisores de rendición de repuestos y combustible",CController::createUrl('//rendidor/admin')); ?></li>
  <li><?php echo CHtml::link("Administrar cuentas contables de repuestos",CController::createUrl('//cuentaContableRepuesto/admin')); ?></li>
  <li><?php echo CHtml::link("Administrar unidades de repuestos",CController::createUrl('//unidad/admin')); ?></li>
+ <li><?php echo CHtml::link("Administrar unidades de tiempo",CController::createUrl('//unidadTiempo/admin')); ?></li>
  <li>&nbsp;</li>
  <li><?php echo CHtml::link("Exportar Carpeta Dicc",CController::createUrl('//admin/dicc')); ?></li>
  <!--<li><?php echo CHtml::link("Importar datos a través de Carga Masiva",CController::createUrl('//admin/masiva')); ?></li>-->

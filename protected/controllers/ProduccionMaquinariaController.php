@@ -50,6 +50,19 @@ class ProduccionMaquinariaController extends Controller
 			$model->attributes=$_GET['ProduccionMaquinaria'];
 		}
 
+		$cabeceras_todas = [
+			['name'=>'Máquina','width'=>'lg'],
+			['name'=>'Operador','width'=>'lg'],
+			['name'=>'Centro Gestión','width'=>'lg'],
+			['name'=>'PU','width'=>'sm'],
+			['name'=>'Hrs. Físicas','width'=>'sm'],
+			//['name'=>'Hrs. Contratadas','width'=>'sm'],
+			['name'=>'Producción Física','width'=>'md'],
+			//['name'=>'Producción Contratada','width'=>'md'],
+			['name'=>'Ver', 'filtro'=>'false'],
+		];;
+		
+
 		$cabeceras = [
 			['name'=>'Máquina','width'=>'lg'],
 			['name'=>'Operador','width'=>'lg'],

@@ -21,10 +21,6 @@
 class Unidadfaena extends CActiveRecord
 {
 
-	public const UNIDAD_HORAS = 1;
-	public const UNIDAD_DIAS = 2;
-
-
 	/**
 	 * @return string the associated database table name
 	 */
@@ -35,22 +31,9 @@ class Unidadfaena extends CActiveRecord
 
 	public $tipo_camion;
 
-	public static function listar(){
-		return [
-			['id' =>Unidadfaena::UNIDAD_HORAS, 'nombre'=>'HORAS'], 
-			['id' =>UnidadFaena::UNIDAD_DIAS, 'nombre'=>'DÍAS'], 
-		];
-	}
-
 	public static function getUnidad($unidad){
-		$unidades = [
-			1=>'HORAS', 
-			2=>'DÍAS', 
-		];
-		if(isset($unidades[$unidad])){
-			return $unidades[$unidad];
-		}
-		return "";
+		$unidadF = UnidadTiempo::model()->findByPk($unidad);
+		return isset($unidadF)?$unidadF->nombre:"";
 	}
 	
 	public function esDecimal($attribute,$params)

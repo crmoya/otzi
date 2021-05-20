@@ -1,3 +1,47 @@
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+Columnas del informe: <i class="toggle icon-plus-sign open-columns"></i>
+<div class="columns">
+<?php foreach ($cabeceras as $th):?>
+	<div class='column-wrapper'><input type='checkbox' checked>&nbsp;&nbsp;<?=$th['name']?></div>
+<?php endforeach; ?>
+</div>
+<script>
+$(document).ready(function(e){
+	let open = false;
+	function toggle(){
+		if(!open){
+			$('.columns').fadeIn();
+			$('.toggle').removeClass('icon-plus-sign');
+			$('.toggle').addClass('icon-minus-sign');
+		}
+		else{
+			$('.columns').fadeOut();
+			$('.toggle').removeClass('icon-minus-sign');
+			$('.toggle').addClass('icon-plus-sign');
+		}
+		open = !open;
+	}
+	$('.open-columns').click(()=>{
+		toggle();
+	});
+});
+</script>
+<style>
+.column-wrapper{
+	width: 250px;
+	display: inline-block;
+}
+.open-columns:hover{
+	cursor: pointer;
+}
+.columns{
+	display: inline-block;
+	border: 1px solid silver;
+	border-radius: 10px;
+	padding: 10px;
+	display: none;
+}
+</style>
 <div class="wrapper">
 	<img class="loading" src="<?php echo Yii::app()->request->baseUrl; ?>/images/Gear.gif"/>
 	<table id="datos" class='display nowrap' data-order='[[ 1, "desc" ]]' style="width:100%;height:100%;display:none">

@@ -170,7 +170,7 @@ $cs->registerCoreScript('jquery');
 											</td>
 											<td>
 												<?php
-												echo $form->dropDownList($u, "[$i]unidad", CHtml::listData(Unidadfaena::listar(), 'id', 'nombre'), array('style' => 'width:100px'));
+												echo $form->dropDownList($u, "[$i]unidad", CHtml::listData(UnidadTiempo::model()->findAll(), 'id', 'nombre'), array('style' => 'width:100px'));
 												?>
 											</td>
 											<td>
@@ -224,7 +224,7 @@ $cs->registerCoreScript('jquery');
 													</table>													
 												</td>
 												<td width="100px">	
-													<?php echo CHtml::dropDownList('Unidadfaena[{0}][unidad]', '', CHtml::listData(Unidadfaena::listar(), 'id', 'nombre'), array('style' => 'width:100px','id'=>'unidadc{0}')); ?>
+													<?php echo CHtml::dropDownList('Unidadfaena[{0}][unidad]', '', CHtml::listData(UnidadTiempo::model()->findAll(), 'id', 'nombre'), array('style' => 'width:100px','id'=>'unidadc{0}')); ?>
 												</td>
 												<td width="100px">
 													<?php echo CHtml::textField('Unidadfaena[{0}][pu]', '', array('style' => 'width:100px', 'class' => 'fixed unidad','id'=>'puc{0}')); ?>
@@ -305,7 +305,7 @@ $cs->registerCoreScript('jquery');
 											</td>
 											<td>
 												<?php
-												echo $form->dropDownList($ue, "[$i]unidad", CHtml::listData(UnidadfaenaEquipo::listar(), 'id', 'nombre'), array('style' => 'width:100px'));
+												echo $form->dropDownList($ue, "[$i]unidad", CHtml::listData(UnidadTiempo::model()->findAll(), 'id', 'nombre'), array('style' => 'width:100px'));
 												?>
 											</td>
 											<td>
@@ -365,7 +365,7 @@ $cs->registerCoreScript('jquery');
 													
 												</td>
 												<td width="100px">	
-													<?php echo CHtml::dropDownList('UnidadfaenaEquipo[{0}][unidad]', '', CHtml::listData(UnidadfaenaEquipo::listar(), 'id', 'nombre'), array('style' => 'width:100px')); ?>
+													<?php echo CHtml::dropDownList('UnidadfaenaEquipo[{0}][unidad]', '', CHtml::listData(UnidadTiempo::model()->findAll(), 'id', 'nombre'), array('style' => 'width:100px')); ?>
 												</td>
 												<td width="100px">
 													<?php echo CHtml::textField('UnidadfaenaEquipo[{0}][pu]', '', array('style' => 'width:100px','id'=>'pu_unidad{0}', 'class' => 'fixed unidad')); ?>
