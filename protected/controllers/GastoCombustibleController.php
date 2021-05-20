@@ -167,7 +167,8 @@ class GastoCombustibleController extends Controller
 		
 		foreach($gastos as $gasto){
 			$partes = explode("-",$gasto->id);
-			$id = (int)$partes[0];
+			$report_id = (int)$partes[0];
+			$carga_id = (int)$partes[3];
 			$tipo = $partes[1];
 			$tipo_maquina = $partes[2];
 			$detalleGastoCombustible = new DetalleGastoCombustible;
@@ -186,27 +187,27 @@ class GastoCombustibleController extends Controller
 				$report = null;
 				$carga = null;
 				if($tipo_maquina == "CP"){
-					$report = RCamionPropio::model()->findByPk($id);
-					$carga = CargaCombCamionPropio::model()->findByAttributes(['rCamionPropio_id'=>$id]);
-					$detalleGastoCombustible->report_id = $id;
+					$report = RCamionPropio::model()->findByPk($report_id);
+					$carga = CargaCombCamionPropio::model()->findByPk($carga_id);
+					$detalleGastoCombustible->report_id = $report_id;
 					$detalleGastoCombustible->report_tipo = "CP";
 				}
 				if($tipo_maquina == "CA"){
-					$report = RCamionArrendado::model()->findByPk($id);
-					$carga = CargaCombCamionArrendado::model()->findByAttributes(['rCamionArrendado_id'=>$id]);
-					$detalleGastoCombustible->report_id = $id;
+					$report = RCamionArrendado::model()->findByPk($report_id);
+					$carga = CargaCombCamionArrendado::model()->findByPk($carga_id);
+					$detalleGastoCombustible->report_id = $report_id;
 					$detalleGastoCombustible->report_tipo = "CA";
 				}
 				if($tipo_maquina == "EP"){
-					$report = REquipoPropio::model()->findByPk($id);
-					$carga = CargaCombEquipoPropio::model()->findByAttributes(['rEquipoPropio_id'=>$id]);
-					$detalleGastoCombustible->report_id = $id;
+					$report = REquipoPropio::model()->findByPk($report_id);
+					$carga = CargaCombEquipoPropio::model()->findByPk($carga_id);
+					$detalleGastoCombustible->report_id = $report_id;
 					$detalleGastoCombustible->report_tipo = "EP";
 				}
 				if($tipo_maquina == "EA"){
-					$report = REquipoArrendado::model()->findByPk($id);
-					$carga = CargaCombEquipoArrendado::model()->findByAttributes(['rEquipoArrendado_id'=>$id]);
-					$detalleGastoCombustible->report_id = $id;
+					$report = REquipoArrendado::model()->findByPk($report_id);
+					$carga = CargaCombEquipoArrendado::model()->findByPk($carga_id);
+					$detalleGastoCombustible->report_id = $report_id;
 					$detalleGastoCombustible->report_tipo = "EA";
 				}
 				if(isset($report)){

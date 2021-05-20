@@ -28,6 +28,9 @@ switch ($tipo) {
     Seleccione los adjuntos que desea exportar a PDF y presione "Descargar"
     <button id="descargar" class="btn btn-success float-right">Descargar</button>
 </p>
+<p>
+    <button id="seleccionar" class="btn btn-info float-left">Seleccionar Todos</button><br/>
+</p>
 <?php
 $idsArr = explode("-",$ids);
 foreach($idsArr as $id):?>
@@ -116,6 +119,23 @@ $cs = Yii::app()->clientScript;
 $cs->registerCoreScript('jquery');
 ?>
 <script>
+    var seleccionados = false;
+    $('#seleccionar').click(function(e) {
+        if(!seleccionados){
+            $('.seleccionar').each(function(e){
+                $(this).prop('checked',true);
+            });
+            seleccionados = true;
+            $('#seleccionar').html("Deseleccionar todos");
+        }
+        else{
+            $('.seleccionar').each(function(e){
+                $(this).prop('checked',false);
+            });
+            seleccionados = false;
+            $('#seleccionar').html("Seleccionar todos");
+        }
+    });
     $('#descargar').click(function(e) {
         var registros = "";
         $('.seleccionar').each(function() { 
@@ -126,7 +146,11 @@ $cs->registerCoreScript('jquery');
         if(registros != ""){
             registros = registros.substring(0,registros.length-4);
             var url = "<?=CController::createUrl("//gerencia/generapdf");?>?ids="+registros+"&tipo=<?=$tipo?>";
-            window.location = url;
+            const link = document.createElement('a');
+            link.id = 'someLink';
+            link.href = url;
+            link.target = "_blank";
+            link.click();
         }
     });
 </script>

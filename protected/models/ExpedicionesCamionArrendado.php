@@ -12,7 +12,7 @@ class ExpedicionesCamionArrendado extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fecha_inicio, fecha_fin, camion_id, faena_id, reporte', 'safe', 'on'=>'search'),
+			array('fecha_inicio, fecha_fin, camion_id, faena_id, reporte, chofer_id', 'safe', 'on'=>'search'),
 		);
 	}
 

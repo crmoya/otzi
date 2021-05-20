@@ -50,42 +50,39 @@ class ProduccionMaquinariaController extends Controller
 			$model->attributes=$_GET['ProduccionMaquinaria'];
 		}
 
-		$cabeceras_todas = [
-			['name'=>'Máquina','width'=>'lg'],
-			['name'=>'Operador','width'=>'lg'],
-			['name'=>'Centro Gestión','width'=>'lg'],
-			['name'=>'PU','width'=>'sm'],
-			['name'=>'Hrs. Físicas','width'=>'sm'],
-			//['name'=>'Hrs. Contratadas','width'=>'sm'],
-			['name'=>'Producción Física','width'=>'md'],
-			//['name'=>'Producción Contratada','width'=>'md'],
-			['name'=>'Ver', 'filtro'=>'false'],
-		];;
-		
+		$esquema = ["Máquina", "Operador", "Centro Gestión", "Producción Física", "Ver"];
 
-		$cabeceras = [
-			['name'=>'Máquina','width'=>'lg'],
-			['name'=>'Operador','width'=>'lg'],
-			['name'=>'Centro Gestión','width'=>'lg'],
-			['name'=>'PU','width'=>'sm'],
-			['name'=>'Hrs. Físicas','width'=>'sm'],
-			//['name'=>'Hrs. Contratadas','width'=>'sm'],
-			['name'=>'Producción Física','width'=>'md'],
-			//['name'=>'Producción Contratada','width'=>'md'],
-			['name'=>'Ver', 'filtro'=>'false'],
-		];
-
-		$extra_datos = [
-			['campo'=>'maquina','exportable','dots'=>"md"],
-			['campo'=>'operador','exportable','dots'=>'md'],
-			['campo'=>'centro_gestion','exportable','dots'=>'md'],
-			['campo'=>'pu','exportable', 'format'=>'money','acumulado'=>'suma'],
-			['campo'=>'horas_fisicas','exportable', 'format'=>'number','acumulado'=>'suma'],
-			//['campo'=>'horas_contratadas','exportable', 'format'=>'number','acumulado'=>'suma'],
-			['campo'=>'produccion_fisica','exportable', 'format'=>'money','acumulado'=>'suma'],
-			//['campo'=>'produccion_contratada','exportable', 'format'=>'money','acumulado'=>'suma'],
-			['campo'=>'maquina_id','format'=> 'enlace-imagen', 'new-page'=>'true', 'url'=>"//produccionMaquinaria/redirect", 'params'=>['maquina_id','operador_id','faena_id','tipo_maquina'], 'fecha_inicio'=>$model->fecha_inicio,'fecha_fin'=>$model->fecha_fin, 'ordenable'=>'false'],
-		];
+		$columns = "";
+		if(isset($_GET['columns'])){
+			$columns = $_GET['columns'];
+		}
+		if($columns == ""){
+			for($i=0;$i<count($esquema);$i++){
+				$columns .= "1";
+			}
+		}
+		$cabeceras = [];
+		$extra_datos = [];
+		if(Tools::charAt($columns,0) == "1"){
+			$cabeceras[] = ['name'=>'Máquina','width'=>'xl'];
+			$extra_datos[] = ['campo'=>'maquina','exportable','dots'=>"xl"];
+		}
+		if(Tools::charAt($columns,1) == "1"){
+			$cabeceras[] = ['name'=>'Operador','width'=>'lg'];
+			$extra_datos[] = ['campo'=>'operador','exportable','dots'=>'md'];
+		}
+		if(Tools::charAt($columns,2) == "1"){
+			$cabeceras[] = ['name'=>'Centro Gestión','width'=>'lg'];
+			$extra_datos[] = ['campo'=>'centro_gestion','exportable','dots'=>'md'];
+		}
+		if(Tools::charAt($columns,3) == "1"){
+			$cabeceras[] = ['name'=>'Producción Física','width'=>'md'];
+			$extra_datos[] = ['campo'=>'produccion_fisica','exportable', 'format'=>'money','acumulado'=>'suma'];
+		}
+		if(Tools::charAt($columns,4) == "1"){
+			$cabeceras[] = ['name'=>'Ver', 'filtro'=>'false'];
+			$extra_datos[] = ['campo'=>'maquina_id','format'=> 'enlace-imagen', 'new-page'=>'true', 'url'=>"//produccionMaquinaria/redirect", 'params'=>['maquina_id','operador_id','faena_id','tipo_maquina'], 'fecha_inicio'=>$model->fecha_inicio,'fecha_fin'=>$model->fecha_fin, 'ordenable'=>'false'];
+		}
 
 		$datos = ProduccionMaquinaria::model()->findAll($model->search());
 
@@ -94,6 +91,7 @@ class ProduccionMaquinariaController extends Controller
 			'datos' => $datos,
 			'cabeceras' => $cabeceras,
 			'extra_datos' => $extra_datos,
+			'esquema' => $esquema,
 		));
 	}
 

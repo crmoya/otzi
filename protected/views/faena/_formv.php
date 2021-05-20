@@ -305,7 +305,7 @@ $cs->registerCoreScript('jquery');
 											</td>
 											<td>
 												<?php
-												echo $form->dropDownList($ue, "[$i]unidad", CHtml::listData(UnidadTiempo::model()->findAll(), 'id', 'nombre'), array('style' => 'width:100px'));
+												echo $form->dropDownList($ue, "[$i]unidad", CHtml::listData(UnidadTiempo::model()->findAll(), 'id', 'nombre'), array('style' => 'width:100px','class'=>'unidad'));
 												?>
 											</td>
 											<td>
@@ -365,13 +365,13 @@ $cs->registerCoreScript('jquery');
 													
 												</td>
 												<td width="100px">	
-													<?php echo CHtml::dropDownList('UnidadfaenaEquipo[{0}][unidad]', '', CHtml::listData(UnidadTiempo::model()->findAll(), 'id', 'nombre'), array('style' => 'width:100px')); ?>
+													<?php echo CHtml::dropDownList('UnidadfaenaEquipo[{0}][unidad]', '', CHtml::listData(UnidadTiempo::model()->findAll(), 'id', 'nombre'), array('style' => 'width:100px','class'=>'unidad')); ?>
 												</td>
 												<td width="100px">
-													<?php echo CHtml::textField('UnidadfaenaEquipo[{0}][pu]', '', array('style' => 'width:100px','id'=>'pu_unidad{0}', 'class' => 'fixed unidad')); ?>
+													<?php echo CHtml::textField('UnidadfaenaEquipo[{0}][pu]', '', array('style' => 'width:100px','id'=>'pu_unidad{0}', 'class' => 'fixed')); ?>
 												</td>
 												<td width="100px">
-													<?php echo CHtml::textField('UnidadfaenaEquipo[{0}][horas_minimas]', '', array('style' => 'width:100px', 'class' => 'fixed unidad horas_minimas', 'id' => 'horas{0}', 'horas_equipo' => '0', 'i' => '{0}')); ?>
+													<?php echo CHtml::textField('UnidadfaenaEquipo[{0}][horas_minimas]', '', array('style' => 'width:100px', 'class' => 'fixed horas_minimas', 'id' => 'horas{0}', 'horas_equipo' => '0', 'i' => '{0}')); ?>
 													<div style="color:red" id="errorHoras{0}"></div>
 												</td>
 												<td>
@@ -521,15 +521,8 @@ $cs->registerCoreScript('jquery');
 		});
 
 		$('#guardar').click(function(e) {
+			
 			var ok = true;
-			$('.unidad').each(function(e) {
-				$(this).css('background', 'white');
-				if ($(this).val() == "") {
-					$(this).css('background', 'pink');
-					ok = false;
-				}
-			});
-
 			$('.horas_minimas').each(function(e){
 				$(this).css('background', 'white');
 				var i = $(this).attr('i');

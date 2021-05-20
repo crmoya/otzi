@@ -1,12 +1,45 @@
+<?php if(isset($esquema)):?>
+
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 Columnas del informe: <i class="toggle icon-plus-sign open-columns"></i>
 <div class="columns">
-<?php foreach ($cabeceras as $th):?>
-	<div class='column-wrapper'><input type='checkbox' checked>&nbsp;&nbsp;<?=$th['name']?></div>
-<?php endforeach; ?>
+	<div class="row">
+		<div class="col-md-10">
+		<?php 
+		$params = Yii::app()->request->getQueryString();
+		$columns = Yii::app()->request->getParam('columns');
+		$i = 0;
+		foreach ($esquema as $th):
+			$checked = "checked";
+			if(isset($columns) && $columns != ""){
+				$column = Tools::charAt($columns, $i);
+				$checked = $column == "1"?"checked":"";
+			}
+			$i++;
+		?>
+			<div class='column-wrapper'><input i='' class='column-check' type='checkbox' <?=$checked?> name="<?=$th?>">&nbsp;&nbsp;<?=$th?></div>
+		<?php 
+		endforeach; ?>
+		</div>
+		<div class="col-md-2">
+			<div class="btn btn-info filtro-columnas">Aceptar</div>
+		</div>
+	</div>
 </div>
+
+<?php 
+$index = strpos($params, '&columns=');
+if($index !== false){
+	$params = substr($params, 0, $index);
+}
+
+?>
 <script>
 $(document).ready(function(e){
+	String.prototype.replaceAt = function(index, replacement) {
+		return this.substr(0, index) + replacement + this.substr(index + replacement.length);
+	}
 	let open = false;
 	function toggle(){
 		if(!open){
@@ -24,8 +57,44 @@ $(document).ready(function(e){
 	$('.open-columns').click(()=>{
 		toggle();
 	});
+	let columns = '';
+	let i = 0;
+	$('.column-check').each(function(e){
+		columns += $(this).prop('checked')?'1':'0';
+		$(this).attr('i',i++);
+	});
+	$('.column-check').change(function(e){
+		var checked = $(this).prop('checked')?'1':'0';
+		if(countChecked() < 2 && checked == "0"){
+			$(this).prop('checked','checked');
+			Swal.fire({
+				title: 'Error!',
+				text: 'No es posible mostrar menos de 2 columnas del informe',
+				icon: 'error',
+				confirmButtonText: 'OK'
+			});
+			return false;
+		}
+		var i = parseInt($(this).attr('i'));
+		columns = columns.replaceAt(i, checked);
+	});
+
+	$('.filtro-columnas').click(function(e){
+		window.location = '<?=CController::createUrl(Yii::app()->controller->id."/".Yii::app()->controller->action->id)."?".$params?>&columns=' + columns;
+	});
+
+	function countChecked(){
+		var checked = 0;
+		$('.column-check').each(function(e){
+			if($(this).prop('checked')){
+				checked++;
+			}
+		});
+		return checked;
+	}
 });
 </script>
+<?php endif;?>
 <style>
 .column-wrapper{
 	width: 250px;

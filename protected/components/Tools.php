@@ -9,6 +9,10 @@ class Tools
 
 	const FACTOR_KMS_MILLAS = 1.60934;
 
+	public static function charAt($string, $i){
+		return substr($string, $i, 1);
+	}
+	
 	public static function removerApostrofes($text){
 		$text = htmlspecialchars($text);
 		$text = str_replace("'","",$text);

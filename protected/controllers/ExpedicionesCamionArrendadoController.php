@@ -101,6 +101,17 @@ class ExpedicionesCamionArrendadoController extends Controller
 			$combustible = 0;
 			$repuestos = 0;
 
+			if($model->camion_id != null && $model->camion_id != ""){
+				if($model->camion_id != $report['camion_id']){
+					continue;
+				}
+			}
+			if($model->chofer_id != null && $model->chofer_id != ""){
+				if($model->chofer_id != $report['chofer_id']){
+					continue;
+				}
+			}
+			
 			//producción
 			//producción por volumen:
 			
