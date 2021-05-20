@@ -193,7 +193,7 @@ class GerenciaController extends Controller
 			$extension = strtolower(pathinfo($path)['extension']);
 			
 			if($extension == 'png' || $extension == 'jpg' || $extension == 'jpeg'){
-				$html .= "<img width='80%' src='" . $image . "'/><br/><br/>";
+				$html .= "<img height='100%' src='" . $image . "'/><br/><br/>";
 			}
 		}
 		$this->render("imprimir",['html'=>$html]);
