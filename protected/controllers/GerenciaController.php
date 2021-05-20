@@ -190,10 +190,19 @@ class GerenciaController extends Controller
 			}
 			$path = __DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . 'archivos' . DIRECTORY_SEPARATOR . $path_tipo . DIRECTORY_SEPARATOR . $archivo[0] . DIRECTORY_SEPARATOR . $archivo[1];
 			$image = Yii::app()->assetManager->publish($path);
+			$size = getimagesize($path);
+			$restrictions = "";
+			//es más ancha que alta
+			if($size[0] > $size[1]){
+				$restrictions = "style='width:700px;'";
+			}
+			else{
+				$restrictions = "style='height: 900px;'";
+			}
 			$extension = strtolower(pathinfo($path)['extension']);
 			
 			if($extension == 'png' || $extension == 'jpg' || $extension == 'jpeg'){
-				$html .= "<img height='100%' src='" . $image . "'/><br/><br/>";
+				$html .= "<img " . $restrictions . " src='" . $image . "'/><br/><br/>";
 			}
 		}
 		$this->render("imprimir",['html'=>$html]);
