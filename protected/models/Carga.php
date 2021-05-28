@@ -104,6 +104,10 @@ class Carga{
 							$cargaComb->nombre = $gastoCompleta->nombre_quien_rinde;
 						}
 						$cargaComb->rut_rinde = " ";
+						$informe = InformeGasto::model()->findByPk($gasto->report_id);
+						if(isset($informe)){
+							$cargaComb->numero = $informe->numero;
+						}
 						$cargaComb->cuenta = " ";
 						$cargaComb->nombre_proveedor = $gasto->supplier;
 						$cargaComb->rut_proveedor = $gastoCompleta->rut_proveedor;
@@ -196,6 +200,10 @@ class Carga{
 							$cargaComb->nombre = $gastoCompleta->nombre_quien_rinde;
 						}
 						$cargaComb->rut_rinde = " ";
+						$informe = InformeGasto::model()->findByPk($gasto->report_id);
+						if(isset($informe)){
+							$cargaComb->numero = $informe->numero;
+						}
 						$cargaComb->nombre_proveedor = $gasto->supplier;
 						$cargaComb->rut_proveedor = $gastoCompleta->rut_proveedor;
 						$cargaComb->observaciones = "Registro de Rindegastos";
@@ -302,6 +310,10 @@ class Carga{
 							$cargaComb->nombre = $gastoCompleta->nombre_quien_rinde;
 						}
 						$cargaComb->rut_rinde = " ";
+						$informe = InformeGasto::model()->findByPk($gasto->report_id);
+						if(isset($informe)){
+							$cargaComb->numero = $informe->numero;
+						}
 						$cargaComb->nombre_proveedor = $gasto->supplier;
 						$cargaComb->rut_proveedor = $gastoCompleta->rut_proveedor;
 						$cargaComb->observaciones = "Registro de Rindegastos";
@@ -407,6 +419,10 @@ class Carga{
 							$cargaComb->nombre = $gastoCompleta->nombre_quien_rinde;
 						}
 						$cargaComb->rut_rinde = " ";
+						$informe = InformeGasto::model()->findByPk($gasto->report_id);
+						if(isset($informe)){
+							$cargaComb->numero = $informe->numero;
+						}
 						$cargaComb->nombre_proveedor = $gasto->supplier;
 						$cargaComb->rut_proveedor = $gastoCompleta->rut_proveedor;
 						$cargaComb->observaciones = "Registro de Rindegastos";
