@@ -212,6 +212,7 @@ class Carga{
 						//busco un report al que asociar la carga:
 						//inicio buscando para la fecha del gasto
 						$fecha = new DateTime($gasto->issue_date);
+						$ultimoDiaMes = date("Y-m-t",strtotime($gasto->issue_date));
 						$report = RCamionArrendado::model()->findByAttributes(['fecha'=>$gasto->issue_date, 'camionArrendado_id'=>$vehiculoRG->camionarrendado_id]);
 						while($report == null){
 							//si no hay report busco para el día siguiente,
@@ -307,10 +308,10 @@ class Carga{
 						$cargaComb->tipo_documento = Tools::traducirTipoDocumento($gastoCompleta->tipo_documento);							
 						$cargaComb->rindegastos = 1;
 
-
 						//busco un report al que asociar la compra:
 						//inicio buscando para la fecha del gasto
 						$fecha = new DateTime($gasto->issue_date);
+						$ultimoDiaMes = date("Y-m-t",strtotime($gasto->issue_date));
 						$report = REquipoPropio::model()->findByAttributes(['fecha'=>$gasto->issue_date, 'equipoPropio_id'=>$vehiculoRG->equipopropio_id]);
 						while($report == null){
 							//si no hay report busco para el día siguiente,
@@ -337,6 +338,11 @@ class Carga{
 									'reporte' => "*".$gasto->id,
 									'observaciones' => "Report creado automáticamente para asociación con RindeGastos",
 								]);
+
+								if($report->reporte == "*9433028"){
+									var_dump($report);
+									die;
+								}
 								if(!isset($report)){
 									$report = new REquipoPropio();
 									$report->fecha = $fecha->format('Y-m-d');
@@ -411,6 +417,7 @@ class Carga{
 						//busco un report al que asociar la compra:
 						//inicio buscando para la fecha del gasto
 						$fecha = new DateTime($gasto->issue_date);
+						$ultimoDiaMes = date("Y-m-t",strtotime($gasto->issue_date));
 						$report = REquipoArrendado::model()->findByAttributes(['fecha'=>$gasto->issue_date, 'equipoArrendado_id'=>$vehiculoRG->equipoarrendado_id]);
 						while($report == null){
 							//si no hay report busco para el día siguiente,
@@ -474,7 +481,6 @@ class Carga{
 							$errores[] = $cargaComb->errors;
 						}
 					}
-
 
 					if(!$combustible->save()){
 						$errores[] = $combustible->errors;
@@ -567,6 +573,7 @@ class Carga{
 						//busco un report al que asociar la compra:
 						//inicio buscando para la fecha del gasto
 						$fecha = new DateTime($gasto->issue_date);
+						$ultimoDiaMes = date("Y-m-t",strtotime($gasto->issue_date));
 						$report = RCamionPropio::model()->findByAttributes(['fecha'=>$gasto->issue_date, 'camionPropio_id'=>$vehiculoRG->camionpropio_id]);
 						while($report == null){
 							//si no hay report busco para el día siguiente,
@@ -576,11 +583,29 @@ class Carga{
 							//pero si llega al fin de mes, lo agrego al fin de mes
 							$dow = date('w',strtotime($fecha->format("Y-m-d")));
 							if($dow == 6 || $ultimoDiaMes == $fecha->format("Y-m-d")){
-								//sábado
-								$report = new RCamionPropio();
-								$report->fecha = $fecha->format('Y-m-d');
-								$report->reporte = "*".$gasto->id;
-								$report->observaciones = "Report creado automáticamente para asociación con RindeGastos";
+								//sábado o fin de mes
+								$report = RCamionPropio::model()->findByAttributes([
+									'reporte' => "*".$gasto->id,
+									'observaciones' => "Report creado automáticamente para asociación con RindeGastos",
+								]);
+								if(isset($report)){
+									//si ya había sido creado un report con ese campo reporte, lo traslado a fin de mes (que sería anterior)	
+									//fix fin de mes
+									$report->fecha = $fecha->format('Y-m-d');
+									$report->save();
+									break;
+								}
+								$report = RCamionPropio::model()->findByAttributes([
+									'fecha' => $fecha->format('Y-m-d'),
+									'reporte' => "*".$gasto->id,
+									'observaciones' => "Report creado automáticamente para asociación con RindeGastos",
+								]);
+								if(!isset($report)){
+									$report = new RCamionPropio();
+									$report->fecha = $fecha->format('Y-m-d');
+									$report->reporte = "*".$gasto->id;
+									$report->observaciones = "Report creado automáticamente para asociación con RindeGastos";
+								}
 								$report->camionPropio_id = (int)$vehiculoRG->camionpropio_id;
 								$report->chofer_id = 0;
 								$report->panne = 0;
@@ -648,6 +673,7 @@ class Carga{
 						//busco un report al que asociar la compra:
 						//inicio buscando para la fecha del gasto
 						$fecha = new DateTime($gasto->issue_date);
+						$ultimoDiaMes = date("Y-m-t",strtotime($gasto->issue_date));
 						$report = RCamionArrendado::model()->findByAttributes(['fecha'=>$gasto->issue_date, 'camionArrendado_id'=>$vehiculoRG->camionarrendado_id]);
 						while($report == null){
 							//si no hay report busco para el día siguiente,
@@ -657,11 +683,29 @@ class Carga{
 							//pero si llega al fin de mes, lo agrego al fin de mes
 							$dow = date('w',strtotime($fecha->format("Y-m-d")));
 							if($dow == 6 || $ultimoDiaMes == $fecha->format("Y-m-d")){
-								//sábado
-								$report = new RCamionArrendado();
-								$report->fecha = $fecha->format('Y-m-d');
-								$report->reporte = "*".$gasto->id;
-								$report->observaciones = "Report creado automáticamente para asociación con RindeGastos";
+								//sábado o fin de mes
+								$report = RCamionArrendado::model()->findByAttributes([
+									'reporte' => "*".$gasto->id,
+									'observaciones' => "Report creado automáticamente para asociación con RindeGastos",
+								]);
+								if(isset($report)){
+									//si ya había sido creado un report con ese campo reporte, lo traslado a fin de mes (que sería anterior)	
+									//fix fin de mes
+									$report->fecha = $fecha->format('Y-m-d');
+									$report->save();
+									break;
+								}
+								$report = RCamionArrendado::model()->findByAttributes([
+									'fecha' => $fecha->format('Y-m-d'),
+									'reporte' => "*".$gasto->id,
+									'observaciones' => "Report creado automáticamente para asociación con RindeGastos",
+								]);
+								if(!isset($report)){
+									$report = new RCamionArrendado();
+									$report->fecha = $fecha->format('Y-m-d');
+									$report->reporte = "*".$gasto->id;
+									$report->observaciones = "Report creado automáticamente para asociación con RindeGastos";
+								}
 								$report->camionArrendado_id = (int)$vehiculoRG->camionarrendado_id;
 								$report->ordenCompra = "OC - RindeGastos";
 								$report->chofer_id = 0;
@@ -730,6 +774,7 @@ class Carga{
 						//busco un report al que asociar la compra:
 						//inicio buscando para la fecha del gasto
 						$fecha = new DateTime($gasto->issue_date);
+						$ultimoDiaMes = date("Y-m-t",strtotime($gasto->issue_date));
 						$report = REquipoPropio::model()->findByAttributes(['fecha'=>$gasto->issue_date, 'equipoPropio_id'=>$vehiculoRG->equipopropio_id]);
 						while($report == null){
 							//si no hay report busco para el día siguiente,
@@ -739,11 +784,29 @@ class Carga{
 							//pero si llega al fin de mes, lo agrego al fin de mes
 							$dow = date('w',strtotime($fecha->format("Y-m-d")));
 							if($dow == 6 || $ultimoDiaMes == $fecha->format("Y-m-d")){
-								//sábado
-								$report = new REquipoPropio();
-								$report->fecha = $fecha->format('Y-m-d');
-								$report->reporte = "*".$gasto->id;
-								$report->observaciones = "Report creado automáticamente para asociación con RindeGastos";
+								//sábado o fin de mes
+								$report = REquipoPropio::model()->findByAttributes([
+									'reporte' => "*".$gasto->id,
+									'observaciones' => "Report creado automáticamente para asociación con RindeGastos",
+								]);
+								if(isset($report)){
+									//si ya había sido creado un report con ese campo reporte, lo traslado a fin de mes (que sería anterior)	
+									//fix fin de mes
+									$report->fecha = $fecha->format('Y-m-d');
+									$report->save();
+									break;
+								}
+								$report = REquipoPropio::model()->findByAttributes([
+									'fecha' => $fecha->format('Y-m-d'),
+									'reporte' => "*".$gasto->id,
+									'observaciones' => "Report creado automáticamente para asociación con RindeGastos",
+								]);
+								if(!isset($report)){
+									$report = new REquipoPropio();
+									$report->fecha = $fecha->format('Y-m-d');
+									$report->reporte = "*".$gasto->id;
+									$report->observaciones = "Report creado automáticamente para asociación con RindeGastos";
+								}
 								$report->equipoPropio_id = (int)$vehiculoRG->equipopropio_id;
 								$report->hInicial = 0;
 								$report->hFinal = 0;
@@ -813,6 +876,7 @@ class Carga{
 						//busco un report al que asociar la compra:
 						//inicio buscando para la fecha del gasto
 						$fecha = new DateTime($gasto->issue_date);
+						$ultimoDiaMes = date("Y-m-t",strtotime($gasto->issue_date));
 						$report = REquipoArrendado::model()->findByAttributes(['fecha'=>$gasto->issue_date, 'equipoArrendado_id'=>$vehiculoRG->equipoarrendado_id]);
 						while($report == null){
 							//si no hay report busco para el día siguiente,
@@ -822,12 +886,29 @@ class Carga{
 							//pero si llega al fin de mes, lo agrego al fin de mes
 							$dow = date('w',strtotime($fecha->format("Y-m-d")));
 							if($dow == 6 || $ultimoDiaMes == $fecha->format("Y-m-d")){
-								//sábado
-								$report = new REquipoArrendado();
-								$report->fecha = $fecha->format('Y-m-d');
-								$report->reporte = "*".$gasto->id;
-								$report->ordenCompra = "OC - RindeGastos";
-								$report->observaciones = "Report creado automáticamente para asociación con RindeGastos";
+								//sábado o fin de mes
+								$report = REquipoArrendado::model()->findByAttributes([
+									'reporte' => "*".$gasto->id,
+									'observaciones' => "Report creado automáticamente para asociación con RindeGastos",
+								]);
+								if(isset($report)){
+									//si ya había sido creado un report con ese campo reporte, lo traslado a fin de mes (que sería anterior)	
+									//fix fin de mes
+									$report->fecha = $fecha->format('Y-m-d');
+									$report->save();
+									break;
+								}
+								$report = REquipoArrendado::model()->findByAttributes([
+									'fecha' => $fecha->format('Y-m-d'),
+									'reporte' => "*".$gasto->id,
+									'observaciones' => "Report creado automáticamente para asociación con RindeGastos",
+								]);
+								if(!isset($report)){
+									$report = new REquipoArrendado();
+									$report->fecha = $fecha->format('Y-m-d');
+									$report->reporte = "*".$gasto->id;
+									$report->observaciones = "Report creado automáticamente para asociación con RindeGastos";
+								}
 								$report->equipoArrendado_id = (int)$vehiculoRG->equipoarrendado_id;
 								$report->hInicial = 0;
 								$report->hFinal = 0;
@@ -1271,8 +1352,6 @@ class Carga{
 			$transaction->rollback();
 		}
 	}
-
-
 
 	public function informes()
 	{
