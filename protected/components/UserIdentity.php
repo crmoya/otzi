@@ -15,6 +15,8 @@ class UserIdentity extends CUserIdentity
             $this->errorCode=self::ERROR_USERNAME_INVALID;
         else if($record->clave!==sha1($this->password))
             $this->errorCode=self::ERROR_PASSWORD_INVALID;
+        else if($record->vigente == 0)
+            $this->errorCode=self::ERROR_USERNAME_INVALID;
         else
         {
             $this->_id=$record->id;
