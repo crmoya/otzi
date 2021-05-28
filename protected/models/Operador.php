@@ -119,7 +119,8 @@ class Operador extends CActiveRecord
 		$connection->active=false;
 		$command = null;
 		$data[0]=array('nombre'=>"Seleccione un operador",'id'=>'');
-		$i=1;
+		$data[1]=array('nombre'=>" -- NO ASIGNADO -- ",'id'=>0);
+		$i=2;
 		foreach($rows as $row){
 			$data[$i]=array('id'=>$row['id'],'nombre'=>$row['nombre'].', '.$row['rut']);
 			$i++;
@@ -127,27 +128,4 @@ class Operador extends CActiveRecord
 		return $data;
 	}
 	
-	public function listar2(){
-
-		$data = array();
-		$connection=Yii::app()->db;
-		$connection->active=true;
-		$command=$connection->createCommand("
-			select		id,nombre,rut
-			from		operador
-			where		vigente = 'SÍ'
-			order by	nombre
-			"
-		);
-		$dataReader=$command->query();
-		$rows=$dataReader->readAll();
-		$connection->active=false;
-		$command = null;
-		$i=0;
-		foreach($rows as $row){
-			$data[$i]=array('id'=>$row['id'],'nombre'=>$row['nombre'].', '.$row['rut']);
-			$i++;
-		}
-		return $data;
-	}
 }
