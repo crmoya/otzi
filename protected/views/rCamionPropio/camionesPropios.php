@@ -10,6 +10,7 @@ $cs->registerCoreScript('jquery');
 <script language="javascript" type="text/javascript">
 	$(function() {
 
+
 		var proveedores = Array();
 		proveedores = [<?php
 						$resp = "";
@@ -698,64 +699,57 @@ $cs->registerCoreScript('jquery');
 			});
 			return ok;
 		}
+		var kms = ($('#RCamionPropio_kmFinal').val() - $('#RCamionPropio_kmInicial').val()).toFixed(2);
+		$('#kmRecorridos').val(kms);
 
-		$(document).ready(function(e) {
-
-
-
-			var kms = ($('#RCamionPropio_kmFinal').val() - $('#RCamionPropio_kmInicial').val()).toFixed(2);
-			$('#kmRecorridos').val(kms);
-
-			<?php
-			$codigo = "";
-			$capacidad = "";
-			$pOv = "";
-			if (isset($model->camiones)) {
-				if (isset($model->camiones->codigo)) {
-					$codigo = $model->camiones->codigo;
-				}
-				if (isset($model->camiones->capacidad)) {
-					$capacidad = $model->camiones->capacidad;
-				}
-				if (isset($model->camiones->pesoOVolumen)) {
-					$pOv = $model->camiones->pesoOVolumen == "L" ? "lts." : "kgs.";
-				}
+		<?php
+		$codigo = "";
+		$capacidad = "";
+		$pOv = "";
+		if (isset($model->camiones)) {
+			if (isset($model->camiones->codigo)) {
+				$codigo = $model->camiones->codigo;
 			}
-			?>
+			if (isset($model->camiones->capacidad)) {
+				$capacidad = $model->camiones->capacidad;
+			}
+			if (isset($model->camiones->pesoOVolumen)) {
+				$pOv = $model->camiones->pesoOVolumen == "L" ? "lts." : "kgs.";
+			}
+		}
+		?>
 
-			var codigo = '<?= $codigo ?>';
-			var capacidad = '<?= $capacidad ?>';
-			var pOv = '<?= $pOv ?>';
+		var codigo = '<?= $codigo ?>';
+		var capacidad = '<?= $capacidad ?>';
+		var pOv = '<?= $pOv ?>';
 
-			$('#codigo').html(codigo);
-			$('#capacidad').val(capacidad);
-			$('#lblCapacidad').html(capacidad + " " + pOv);
+		$('#codigo').html(codigo);
+		$('#capacidad').val(capacidad);
+		$('#lblCapacidad').html(capacidad + " " + pOv);
 
-			$('.faenaT').each(function(e) {
-				var faenaId = $(this).val();
-				var camion_id = $("#RCamionPropio_camionPropio_id").val();
-				var id = $(this).attr('id');
-				var selunidad = $(this).attr('selunidad');
-				var i = id.substring(id.length - 1);
-				$.ajax({
-					type: 'POST',
-					cache: false,
-					url: '<?= CController::createUrl('//faena/listunits') ?>',
-					data: {
-						faena_id: faenaId,
-						camion_id: camion_id,
-						selunidad: selunidad
-					},
-					success: function(msg) {
-						$('#unidadfaena' + i).html(msg);
-					},
-					error: function(XMLHttpRequest, textStatus, errorThrown) {
+		$('.faenaT').each(function(e) {
+			var faenaId = $(this).val();
+			var camion_id = $("#RCamionPropio_camionPropio_id").val();
+			var id = $(this).attr('id');
+			var selunidad = $(this).attr('selunidad');
+			var i = id.substring(id.length - 1);
+			$.ajax({
+				type: 'POST',
+				cache: false,
+				url: '<?= CController::createUrl('//faena/listunits') ?>',
+				data: {
+					faena_id: faenaId,
+					camion_id: camion_id,
+					selunidad: selunidad
+				},
+				success: function(msg) {
+					$('#unidadfaena' + i).html(msg);
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
 
-					}
-				});
+				}
 			});
 		});
-
 	});
 </script>
 <?php $this->pageTitle = Yii::app()->name; ?>
@@ -835,7 +829,7 @@ $cs->registerCoreScript('jquery');
 				</table>
 			</div>
 			<div class="row buttons">
-				<?php echo CHtml::submitButton('Habilitar para modificación', array('id' => 'habilitar','class'=>'btn btn-primary form-control')); ?>
+				<?php echo CHtml::submitButton('Habilitar para modificación', array('id' => 'habilitar', 'class' => 'btn btn-primary form-control')); ?>
 			</div>
 		</div>
 		<?php
@@ -1563,7 +1557,7 @@ $cs->registerCoreScript('jquery');
 
 														<tr>
 															<td><?php echo $form->labelEx($repuesto, "cantidad", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->textField($repuesto, "[$i]cantidad", array('id' => "cantidadR$i", 'disabled' => $model->validado == 2 ? 'disabled' : '','class'=>'fixed')); ?><div id="errorCantidadR<?php echo $i; ?>" style="color:red;width:100px;"></div>
+															<td><?php echo $form->textField($repuesto, "[$i]cantidad", array('id' => "cantidadR$i", 'disabled' => $model->validado == 2 ? 'disabled' : '', 'class' => 'fixed')); ?><div id="errorCantidadR<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
 															<td></td>
 															<td><?php echo $form->labelEx($repuesto, "unidad", array('style' => 'width:80px;')); ?></td>
@@ -1668,7 +1662,7 @@ $cs->registerCoreScript('jquery');
 															
                                                                                                                         <tr>
 															 <td><?php echo $form->labelEx($repuesto, "cantidad", array('style' => 'width:80px;')); ?></td>
-															 <td><?php echo $form->textField($repuesto, "[{0}]cantidad", array('id' => "cantidadR{0}",'class'=>'fixed')); ?><div id="errorCantidadR{0}" style="color:red;width:100px;"></div></td>
+															 <td><?php echo $form->textField($repuesto, "[{0}]cantidad", array('id' => "cantidadR{0}", 'class' => 'fixed')); ?><div id="errorCantidadR{0}" style="color:red;width:100px;"></div></td>
 															 <td></td>
 															 <td><?php echo $form->labelEx($repuesto, "unidad", array('style' => 'width:80px;')); ?></td>
 															 <td><?php echo $form->dropDownList($repuesto, '[{0}]unidad', CHtml::listData(Unidad::model()->findAll(), 'sigla', 'nombre'), array('id' => 'unidad{0}')); ?></td>
@@ -1812,7 +1806,7 @@ $cs->registerCoreScript('jquery');
 		</fieldset>
 
 		<div class="row buttons">
-			<?php echo CHtml::submitButton('Guardar', array('id' => 'guardar', 'disabled' => $model->validado == 2 ? 'disabled' : '','class'=>'btn btn-primary form-control')); ?>
+			<?php echo CHtml::submitButton('Guardar', array('id' => 'guardar', 'disabled' => $model->validado == 2 ? 'disabled' : '', 'class' => 'btn btn-primary form-control')); ?>
 		</div>
 
 	<?php $this->endWidget();

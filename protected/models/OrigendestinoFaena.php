@@ -229,7 +229,6 @@ class OrigendestinoFaena extends CActiveRecord
 						od.origen_id = o.id 
 			"
 		);
-		$command->bindParam(":faena",$idFaena,PDO::PARAM_INT);
 		$dataReader=$command->query();
 		$rows=$dataReader->readAll();
 		$connection->active=false;

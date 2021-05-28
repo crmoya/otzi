@@ -476,6 +476,8 @@ class RCamionPropioController extends Controller
 		$codigo = $camion->codigo;
 		$capacidad = $camion->capacidad;
 
+		
+
 		if (Yii::app()->user->rol == "administrador") {
 			$this->render('camionesPropios', array(
 				'model' => $model,
@@ -487,6 +489,7 @@ class RCamionPropioController extends Controller
 				'codigo' => $codigo,
 			));
 		}
+		
 		if (Yii::app()->user->rol == "operativo") {
 			$this->render('camionesPropiosOp', array(
 				'model' => $model,
@@ -498,6 +501,8 @@ class RCamionPropioController extends Controller
 				'codigo' => $codigo,
 			));
 		}
+
+		
 	}
 
 	/**
