@@ -16,7 +16,7 @@
  * @property EquipoPropio $equipopropio
  * @property Faena $faena
  */
-class UnidadFaenaEquipo extends CActiveRecord
+class UnidadfaenaEquipo extends CActiveRecord
 {
 
 	/**
