@@ -18,7 +18,7 @@
  * @property Camionpropio $camionpropio
  * @property Faena $faena
  */
-class Unidadfaena extends CActiveRecord
+class UnidadFaena extends CActiveRecord
 {
 
 	/**
