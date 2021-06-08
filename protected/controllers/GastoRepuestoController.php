@@ -79,8 +79,7 @@ class GastoRepuestoController extends Controller
 
 	
 	public function actionView($fecha_inicio, $fecha_fin, $propiosOArrendados, $maquina, $operador, $centro_gestion){
-		
-		
+		$maquina = str_replace("___","\"",$maquina);
 		$this->pageTitle = "Detalle de informe de gasto de combustibles";
 		$criteria=new CDbCriteria();	
 

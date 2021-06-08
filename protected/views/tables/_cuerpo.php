@@ -305,7 +305,8 @@ $(document).ready(function(e){
 							$params = "";
 							if(isset($extra_dato['params'])){
 								foreach($extra_dato['params'] as $param){
-									$params .= $param . "=" . $fila->$param . "&";
+									$valor = str_replace("\"","___",$fila->$param);
+									$params .= $param . "=" . $valor . "&";
 								}
 							}
 							$valor = '<a href="' . CController::createUrl($extra_dato['url']) . '&' . $params .'"><img src="' . Yii::app()->request->baseUrl . '/images/search.png"/></a>';	
