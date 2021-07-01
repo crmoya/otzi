@@ -517,8 +517,6 @@ class Carga{
 					$nocombustible->fecha = $gasto->issue_date;
 					$nocombustible->total = intval($gasto->net);
 					$nocombustible->gasto_completa_id = intval($gastoCompleta->id);
-
-					
 					$tipo_report = "";
 
 					$vehiculoRG = VehiculoRindegastos::model()->findByAttributes(['vehiculo'=>$gastoCompleta->vehiculo_equipo]);
@@ -548,6 +546,7 @@ class Carga{
 					else{
 						$nocombustible->faena_id = 0;
 					}
+
 					//asociar gasto a report de compra de repuesto
 					//según el tipo de report, busco si hay uno para la fecha 
 					if($tipo_report == "CP"){
@@ -608,6 +607,15 @@ class Carga{
 									//si ya había sido creado un report con ese campo reporte, lo traslado a fin de mes (que sería anterior)	
 									//fix fin de mes
 									$report->fecha = $fecha->format('Y-m-d');
+									$report->camionPropio_id = (int)$vehiculoRG->camionpropio_id;
+									$report->chofer_id = 0;
+									$report->panne = 0;
+									$report->iniPanne = "";
+									$report->finPanne = "";
+									$report->minPanne = 0;
+									$report->usuario_id = 213;
+									$report->horometro_inicial = 0;
+									$report->horometro_final = 0;
 									$report->save();
 									break;
 								}
@@ -708,6 +716,16 @@ class Carga{
 									//si ya había sido creado un report con ese campo reporte, lo traslado a fin de mes (que sería anterior)	
 									//fix fin de mes
 									$report->fecha = $fecha->format('Y-m-d');
+									$report->camionArrendado_id = (int)$vehiculoRG->camionarrendado_id;
+									$report->ordenCompra = "OC - RindeGastos";
+									$report->chofer_id = 0;
+									$report->panne = 0;
+									$report->iniPanne = "";
+									$report->finPanne = "";
+									$report->minPanne = 0;
+									$report->usuario_id = 213;
+									$report->horometro_inicial = 0;
+									$report->horometro_final = 0;
 									$report->save();
 									break;
 								}
@@ -805,10 +823,22 @@ class Carga{
 									'reporte' => "*".$gasto->id,
 									'observaciones' => "Report creado automáticamente para asociación con RindeGastos",
 								]);
+								
 								if(isset($report)){
 									//si ya había sido creado un report con ese campo reporte, lo traslado a fin de mes (que sería anterior)	
 									//fix fin de mes
 									$report->fecha = $fecha->format('Y-m-d');
+									$report->equipoPropio_id = (int)$vehiculoRG->equipopropio_id;
+									$report->hInicial = 0;
+									$report->hFinal = 0;
+									$report->horas = 0;
+									$report->operador_id = 0;
+									$report->panne = 0;
+									$report->iniPanne = "";
+									$report->finPanne = "";
+									$report->minPanne = 0;
+									$report->horasGps = 0;
+									$report->usuario_id = 213;
 									$report->save();
 									break;
 								}
@@ -823,6 +853,7 @@ class Carga{
 									$report->reporte = "*".$gasto->id;
 									$report->observaciones = "Report creado automáticamente para asociación con RindeGastos";
 								}
+								
 								$report->equipoPropio_id = (int)$vehiculoRG->equipopropio_id;
 								$report->hInicial = 0;
 								$report->hFinal = 0;
@@ -911,6 +942,17 @@ class Carga{
 									//si ya había sido creado un report con ese campo reporte, lo traslado a fin de mes (que sería anterior)	
 									//fix fin de mes
 									$report->fecha = $fecha->format('Y-m-d');
+									$report->equipoArrendado_id = (int)$vehiculoRG->equipoarrendado_id;
+									$report->hInicial = 0;
+									$report->hFinal = 0;
+									$report->horas = 0;
+									$report->operador_id = 0;
+									$report->panne = 0;
+									$report->iniPanne = "";
+									$report->finPanne = "";
+									$report->minPanne = 0;
+									$report->horasGps = 0;
+									$report->usuario_id = 213;
 									$report->save();
 									break;
 								}
