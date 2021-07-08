@@ -47,10 +47,10 @@ class Tools
 		else return "";
 	}
 
-	public static function getExpenses($page)
+	public static function getExpenses($page, $policy)
 	{
 		header('Content-Type: application/json'); // Specify the type of data
-		$ch = curl_init('https://api.rindegastos.com/v1/getExpenses?Page=' . $page); // Initialise cURL
+		$ch = curl_init('https://api.rindegastos.com/v1/getExpenses?ExpensePolicyId=' . $policy . '&Page=' . $page); // Initialise cURL
 		$authorization = "Authorization: Bearer " . "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMzA2NDIiLCJjb21wYW55X2lkIjoiMzY0NiIsInJhbmRvbSI6InJhbmRBUEk1ZjEwNTdmYzVjOWU0MC4zNzY0MjU0MSJ9.Y3YjaG4SaO0SY9LPE_Uwuf809J4d_1lTTVgX8yCaQ5k"; // Prepare the authorisation token
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', $authorization)); // Inject the token into the header
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -60,10 +60,10 @@ class Tools
 		return json_decode($result); // Return the received data
 	}
 
-	public static function getReports($page)
+	public static function getReports($page, $policy)
 	{
 		header('Content-Type: application/json'); // Specify the type of data
-		$ch = curl_init('https://api.rindegastos.com/v1/getExpenseReports?Page=' . $page); // Initialise cURL
+		$ch = curl_init('https://api.rindegastos.com/v1/getExpenseReports?ExpensePolicyId=' . $policy . '&Page=' . $page); // Initialise cURL
 		$authorization = "Authorization: Bearer " . "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMzA2NDIiLCJjb21wYW55X2lkIjoiMzY0NiIsInJhbmRvbSI6InJhbmRBUEk1ZjEwNTdmYzVjOWU0MC4zNzY0MjU0MSJ9.Y3YjaG4SaO0SY9LPE_Uwuf809J4d_1lTTVgX8yCaQ5k"; // Prepare the authorisation token
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', $authorization)); // Inject the token into the header
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

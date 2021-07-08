@@ -123,7 +123,7 @@ class GastoCompleta extends CActiveRecord
 	public $fecha_fin;
 
 	const POLICY_COMBUSTIBLES = 44639;
-
+	const POLICY_MAQUINARIA = 41786;
 
 	/**
 	 * @return string the associated database table name
