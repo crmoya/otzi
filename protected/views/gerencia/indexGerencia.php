@@ -38,5 +38,9 @@ Bienvenido <?php echo CHtml::encode($nombre);?>, por favor seleccione una de las
 </ul>
 
 <ul>
+ <li><a href="<?=Yii::app()->baseUrl;?>/../chipax/web/chipax">Aplicación de sincronización gastos CHIPAX-RINDEGASTOS</a></li>
+</ul>
+
+<ul>
  <li><?php echo CHtml::link("Cambiar mi clave",CController::createUrl('//site/cambiarClave')); ?></li>
 </ul>
