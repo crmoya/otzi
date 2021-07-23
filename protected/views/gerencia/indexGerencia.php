@@ -38,7 +38,7 @@ Bienvenido <?php echo CHtml::encode($nombre);?>, por favor seleccione una de las
 </ul>
 
 <ul>
- <li><a href="<?=Yii::app()->baseUrl;?>/../chipax/web/chipax">Aplicación de sincronización gastos CHIPAX-RINDEGASTOS</a></li>
+ <li><a target="_blank" href="<?php echo Yii::app()->baseUrl;?>/../chipax/web/chipax">Aplicación de sincronización gastos CHIPAX-RINDEGASTOS</a></li>
 </ul>
 
 <ul>
