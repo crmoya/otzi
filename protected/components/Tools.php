@@ -435,4 +435,10 @@ class Tools
 		}
 		return false;
 	}
+
+	public static function generateSecretChipax(){
+		$secret = date("Y-m-d i")."chipax-mogly-secret";
+		$encrypted = md5($secret);
+		return $encrypted;
+	}
 }
