@@ -408,6 +408,9 @@ class RCamionPropioController extends Controller
 							}
 						}
 						if (isset($_POST['CompraRepuestoCamionPropio'])) {
+
+							echo "<pre>";
+							print_r($_POST['CompraRepuestoCamionPropio']);die;
 							foreach ($_POST['CompraRepuestoCamionPropio'] as $i => $compraArr) {
 								$compra = null;
 								$id = -1;
@@ -436,6 +439,7 @@ class RCamionPropioController extends Controller
 								$compra->rut_proveedor = $compraArr['rut_proveedor'];
 								Proveedor::model()->ingresaProveedor($compra->rut_proveedor, $compra->nombre_proveedor);
 								$compra->cuenta = $compraArr['cuenta'];
+								
 								$valid = $valid && $compra->validate();
 								if ($valid) {
 									$compra->save();

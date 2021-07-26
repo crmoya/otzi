@@ -88,6 +88,7 @@ class CompraRepuestoCamionPropio extends CActiveRecord
 			'fechaRendicion'=>'Fecha de Documento',
 			'rut_rinde'=>'Rut quien rinde',
 			'faena_id' => 'Faena',
+			'cuenta' => 'Cuenta',
 		);
 	}
 

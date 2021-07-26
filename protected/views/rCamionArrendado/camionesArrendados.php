@@ -1551,7 +1551,7 @@ $cs->registerCoreScript('jquery');
 
 														<tr>
 															<td><?php echo $form->labelEx($repuesto, "cuenta", array('style' => 'width:80px;')); ?></td>
-															<td><?php echo $form->textField($repuesto, "[{0}]cuenta", array('id' => "cuentaR{0}", 'disabled' => $model->validado == 2 ? 'disabled' : '')); ?></td>
+															<td><?php echo $form->textField($repuesto, "[$i]cuenta", array('id' => "cuentaR{0}", 'disabled' => $model->validado == 2 ? 'disabled' : '')); ?></td>
 															<td>
 																<div id="errorCuentaR_id<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
