@@ -4,3 +4,4 @@ protected/archivos
 /vendor
 assets
 composer.lock
+error_log
