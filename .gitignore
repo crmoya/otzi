@@ -1,9 +1,7 @@
 protected/runtime
 protected/config/main.php
-index.php
+/index.php
 protected/config/main.php
-index.php
 protected/archivos
 /vendor
 assets
-index.php
