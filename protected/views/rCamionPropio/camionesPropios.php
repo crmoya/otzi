@@ -1511,7 +1511,7 @@ $cs->registerCoreScript('jquery');
 															<td>
 																<input type="hidden" class="rowIndex" value="<?php echo $i; ?>" />
 																<?php if ($model->validado != 2) : ?>
-																	<div class="remove" tipo="repuesto" id="removeRepuesto<?php echo $i; ?>" validate="true">Eliminar</div>
+																	<div class="remove" tipo="repuesto" id="removeRepuesto<?php echo $i; ?>" validate="true">Eliminar<?=$repuesto->rindegastos?></div>
 																<?php endif; ?>
 															</td>
 														</tr>
