@@ -570,7 +570,7 @@ class Carga{
 						}
 						$compra->observaciones = "Registro de Rindegastos";
 						$compra->rut_rinde = " ";
-						$compra->cuenta = " ";
+						$compra->cuenta = $gasto->category_code." - ".$gasto->category;
 						$compra->nombre_proveedor = $gasto->supplier;
 						$compra->rut_proveedor = $gastoCompleta->rut_proveedor;
 						$compra->tipo_documento = Tools::traducirTipoDocumento($gastoCompleta->tipo_documento);
@@ -679,7 +679,7 @@ class Carga{
 						}
 						$compra->observaciones = "Registro de Rindegastos";
 						$compra->rut_rinde = " ";
-						$compra->cuenta = " ";
+						$compra->cuenta = $gasto->category_code." - ".$gasto->category;
 						$compra->nombre_proveedor = $gasto->supplier;
 						$compra->rut_proveedor = $gastoCompleta->rut_proveedor;
 						$compra->tipo_documento = Tools::traducirTipoDocumento($gastoCompleta->tipo_documento);
@@ -790,7 +790,7 @@ class Carga{
 						}
 						$compra->observaciones = "Registro de Rindegastos";
 						$compra->rut_rinde = " ";
-						$compra->cuenta = " ";
+						$compra->cuenta = $gasto->category_code." - ".$gasto->category;
 						$compra->nombre_proveedor = $gasto->supplier;
 						$compra->rut_proveedor = $gastoCompleta->rut_proveedor;
 						$compra->tipo_documento = Tools::traducirTipoDocumento($gastoCompleta->tipo_documento);
@@ -905,7 +905,7 @@ class Carga{
 						}
 						$compra->observaciones = "Registro de Rindegastos";
 						$compra->rut_rinde = " ";
-						$compra->cuenta = " ";
+						$compra->cuenta = $gasto->category_code." - ".$gasto->category;
 						$compra->nombre_proveedor = $gasto->supplier;
 						$compra->rut_proveedor = $gastoCompleta->rut_proveedor;
 						$compra->tipo_documento = Tools::traducirTipoDocumento($gastoCompleta->tipo_documento);

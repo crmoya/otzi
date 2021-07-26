@@ -1139,7 +1139,7 @@ $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.MultiFile.min.js', CCl
 															
 															<tr>
 															 <td><?php echo $form->labelEx($repuesto, "cuenta", array('style' => 'width:80px;')); ?></td>
-															 <td><?php echo $form->dropDownList($repuesto, '[{0}]cuenta', CHtml::listData(CuentaContableRepuesto::model()->findAll(), 'nombre', 'nombre'), array('id' => 'cuentaR{0}')); ?></td>
+															 <td><?php echo $form->textField($repuesto, "[{0}]cuenta", array('id' => "cuentaR{0}")); ?></td>
 															 <td><div id="errorCuentaR_id{0}" style="color:red;width:100px;"></div></td>
 															 <td><?php echo $form->labelEx($repuesto, "faena_id", array('style' => 'width:80px;')); ?></td>
 															 <td><?php echo $form->dropDownList($repuesto, '[{0}]faena_id', CHtml::listData(Faena::model()->listar(), 'id', 'nombre'), array('id' => 'faenaR_id{0}')); ?></td>

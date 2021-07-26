@@ -24,10 +24,11 @@ class SiteController extends Controller
 	}
 
 
+	/*
 	public function actionConfigureRoles()
 	{
 
-		/*
+		
 		$record=Authassignment::model()->deleteAll();
 		$record=Authitem::model()->deleteAll();
 		$record=Authitemchild::model()->deleteAll();
@@ -44,8 +45,9 @@ class SiteController extends Controller
 		$auth->assign('administrador',4);
 
 		$this->render("//admin/indexAdmin",array('nombre'=>Yii::app()->user->nombre));
-*/
 	}
+	*/
+
 	/**
 	 * This is the default 'index' action that is invoked
 	 * when an action is not explicitly requested by users.
@@ -68,6 +70,19 @@ class SiteController extends Controller
 				$this->render("//gerencia/indexGerencia", array('nombre' => Yii::app()->user->nombre));
 			}
 		}
+	}
+
+
+	public function actionFixdupli(){
+		$list= Yii::app()->db->createCommand("
+			SELECT count(id) as count,rCamionPropio_id,montoNeto
+			FROM `compraRepuestoCamionPropio` 
+			where observaciones like '%Rindegastos%' 
+			group by rCamionPropio_id,montoNeto 
+			HAVING count(id)>1
+		")->queryAll();
+
+		
 	}
 
 /*
@@ -385,7 +400,7 @@ class SiteController extends Controller
 		return array(
 			array(
 				'allow',
-				'actions' => array('login','loginmovil', 'logout', 'error', 'index', 'gastos', 'informes', 'rindegastos','fix','fixmaquinas','fixcamiones','test'),
+				'actions' => array('login','loginmovil', 'logout', 'error', 'index', 'gastos', 'informes', 'rindegastos','fix','fixmaquinas','fixcamiones','test','fixdupli'),
 				'users' => array('*'),
 			),
 			array(
