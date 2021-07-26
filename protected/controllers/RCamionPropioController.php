@@ -409,8 +409,6 @@ class RCamionPropioController extends Controller
 						}
 						if (isset($_POST['CompraRepuestoCamionPropio'])) {
 
-							echo "<pre>";
-							print_r($_POST['CompraRepuestoCamionPropio']);die;
 							foreach ($_POST['CompraRepuestoCamionPropio'] as $i => $compraArr) {
 								$compra = null;
 								$id = -1;
