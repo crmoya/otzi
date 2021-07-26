@@ -406,6 +406,7 @@ class RCamionArrendadoController extends Controller
 								$compra->rut_proveedor = $compraArr['rut_proveedor'];
 								Proveedor::model()->ingresaProveedor($compra->rut_proveedor, $compra->nombre_proveedor);
 								$compra->cuenta = $compraArr['cuenta'];
+								$compra->rindegastos = $compraArr['rindegastos'];
 								$valid = $valid && $compra->validate();
 								if ($valid) {
 									$compra->save();

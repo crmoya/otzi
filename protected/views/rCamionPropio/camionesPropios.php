@@ -1510,9 +1510,10 @@ $cs->registerCoreScript('jquery');
 															</td>
 															<td>
 																<input type="hidden" class="rowIndex" value="<?php echo $i; ?>" />
+																<?=$form->hiddenField($repuesto,"[$i]rindegastos")?>
 																<?php if ($model->validado != 2) : ?>
 																	<div class="remove" tipo="repuesto" id="removeRepuesto<?php echo $i; ?>" validate="true">Eliminar<?=$repuesto->rindegastos?></div>
-																	<?=$form->hiddenField($repuesto,"[$i]rindegastos")?>
+																	
 																<?php endif; ?>
 															</td>
 														</tr>

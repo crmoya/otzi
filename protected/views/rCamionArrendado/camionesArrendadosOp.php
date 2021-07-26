@@ -1425,6 +1425,7 @@ $cs->registerCoreScript('jquery');
 																<div id="errorMontoNeto<?php echo $i; ?>" style="color:red;width:100px;"></div>
 															</td>
 															<td>
+																<?=$form->hiddenField($repuesto,"[$i]rindegastos")?>
 																<input type="hidden" class="rowIndex" value="<?php echo $i; ?>" />
 																<?php if ($model->validado != 1) : ?>
 																	<div class="remove" tipo="repuesto" id="removeRepuesto<?php echo $i; ?>" validate="true">Eliminar</div>
