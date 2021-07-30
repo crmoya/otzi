@@ -1386,6 +1386,7 @@ class Carga{
 					if (isset($gasto)) {
 						continue;
 					}
+				
 					$gasto = new Gasto();
 					$gasto->id = $expense->Id;
 					$gasto->status = $expense->Status;
@@ -1401,6 +1402,8 @@ class Carga{
 					$gasto->note = $expense->Note;
 					$gasto->expense_policy_id = (int)$expense->ExpensePolicyId;
 					$gasto->report_id = (int)$expense->ReportId;
+
+					
 
 					if (!$gasto->save()) {
 						$errores[] = $gasto->errors;

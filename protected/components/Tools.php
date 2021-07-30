@@ -50,7 +50,7 @@ class Tools
 	public static function getExpenses($page, $policy)
 	{
 		header('Content-Type: application/json'); // Specify the type of data
-		$ch = curl_init('https://api.rindegastos.com/v1/getExpenses?ExpensePolicyId=' . $policy . '&Page=' . $page); // Initialise cURL
+		$ch = curl_init('https://api.rindegastos.com/v1/getExpenses?&Status=1&ExpensePolicyId=' . $policy . '&Page=' . $page); // Initialise cURL
 		$authorization = "Authorization: Bearer " . "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMzA2NDIiLCJjb21wYW55X2lkIjoiMzY0NiIsInJhbmRvbSI6InJhbmRBUEk1ZjEwNTdmYzVjOWU0MC4zNzY0MjU0MSJ9.Y3YjaG4SaO0SY9LPE_Uwuf809J4d_1lTTVgX8yCaQ5k"; // Prepare the authorisation token
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', $authorization)); // Inject the token into the header
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
