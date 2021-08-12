@@ -507,7 +507,7 @@ class Carga{
 					$nocombustible = new NocombustibleRindegasto();
 					$nocombustible->status = $gasto->status;
 					$nocombustible->fecha = $gasto->issue_date;
-					$nocombustible->total = intval($gasto->net);
+					$nocombustible->total = intval($gasto->net) + intval($gastoCompleta->iva);
 					$nocombustible->gasto_completa_id = intval($gastoCompleta->id);
 					$tipo_report = "";
 
