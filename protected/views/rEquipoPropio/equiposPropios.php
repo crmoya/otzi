@@ -886,6 +886,7 @@ $cs->registerCoreScript('jquery');
 															<td></td>
 															<td></td>
 															<td>
+																<?=$form->hiddenField($combustible,"[$i]rindegastos")?>
 																<input type="hidden" class="rowIndex" value="<?php echo $i; ?>" />
 																<?php if ($model->validado != 2) : ?>
 																	<div class="remove" tipo="combustible" id="removeCombustible<?php echo $i; ?>" validate="true">Eliminar</div>

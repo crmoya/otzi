@@ -367,6 +367,7 @@ class RCamionArrendadoController extends Controller
 								$carga->rut_proveedor = $cargaArr['rut_proveedor'];
 								Proveedor::model()->ingresaProveedor($carga->rut_proveedor, $carga->nombre_proveedor);
 								$carga->tipo_documento = $cargaArr['tipo_documento'];
+								$carga->rindegastos = $cargaArr['rindegastos'];
 								$valid = $valid && $carga->validate();
 								if ($valid) {
 									$carga->save();

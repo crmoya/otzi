@@ -1140,6 +1140,7 @@ $cs->registerCoreScript('jquery');
 												<td width="100px">
 													<?php echo $form->hiddenField($combustible, "[$i]id"); ?>
 													<input type="hidden" class="rowIndex" value="<?php echo $i; ?>" />
+													<?=$form->hiddenField($combustible,"[$i]rindegastos")?>
 													<table style="border:solid 1px silver;padding:10px;">
 														<tr>
 															<td><?php echo $form->labelEx($combustible, "faena_id", array('style' => 'width:80px;')); ?></td>

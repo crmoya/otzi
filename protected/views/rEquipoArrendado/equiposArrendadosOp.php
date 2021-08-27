@@ -783,6 +783,7 @@ $cs->registerCoreScript('jquery');
 											<tr class="templateContent">
 												<td width="100px">
 													<?php echo $form->hiddenField($combustible, "[$i]id"); ?>
+													<?=$form->hiddenField($combustible,"[$i]rindegastos")?>
 													<input type="hidden" class="rowIndex" value="<?php echo $i; ?>" />
 													<table style="border:solid 1px silver;padding:10px;">
 														<tr>
