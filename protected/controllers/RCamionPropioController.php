@@ -396,7 +396,9 @@ class RCamionPropioController extends Controller
 								$carga->rut_proveedor = $cargaArr['rut_proveedor'];
 								Proveedor::model()->ingresaProveedor($carga->rut_proveedor, $carga->nombre_proveedor);
 								$carga->tipo_documento = $cargaArr['tipo_documento'];
-								$carga->rindegastos = $cargaArr['rindegastos'];
+								if(isset($cargaArr['rindegastos'])){
+									$carga->rindegastos = $cargaArr['rindegastos'];
+								}
 								$valid = $valid && $carga->validate();
 								if ($valid) {
 									$carga->save();
@@ -419,7 +421,7 @@ class RCamionPropioController extends Controller
 									$compra = new CompraRepuestoCamionPropio();
 								//}
 
-								
+
 								$compra->factura = $compraArr['factura'];
 								$compra->guia = $compraArr['guia'];
 								$compra->montoNeto = $compraArr['montoNeto'];
@@ -437,7 +439,9 @@ class RCamionPropioController extends Controller
 								$compra->observaciones = $compraArr['observaciones'];
 								$compra->nombre_proveedor = $compraArr['nombre_proveedor'];
 								$compra->rut_proveedor = $compraArr['rut_proveedor'];
-								$compra->rindegastos = $compraArr['rindegastos'];
+								if(isset($compraArr['rindegastos'])){
+									$compra->rindegastos = $compraArr['rindegastos'];
+								}
 								Proveedor::model()->ingresaProveedor($compra->rut_proveedor, $compra->nombre_proveedor);
 								$compra->cuenta = $compraArr['cuenta'];
 								

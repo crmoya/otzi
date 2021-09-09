@@ -345,7 +345,9 @@ class REquipoArrendadoController extends Controller
 								$carga->rut_proveedor = $cargaArr['rut_proveedor'];
 								Proveedor::model()->ingresaProveedor($carga->rut_proveedor, $carga->nombre_proveedor);
 								$carga->tipo_documento = $cargaArr['tipo_documento'];
-								$carga->rindegastos = $cargaArr['rindegastos'];
+								if(isset($cargaArr['rindegastos'])){
+									$carga->rindegastos = $cargaArr['rindegastos'];
+								}
 								$valid = $valid && $carga->validate();
 								if ($valid) {
 									$carga->save();
@@ -385,7 +387,9 @@ class REquipoArrendadoController extends Controller
 								$compra->rut_proveedor = $compraArr['rut_proveedor'];
 								Proveedor::model()->ingresaProveedor($compra->rut_proveedor, $compra->nombre_proveedor);
 								$compra->cuenta = $compraArr['cuenta'];
-								$compra->rindegastos = $compraArr['rindegastos'];
+								if(isset($compraArr['rindegastos'])){
+									$compra->rindegastos = $compraArr['rindegastos'];
+								}
 								$valid = $valid && $compra->validate();
 								if ($valid) {
 									$compra->save();
