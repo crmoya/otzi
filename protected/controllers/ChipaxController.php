@@ -20,7 +20,6 @@ class ChipaxController extends Controller
 
     public function actionAdd()
 	{
-		
 		$hash = Yii::app()->request->getQuery('hash');
 		$local_hash = Tools::chipaxSecret(0);
         $intentos = 1;
