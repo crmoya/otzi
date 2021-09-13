@@ -1027,11 +1027,12 @@ class Carga{
 		try {
 
 			//elimino todo lo anterior
+			/*
 			GastoImagen::model()->deleteAll();
 			ExtraGasto::model()->deleteAll();
 			GastoCompleta::model()->deleteAll();
-			Gasto::model()->deleteAll();
-
+			*/
+			Gasto::model()->deleteAllByAttributes(['chipax'=> 0]);
 
 			//AHORA TRAIGO LOS
 			//GASTOS Y SUS DERIVADOS
