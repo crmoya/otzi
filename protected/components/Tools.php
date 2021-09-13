@@ -441,4 +441,14 @@ class Tools
 		$encrypted = md5($secret);
 		return $encrypted;
 	}
+
+
+	public static function chipaxSecret($retraso) {
+        $fecha = new DateTime(date("Y-m-d H:i"));
+        $fecha->sub(new DateInterval('PT' . (int) $retraso . 'M'));
+        $secret = $fecha->format('Y-m-d i') . "chipax-mogly-secret";
+        $encrypted = md5($secret);
+        return $encrypted;
+    }
+
 }
