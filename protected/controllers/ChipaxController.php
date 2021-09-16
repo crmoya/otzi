@@ -3,21 +3,6 @@
 class ChipaxController extends Controller
 {
 
-	Const APPLICATION_ID = 'ASCCPE';
-
-    /**
-     * Default response format
-     * either 'json' or 'xml'
-     */
-    private $format = 'json';
-    /**
-     * @return array action filters
-     */
-    public function filters()
-    {
-            return array();
-    }
-
     public function actionAdd()
 	{
 		$hash = Yii::app()->request->getQuery('hash');
@@ -30,6 +15,7 @@ class ChipaxController extends Controller
         if ($hash != $local_hash) {
             die("Hash incorrecto");
         }
+
 		$gasto = json_decode(file_get_contents("php://input"), true);
 		echo json_encode($gasto);
 	}

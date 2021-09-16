@@ -15,7 +15,7 @@
 
 
 <?php $form=$this->beginWidget('CActiveForm', array(
-	'action'=>Yii::app()->createUrl($this->route,['policy'=>$model->policy]),
+	'action'=>Yii::app()->createUrl($this->route,['policy'=>$model->policy,'remuneraciones'=>$model->es_remuneraciones]),
 	'method'=>'get',
 )); 
 
@@ -26,12 +26,14 @@
 
 <table>
  <tr>
+<?php if($model->es_remuneraciones == 0):?>
   <td>
   	<?php echo $form->label($model,'igual'); ?>
   </td>
   <td>
   	<?php echo $form->dropDownList($model,'igual', CHtml::listData(array(array('id'=>'TODOS','nombre'=>'TODOS'),array('id'=>'SIN ERRORES','nombre'=>'SIN ERRORES'),array('id'=>'CON ERRORES','nombre'=>'CON ERRORES')), 'id', 'nombre')); ?>
   </td>
+<?php endif;?>
   <td>
   	<?php echo $form->label($model,'fecha_inicio'); ?>
   </td>

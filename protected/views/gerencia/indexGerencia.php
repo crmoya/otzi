@@ -35,6 +35,7 @@ Bienvenido <?php echo CHtml::encode($nombre);?>, por favor seleccione una de las
 <ul>
  <li><?php echo CHtml::link("Visualizar gastos RindeGastos COMBUSTIBLES",CController::createUrl('//gastoCompleta/admin',['policy'=>GastoCompleta::POLICY_COMBUSTIBLES])); ?></li>
  <li><?php echo CHtml::link("Visualizar gastos RindeGastos DEPARTAMENTO DE MAQUINARIA DIFERENTE DE COMBUSTIBLES",CController::createUrl('//gastoCompleta/admin',['policy'=>41786])); ?></li>
+ <li><?php echo CHtml::link("Visualizar gastos de REMUNERACIONES",CController::createUrl('//gastoCompleta/admin',['remuneraciones'=>1])); ?></li>
 </ul>
 
 <ul>

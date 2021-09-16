@@ -9,6 +9,18 @@ class Tools
 
 	const FACTOR_KMS_MILLAS = 1.60934;
 
+	const CATEGORIAS_REMUNERACIONES_RINDEGASTOS = [
+		'13 Remuneraciones del Personal',
+		'13.1 Remuneraciones del Personal Indirecto',
+		'13.2 Remuneraciones Personal externo',
+		'13.2 Remuneraciones personal externo (por ej. Moncho)',
+		'13.2 Remuneraciones personal externo por ej. Moncho',
+		'14.3 Honorarios Técnicos, Profesionales, Otros',
+		'2-1-06-007 Imposiciones valor nominal 2019',
+		'2-1-06-008 Imposiciones valor nominal 2018',
+		'Cop. 2-1-06-008 Imposiciones valor nominal 2018'
+	];
+
 	public static function charAt($string, $i){
 		return substr($string, $i, 1);
 	}

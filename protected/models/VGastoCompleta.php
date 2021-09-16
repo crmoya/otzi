@@ -113,6 +113,14 @@ class VGastoCompleta extends CActiveRecord
 			$criteria->params[':fecha_inicio'] = $this->fecha_inicio;
 			$criteria->params[':fecha_fin'] = $this->fecha_fin;
 		}
+
+		if($this->es_remuneraciones == 1){
+			$criteria->addInCondition('categoria',Tools::CATEGORIAS_REMUNERACIONES_RINDEGASTOS);
+		}
+		else{
+			$criteria->addNotInCondition('categoria',Tools::CATEGORIAS_REMUNERACIONES_RINDEGASTOS);
+		}
+
 		
 		return $criteria;
 	}
@@ -121,6 +129,7 @@ class VGastoCompleta extends CActiveRecord
 	public $igual;
 	public $fecha_inicio;
 	public $fecha_fin;
+	public $es_remuneraciones = 0;
 
 	const POLICY_COMBUSTIBLES = 44639;
 

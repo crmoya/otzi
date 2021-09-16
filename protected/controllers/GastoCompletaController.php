@@ -189,7 +189,7 @@ class GastoCompletaController extends Controller
 	/**
 	 * Manages all models.
 	 */
-	public function actionAdmin($policy)
+	public function actionAdmin($policy = 0, $remuneraciones = 0)
 	{
 		
 		$this->pageTitle = "";
@@ -202,9 +202,10 @@ class GastoCompletaController extends Controller
 		}
 
 		$model->policy = $policy;
+		$model->es_remuneraciones = $remuneraciones;
 
-		$gastoNombre = "DEPARTAMENTO DE MAQUINARIA DIFERENTE DE COMBUSTIBLES";
-		if($policy == VGastoCompleta::POLICY_COMBUSTIBLES){
+		$gastoNombre = "REMUNERACIONES";
+		if($policy == VGastoCompleta::POLICY_COMBUSTIBLES && $remuneraciones == 0){
 			$gastoNombre = "COMBUSTIBLES";
 			$cabeceras = [
 				['name'=>'Proveedor','width'=>'md'],
@@ -274,7 +275,8 @@ class GastoCompletaController extends Controller
 				['campo'=>'vehiculo_oficina_central','visible'=>'false', 'exportable'],
 			];
 		}
-		else{
+		else if($remuneraciones == 0){
+			$gastoNombre = "DEPARTAMENTO DE MAQUINARIA DIFERENTE DE COMBUSTIBLES";
 			$cabeceras = [
 				['name'=>'Comercio','width'=>'md'],
 				['name'=>'Fecha','width'=>'md', 'format'=>'date'],
@@ -335,6 +337,54 @@ class GastoCompletaController extends Controller
 				['campo'=>'vehiculo_oficina_central','visible'=>'false'],
 			];
 		}
+		else if($remuneraciones == 1){
+			$cabeceras = [
+				['name'=>'Comercio','width'=>'md'],
+				['name'=>'Fecha','width'=>'md', 'format'=>'date'],
+				['name'=>'Total','width'=>'md'],
+				['name'=>'Categoría','width'=>'md'],
+				['name'=>'C. Costo Faena','width'=>'md'],
+				['name'=>'Tipo doc.','width'=>'md'],
+				['name'=>'Nº doc.','width'=>'md'],
+				['name'=>'Vehículo Equipo','width'=>'lg'],
+				['name'=>'Folio','width'=>'xs'],
+				['name'=>'Nota','width'=>'lg'],
+				['name'=>'Imagen','width'=>'xs'],
+
+				//no visibles pero exportables
+				['name'=>'Folio','visible'=>'false'],
+				['name'=>'Cantidad','visible'=>'false'],
+				['name'=>'RUT Proveedor','visible'=>'false'],
+				['name'=>'Unidad','visible'=>'false'],
+				['name'=>'Monto Neto','visible'=>'false'],
+				['name'=>'Grupo Categoría','visible'=>'false'],
+				['name'=>'Vehículo Oficina central','visible'=>'false'],
+			];
+	
+			$extra_datos = [
+				['campo'=>'comercio','exportable','dots'=>"md"],
+				['campo'=>'fecha','exportable','dots'=>'md'],
+				['campo'=>'neto','exportable', 'format'=>'money','acumulado'=>'suma'],
+				['campo'=>'categoria','exportable','dots'=>"md"],
+				['campo'=>'centro_costo_faena','exportable','dots'=>"md"],
+				['campo'=>'tipo_documento','exportable','dots'=>"sm"],
+				['campo'=>'nro_documento','exportable','dots'=>"sm"],
+				['campo'=>'vehiculo_equipo','exportable','dots'=>"md"],
+				['campo'=>'folio','format'=> 'enlace', 'url'=>"//informeGasto/view", 'params'=>['folio','gasto_id']],
+				['campo'=>'nota','exportable','dots'=>'lg'],
+				['campo'=>'imagen','format'=>'imagen','dots'=>'xs'],
+
+				// no visibles pero exportables
+				['campo'=>'folio','visible'=>'false', 'exportable'],
+				['campo'=>'cantidad','visible'=>'false', 'exportable'],
+				['campo'=>'rut_proveedor','visible'=>'false', 'exportable'],
+				['campo'=>'unidad','visible'=>'false', 'exportable'],
+				['campo'=>'monto_neto','visible'=>'false', 'exportable'],
+				['campo'=>'grupocategoria','visible'=>'false', 'exportable'],
+				['campo'=>'vehiculo_oficina_central','visible'=>'false'],
+			];
+		}
+
 
 		$datos = VGastoCompleta::model()->findAll($model->search());
 

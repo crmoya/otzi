@@ -29,8 +29,15 @@ class Carga{
 			CargaCombEquipoArrendado::model()->deleteAllByAttributes(['rindegastos'=>1]);
 
 
-			//INGRESO LOS GASTOS DE COMBUSTIBLE DE ACUERDO A LA TABLA GASTO_COMPLETA
-			$gastos = Gasto::model()->findAllByAttributes(['expense_policy_id'=>GastoCompleta::POLICY_COMBUSTIBLES,'status'=>1]);
+			$criteria = new CDbCriteria();
+
+			//filtro las categorías que para las que no son remuneraciones
+			$criteria->addNotInCondition('category',Tools::CATEGORIAS_REMUNERACIONES_RINDEGASTOS);
+			//INGRESO LOS GASTOS DE COMBUSTIBLE DE ACUERDO A LA TABLA GASTO_COMPLETA			
+			$gastos = Gasto::model()->findAllByAttributes(
+						['expense_policy_id'=>GastoCompleta::POLICY_COMBUSTIBLES,'status'=>1],
+						$criteria
+					);
 			foreach($gastos as $gasto){
 				$gastoCompleta = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
 				if(isset($gastoCompleta)){
@@ -500,7 +507,10 @@ class Carga{
 			}
 
 			//INGRESO LOS GASTOS DIFERENTES DE COMBUSTIBLE DE ACUERDO A LA TABLA GASTO_COMPLETA
-			$gastos = Gasto::model()->findAllByAttributes(['expense_policy_id'=>GastoCompleta::POLICY_MAQUINARIA,'status'=>1]);
+			$gastos = Gasto::model()->findAllByAttributes(
+				['expense_policy_id'=>GastoCompleta::POLICY_MAQUINARIA,'status'=>1],
+				$criteria
+			);
 			foreach($gastos as $gasto){
 				$gastoCompleta = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
 				if(isset($gastoCompleta)){

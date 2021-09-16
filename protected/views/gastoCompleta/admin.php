@@ -1,6 +1,6 @@
 <?php
 
-Yii::app()->getController()->pageTitle="Gastos de " . $gastoNombre . " de Rindegastos";
+Yii::app()->getController()->pageTitle="Gastos de " . $gastoNombre;
 ?>
 <?php echo $this->renderPartial('//tables/_header', ['model'=>$model]); ?>
 
