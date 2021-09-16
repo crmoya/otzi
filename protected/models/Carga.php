@@ -35,6 +35,7 @@ class Carga{
 			RemuneracionEquipoPropio::model()->deleteAllByAttributes(['rindegastos'=>1]);
 			RemuneracionEquipoArrendado::model()->deleteAllByAttributes(['rindegastos'=>1]);
 
+			/*
 			$criteria = new CDbCriteria();
 
 			//filtro las categorías que para las que no son remuneraciones
@@ -1014,6 +1015,8 @@ class Carga{
 				}
 			}
 
+			*/
+
 			//INGRESO LOS GASTOS DE REMUNERACIONES DE ACUERDO A LA TABLA GASTO_COMPLETA
 			$criteria = new CDbCriteria();
 			$criteria->addInCondition('category',Tools::CATEGORIAS_REMUNERACIONES_RINDEGASTOS);
@@ -1021,6 +1024,7 @@ class Carga{
 				['expense_policy_id'=>GastoCompleta::POLICY_MAQUINARIA,'status'=>1],
 				$criteria
 			);
+
 			foreach($gastos as $gasto){
 				$gastoCompleta = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
 				if(isset($gastoCompleta)){
@@ -1032,25 +1036,26 @@ class Carga{
 					$tipo_report = "";
 
 					$vehiculoRG = VehiculoRindegastos::model()->findByAttributes(['vehiculo'=>$gastoCompleta->vehiculo_equipo]);
+
 					if(isset($vehiculoRG)){
 						if($vehiculoRG->camionpropio_id != null){
-							$nocombustible->camionpropio_id = $vehiculoRG->camionpropio_id;
+							$remuneracionRG->camionpropio_id = $vehiculoRG->camionpropio_id;
 							$tipo_report = "CP";
 						}
 						if($vehiculoRG->camionarrendado_id != null){
-							$nocombustible->camionarrendado_id = $vehiculoRG->camionarrendado_id;
+							$remuneracionRG->camionarrendado_id = $vehiculoRG->camionarrendado_id;
 							$tipo_report = "CA";
 						}
 						if($vehiculoRG->equipopropio_id != null){
-							$nocombustible->equipopropio_id = $vehiculoRG->equipopropio_id;
+							$remuneracionRG->equipopropio_id = $vehiculoRG->equipopropio_id;
 							$tipo_report = "EP";
 						}
 						if($vehiculoRG->equipoarrendado_id != null){
-							$nocombustible->equipoarrendado_id = $vehiculoRG->equipoarrendado_id;
+							$remuneracionRG->equipoarrendado_id = $vehiculoRG->equipoarrendado_id;
 							$tipo_report = "EA";
 						}
 					}
-
+					
 					$faenaRG = FaenaRindegasto::model()->findByAttributes(['faena'=>$gastoCompleta->centro_costo_faena]);
 					if(isset($faenaRG)){
 						$remuneracionRG->faena_id = $faenaRG->faena_id;
@@ -1058,6 +1063,7 @@ class Carga{
 					else{
 						$remuneracionRG->faena_id = 0;
 					}
+
 
 					//asociar gasto a report de remuneración
 					//según el tipo de report, busco si hay uno para la fecha 
@@ -1072,7 +1078,7 @@ class Carga{
 						}
 						$remuneracion->descripcion = $descripcion;
 						$remuneracion->montoNeto = (int)$gastoCompleta->monto_neto;
-						$remuneracion = str_replace(",",".",$gastoCompleta->cantidad);
+						$cantidad = str_replace(",",".",$gastoCompleta->cantidad);
 						$remuneracion->cantidad = (float)$cantidad;
 						$remuneracion->unidad = Tools::convertUnidad($gastoCompleta->unidad);
 						if(isset($faenaRG)){
