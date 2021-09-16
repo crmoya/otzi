@@ -7,10 +7,10 @@ class DetalleGastoRemuneraciones{
     public $reporte;
     public $operador;
     public $maquina;
-    public $repuesto;
+    public $descripcion;
     public $neto;
     public $guia;
-    public $factura;
+    public $documento;
     public $cantidad;
     public $centro_gestion;
     public $numero;

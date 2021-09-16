@@ -35,7 +35,6 @@ class Carga{
 			RemuneracionEquipoPropio::model()->deleteAllByAttributes(['rindegastos'=>1]);
 			RemuneracionEquipoArrendado::model()->deleteAllByAttributes(['rindegastos'=>1]);
 
-			/*
 			$criteria = new CDbCriteria();
 
 			//filtro las categorías que para las que no son remuneraciones
@@ -1015,7 +1014,6 @@ class Carga{
 				}
 			}
 
-			*/
 
 			//INGRESO LOS GASTOS DE REMUNERACIONES DE ACUERDO A LA TABLA GASTO_COMPLETA
 			$criteria = new CDbCriteria();
@@ -1087,7 +1085,7 @@ class Carga{
 						else{
 							$remuneracion->faena_id = 0;
 						}
-						$remuneracion->factura = substr($gastoCompleta->nro_documento,0,45);
+						$remuneracion->documento = substr($gastoCompleta->nro_documento,0,45);
 						if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
 							$remuneracion->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
 						}
@@ -1196,7 +1194,7 @@ class Carga{
 						else{
 							$remuneracion->faena_id = 0;
 						}
-						$remuneracion->factura = substr($gastoCompleta->nro_documento,0,45);
+						$remuneracion->documento = substr($gastoCompleta->nro_documento,0,45);
 						if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
 							$remuneracion->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
 						}
@@ -1307,7 +1305,7 @@ class Carga{
 						else{
 							$remuneracion->faena_id = 0;
 						}
-						$remuneracion->factura = substr($gastoCompleta->nro_documento,0,45);
+						$remuneracion->documento = substr($gastoCompleta->nro_documento,0,45);
 						if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
 							$remuneracion->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
 						}
@@ -1422,7 +1420,7 @@ class Carga{
 						else{
 							$remuneracion->faena_id = 0;
 						}
-						$remuneracion->factura = substr($gastoCompleta->nro_documento,0,45);
+						$remuneracion->documento = substr($gastoCompleta->nro_documento,0,45);
 						if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
 							$remuneracion->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
 						}

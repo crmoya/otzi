@@ -180,7 +180,7 @@ class GastoRemuneraciones extends CActiveRecord
 		$report_id = (int)$partes[0];
 		$tipo = $partes[1];
 		$tipo_maquina = $partes[2];
-		$compra_id = $partes[3];
+		$remuneracion_id = $partes[3];
 		
 		if($tipo == "RG"){
 			return GastoCompleta::model()->findByAttributes(['id'=>$report_id]);
@@ -188,15 +188,15 @@ class GastoRemuneraciones extends CActiveRecord
 		if($tipo == "R"){
 			$report = null;
 			$compra = null;
-			$nocombustibleRG = null;
+			$remuneracionRG = null;
 			if($tipo_maquina == "CP"){
 				$report = RCamionPropio::model()->findByPk($report_id);
 				if(isset($report)){
-					$compra = CompraRepuestoCamionPropio::model()->findByPk($compra_id);
-					if(isset($compra)){
-						$nocombustibleRG = NocombustibleRindegasto::model()->findByAttributes(['compra_id'=>$compra_id, 'camionpropio_id'=>$report->camionPropio_id,'status'=>1]);
-						if(isset($nocombustibleRG)){
-							return GastoCompleta::model()->findByPk($nocombustibleRG->gasto_completa_id);
+					$remuneracion = RemuneracionCamionPropio::model()->findByPk($remuneracion_id);
+					if(isset($remuneracion)){
+						$remuneracionRG = RemuneracionRindegasto::model()->findByAttributes(['remuneracion_id'=>$remuneracion_id, 'camionpropio_id'=>$report->camionPropio_id,'status'=>1]);
+						if(isset($remuneracionRG)){
+							return GastoCompleta::model()->findByPk($remuneracionRG->gasto_completa_id);
 						}
 					}
 				}				
@@ -204,11 +204,11 @@ class GastoRemuneraciones extends CActiveRecord
 			if($tipo_maquina == "CA"){
 				$report = RCamionArrendado::model()->findByPk($report_id);
 				if(isset($report)){
-					$compra = CompraRepuestoCamionArrendado::model()->findByPk($compra_id);
-					if(isset($compra)){
-						$nocombustibleRG = NocombustibleRindegasto::model()->findByAttributes(['compra_id'=>$compra_id, 'camionarrendado_id'=>$report->camionArrendado_id,'status'=>1]);
-						if(isset($nocombustibleRG)){
-							return GastoCompleta::model()->findByPk($nocombustibleRG->gasto_completa_id);
+					$remuneracion = RemuneracionCamionArrendado::model()->findByPk($remuneracion_id);
+					if(isset($remuneracion)){
+						$remuneracionRG = RemuneracionRindegasto::model()->findByAttributes(['remuneracion_id'=>$remuneracion_id, 'camionarrendado_id'=>$report->camionArrendado_id,'status'=>1]);
+						if(isset($remuneracionRG)){
+							return GastoCompleta::model()->findByPk($remuneracionRG->gasto_completa_id);
 						}
 					}
 				}	
@@ -216,11 +216,11 @@ class GastoRemuneraciones extends CActiveRecord
 			if($tipo_maquina == "EP"){
 				$report = REquipoPropio::model()->findByPk($report_id);
 				if(isset($report)){
-					$compra = CompraRepuestoEquipoPropio::model()->findByPk($compra_id);
-					if(isset($compra)){
-						$nocombustibleRG = NocombustibleRindegasto::model()->findByAttributes(['compra_id'=>$compra_id, 'equipopropio_id'=>$report->equipoPropio_id,'status'=>1]);
-						if(isset($nocombustibleRG)){
-							return GastoCompleta::model()->findByPk($nocombustibleRG->gasto_completa_id);
+					$remuneracion = RemuneracionEquipoPropio::model()->findByPk($remuneracion_id);
+					if(isset($remuneracion)){
+						$remuneracionRG = RemuneracionRindegasto::model()->findByAttributes(['remuneracion_id'=>$remuneracion_id, 'equipopropio_id'=>$report->equipoPropio_id,'status'=>1]);
+						if(isset($remuneracionRG)){
+							return GastoCompleta::model()->findByPk($remuneracionRG->gasto_completa_id);
 						}
 					}
 				}	
@@ -228,11 +228,11 @@ class GastoRemuneraciones extends CActiveRecord
 			if($tipo_maquina == "EA"){
 				$report = REquipoArrendado::model()->findByPk($report_id);
 				if(isset($report)){
-					$compra = CompraRepuestoEquipoArrendado::model()->findByPk($compra_id);
-					if(isset($compra)){
-						$nocombustibleRG = NocombustibleRindegasto::model()->findByAttributes(['compra_id'=>$compra_id, 'equipoarrendado_id'=>$report->equipoArrendado_id,'status'=>1]);
-						if(isset($nocombustibleRG)){
-							return GastoCompleta::model()->findByPk($nocombustibleRG->gasto_completa_id);
+					$remuneracion = RemuneracionEquipoArrendado::model()->findByPk($remuneracion_id);
+					if(isset($remuneracion)){
+						$remuneracionRG = RemuneracionRindegasto::model()->findByAttributes(['remuneracion_id'=>$remuneracion_id, 'equipoarrendado_id'=>$report->equipoArrendado_id,'status'=>1]);
+						if(isset($remuneracionRG)){
+							return GastoCompleta::model()->findByPk($remuneracionRG->gasto_completa_id);
 						}
 					}
 				}	

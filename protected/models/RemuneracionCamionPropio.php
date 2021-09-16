@@ -8,7 +8,7 @@
  * @property string $descripcion
  * @property integer $montoNeto
  * @property string $guia
- * @property string $factura
+ * @property string $documento
  * @property double $cantidad
  * @property string $unidad
  * @property integer $rCamionPropio_id
@@ -47,14 +47,14 @@ class RemuneracionCamionPropio extends CActiveRecord
 			array('descripcion, montoNeto, rCamionPropio_id', 'required'),
 			array('montoNeto, rCamionPropio_id', 'numerical', 'integerOnly'=>true),
 			array('descripcion', 'length', 'max'=>200),
-			array('guia, factura', 'length', 'max'=>45),
+			array('guia, documento', 'length', 'max'=>45),
 			array('unidad', 'length', 'max'=>2),
 			array('nombre', 'length', 'max'=>100),
 			array('cantidad', 'numerical'),
 			array('fechaRendicion,numero', 'length', 'max'=>20),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, descripcion, montoNeto, guia, factura, cantidad, unidad, rCamionPropio_id', 'safe', 'on'=>'search'),
+			array('id, descripcion, montoNeto, guia, documento, cantidad, unidad, rCamionPropio_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -79,7 +79,7 @@ class RemuneracionCamionPropio extends CActiveRecord
 			'descripcion' => 'Descripción',
 			'montoNeto' => 'Monto Neto',
 			'guia' => 'N°Guía u OC',
-			'factura' => 'N°Factura o Boleta',
+			'documento' => 'Documento',
 			'cantidad' => 'Cantidad',
 			'unidad' => 'Cantidad en',
 			'rCamionPropio_id' => 'R Camion Propio',
@@ -106,7 +106,7 @@ class RemuneracionCamionPropio extends CActiveRecord
 		$criteria->compare('descripcion',$this->descripcion,true);
 		$criteria->compare('montoNeto',$this->montoNeto);
 		$criteria->compare('guia',$this->guia,true);
-		$criteria->compare('factura',$this->factura,true);
+		$criteria->compare('documento',$this->documento,true);
 		$criteria->compare('cantidad',$this->cantidad);
 		$criteria->compare('unidad',$this->unidad,true);
 		$criteria->compare('rCamionPropio_id',$this->rCamionPropio_id);

@@ -171,7 +171,7 @@ class GastoRemuneracionesController extends Controller
 			$detalleGastoRemuneraciones->fecha = $gasto->fecha;
 			$detalleGastoRemuneraciones->descripcion = "";
 			$detalleGastoRemuneraciones->guia = "";
-			$detalleGastoRemuneraciones->factura = "";
+			$detalleGastoRemuneraciones->documento = "";
 			$detalleGastoRemuneraciones->cantidad = "";
 			$detalleGastoRemuneraciones->supervisor = "";
 			$detalleGastoRemuneraciones->fuente = "";
@@ -216,8 +216,8 @@ class GastoRemuneracionesController extends Controller
 				}
 				if(isset($remuneracion)){
 					$detalleGastoRemuneraciones->guia = $remuneracion->guia;
-					$detalleGastoRemuneraciones->factura = $remuneracion->factura;
-					$detalleGastoRemuneraciones->repuesto = $remuneracion->descripcion;
+					$detalleGastoRemuneraciones->documento = $remuneracion->documento;
+					$detalleGastoRemuneraciones->descripcion = $remuneracion->descripcion;
 					$detalleGastoRemuneraciones->nombre = $remuneracion->nombre;
 					$detalleGastoRemuneraciones->rut_rinde = $remuneracion->rut_rinde;
 					$detalleGastoRemuneraciones->nombre_proveedor = $remuneracion->nombre_proveedor;
@@ -246,7 +246,6 @@ class GastoRemuneracionesController extends Controller
 			
 			$datos[] = $detalleGastoRemuneraciones;
 		}
-
 
 		$this->render("view",array(
 			'datos' => $datos,
