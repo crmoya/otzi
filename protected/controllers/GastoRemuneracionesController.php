@@ -124,7 +124,7 @@ class GastoRemuneracionesController extends Controller
 			//['name'=>'Fuente','width'=>'sm'],
 			//['name'=>'Operador','width'=>'md'],
 			['name'=>'Máquina','width'=>'md'],
-			['name'=>'Repuesto','width'=>'xl'],
+			['name'=>'Descripción','width'=>'xl'],
 			//['name'=>'Guía','width'=>'sm'],
 			['name'=>'Factura','width'=>'sm'],
 			//['name'=>'Cantidad','width'=>'sm'],
@@ -140,11 +140,11 @@ class GastoRemuneracionesController extends Controller
 
 		$extra_datos = [
 			['campo'=>'fecha','exportable', 'format'=>'date', 'dots'=>"sm"],
-			['campo'=>'reporte','format'=> 'enlace_rg', 'url'=>"//gastoRepuesto/redirect", 'params'=>['report_id','report_tipo']],
+			['campo'=>'reporte','format'=> 'enlace_rg', 'url'=>"//gastoRemuneraciones/redirect", 'params'=>['report_id','report_tipo']],
 			//['campo'=>'fuente','exportable', 'dots'=>"sm"],
 			//['campo'=>'operador','exportable', 'dots'=>"md"],
 			['campo'=>'maquina','exportable', 'dots'=>"md"],
-			['campo'=>'repuesto','exportable', 'dots'=>'xl',],
+			['campo'=>'descripcion','exportable', 'dots'=>'xl',],
 			//['campo'=>'guia','exportable', 'dots'=>"sm"],
 			['campo'=>'factura','exportable', 'dots'=>"sm"],
 			//['campo'=>'cantidad','exportable', 'format'=>'number','acumulado'=>'suma'],
@@ -163,13 +163,13 @@ class GastoRemuneracionesController extends Controller
 		foreach($gastos as $gasto){
 			$partes = explode("-",$gasto->id);
 			$report_id = (int)$partes[0];
-			$compra_id = (int)$partes[3];
+			$remuneracion_id = (int)$partes[3];
 			$tipo = $partes[1];
 			$tipo_maquina = $partes[2];
 			$detalleGastoRemuneraciones = new DetalleGastoRemuneraciones;
 			$detalleGastoRemuneraciones->id = $report_id;
 			$detalleGastoRemuneraciones->fecha = $gasto->fecha;
-			$detalleGastoRemuneraciones->repuesto = "";
+			$detalleGastoRemuneraciones->descripcion = "";
 			$detalleGastoRemuneraciones->guia = "";
 			$detalleGastoRemuneraciones->factura = "";
 			$detalleGastoRemuneraciones->cantidad = "";
@@ -186,41 +186,41 @@ class GastoRemuneracionesController extends Controller
 			
 			if($tipo == "R"){
 				$report = null;
-				$compra = null;
+				$remuneracion = null;
 				if($tipo_maquina == "CP"){
 					$report = RCamionPropio::model()->findByPk($report_id);
-					$compra = CompraRepuestoCamionPropio::model()->findByPk($compra_id);
+					$remuneracion = RemuneracionCamionPropio::model()->findByPk($remuneracion_id);
 					$detalleGastoRemuneraciones->report_id = $report_id;
 					$detalleGastoRemuneraciones->report_tipo = "CP";
 				}
 				if($tipo_maquina == "CA"){
 					$report = RCamionArrendado::model()->findByPk($report_id);
-					$compra = CompraRepuestoCamionArrendado::model()->findByPk($compra_id);
+					$remuneracion = RemuneracionCamionArrendado::model()->findByPk($remuneracion_id);
 					$detalleGastoRemuneraciones->report_id = $report_id;
 					$detalleGastoRemuneraciones->report_tipo = "CA";
 				}
 				if($tipo_maquina == "EP"){
 					$report = REquipoPropio::model()->findByPk($report_id);
-					$compra = CompraRepuestoEquipoPropio::model()->findByPk($compra_id);
+					$remuneracion = RemuneracionEquipoPropio::model()->findByPk($remuneracion_id);
 					$detalleGastoRemuneraciones->report_id = $report_id;
 					$detalleGastoRemuneraciones->report_tipo = "EP";
 				}
 				if($tipo_maquina == "EA"){
 					$report = REquipoArrendado::model()->findByPk($report_id);
-					$compra = CompraRepuestoEquipoArrendado::model()->findByPk($compra_id);
+					$remuneracion = RemuneracionEquipoArrendado::model()->findByPk($remuneracion_id);
 					$detalleGastoRemuneraciones->report_id = $report_id;
 					$detalleGastoRemuneraciones->report_tipo = "EA";
 				}
 				if(isset($report)){
 					$detalleGastoRemuneraciones->reporte = $report->reporte;
 				}
-				if(isset($compra)){
-					$detalleGastoRemuneraciones->guia = $compra->guia;
-					$detalleGastoRemuneraciones->factura = $compra->factura;
-					$detalleGastoRemuneraciones->repuesto = $compra->repuesto;
-					$detalleGastoRemuneraciones->nombre = $compra->nombre;
-					$detalleGastoRemuneraciones->rut_rinde = $compra->rut_rinde;
-					$detalleGastoRemuneraciones->nombre_proveedor = $compra->nombre_proveedor;
+				if(isset($remuneracion)){
+					$detalleGastoRemuneraciones->guia = $remuneracion->guia;
+					$detalleGastoRemuneraciones->factura = $remuneracion->factura;
+					$detalleGastoRemuneraciones->repuesto = $remuneracion->descripcion;
+					$detalleGastoRemuneraciones->nombre = $remuneracion->nombre;
+					$detalleGastoRemuneraciones->rut_rinde = $remuneracion->rut_rinde;
+					$detalleGastoRemuneraciones->nombre_proveedor = $remuneracion->nombre_proveedor;
 
 				}
 				$detalleGastoRemuneraciones->fuente = "SAM";
