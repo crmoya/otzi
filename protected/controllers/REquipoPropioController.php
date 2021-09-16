@@ -149,6 +149,7 @@ class REquipoPropioController extends Controller
         $viajesT = Expedicionportiempoeq::model()->findAllByAttributes(array('requipopropio_id' => $id));
         $cargas = CargaCombEquipoPropio::model()->findAllByAttributes(array('rEquipoPropio_id' => $id));
         $compras = CompraRepuestoEquipoPropio::model()->findAllByAttributes(array('rEquipoPropio_id' => $id));
+        $remuneraciones = RemuneracionEquipoPropio::model()->findAllByAttributes(array('rEquipoPropio_id' => $id));
         $model->fecha = Tools::backFecha($model->fecha);
 
         $equipoPropio_id = $model->equipoPropio_id;
@@ -161,6 +162,7 @@ class REquipoPropioController extends Controller
             'viajesT' => $viajesT,
             'cargas' => $cargas,
             'compras' => $compras,
+            'remuneraciones' => $remuneraciones,
             'equipo' => $equipo,
             'operador' => $operador,
         ));

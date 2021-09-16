@@ -185,6 +185,65 @@
 			</tbody>
 		</table>
 	</fieldset>
+
+	<fieldset id="remuneraciones">
+		<legend>Datos de Remuneraciones</legend>
+		<table cellspacing="0">
+			<tbody>
+				<?php foreach ($remuneraciones as $remuneracion) : ?>
+					<tr>
+						<td width="100px">
+							<table style="border:solid 1px silver;padding:10px;">
+								<tr>
+									<td style='font-size:0.9em;'><b>Descripción:</b></td>
+									<td><?php echo CHtml::encode($remuneracion['descripcion']); ?></td>
+									<td style='font-size:0.9em;'><b>Monto Neto:</b></td>
+									<td><?php echo CHtml::encode("$" . number_format($remuneracion['montoNeto'], 0, ',', '.')); ?></td>
+									<td style='font-size:0.9em;'><b>Tipo documento:</b></td>
+									<td><?php echo CHtml::encode(Tools::getTipoDocumento($remuneracion['tipo_documento'])); ?></td>
+								</tr>
+								<tr>
+									<td style='font-size:0.9em;'><b>Nº documento:</b></td>
+									<td><?php echo CHtml::encode($remuneracion['documento']); ?></td>
+									<td style='font-size:0.9em;'><b>Rut proveedor:</b></td>
+									<td><?php echo CHtml::encode($remuneracion['rut_proveedor']); ?></td>
+									<td style='font-size:0.9em;'><b>Nombre proveedor:</b></td>
+									<td><?php echo CHtml::encode($remuneracion['nombre_proveedor']); ?></td>
+								</tr>
+								<tr>
+									<td style='font-size:0.9em;'><b>Cuenta:</b></td>
+									<td><?php echo CHtml::encode($remuneracion['cuenta']); ?></td>
+									<td style='font-size:0.9em;'><b>Faena:</b></td>
+									<td><?php echo CHtml::encode(Faena::model()->getNombre(CHtml::encode($remuneracion['faena_id']))); ?></td>
+									<td style='font-size:0.9em;'><b>Cantidad:</b></td>
+									<td><?php echo CHtml::encode($remuneracion['cantidad'] . " " . Tools::getNombreUnidad($remuneracion['unidad'])); ?></td>
+								</tr>
+								<tr>
+									
+									<td style='font-size:0.9em;'><b>N°Rendición:</b></td>
+									<td><?php echo CHtml::encode($remuneracion['numero']); ?></td>
+									<td style='font-size:0.9em;'><b>Rut quien rinde:</b></td>
+									<td><?php echo CHtml::encode($remuneracion['rut_rinde']); ?></td>
+									<td style='font-size:0.9em;'><b>Nombre quien rinde:</b></td>
+									<td><?php echo CHtml::encode($remuneracion['nombre']); ?></td>
+								</tr>
+								<tr>
+									<td style='font-size:0.9em;'><b>Fecha de Documento:</b></td>
+									<td><?php echo CHtml::encode($remuneracion['fechaRendicion']); ?></td>
+									<td style='font-size:0.9em;'><b>Guía:</b></td>
+									<td><?php echo CHtml::encode($remuneracion['guia']); ?></td>
+								</tr>
+								<tr>
+									<td style='font-size:0.9em;'><b>Observaciones:</b></td>
+									<td colspan="3" ><?php echo CHtml::encode($remuneracion['observaciones']); ?></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				<?php endforeach; ?>
+			</tbody>
+		</table>
+	</fieldset>
 	
 	<?php if($model->panne == 1):?>
 	<fieldset>

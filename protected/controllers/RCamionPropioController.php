@@ -148,6 +148,7 @@ class RCamionPropioController extends Controller
 		$viajesT = Expedicionportiempo::model()->findAllByAttributes(array('rcamionpropio_id' => $id));
 		$cargas = CargaCombCamionPropio::model()->findAllByAttributes(array('rCamionPropio_id' => $id));
 		$compras = CompraRepuestoCamionPropio::model()->findAllByAttributes(array('rCamionPropio_id' => $id));
+		$remuneraciones = RemuneracionCamionPropio::model()->findAllByAttributes(array('rCamionPropio_id' => $id));
 		$model->fecha = Tools::backFecha($model->fecha);
 
 		$camion_id = $model->camionPropio_id;
@@ -163,6 +164,7 @@ class RCamionPropioController extends Controller
 			'viajesT' => $viajesT,
 			'cargas' => $cargas,
 			'compras' => $compras,
+			'remuneraciones' => $remuneraciones,
 			'camion' => $camion,
 			'chofer' => $chofer,
 			'recorridos' => $recorridos,

@@ -95,6 +95,7 @@ class Carga{
 						$cargaComb->kmCarguio = floatval($gastoCompleta->km_carguio);
 						$cargaComb->guia = "";
 						$cargaComb->factura = substr($gastoCompleta->nro_documento,0,45);
+						$cargaComb->fechaRendicion = $gasto->issue_date;
 						$cargaComb->precioUnitario = 0;
 						$cargaComb->valorTotal = (int)$gastoCompleta->monto_neto + (int)$gastoCompleta->impuesto_especifico;
 						if(isset($faenaRG)){
@@ -197,6 +198,7 @@ class Carga{
 						$cargaComb->petroleoLts = floatval($gastoCompleta->litros_combustible);
 						$cargaComb->kmCarguio = floatval($gastoCompleta->km_carguio);
 						$cargaComb->guia = "";
+						$cargaComb->fechaRendicion = $gasto->issue_date;
 						$cargaComb->factura = substr($gastoCompleta->nro_documento,0,45);
 						$cargaComb->precioUnitario = 0;
 						$cargaComb->valorTotal = (int)$gastoCompleta->monto_neto + (int)$gastoCompleta->impuesto_especifico;
@@ -300,6 +302,7 @@ class Carga{
 						$cargaComb->petroleoLts = floatval($gastoCompleta->litros_combustible);
 						$cargaComb->hCarguio = 0;
 						$cargaComb->guia = "";
+						$cargaComb->fechaRendicion = $gasto->issue_date;
 						$cargaComb->factura = substr($gastoCompleta->nro_documento,0,45);
 						$cargaComb->precioUnitario = 0;
 						$cargaComb->valorTotal = (int)$gastoCompleta->monto_neto + (int)$gastoCompleta->impuesto_especifico;
@@ -404,6 +407,7 @@ class Carga{
 						$cargaComb->petroleoLts = floatval($gastoCompleta->litros_combustible);
 						$cargaComb->hCarguio = 0;
 						$cargaComb->guia = "";
+						$cargaComb->fechaRendicion = $gasto->issue_date;
 						$cargaComb->factura = substr($gastoCompleta->nro_documento,0,45);
 						$cargaComb->precioUnitario = 0;
 						$cargaComb->valorTotal = (int)$gastoCompleta->monto_neto + (int)$gastoCompleta->impuesto_especifico;
@@ -568,6 +572,7 @@ class Carga{
 						}
 						$compra->repuesto = $repuesto;
 						$compra->montoNeto = (int)$gastoCompleta->monto_neto;
+						$compra->fechaRendicion = $gasto->issue_date;
 						$cantidad = str_replace(",",".",$gastoCompleta->cantidad);
 						$compra->cantidad = (float)$cantidad;
 						$compra->unidad = Tools::convertUnidad($gastoCompleta->unidad);
@@ -679,6 +684,7 @@ class Carga{
 						$compra->montoNeto = (int)$gastoCompleta->monto_neto;
 						$cantidad = str_replace(",",".",$gastoCompleta->cantidad);
 						$compra->cantidad = (float)$cantidad;
+						$compra->fechaRendicion = $gasto->issue_date;
 						$compra->unidad = Tools::convertUnidad($gastoCompleta->unidad);
 						if(isset($faenaRG)){
 							$compra->faena_id = $faenaRG->faena_id;
@@ -788,6 +794,7 @@ class Carga{
 						}
 						$compra->repuesto = $repuesto;
 						$compra->montoNeto = (int)$gastoCompleta->monto_neto;
+						$compra->fechaRendicion = $gasto->issue_date;
 						$cantidad = str_replace(",",".",$gastoCompleta->cantidad);
 						$compra->cantidad = (float)$cantidad;
 						$compra->unidad = Tools::convertUnidad($gastoCompleta->unidad);
@@ -903,6 +910,7 @@ class Carga{
 						}
 						$compra->repuesto = $repuesto;
 						$compra->montoNeto = (int)$gastoCompleta->monto_neto;
+						$compra->fechaRendicion = $gasto->issue_date;
 						$cantidad = str_replace(",",".",$gastoCompleta->cantidad);
 						$compra->cantidad = (float)$cantidad;
 						$compra->unidad = Tools::convertUnidad($gastoCompleta->unidad);
@@ -1078,6 +1086,7 @@ class Carga{
 						$remuneracion->montoNeto = (int)$gastoCompleta->monto_neto;
 						$cantidad = str_replace(",",".",$gastoCompleta->cantidad);
 						$remuneracion->cantidad = (float)$cantidad;
+						$remuneracion->fechaRendicion = $gasto->issue_date;
 						$remuneracion->unidad = Tools::convertUnidad($gastoCompleta->unidad);
 						if(isset($faenaRG)){
 							$remuneracion->faena_id = $faenaRG->faena_id;
@@ -1186,6 +1195,7 @@ class Carga{
 						$remuneracion->descripcion = $descripcion;
 						$remuneracion->montoNeto = (int)$gastoCompleta->monto_neto;
 						$cantidad = str_replace(",",".",$gastoCompleta->cantidad);
+						$remuneracion->fechaRendicion = $gasto->issue_date;
 						$remuneracion->cantidad = (float)$cantidad;
 						$remuneracion->unidad = Tools::convertUnidad($gastoCompleta->unidad);
 						if(isset($faenaRG)){
@@ -1296,6 +1306,7 @@ class Carga{
 						}
 						$remuneracion->descripcion = $descripcion;
 						$remuneracion->montoNeto = (int)$gastoCompleta->monto_neto;
+						$remuneracion->fechaRendicion = $gasto->issue_date;
 						$cantidad = str_replace(",",".",$gastoCompleta->cantidad);
 						$remuneracion->cantidad = (float)$cantidad;
 						$remuneracion->unidad = Tools::convertUnidad($gastoCompleta->unidad);
@@ -1411,6 +1422,7 @@ class Carga{
 						}
 						$remuneracion->descripcion = $descripcion;
 						$remuneracion->montoNeto = (int)$gastoCompleta->monto_neto;
+						$remuneracion->fechaRendicion = $gasto->issue_date;
 						$cantidad = str_replace(",",".",$gastoCompleta->cantidad);
 						$remuneracion->cantidad = (float)$cantidad;
 						$remuneracion->unidad = Tools::convertUnidad($gastoCompleta->unidad);

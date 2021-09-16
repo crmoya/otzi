@@ -149,6 +149,7 @@ class REquipoArrendadoController extends Controller
 		$viajesT = Expedicionportiempoeqarr::model()->findAllByAttributes(array('requipoarrendado_id' => $id));
 		$cargas = CargaCombEquipoArrendado::model()->findAllByAttributes(array('rEquipoArrendado_id' => $id));
 		$compras = CompraRepuestoEquipoArrendado::model()->findAllByAttributes(array('rEquipoArrendado_id' => $id));
+		$remuneraciones = RemuneracionEquipoArrendado::model()->findAllByAttributes(array('rEquipoArrendado_id' => $id));
 		$model->fecha = Tools::backFecha($model->fecha);
 
 		$equipoArrendado_id = $model->equipoArrendado_id;
@@ -161,6 +162,7 @@ class REquipoArrendadoController extends Controller
 			'viajesT' => $viajesT,
 			'cargas' => $cargas,
 			'compras' => $compras,
+			'remuneraciones' => $remuneraciones,
 			'equipo' => $equipo,
 			'operador' => $operador,
 		));

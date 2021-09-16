@@ -480,6 +480,7 @@ class RCamionArrendadoController extends Controller
 		$viajesT = Expedicionportiempoarr::model()->findAllByAttributes(array('rcamionarrendado_id' => $id));
 		$cargas = CargaCombCamionArrendado::model()->findAllByAttributes(array('rCamionArrendado_id' => $id));
 		$compras = CompraRepuestoCamionArrendado::model()->findAllByAttributes(array('rCamionArrendado_id' => $id));
+		$remuneraciones = RemuneracionCamionArrendado::model()->findAllByAttributes(array('rCamionArrendado_id' => $id));
 		$model->fecha = Tools::backFecha($model->fecha);
 
 		$recorridos = number_format($model->kmFinal - $model->kmInicial, 2);
@@ -495,6 +496,7 @@ class RCamionArrendadoController extends Controller
 			'viajesT' => $viajesT,
 			'cargas' => $cargas,
 			'compras' => $compras,
+			'remuneraciones' => $remuneraciones,
 			'camion' => $camion,
 			'chofer' => $chofer,
 			'recorridos' => $recorridos,
