@@ -39,7 +39,7 @@ class Resultados extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fecha_inicio, fecha_fin, agruparPor,propiosOArrendados,chbRepuestos,chbCombustible', 'safe', 'on'=>'search'),
+			array('fecha_inicio, fecha_fin, agruparPor,propiosOArrendados,chbRepuestos,chbCombustible,chbRemuneraciones', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -79,6 +79,7 @@ class Resultados extends CActiveRecord
 										centro_gestion,
 										sum(produccion) as produccion,
 										sum(repuestos) as repuestos,
+										sum(remuneraciones) as remuneraciones,
 										sum(combustible) as combustible";
 		$finAgrupacion			  = "	maquina,operador,centro_gestion";
 
@@ -89,6 +90,7 @@ class Resultados extends CActiveRecord
 										'' as centro_gestion,
 										sum(produccion) as produccion,
 										sum(repuestos) as repuestos,
+										sum(remuneraciones) as remuneraciones,
 										sum(combustible) as combustible";
 				$finAgrupacion = "		maquina";
 			}
@@ -98,6 +100,7 @@ class Resultados extends CActiveRecord
 										'' as centro_gestion,
 										sum(produccion) as produccion,
 										sum(repuestos) as repuestos,
+										sum(remuneraciones) as remuneraciones,
 										sum(combustible) as combustible";
 				$finAgrupacion = "		operador";
 			}
@@ -107,6 +110,7 @@ class Resultados extends CActiveRecord
 										centro_gestion,
 										sum(produccion) as produccion,
 										sum(repuestos) as repuestos,
+										sum(remuneraciones) as remuneraciones,
 										sum(combustible) as combustible";
 				$finAgrupacion = "		centro_gestion";
 			}
@@ -116,6 +120,7 @@ class Resultados extends CActiveRecord
 										centro_gestion,
 										sum(produccion) as produccion,
 										sum(repuestos) as repuestos,
+										sum(remuneraciones) as remuneraciones,
 										sum(combustible) as combustible";
 				$finAgrupacion = "		maquina,centro_gestion";
 			}
@@ -125,6 +130,7 @@ class Resultados extends CActiveRecord
 										centro_gestion,
 										sum(produccion) as produccion,
 										sum(repuestos) as repuestos,
+										sum(remuneraciones) as remuneraciones,
 										sum(combustible) as combustible";
 				$finAgrupacion = "		operador,centro_gestion";
 			}
@@ -134,27 +140,45 @@ class Resultados extends CActiveRecord
 										'' as centro_gestion,
 										sum(produccion) as produccion,
 										sum(repuestos) as repuestos,
+										sum(remuneraciones) as remuneraciones,
 										sum(combustible) as combustible";
 				$finAgrupacion = "		maquina,operador";
 			}
 		}
-		if($this->chbCombustible == 1 && $this->chbRepuestos == 1){
+		if($this->chbCombustible == 1 && $this->chbRepuestos == 1 && $this->chbRemuneraciones == 1){
+			$inicioAgrupacion .= "	,
+									sum(produccion) - sum(repuestos) - sum(remuneraciones) - sum(combustible) as resultados";
+		}
+		if($this->chbCombustible == 1 && $this->chbRepuestos == 1 && $this->chbRemuneraciones == 0){
 			$inicioAgrupacion .= "	,
 									sum(produccion) - sum(repuestos) - sum(combustible) as resultados";
 		}
-		if($this->chbCombustible == 1 && $this->chbRepuestos == 0){
-			$inicioAgrupacion .= "	,
-									sum(produccion) - sum(combustible) as resultados";
-		}
-		if($this->chbCombustible == 0 && $this->chbRepuestos == 1){
-			$inicioAgrupacion .= "	,
-									sum(produccion) - sum(repuestos) as resultados";
-		}
-		if($this->chbCombustible == 0 && $this->chbRepuestos == 0){
+		if($this->chbCombustible == 0 && $this->chbRepuestos == 0 && $this->chbRemuneraciones == 0){
 			$inicioAgrupacion .= "	,
 									sum(produccion) as resultados";
 		}
 
+		if($this->chbCombustible == 1 && $this->chbRepuestos == 0 && $this->chbRemuneraciones == 0){
+			$inicioAgrupacion .= "	,
+									sum(produccion) - sum(combustible) as resultados";
+		}
+		if($this->chbCombustible == 0 && $this->chbRepuestos == 1 && $this->chbRemuneraciones == 0){
+			$inicioAgrupacion .= "	,
+									sum(produccion) - sum(repuestos) as resultados";
+		}
+
+		if($this->chbCombustible == 1 && $this->chbRepuestos == 0 && $this->chbRemuneraciones == 1){
+			$inicioAgrupacion .= "	,
+									sum(produccion) - sum(combustible) - sum(remuneraciones) as resultados";
+		}
+		if($this->chbCombustible == 0 && $this->chbRepuestos == 1 && $this->chbRemuneraciones == 1){
+			$inicioAgrupacion .= "	,
+									sum(produccion) - sum(repuestos) - sum(remuneraciones) as resultados";
+		}
+		if($this->chbCombustible == 0 && $this->chbRepuestos == 0 && $this->chbRemuneraciones == 1){
+			$inicioAgrupacion .= "	,
+									sum(produccion) - sum(remuneraciones) as resultados";
+		}
 
 		$criteria->select = $inicioAgrupacion;
 		$criteria->group = $finAgrupacion;
@@ -168,7 +192,7 @@ class Resultados extends CActiveRecord
 	public $agruparPor;
 	public $chbRepuestos;
 	public $chbCombustible;
-
+	public $chbRemuneraciones;
 
 	public function tableName()
 	{
@@ -193,6 +217,7 @@ class Resultados extends CActiveRecord
 			'propiosOArrendados' => 'Propios / Arrendados',
 			'chbRepuestos' => 'Repuestos',
 			'chbCombustible' => 'Combustible',
+			'chbRemuneraciones' => 'Remuneraciones',
 		);
 	}
 
@@ -209,7 +234,7 @@ class Resultados extends CActiveRecord
 	}
 
 	public function getResultados(){
-		return $this->produccion - $this->repuestos - $this->combustible;
+		return $this->produccion - $this->repuestos - $this->remuneraciones - $this->combustible;
 	}
 
 }

@@ -47,12 +47,35 @@ class ResultadosController extends Controller
 		$model->fecha_fin = date("Y-m-t");
 		$model->chbRepuestos = true;
 		$model->chbCombustible = true;
+		$model->chbRemuneraciones = true;
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Resultados'])){
 			$model->attributes=$_GET['Resultados'];
 		}
 
-		if($model->chbCombustible == 1 && $model->chbRepuestos == 1){
+		if($model->chbCombustible == 1 && $model->chbRepuestos == 1 && $model->chbRemuneraciones == 1){
+			$cabeceras = [
+				['name'=>'Máquina o camión','width'=>'lg'],
+				['name'=>'Operador o Chofer','width'=>'lg'],
+				['name'=>'Centro Gestión','width'=>'lg'],
+				['name'=>'Producción','width'=>'md'],
+				['name'=>'Repuestos','width'=>'md'],
+				['name'=>'Remuneraciones','width'=>'md'],
+				['name'=>'Combustible','width'=>'md'],
+				['name'=>'Resultados','width'=>'md'],
+			];
+			$extra_datos = [
+				['campo'=>'maquina','exportable','dots'=>"md"],
+				['campo'=>'operador','exportable','dots'=>'md'],
+				['campo'=>'centro_gestion','exportable','dots'=>'md'],
+				['campo'=>'produccion','exportable', 'format'=>'money','acumulado'=>'suma'],
+				['campo'=>'repuestos','exportable', 'format'=>'money','acumulado'=>'suma'],
+				['campo'=>'remuneraciones','exportable', 'format'=>'money','acumulado'=>'suma'],
+				['campo'=>'combustible','exportable', 'format'=>'money','acumulado'=>'suma'],
+				['campo'=>'resultados','exportable', 'format'=>'money','acumulado'=>'suma'],
+			];
+		}
+		if($model->chbCombustible == 1 && $model->chbRepuestos == 1 && $model->chbRemuneraciones == 0){
 			$cabeceras = [
 				['name'=>'Máquina o camión','width'=>'lg'],
 				['name'=>'Operador o Chofer','width'=>'lg'],
@@ -62,38 +85,6 @@ class ResultadosController extends Controller
 				['name'=>'Combustible','width'=>'md'],
 				['name'=>'Resultados','width'=>'md'],
 			];
-		}
-		else if($model->chbCombustible == 0 && $model->chbRepuestos == 1){
-			$cabeceras = [
-				['name'=>'Máquina o camión','width'=>'lg'],
-				['name'=>'Operador o Chofer','width'=>'lg'],
-				['name'=>'Centro Gestión','width'=>'lg'],
-				['name'=>'Producción','width'=>'md'],
-				['name'=>'Repuestos','width'=>'md'],
-				['name'=>'Resultados','width'=>'md'],
-			];
-		}
-		else if($model->chbCombustible == 1 && $model->chbRepuestos == 0){
-			$cabeceras = [
-				['name'=>'Máquina o camión','width'=>'lg'],
-				['name'=>'Operador o Chofer','width'=>'lg'],
-				['name'=>'Centro Gestión','width'=>'lg'],
-				['name'=>'Producción','width'=>'md'],
-				['name'=>'Combustible','width'=>'md'],
-				['name'=>'Resultados','width'=>'md'],
-			];
-		}
-		else if($model->chbCombustible == 0 && $model->chbRepuestos == 0){
-			$cabeceras = [
-				['name'=>'Máquina o camión','width'=>'lg'],
-				['name'=>'Operador o Chofer','width'=>'lg'],
-				['name'=>'Centro Gestión','width'=>'lg'],
-				['name'=>'Producción','width'=>'md'],
-				['name'=>'Resultados','width'=>'md'],
-			];
-		}
-		
-		if($model->chbCombustible == 1 && $model->chbRepuestos == 1){
 			$extra_datos = [
 				['campo'=>'maquina','exportable','dots'=>"md"],
 				['campo'=>'operador','exportable','dots'=>'md'],
@@ -104,7 +95,35 @@ class ResultadosController extends Controller
 				['campo'=>'resultados','exportable', 'format'=>'money','acumulado'=>'suma'],
 			];
 		}
-		if($model->chbCombustible == 0 && $model->chbRepuestos == 1){
+		else if($model->chbCombustible == 0 && $model->chbRepuestos == 1 && $model->chbRemuneraciones == 1){
+			$cabeceras = [
+				['name'=>'Máquina o camión','width'=>'lg'],
+				['name'=>'Operador o Chofer','width'=>'lg'],
+				['name'=>'Centro Gestión','width'=>'lg'],
+				['name'=>'Producción','width'=>'md'],
+				['name'=>'Repuestos','width'=>'md'],
+				['name'=>'Remuneraciones','width'=>'md'],
+				['name'=>'Resultados','width'=>'md'],
+			];
+			$extra_datos = [
+				['campo'=>'maquina','exportable','dots'=>"md"],
+				['campo'=>'operador','exportable','dots'=>'md'],
+				['campo'=>'centro_gestion','exportable','dots'=>'md'],
+				['campo'=>'produccion','exportable', 'format'=>'money','acumulado'=>'suma'],
+				['campo'=>'repuestos','exportable', 'format'=>'money','acumulado'=>'suma'],
+				['campo'=>'remuneraciones','exportable', 'format'=>'money','acumulado'=>'suma'],
+				['campo'=>'resultados','exportable', 'format'=>'money','acumulado'=>'suma'],
+			];
+		}
+		else if($model->chbCombustible == 0 && $model->chbRepuestos == 1 && $model->chbRemuneraciones == 0){
+			$cabeceras = [
+				['name'=>'Máquina o camión','width'=>'lg'],
+				['name'=>'Operador o Chofer','width'=>'lg'],
+				['name'=>'Centro Gestión','width'=>'lg'],
+				['name'=>'Producción','width'=>'md'],
+				['name'=>'Repuestos','width'=>'md'],
+				['name'=>'Resultados','width'=>'md'],
+			];
 			$extra_datos = [
 				['campo'=>'maquina','exportable','dots'=>"md"],
 				['campo'=>'operador','exportable','dots'=>'md'],
@@ -114,7 +133,35 @@ class ResultadosController extends Controller
 				['campo'=>'resultados','exportable', 'format'=>'money','acumulado'=>'suma'],
 			];
 		}
-		if($model->chbCombustible == 1 && $model->chbRepuestos == 0){
+		else if($model->chbCombustible == 1 && $model->chbRepuestos == 0 && $model->chbRemuneraciones == 1){
+			$cabeceras = [
+				['name'=>'Máquina o camión','width'=>'lg'],
+				['name'=>'Operador o Chofer','width'=>'lg'],
+				['name'=>'Centro Gestión','width'=>'lg'],
+				['name'=>'Producción','width'=>'md'],
+				['name'=>'Remuneraciones','width'=>'md'],
+				['name'=>'Combustible','width'=>'md'],
+				['name'=>'Resultados','width'=>'md'],
+			];
+			$extra_datos = [
+				['campo'=>'maquina','exportable','dots'=>"md"],
+				['campo'=>'operador','exportable','dots'=>'md'],
+				['campo'=>'centro_gestion','exportable','dots'=>'md'],
+				['campo'=>'produccion','exportable', 'format'=>'money','acumulado'=>'suma'],
+				['campo'=>'remuneraciones','exportable', 'format'=>'money','acumulado'=>'suma'],
+				['campo'=>'combustible','exportable', 'format'=>'money','acumulado'=>'suma'],
+				['campo'=>'resultados','exportable', 'format'=>'money','acumulado'=>'suma'],
+			];
+		}
+		else if($model->chbCombustible == 1 && $model->chbRepuestos == 0 && $model->chbRemuneraciones == 0){
+			$cabeceras = [
+				['name'=>'Máquina o camión','width'=>'lg'],
+				['name'=>'Operador o Chofer','width'=>'lg'],
+				['name'=>'Centro Gestión','width'=>'lg'],
+				['name'=>'Producción','width'=>'md'],
+				['name'=>'Combustible','width'=>'md'],
+				['name'=>'Resultados','width'=>'md'],
+			];
 			$extra_datos = [
 				['campo'=>'maquina','exportable','dots'=>"md"],
 				['campo'=>'operador','exportable','dots'=>'md'],
@@ -124,12 +171,37 @@ class ResultadosController extends Controller
 				['campo'=>'resultados','exportable', 'format'=>'money','acumulado'=>'suma'],
 			];
 		}
-		if($model->chbCombustible == 0 && $model->chbRepuestos == 0){
+		else if($model->chbCombustible == 0 && $model->chbRepuestos == 0 && $model->chbRemuneraciones == 0){
+			$cabeceras = [
+				['name'=>'Máquina o camión','width'=>'lg'],
+				['name'=>'Operador o Chofer','width'=>'lg'],
+				['name'=>'Centro Gestión','width'=>'lg'],
+				['name'=>'Producción','width'=>'md'],
+				['name'=>'Resultados','width'=>'md'],
+			];
 			$extra_datos = [
 				['campo'=>'maquina','exportable','dots'=>"md"],
 				['campo'=>'operador','exportable','dots'=>'md'],
 				['campo'=>'centro_gestion','exportable','dots'=>'md'],
 				['campo'=>'produccion','exportable', 'format'=>'money','acumulado'=>'suma'],
+				['campo'=>'resultados','exportable', 'format'=>'money','acumulado'=>'suma'],
+			];
+		}
+		else if($model->chbCombustible == 0 && $model->chbRepuestos == 0 && $model->chbRemuneraciones == 1){
+			$cabeceras = [
+				['name'=>'Máquina o camión','width'=>'lg'],
+				['name'=>'Operador o Chofer','width'=>'lg'],
+				['name'=>'Centro Gestión','width'=>'lg'],
+				['name'=>'Producción','width'=>'md'],
+				['name'=>'Remuneraciones','width'=>'md'],
+				['name'=>'Resultados','width'=>'md'],
+			];
+			$extra_datos = [
+				['campo'=>'maquina','exportable','dots'=>"md"],
+				['campo'=>'operador','exportable','dots'=>'md'],
+				['campo'=>'centro_gestion','exportable','dots'=>'md'],
+				['campo'=>'produccion','exportable', 'format'=>'money','acumulado'=>'suma'],
+				['campo'=>'remuneraciones','exportable', 'format'=>'money','acumulado'=>'suma'],
 				['campo'=>'resultados','exportable', 'format'=>'money','acumulado'=>'suma'],
 			];
 		}
