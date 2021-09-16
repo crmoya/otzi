@@ -1,6 +1,6 @@
 <?php
 
-class GastoRepuestoController extends Controller
+class GastoRemuneracionesController extends Controller
 {
 
 	/**
@@ -42,12 +42,12 @@ class GastoRepuestoController extends Controller
 		
 		$this->pageTitle = "";
 
-		$model=new GastoRepuesto('search');
+		$model=new GastoRemuneraciones('search');
 		$model->fecha_inicio = date("Y-m-01");
 		$model->fecha_fin = date("Y-m-t");
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['GastoRepuesto'])){
-			$model->attributes=$_GET['GastoRepuesto'];
+		if(isset($_GET['GastoRemuneraciones'])){
+			$model->attributes=$_GET['GastoRemuneraciones'];
 		}
 
 	
@@ -64,10 +64,10 @@ class GastoRepuestoController extends Controller
 			['campo'=>'operador','exportable','dots'=>'md'],
 			['campo'=>'centro_gestion','exportable','dots'=>'md'],
 			['campo'=>'total','exportable', 'format'=>'money','acumulado'=>'suma'],
-			['campo'=>'id','format'=> 'enlace-ver', 'url'=>"//gastoRepuesto/view?fecha_inicio=$model->fecha_inicio&fecha_fin=$model->fecha_fin&propiosOArrendados=$model->propiosOArrendados", 'params'=>['maquina','operador','centro_gestion']],
+			['campo'=>'id','format'=> 'enlace-ver', 'url'=>"//gastoRemuneraciones/view?fecha_inicio=$model->fecha_inicio&fecha_fin=$model->fecha_fin&propiosOArrendados=$model->propiosOArrendados", 'params'=>['maquina','operador','centro_gestion']],
 		];
 
-		$datos = GastoRepuesto::model()->findAll($model->search());
+		$datos = GastoRemuneraciones::model()->findAll($model->search());
 
 		$this->render("admin",array(
 			'model'=>$model,
@@ -80,7 +80,7 @@ class GastoRepuestoController extends Controller
 	
 	public function actionView($fecha_inicio, $fecha_fin, $propiosOArrendados, $maquina, $operador, $centro_gestion){
 		$maquina = str_replace("___","\"",$maquina);
-		$this->pageTitle = "Detalle de informe de gasto de repuestos";
+		$this->pageTitle = "Detalle de informe de gasto de remuneraciones";
 		$criteria=new CDbCriteria();	
 
 		if($fecha_inicio != "" && $fecha_fin == ""){
@@ -158,7 +158,7 @@ class GastoRepuestoController extends Controller
 			['campo'=>'imagen','format'=>'imagen-gasto'],
 		];
 
-		$gastos = GastoRepuesto::model()->findAll($criteria);
+		$gastos = GastoRemuneraciones::model()->findAll($criteria);
 		$datos = [];
 		foreach($gastos as $gasto){
 			$partes = explode("-",$gasto->id);
@@ -166,19 +166,19 @@ class GastoRepuestoController extends Controller
 			$compra_id = (int)$partes[3];
 			$tipo = $partes[1];
 			$tipo_maquina = $partes[2];
-			$detalleGastoRepuesto = new DetalleGastoRepuesto;
-			$detalleGastoRepuesto->id = $report_id;
-			$detalleGastoRepuesto->fecha = $gasto->fecha;
-			$detalleGastoRepuesto->repuesto = "";
-			$detalleGastoRepuesto->guia = "";
-			$detalleGastoRepuesto->factura = "";
-			$detalleGastoRepuesto->cantidad = "";
-			$detalleGastoRepuesto->supervisor = "";
-			$detalleGastoRepuesto->fuente = "";
-			$detalleGastoRepuesto->numero = "";
-			$detalleGastoRepuesto->nombre = "";
-			$detalleGastoRepuesto->rut_rinde = "";
-			$detalleGastoRepuesto->nombre_proveedor = "";
+			$detalleGastoRemuneraciones = new DetalleGastoRemuneraciones;
+			$detalleGastoRemuneraciones->id = $report_id;
+			$detalleGastoRemuneraciones->fecha = $gasto->fecha;
+			$detalleGastoRemuneraciones->repuesto = "";
+			$detalleGastoRemuneraciones->guia = "";
+			$detalleGastoRemuneraciones->factura = "";
+			$detalleGastoRemuneraciones->cantidad = "";
+			$detalleGastoRemuneraciones->supervisor = "";
+			$detalleGastoRemuneraciones->fuente = "";
+			$detalleGastoRemuneraciones->numero = "";
+			$detalleGastoRemuneraciones->nombre = "";
+			$detalleGastoRemuneraciones->rut_rinde = "";
+			$detalleGastoRemuneraciones->nombre_proveedor = "";
 			
 
 			$gastoCompleta = $gasto->gastoCompleta;
@@ -190,61 +190,61 @@ class GastoRepuestoController extends Controller
 				if($tipo_maquina == "CP"){
 					$report = RCamionPropio::model()->findByPk($report_id);
 					$compra = CompraRepuestoCamionPropio::model()->findByPk($compra_id);
-					$detalleGastoRepuesto->report_id = $report_id;
-					$detalleGastoRepuesto->report_tipo = "CP";
+					$detalleGastoRemuneraciones->report_id = $report_id;
+					$detalleGastoRemuneraciones->report_tipo = "CP";
 				}
 				if($tipo_maquina == "CA"){
 					$report = RCamionArrendado::model()->findByPk($report_id);
 					$compra = CompraRepuestoCamionArrendado::model()->findByPk($compra_id);
-					$detalleGastoRepuesto->report_id = $report_id;
-					$detalleGastoRepuesto->report_tipo = "CA";
+					$detalleGastoRemuneraciones->report_id = $report_id;
+					$detalleGastoRemuneraciones->report_tipo = "CA";
 				}
 				if($tipo_maquina == "EP"){
 					$report = REquipoPropio::model()->findByPk($report_id);
 					$compra = CompraRepuestoEquipoPropio::model()->findByPk($compra_id);
-					$detalleGastoRepuesto->report_id = $report_id;
-					$detalleGastoRepuesto->report_tipo = "EP";
+					$detalleGastoRemuneraciones->report_id = $report_id;
+					$detalleGastoRemuneraciones->report_tipo = "EP";
 				}
 				if($tipo_maquina == "EA"){
 					$report = REquipoArrendado::model()->findByPk($report_id);
 					$compra = CompraRepuestoEquipoArrendado::model()->findByPk($compra_id);
-					$detalleGastoRepuesto->report_id = $report_id;
-					$detalleGastoRepuesto->report_tipo = "EA";
+					$detalleGastoRemuneraciones->report_id = $report_id;
+					$detalleGastoRemuneraciones->report_tipo = "EA";
 				}
 				if(isset($report)){
-					$detalleGastoRepuesto->reporte = $report->reporte;
+					$detalleGastoRemuneraciones->reporte = $report->reporte;
 				}
 				if(isset($compra)){
-					$detalleGastoRepuesto->guia = $compra->guia;
-					$detalleGastoRepuesto->factura = $compra->factura;
-					$detalleGastoRepuesto->repuesto = $compra->repuesto;
-					$detalleGastoRepuesto->nombre = $compra->nombre;
-					$detalleGastoRepuesto->rut_rinde = $compra->rut_rinde;
-					$detalleGastoRepuesto->nombre_proveedor = $compra->nombre_proveedor;
+					$detalleGastoRemuneraciones->guia = $compra->guia;
+					$detalleGastoRemuneraciones->factura = $compra->factura;
+					$detalleGastoRemuneraciones->repuesto = $compra->repuesto;
+					$detalleGastoRemuneraciones->nombre = $compra->nombre;
+					$detalleGastoRemuneraciones->rut_rinde = $compra->rut_rinde;
+					$detalleGastoRemuneraciones->nombre_proveedor = $compra->nombre_proveedor;
 
 				}
-				$detalleGastoRepuesto->fuente = "SAM";
+				$detalleGastoRemuneraciones->fuente = "SAM";
 			}
 			if(isset($gastoCompleta)){
 				if(isset($gastoCompleta->gasto)){
 					$informeGasto = InformeGasto::model()->findByPk($gastoCompleta->gasto->report_id);
 					if(isset($informeGasto)){
-						$detalleGastoRepuesto->numero = $informeGasto->numero;
-						$detalleGastoRepuesto->folio = $informeGasto->numero;
-						$detalleGastoRepuesto->gasto_id = $gastoCompleta->gasto->id;
+						$detalleGastoRemuneraciones->numero = $informeGasto->numero;
+						$detalleGastoRemuneraciones->folio = $informeGasto->numero;
+						$detalleGastoRemuneraciones->gasto_id = $gastoCompleta->gasto->id;
 					}
 				}
 			}
-			$detalleGastoRepuesto->imagen = "";
+			$detalleGastoRemuneraciones->imagen = "";
 			if(isset($gastoCompleta)){
-				$detalleGastoRepuesto->imagen = $gastoCompleta->imagen;
+				$detalleGastoRemuneraciones->imagen = $gastoCompleta->imagen;
 			}
-			$detalleGastoRepuesto->operador = $gasto->operador;
-			$detalleGastoRepuesto->maquina = $gasto->maquina;
-			$detalleGastoRepuesto->centro_gestion = $gasto->centro_gestion;
-			$detalleGastoRepuesto->neto = $gasto->total;
+			$detalleGastoRemuneraciones->operador = $gasto->operador;
+			$detalleGastoRemuneraciones->maquina = $gasto->maquina;
+			$detalleGastoRemuneraciones->centro_gestion = $gasto->centro_gestion;
+			$detalleGastoRemuneraciones->neto = $gasto->total;
 			
-			$datos[] = $detalleGastoRepuesto;
+			$datos[] = $detalleGastoRemuneraciones;
 		}
 
 

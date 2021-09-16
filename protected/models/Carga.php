@@ -15,6 +15,7 @@ class Carga{
 			//elimino todo lo anterior
 			CombustibleRindegasto::model()->deleteAll();
 			NocombustibleRindegasto::model()->deleteAll();
+			RemuneracionRindegasto::model()->deleteAll();
 
 			//además elimino las compras de repuestos que hayan sido ingresadas por rindegastos
 			CompraRepuestoCamionPropio::model()->deleteAllByAttributes(['rindegastos'=>1]);
@@ -28,6 +29,11 @@ class Carga{
 			CargaCombEquipoPropio::model()->deleteAllByAttributes(['rindegastos'=>1]);
 			CargaCombEquipoArrendado::model()->deleteAllByAttributes(['rindegastos'=>1]);
 
+			//además elimino las compras de repuestos que hayan sido ingresadas por rindegastos
+			RemuneracionCamionPropio::model()->deleteAllByAttributes(['rindegastos'=>1]);
+			RemuneracionCamionArrendado::model()->deleteAllByAttributes(['rindegastos'=>1]);
+			RemuneracionEquipoPropio::model()->deleteAllByAttributes(['rindegastos'=>1]);
+			RemuneracionEquipoArrendado::model()->deleteAllByAttributes(['rindegastos'=>1]);
 
 			$criteria = new CDbCriteria();
 
@@ -1004,6 +1010,510 @@ class Carga{
 
 					if(!$nocombustible->save()){
 						$errores[] = $nocombustible->errors;
+					}
+				}
+			}
+
+			//INGRESO LOS GASTOS DE REMUNERACIONES DE ACUERDO A LA TABLA GASTO_COMPLETA
+			$criteria = new CDbCriteria();
+			$criteria->addInCondition('category',Tools::CATEGORIAS_REMUNERACIONES_RINDEGASTOS);
+			$gastos = Gasto::model()->findAllByAttributes(
+				['expense_policy_id'=>GastoCompleta::POLICY_MAQUINARIA,'status'=>1],
+				$criteria
+			);
+			foreach($gastos as $gasto){
+				$gastoCompleta = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
+				if(isset($gastoCompleta)){
+					$remuneracionRG = new RemuneracionRindegasto();
+					$remuneracionRG->status = $gasto->status;
+					$remuneracionRG->fecha = $gasto->issue_date;
+					$remuneracionRG->total = intval($gasto->net) + intval($gastoCompleta->iva);
+					$remuneracionRG->gasto_completa_id = intval($gastoCompleta->id);
+					$tipo_report = "";
+
+					$vehiculoRG = VehiculoRindegastos::model()->findByAttributes(['vehiculo'=>$gastoCompleta->vehiculo_equipo]);
+					if(isset($vehiculoRG)){
+						if($vehiculoRG->camionpropio_id != null){
+							$nocombustible->camionpropio_id = $vehiculoRG->camionpropio_id;
+							$tipo_report = "CP";
+						}
+						if($vehiculoRG->camionarrendado_id != null){
+							$nocombustible->camionarrendado_id = $vehiculoRG->camionarrendado_id;
+							$tipo_report = "CA";
+						}
+						if($vehiculoRG->equipopropio_id != null){
+							$nocombustible->equipopropio_id = $vehiculoRG->equipopropio_id;
+							$tipo_report = "EP";
+						}
+						if($vehiculoRG->equipoarrendado_id != null){
+							$nocombustible->equipoarrendado_id = $vehiculoRG->equipoarrendado_id;
+							$tipo_report = "EA";
+						}
+					}
+
+					$faenaRG = FaenaRindegasto::model()->findByAttributes(['faena'=>$gastoCompleta->centro_costo_faena]);
+					if(isset($faenaRG)){
+						$remuneracionRG->faena_id = $faenaRG->faena_id;
+					}
+					else{
+						$remuneracionRG->faena_id = 0;
+					}
+
+					//asociar gasto a report de remuneración
+					//según el tipo de report, busco si hay uno para la fecha 
+					if($tipo_report == "CP"){
+						$remuneracion = new RemuneracionCamionPropio();
+						$descripcion = $gasto->note;
+						if(strlen($descripcion) > 200){
+							$descripcion = substr($descripcion,0,200);
+						}
+						if($descripcion == ""){
+							$descripcion = "Sin descripción - Rindegastos";
+						}
+						$remuneracion->descripcion = $descripcion;
+						$remuneracion->montoNeto = (int)$gastoCompleta->monto_neto;
+						$remuneracion = str_replace(",",".",$gastoCompleta->cantidad);
+						$remuneracion->cantidad = (float)$cantidad;
+						$remuneracion->unidad = Tools::convertUnidad($gastoCompleta->unidad);
+						if(isset($faenaRG)){
+							$remuneracion->faena_id = $faenaRG->faena_id;
+						}
+						else{
+							$remuneracion->faena_id = 0;
+						}
+						$remuneracion->factura = substr($gastoCompleta->nro_documento,0,45);
+						if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
+							$remuneracion->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
+						}
+						else{
+							$remuneracion->nombre = $gastoCompleta->nombre_quien_rinde;
+						}
+						$remuneracion->observaciones = "Registro de Rindegastos";
+						$remuneracion->rut_rinde = " ";
+						$remuneracion->cuenta = $gasto->category_code." - ".$gasto->category;
+						$remuneracion->nombre_proveedor = $gasto->supplier;
+						$remuneracion->rut_proveedor = $gastoCompleta->rut_proveedor;
+						$remuneracion->tipo_documento = Tools::traducirTipoDocumento($gastoCompleta->tipo_documento);
+						$remuneracion->rindegastos = 1;
+
+
+						//busco un report al que asociar la compra:
+						//inicio buscando para la fecha del gasto
+						$fecha = new DateTime($gasto->issue_date);
+						$ultimoDiaMes = date("Y-m-t",strtotime($gasto->issue_date));
+						$report = RCamionPropio::model()->findByAttributes(['fecha'=>$gasto->issue_date, 'camionPropio_id'=>$vehiculoRG->camionpropio_id]);
+						while($report == null){
+							//si no hay report busco para el día siguiente,
+							//sino para el subsiguiente, hasta llegar al día sábado, si no hay para el sábado
+							//creo un report para el sábado y asocio la remuneración a ese
+							//el día posterior, hasta el sábado de esa semana.
+							//pero si llega al fin de mes, lo agrego al fin de mes
+							$dow = date('w',strtotime($fecha->format("Y-m-d")));
+							if($dow == 6 || $ultimoDiaMes == $fecha->format("Y-m-d")){
+								//sábado o fin de mes
+								$report = RCamionPropio::model()->findByAttributes([
+									'reporte' => "*".$gasto->id,
+									'observaciones' => "Report creado automáticamente para asociación con RindeGastos",
+								]);
+								if(isset($report)){
+									//si ya había sido creado un report con ese campo reporte, lo traslado a fin de mes (que sería anterior)	
+									//fix fin de mes
+									$report->fecha = $fecha->format('Y-m-d');
+									$report->camionPropio_id = (int)$vehiculoRG->camionpropio_id;
+									$report->chofer_id = 0;
+									$report->panne = 0;
+									$report->iniPanne = "";
+									$report->finPanne = "";
+									$report->minPanne = 0;
+									$report->usuario_id = 213;
+									$report->horometro_inicial = 0;
+									$report->horometro_final = 0;
+									$report->save();
+									break;
+								}
+								$report = RCamionPropio::model()->findByAttributes([
+									'fecha' => $fecha->format('Y-m-d'),
+									'reporte' => "*".$gasto->id,
+									'observaciones' => "Report creado automáticamente para asociación con RindeGastos",
+								]);
+								if(!isset($report)){
+									$report = new RCamionPropio();
+									$report->fecha = $fecha->format('Y-m-d');
+									$report->reporte = "*".$gasto->id;
+									$report->observaciones = "Report creado automáticamente para asociación con RindeGastos";
+								}
+								$report->camionPropio_id = (int)$vehiculoRG->camionpropio_id;
+								$report->chofer_id = 0;
+								$report->panne = 0;
+								$report->iniPanne = "";
+								$report->finPanne = "";
+								$report->minPanne = 0;
+								$report->usuario_id = 213;
+								$report->horometro_inicial = 0;
+								$report->horometro_final = 0;
+								if(!$report->save()){
+									$errores[] = $report->errors;
+								}
+								break;
+							}
+							else{
+								$fecha->add(new DateInterval('P1D'));
+								$report = RCamionPropio::model()->findByAttributes(['fecha'=>$fecha->format('Y-m-d'), 'camionPropio_id'=>$vehiculoRG->camionpropio_id]);
+							}
+						}
+						$remuneracion->rCamionPropio_id = $report->id;
+						//si puedo guardar la remuneracion, enlazo el registro de rindegastos
+						if($remuneracion->save()){
+							$remuneracionRG->remuneracion_id = $remuneracion->id;
+						}
+						else{
+							$errores[] = $remuneracion->errors;
+						}
+					}
+					else if($tipo_report == "CA"){
+						$remuneracion = new RemuneracionCamionArrendado();
+						$descripcion = $gasto->note;
+						if(strlen($descripcion) > 200){
+							$descripcion = substr($descripcion,0,200);
+						}
+						if($descripcion == ""){
+							$descripcion = "Sin descripción - Rindegastos";
+						}
+						$remuneracion->descripcion = $descripcion;
+						$remuneracion->montoNeto = (int)$gastoCompleta->monto_neto;
+						$cantidad = str_replace(",",".",$gastoCompleta->cantidad);
+						$remuneracion->cantidad = (float)$cantidad;
+						$remuneracion->unidad = Tools::convertUnidad($gastoCompleta->unidad);
+						if(isset($faenaRG)){
+							$remuneracion->faena_id = $faenaRG->faena_id;
+						}
+						else{
+							$remuneracion->faena_id = 0;
+						}
+						$remuneracion->factura = substr($gastoCompleta->nro_documento,0,45);
+						if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
+							$remuneracion->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
+						}
+						else{
+							$remuneracion->nombre = $gastoCompleta->nombre_quien_rinde;
+						}
+						$remuneracion->observaciones = "Registro de Rindegastos";
+						$remuneracion->rut_rinde = " ";
+						$remuneracion->cuenta = $gasto->category_code." - ".$gasto->category;
+						$remuneracion->nombre_proveedor = $gasto->supplier;
+						$remuneracion->rut_proveedor = $gastoCompleta->rut_proveedor;
+						$remuneracion->tipo_documento = Tools::traducirTipoDocumento($gastoCompleta->tipo_documento);
+						$remuneracion->rindegastos = 1;
+
+
+						//busco un report al que asociar la remuneración:
+						//inicio buscando para la fecha del gasto
+						$fecha = new DateTime($gasto->issue_date);
+						$ultimoDiaMes = date("Y-m-t",strtotime($gasto->issue_date));
+						$report = RCamionArrendado::model()->findByAttributes(['fecha'=>$gasto->issue_date, 'camionArrendado_id'=>$vehiculoRG->camionarrendado_id]);
+						while($report == null){
+							//si no hay report busco para el día siguiente,
+							//sino para el subsiguiente, hasta llegar al día sábado, si no hay para el sábado
+							//creo un report para el sábado y asocio la remuneración a ese
+							//el día posterior, hasta el sábado de esa semana.
+							//pero si llega al fin de mes, lo agrego al fin de mes
+							$dow = date('w',strtotime($fecha->format("Y-m-d")));
+							if($dow == 6 || $ultimoDiaMes == $fecha->format("Y-m-d")){
+								//sábado o fin de mes
+								$report = RCamionArrendado::model()->findByAttributes([
+									'reporte' => "*".$gasto->id,
+									'observaciones' => "Report creado automáticamente para asociación con RindeGastos",
+								]);
+								if(isset($report)){
+									//si ya había sido creado un report con ese campo reporte, lo traslado a fin de mes (que sería anterior)	
+									//fix fin de mes
+									$report->fecha = $fecha->format('Y-m-d');
+									$report->camionArrendado_id = (int)$vehiculoRG->camionarrendado_id;
+									$report->ordenCompra = "OC - RindeGastos";
+									$report->chofer_id = 0;
+									$report->panne = 0;
+									$report->iniPanne = "";
+									$report->finPanne = "";
+									$report->minPanne = 0;
+									$report->usuario_id = 213;
+									$report->horometro_inicial = 0;
+									$report->horometro_final = 0;
+									$report->save();
+									break;
+								}
+								$report = RCamionArrendado::model()->findByAttributes([
+									'fecha' => $fecha->format('Y-m-d'),
+									'reporte' => "*".$gasto->id,
+									'observaciones' => "Report creado automáticamente para asociación con RindeGastos",
+								]);
+								if(!isset($report)){
+									$report = new RCamionArrendado();
+									$report->fecha = $fecha->format('Y-m-d');
+									$report->reporte = "*".$gasto->id;
+									$report->observaciones = "Report creado automáticamente para asociación con RindeGastos";
+								}
+								$report->camionArrendado_id = (int)$vehiculoRG->camionarrendado_id;
+								$report->ordenCompra = "OC - RindeGastos";
+								$report->chofer_id = 0;
+								$report->panne = 0;
+								$report->iniPanne = "";
+								$report->finPanne = "";
+								$report->minPanne = 0;
+								$report->usuario_id = 213;
+								$report->horometro_inicial = 0;
+								$report->horometro_final = 0;
+								if(!$report->save()){
+									$errores[] = $report->errors;
+								}
+								break;
+							}
+							else{
+								$fecha->add(new DateInterval('P1D'));
+								$report = RCamionArrendado::model()->findByAttributes(['fecha'=>$fecha->format('Y-m-d'), 'camionArrendado_id'=>$vehiculoRG->camionarrendado_id]);
+							}
+						}
+						$remuneracion->rCamionArrendado_id = $report->id;						
+						//si puedo guardar la remuneración, enlazo el registro de rindegastos
+						if($remuneracion->save()){
+							$remuneracionRG->remuneracion_id = $remuneracion->id;
+						}
+						else{
+							$errores[] = $remuneracion->errors;
+						}
+					}
+					else if($tipo_report == "EP"){
+						$remuneracion = new RemuneracionEquipoPropio();
+						$descripcion = $gasto->note;
+						if(strlen($descripcion) > 200){
+							$descripcion = substr($descripcion,0,200);
+						}
+						if($descripcion == ""){
+							$descripcion = "Sin descripción - Rindegastos";
+						}
+						$remuneracion->descripcion = $descripcion;
+						$remuneracion->montoNeto = (int)$gastoCompleta->monto_neto;
+						$cantidad = str_replace(",",".",$gastoCompleta->cantidad);
+						$remuneracion->cantidad = (float)$cantidad;
+						$remuneracion->unidad = Tools::convertUnidad($gastoCompleta->unidad);
+						if(isset($faenaRG)){
+							$remuneracion->faena_id = $faenaRG->faena_id;
+						}
+						else{
+							$remuneracion->faena_id = 0;
+						}
+						$remuneracion->factura = substr($gastoCompleta->nro_documento,0,45);
+						if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
+							$remuneracion->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
+						}
+						else{
+							$remuneracion->nombre = $gastoCompleta->nombre_quien_rinde;
+						}
+						$remuneracion->observaciones = "Registro de Rindegastos";
+						$remuneracion->rut_rinde = " ";
+						$remuneracion->cuenta = $gasto->category_code." - ".$gasto->category;
+						$remuneracion->nombre_proveedor = $gasto->supplier;
+						$remuneracion->rut_proveedor = $gastoCompleta->rut_proveedor;
+						$remuneracion->tipo_documento = Tools::traducirTipoDocumento($gastoCompleta->tipo_documento);
+						$remuneracion->rindegastos = 1;
+
+
+						//busco un report al que asociar la remuneración:
+						//inicio buscando para la fecha del gasto
+						$fecha = new DateTime($gasto->issue_date);
+						$ultimoDiaMes = date("Y-m-t",strtotime($gasto->issue_date));
+						$report = REquipoPropio::model()->findByAttributes(['fecha'=>$gasto->issue_date, 'equipoPropio_id'=>$vehiculoRG->equipopropio_id]);
+						while($report == null){
+							//si no hay report busco para el día siguiente,
+							//sino para el subsiguiente, hasta llegar al día sábado, si no hay para el sábado
+							//creo un report para el sábado y asocio la remuneración a ese
+							//el día posterior, hasta el sábado de esa semana.
+							//pero si llega al fin de mes, lo agrego al fin de mes
+							$dow = date('w',strtotime($fecha->format("Y-m-d")));
+							if($dow == 6 || $ultimoDiaMes == $fecha->format("Y-m-d")){
+								//sábado o fin de mes
+								$report = REquipoPropio::model()->findByAttributes([
+									'reporte' => "*".$gasto->id,
+									'observaciones' => "Report creado automáticamente para asociación con RindeGastos",
+								]);
+								
+								if(isset($report)){
+									//si ya había sido creado un report con ese campo reporte, lo traslado a fin de mes (que sería anterior)	
+									//fix fin de mes
+									$report->fecha = $fecha->format('Y-m-d');
+									$report->equipoPropio_id = (int)$vehiculoRG->equipopropio_id;
+									$report->hInicial = 0;
+									$report->hFinal = 0;
+									$report->horas = 0;
+									$report->operador_id = 0;
+									$report->panne = 0;
+									$report->iniPanne = "";
+									$report->finPanne = "";
+									$report->minPanne = 0;
+									$report->horasGps = 0;
+									$report->usuario_id = 213;
+									$report->save();
+									break;
+								}
+								$report = REquipoPropio::model()->findByAttributes([
+									'fecha' => $fecha->format('Y-m-d'),
+									'reporte' => "*".$gasto->id,
+									'observaciones' => "Report creado automáticamente para asociación con RindeGastos",
+								]);
+								if(!isset($report)){
+									$report = new REquipoPropio();
+									$report->fecha = $fecha->format('Y-m-d');
+									$report->reporte = "*".$gasto->id;
+									$report->observaciones = "Report creado automáticamente para asociación con RindeGastos";
+								}
+								
+								$report->equipoPropio_id = (int)$vehiculoRG->equipopropio_id;
+								$report->hInicial = 0;
+								$report->hFinal = 0;
+								$report->horas = 0;
+								$report->operador_id = 0;
+								$report->panne = 0;
+								$report->iniPanne = "";
+								$report->finPanne = "";
+								$report->minPanne = 0;
+								$report->horasGps = 0;
+								$report->usuario_id = 213;
+								if(!$report->save()){
+									$errores[] = $report->errors;
+								}
+								break;
+							}
+							else{
+								$fecha->add(new DateInterval('P1D'));
+								$report = REquipoPropio::model()->findByAttributes(['fecha'=>$fecha->format('Y-m-d'), 'equipoPropio_id'=>$vehiculoRG->equipopropio_id]);
+							}
+						}
+						$remuneracion->rEquipoPropio_id = $report->id;						
+						//si puedo guardar la remuneración, enlazo el registro de rindegastos
+						if($remuneracion->save()){
+							$remuneracionRG->remuneracion_id = $remuneracion->id;
+						}
+						else{
+							$errores[] = $remuneracion->errors;
+						}
+					}
+					else if($tipo_report == "EA"){
+						$remuneracion = new RemuneracionEquipoArrendado();
+						$descripcion = $gasto->note;
+						if(strlen($descripcion) > 200){
+							$descripcion = substr($descripcion,0,200);
+						}
+						if($descripcion == ""){
+							$descripcion = "Sin descripción - Rindegastos";
+						}
+						$remuneracion->descripcion = $descripcion;
+						$remuneracion->montoNeto = (int)$gastoCompleta->monto_neto;
+						$cantidad = str_replace(",",".",$gastoCompleta->cantidad);
+						$remuneracion->cantidad = (float)$cantidad;
+						$remuneracion->unidad = Tools::convertUnidad($gastoCompleta->unidad);
+						if(isset($faenaRG)){
+							$remuneracion->faena_id = $faenaRG->faena_id;
+						}
+						else{
+							$remuneracion->faena_id = 0;
+						}
+						$remuneracion->factura = substr($gastoCompleta->nro_documento,0,45);
+						if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
+							$remuneracion->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
+						}
+						else{
+							$remuneracion->nombre = $gastoCompleta->nombre_quien_rinde;
+						}
+						$remuneracion->observaciones = "Registro de Rindegastos";
+						$remuneracion->rut_rinde = " ";
+						$remuneracion->cuenta = $gasto->category_code." - ".$gasto->category;
+						$remuneracion->nombre_proveedor = $gasto->supplier;
+						$remuneracion->rut_proveedor = $gastoCompleta->rut_proveedor;
+						$remuneracion->tipo_documento = Tools::traducirTipoDocumento($gastoCompleta->tipo_documento);
+						$remuneracion->rindegastos = 1;
+
+
+						//busco un report al que asociar la remuneración:
+						//inicio buscando para la fecha del gasto
+						$fecha = new DateTime($gasto->issue_date);
+						$ultimoDiaMes = date("Y-m-t",strtotime($gasto->issue_date));
+						$report = REquipoArrendado::model()->findByAttributes(['fecha'=>$gasto->issue_date, 'equipoArrendado_id'=>$vehiculoRG->equipoarrendado_id]);
+						while($report == null){
+							//si no hay report busco para el día siguiente,
+							//sino para el subsiguiente, hasta llegar al día sábado, si no hay para el sábado
+							//creo un report para el sábado y asocio la remuneración a ese
+							//el día posterior, hasta el sábado de esa semana.
+							//pero si llega al fin de mes, lo agrego al fin de mes
+							$dow = date('w',strtotime($fecha->format("Y-m-d")));
+							if($dow == 6 || $ultimoDiaMes == $fecha->format("Y-m-d")){
+								//sábado o fin de mes
+								$report = REquipoArrendado::model()->findByAttributes([
+									'reporte' => "*".$gasto->id,
+									'observaciones' => "Report creado automáticamente para asociación con RindeGastos",
+								]);
+								if(isset($report)){
+									//si ya había sido creado un report con ese campo reporte, lo traslado a fin de mes (que sería anterior)	
+									//fix fin de mes
+									$report->fecha = $fecha->format('Y-m-d');
+									$report->ordenCompra = "OC - RindeGastos";
+									$report->equipoArrendado_id = (int)$vehiculoRG->equipoarrendado_id;
+									$report->hInicial = 0;
+									$report->hFinal = 0;
+									$report->horas = 0;
+									$report->operador_id = 0;
+									$report->panne = 0;
+									$report->iniPanne = "";
+									$report->finPanne = "";
+									$report->minPanne = 0;
+									$report->horasGps = 0;
+									$report->usuario_id = 213;
+									$report->save();
+									break;
+								}
+								$report = REquipoArrendado::model()->findByAttributes([
+									'fecha' => $fecha->format('Y-m-d'),
+									'reporte' => "*".$gasto->id,
+									'observaciones' => "Report creado automáticamente para asociación con RindeGastos",
+								]);
+								if(!isset($report)){
+									$report = new REquipoArrendado();
+									$report->fecha = $fecha->format('Y-m-d');
+									$report->reporte = "*".$gasto->id;
+									$report->observaciones = "Report creado automáticamente para asociación con RindeGastos";
+								}
+								$report->equipoArrendado_id = (int)$vehiculoRG->equipoarrendado_id;
+								$report->ordenCompra = "OC - RindeGastos";
+								$report->hInicial = 0;
+								$report->hFinal = 0;
+								$report->horas = 0;
+								$report->operador_id = 0;
+								$report->panne = 0;
+								$report->iniPanne = "";
+								$report->finPanne = "";
+								$report->minPanne = 0;
+								$report->horasGps = 0;
+								$report->usuario_id = 213;
+								if(!$report->save()){
+									$errores[] = $report->errors;
+								}
+								break;
+							}
+							else{
+								$fecha->add(new DateInterval('P1D'));
+								$report = REquipoArrendado::model()->findByAttributes(['fecha'=>$fecha->format('Y-m-d'), 'equipoArrendado_id'=>$vehiculoRG->equipoarrendado_id]);
+							}
+						}
+						$remuneracion->rEquipoArrendado_id = $report->id;						
+						//si puedo guardar la remuneración, enlazo el registro de rindegastos
+						if($remuneracion->save()){
+							$remuneracionRG->remuneracion_id = $remuneracion->id;
+						}
+						else{
+							$errores[] = $remuneracion->errors;
+						}
+					}
+
+					if(!$remuneracionRG->save()){
+						$errores[] = $remuneracionRG->errors;
 					}
 				}
 			}
