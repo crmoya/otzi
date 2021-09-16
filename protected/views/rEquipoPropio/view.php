@@ -110,7 +110,7 @@
 									<td style='font-size:0.9em;'><b>Rut quien rinde:</b></td>
 									<td><?php echo CHtml::encode($combustible['rut_rinde']); ?></td>
 									<td style='font-size:0.9em;'><b>Fecha de Documento:</b></td>
-									<td><?php echo CHtml::encode($combustible['fechaRendicion']); ?></td>
+									<td><?php echo CHtml::encode(Tools::backFecha($combustible['fechaRendicion'])); ?></td>
 									<td style='font-size:0.9em;'><b>Nombre quien rinde:</b></td>
 									<td><?php echo CHtml::encode($combustible['nombre']); ?></td>
 								</tr>
@@ -170,7 +170,7 @@
 								</tr>
 								<tr>
 									<td style='font-size:0.9em;'><b>Fecha de Documento:</b></td>
-									<td><?php echo CHtml::encode($compra['fechaRendicion']); ?></td>
+									<td><?php echo CHtml::encode(Tools::backFecha($compra['fechaRendicion'])); ?></td>
 									<td style='font-size:0.9em;'><b>Guía:</b></td>
 									<td><?php echo CHtml::encode($compra['guia']); ?></td>
 								</tr>
@@ -229,7 +229,7 @@
 								</tr>
 								<tr>
 									<td style='font-size:0.9em;'><b>Fecha de Documento:</b></td>
-									<td><?php echo CHtml::encode($remuneracion['fechaRendicion']); ?></td>
+									<td><?php echo CHtml::encode(Tools::backFecha($remuneracion['fechaRendicion'])); ?></td>
 									<td style='font-size:0.9em;'><b>Guía:</b></td>
 									<td><?php echo CHtml::encode($remuneracion['guia']); ?></td>
 								</tr>
