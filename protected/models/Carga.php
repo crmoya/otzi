@@ -2,7 +2,6 @@
 
 class Carga{
 
-
 	public function rindeGastos()
 	{
 		$connection= Yii::app()->db;
@@ -1563,11 +1562,6 @@ class Carga{
 		try {
 
 			//elimino todo lo anterior
-			/*
-			GastoImagen::model()->deleteAll();
-			ExtraGasto::model()->deleteAll();
-			GastoCompleta::model()->deleteAll();
-			*/
 			Gasto::model()->deleteAllByAttributes(['chipax'=> 0]);
 
 			//AHORA TRAIGO LOS
