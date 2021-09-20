@@ -98,6 +98,7 @@ class ChipaxController extends Controller
                 throw new Exception("No se pudo crear el gasto completo");
             }        
 
+/*
             //procesar gasto
             ini_set("memory_limit", "-1");
             set_time_limit(0);
@@ -1609,7 +1610,7 @@ class ChipaxController extends Controller
             }
 
 
-
+*/
 
             $transaction->commit();  
             
