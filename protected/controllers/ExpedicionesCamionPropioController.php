@@ -64,6 +64,7 @@ class ExpedicionesCamionPropioController extends Controller
 			['name'=>'Producción','width'=>'md'],
 			['name'=>'Comb.Lts','width'=>'sm'],
 			['name'=>'Repuestos($)','width'=>'md'],
+			['name'=>'Remuneraciones($)','width'=>'md'],
 			['name'=>'Hrs.Panne','width'=>'sm'],
 			['name'=>'Panne','width'=>'sm'],
 			['name'=>'Validar', 'filtro'=>'validacion', 'width'=>'xs'],
@@ -86,6 +87,7 @@ class ExpedicionesCamionPropioController extends Controller
 			['campo'=>'produccion','exportable','format'=>'money','acumulado'=>'suma'],
 			['campo'=>'combustible','exportable', 'format'=>'number','acumulado'=>'suma'],
 			['campo'=>'repuestos','exportable', 'format'=>'money','acumulado'=>'suma'],
+			['campo'=>'remuneraciones','exportable', 'format'=>'money','acumulado'=>'suma'],
 			['campo'=>'horas_panne','exportable', 'format'=>'number','acumulado'=>'suma'],
 			['campo'=>'panne','exportable'],
 			['campo'=>'validado','format'=>'validado','params'=>['id'],'ordenable'=>'false'],
@@ -102,6 +104,7 @@ class ExpedicionesCamionPropioController extends Controller
 			$produccion = 0;
 			$combustible = 0;
 			$repuestos = 0;
+			$remuneraciones = 0;
 
 			if($model->camion_id != null && $model->camion_id != ""){
 				if($model->camion_id != $report['camion_id']){
@@ -160,6 +163,13 @@ class ExpedicionesCamionPropioController extends Controller
 				$repuestos += $compra->montoNeto;
 			}
 
+			//remuneraciones
+			$sueldos = RemuneracionCamionPropio::model()->findAllByAttributes(['rCamionPropio_id'=>$report['id']]);
+			foreach($sueldos as $sueldo){
+				$remuneraciones += $sueldo->montoNeto;
+			}
+
+
 			$dato['tipo'] = $report['tipo'];
 			$dato['fecha'] = $report['fecha'];
 			$dato['reporte'] = $report['reporte'];
@@ -178,6 +188,7 @@ class ExpedicionesCamionPropioController extends Controller
 			$dato['produccion'] = $produccion;
 			$dato['combustible'] = $combustible;
 			$dato['repuestos'] = $repuestos;
+			$dato['remuneraciones'] = $remuneraciones;
 			
 			$datos[] = (object)$dato;	
 		}
