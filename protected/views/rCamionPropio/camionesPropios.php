@@ -889,7 +889,7 @@ $cs->registerCoreScript('jquery');
 						echo $form->dropDownList(
 							$model,
 							'camionPropio_id',
-							CHtml::listData(CamionPropio::model()->listar(), 'id', 'nombre'),
+							CHtml::listData(CamionPropio::model()->listarTodos(), 'id', 'nombre'),
 							array(
 								'class' => 'camion',
 								'disabled' => $model->validado == 1 || $model->validado == 2 ? 'disabled' : '',
