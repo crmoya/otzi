@@ -181,4 +181,23 @@ class EquipoPropio extends CActiveRecord
 		}
 		return $data;
 	}
+
+	public function listarEnRG(){
+		$data = array();
+		$connection=Yii::app()->db;
+		$connection->active=true;
+		$command=$connection->createCommand("
+			select		e.id,concat(codigo,': ',nombre) as nombre
+			from		equipoPropio e
+			join		vehiculo_rindegasto v on v.equipopropio_id = e.id
+			order by	nombre
+			"
+		);
+		$dataReader=$command->query();
+		$rows=$dataReader->readAll();
+		$connection->active=false;
+		$command = null;
+		
+		return $rows;
+	}
 }

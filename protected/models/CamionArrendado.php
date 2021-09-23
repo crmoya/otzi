@@ -207,4 +207,23 @@ class CamionArrendado extends CActiveRecord
 		}
 		return $data;
 	}
+
+	public function listarEnRG(){
+		$data = array();
+		$connection=Yii::app()->db;
+		$connection->active=true;
+		$command=$connection->createCommand("
+			select		e.id,nombre
+			from		camionArrendado e
+			join		vehiculo_rindegasto v on v.camionarrendado_id = e.id
+			order by	nombre
+			"
+		);
+		$dataReader=$command->query();
+		$rows=$dataReader->readAll();
+		$connection->active=false;
+		$command = null;
+		
+		return $rows;
+	}
 }

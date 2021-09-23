@@ -11,10 +11,22 @@
 	'filter'=>$model,
 	'columns'=>array(
 		'vehiculo',
-		['name'=>"camionpropio_id",'value'=>'isset($data->camionPropio)?$data->camionPropio->nombre." (".$data->camionPropio->codigo.")":""'],
-		['name'=>"camionarrendado_id",'value'=>'isset($data->camionArrendado)?$data->camionArrendado->nombre:""'],
-		['name'=>"equipopropio_id",'value'=>'isset($data->equipoPropio)?$data->equipoPropio->nombre." (".$data->equipoPropio->codigo.")":""'],
-		['name'=>"equipoarrendado_id",'value'=>'isset($data->equipoArrendado)?$data->equipoArrendado->nombre:""'],
+		[
+			'name'=>"camionpropio_id",'value'=>'isset($data->camionPropio)?$data->camionPropio->nombre." (".$data->camionPropio->codigo.")":""',
+			'filter'=>CHtml::listData(CamionPropio::model()->listarEnRG(), 'id', 'nombre'),
+		],
+		[
+			'name'=>"camionarrendado_id",'value'=>'isset($data->camionArrendado)?$data->camionArrendado->nombre:""',
+			'filter'=>CHtml::listData(CamionArrendado::model()->listarEnRG(), 'id', 'nombre'),
+		],
+		[
+			'name'=>"equipopropio_id",'value'=>'isset($data->equipoPropio)?$data->equipoPropio->nombre." (".$data->equipoPropio->codigo.")":""',
+			'filter'=>CHtml::listData(EquipoPropio::model()->listarEnRG(), 'id', 'nombre'),
+		],
+		[
+			'name'=>"equipoarrendado_id",'value'=>'isset($data->equipoArrendado)?$data->equipoArrendado->nombre:""',
+			'filter'=>CHtml::listData(EquipoArrendado::model()->listarEnRG(), 'id', 'nombre'),
+		],
 		array(
 			'class'=>'CButtonColumn',
 			'template' => '{delete}',

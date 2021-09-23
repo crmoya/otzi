@@ -45,7 +45,7 @@ class VehiculoRindegastos extends CActiveRecord
 			array('id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, vehiculo', 'safe', 'on'=>'search'),
+			array('id, vehiculo, camionpropio_id, camionarrendado_id, equipoarrendado_id, equipopropio_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -93,6 +93,10 @@ class VehiculoRindegastos extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('vehiculo',$this->vehiculo,true);
+		$criteria->compare('camionpropio_id',$this->camionpropio_id);
+		$criteria->compare('camionarrendado_id',$this->camionarrendado_id);
+		$criteria->compare('equipopropio_id',$this->equipopropio_id);
+		$criteria->compare('equipoarrendado_id',$this->equipoarrendado_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
