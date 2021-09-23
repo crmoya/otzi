@@ -35,7 +35,7 @@ class Carga{
 			RemuneracionEquipoArrendado::model()->deleteAllByAttributes(['rindegastos'=>1]);
 
 			$criteria = new CDbCriteria();
-
+			
 			//filtro las categorías que para las que no son remuneraciones
 			$criteria->addNotInCondition('category',Tools::CATEGORIAS_REMUNERACIONES_RINDEGASTOS);
 			//INGRESO LOS GASTOS DE COMBUSTIBLE DE ACUERDO A LA TABLA GASTO_COMPLETA			
@@ -78,6 +78,11 @@ class Carga{
 							$tipo_report = "EA";
 						}
 					}
+					else{
+						//gasto no asociado a un vehículo
+						continue;
+					}
+
 					$faenaRG = FaenaRindegasto::model()->findByAttributes(['faena'=>$gastoCompleta->centro_costo_faena]);
 					if(isset($faenaRG)){
 						$combustible->faena_id = $faenaRG->faena_id;
@@ -549,7 +554,10 @@ class Carga{
 							$tipo_report = "EA";
 						}
 					}
-
+					else{
+						//gasto no asociado a un vehículo
+						continue;
+					}
 					$faenaRG = FaenaRindegasto::model()->findByAttributes(['faena'=>$gastoCompleta->centro_costo_faena]);
 					if(isset($faenaRG)){
 						$nocombustible->faena_id = $faenaRG->faena_id;
@@ -1060,7 +1068,10 @@ class Carga{
 							$tipo_report = "EA";
 						}
 					}
-					
+					else{
+						//gasto no asociado a un vehículo
+						continue;
+					}
 					$faenaRG = FaenaRindegasto::model()->findByAttributes(['faena'=>$gastoCompleta->centro_costo_faena]);
 					if(isset($faenaRG)){
 						$remuneracionRG->faena_id = $faenaRG->faena_id;
