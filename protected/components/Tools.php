@@ -9,6 +9,38 @@ class Tools
 
 	const FACTOR_KMS_MILLAS = 1.60934;
 
+	const CATEGORIAS_COMBUSTIBLES_CHIPAX = [
+		'01 Bencina',
+		'02 Petróleo',
+		'02.a Gas Licuado Vehicular',
+		'Cop. 01 Bencina',
+		'Cop. 02 Petróleo',
+		'Cop. 02.a Gas Licuado Vehicular',
+		'Cop. 03.1 Parafina',
+		'CG.- 01 Bencina',
+		'CG.- 02 Petróleo',
+
+	];
+	const CATEGORIAS_REMUNERACIONES_CHIPAX = [
+		'13 Remuneraciónes del Personal',
+		'13.2 Remuneraciones Personal externo',
+		'Cop. 13.1 Remuneraciones del Personal Indirecto',
+		'Cop. 13.2 Remuneraciones Personal externo',
+		'14 Honorarios Profesionales',
+		'14.1 Honorarios Profesionales Abogados',
+		'14.2 Honorarios Profesionales Notarios, CBR',
+		'14.3 Honorarios Técnicos, Profesionales, Otros',
+		'Cop. 14 Honorarios Profesionales',
+		'Cop. 14.1 Profesionales Abogados',
+		'Cop. 14.2 Honorarios Técnicos, Profesionales, Otro',
+		'Cop. 14.3 Honorarios Profesionales Notarios, CBR',
+		'CG.- 13 Remuneraciones del Personal',
+		'CG.-Honorarios Profesionales',
+		'CG.- 14 Honorarios Profesionales Abogados',
+		'CG.- 14.2_Honorarios Técnicos, Profesionales Otros',
+		'CG.- 14.3 Honorarios Profesionales Notarios, CBR',
+	];
+
 	const CATEGORIAS_REMUNERACIONES_RINDEGASTOS = [
 		'13 Remuneraciones del Personal',
 		'13.1 Remuneraciones del Personal Indirecto',
