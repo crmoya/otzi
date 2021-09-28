@@ -8,9 +8,9 @@ class ChipaxController extends Controller
         ini_set("memory_limit", "-1");
         set_time_limit(0);
         $connection= Yii::app()->db;
-        $connection->active=true;
 		$transaction=$connection->beginTransaction();
         $respuesta = json_encode(['status'=>'OK','message' => ""]);
+        $errores = [];
         try {
             $hash = Yii::app()->request->getQuery('hash');
             $local_hash = Tools::chipaxSecret(0);
@@ -579,7 +579,6 @@ class ChipaxController extends Controller
                     $errores[] = $combustible->errors;
                 }
             }
-
             //en remuneraciones y otros gastos falta filtrar por BHE o BTE
             //falta folio en gasto
             //probablemente la descripción esté mal
@@ -1089,6 +1088,7 @@ class ChipaxController extends Controller
 
             //OTROS GASTOS
             else{
+                
                 $nocombustible = new NocombustibleRindegasto();
                 $nocombustible->status = $gasto->status;
                 $nocombustible->fecha = $gasto->issue_date;
@@ -1126,7 +1126,6 @@ class ChipaxController extends Controller
                 else{
                     $nocombustible->faena_id = 0;
                 }
-
                 //asociar gasto a report de compra de repuesto
                 //según el tipo de report, busco si hay uno para la fecha 
                 if($tipo_report == "CP"){
@@ -1238,6 +1237,7 @@ class ChipaxController extends Controller
                     else{
                         $errores[] = $compra->errors;
                     }
+                    
                 }
                 else if($tipo_report == "CA"){
                     $compra = new CompraRepuestoCamionArrendado();
@@ -1590,8 +1590,8 @@ class ChipaxController extends Controller
 
             }
 
+            
             if(count($errores) > 0){
-                $transaction->rollback();
                 throw new Exception("No se pudo crear la carga de combustible o el report automático para asociar el gasto en SAM.");
             }
             else {
