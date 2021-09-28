@@ -8,6 +8,7 @@ class ChipaxController extends Controller
         ini_set("memory_limit", "-1");
         set_time_limit(0);
         $connection= Yii::app()->db;
+        $connection->active=true;
 		$transaction=$connection->beginTransaction();
         $respuesta = json_encode(['status'=>'OK','message' => ""]);
         try {
