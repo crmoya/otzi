@@ -23,6 +23,54 @@ class SiteController extends Controller
 		);
 	}
 
+	public function actionClean()
+	{
+		//borro todos los gastos creados con chipax
+		//esto borrará los gasto_completa y también los combustible, nocombustible y remuneraciones creados
+		Gasto::model()->deleteAllByAttributes(['chipax'=>1]);
+		//ahora hay que limpiar los reports que no tengan cargas, compras o remuneraciones asociadas por si fueron creados
+		
+		//para camionesPropios
+		Yii::app()->db->createCommand("
+			delete from rCamionPropio r
+			where 	not exists (select * from cargaCombCamionPropio where rCamionPropio_id = r.id) AND
+					not exists (select * from compraRepuestoCamionPropio where rCamionPropio_id = r.id) AND
+					not exists (select * from remuneracionCamionPropio where rCamionPropio_id = r.id) AND
+					`reporte` LIKE '*%' AND 
+					`observaciones` LIKE '%Report creado automáticamente para asociación con RindeGastos%'
+		")->execute();
+
+		//para camionesArrendados
+		Yii::app()->db->createCommand("
+			delete from rCamionArrendado r
+			where 	not exists (select * from cargaCombCamionArrendado where rCamionArrendado_id = r.id) AND
+					not exists (select * from compraRepuestoCamionArrendado where rCamionArrendado_id = r.id) AND
+					not exists (select * from remuneracionCamionArrendado where rCamionArrendado_id = r.id) AND
+					`reporte` LIKE '*%' AND 
+					`observaciones` LIKE '%Report creado automáticamente para asociación con RindeGastos%'
+		")->execute();
+
+		//para equiposPropios
+		Yii::app()->db->createCommand("
+			delete from rEquipoPropio r
+			where 	not exists (select * from cargaCombEquipoPropio where rEquipoPropio_id = r.id) AND
+					not exists (select * from compraRepuestoEquipoPropio where rEquipoPropio_id = r.id) AND
+					not exists (select * from remuneracionEquipoPropio where rEquipoPropio_id = r.id) AND
+					`reporte` LIKE '*%' AND 
+					`observaciones` LIKE '%Report creado automáticamente para asociación con RindeGastos%'
+		")->execute();
+
+		//para equiposArrendados
+		Yii::app()->db->createCommand("
+			delete from rEquipoArrendado r
+			where 	not exists (select * from cargaCombEquipoArrendado where rEquipoArrendado_id = r.id) AND
+					not exists (select * from compraRepuestoEquipoArrendado where rEquipoArrendado_id = r.id) AND
+					not exists (select * from remuneracionEquipoArrendado where rEquipoArrendado_id = r.id) AND
+					`reporte` LIKE '*%' AND 
+					`observaciones` LIKE '%Report creado automáticamente para asociación con RindeGastos%'
+		")->execute();
+		
+	}
 
 	/*
 	public function actionConfigureRoles()
