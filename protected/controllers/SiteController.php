@@ -25,11 +25,74 @@ class SiteController extends Controller
 
 	public function actionClean()
 	{
+		//borro las cargas, compras y remuneraciones asociadas a los gastos
+		$gastos = Gasto::model()->findAllByAttributes(['chipax'=>1]);
+		foreach($gastos as $gasto){
+			$gastoCompleta = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
+			$combustible = CombustibleRindegasto::model()->findByAttributes(['gasto_completa_id'=>$gastoCompleta->id]);
+			$noCombustible = NocombustibleRindegasto::model()->findByAttributes(['gasto_completa_id'=>$gastoCompleta->id]);
+			$remuneracion = RemuneracionRindegasto::model()->findByAttributes(['gasto_completa_id'=>$gastoCompleta->id]);
+			if(isset($combustible)){
+				if($combustible->camionpropio_id != null){
+					$carga = CargaCombCamionPropio::model()->findByPk($combustible->carga_id);
+					$carga->delete();
+				}
+				if($combustible->camionarrendado_id != null){
+					$carga = CargaCombCamionArrendado::model()->findByPk($combustible->carga_id);
+					$carga->delete();
+				}
+				if($combustible->equipopropio_id != null){
+					$carga = CargaCombEquipoPropio::model()->findByPk($combustible->carga_id);
+					$carga->delete();
+				}
+				if($combustible->equipoarrendado_id != null){
+					$carga = CargaCombEquipoArrendado::model()->findByPk($combustible->carga_id);
+					$carga->delete();
+				}
+			}
+			if(isset($noCombustible)){
+				if($noCombustible->camionpropio_id != null){
+					$compra = CompraRepuestoCamionPropio::model()->findByPk($noCombustible->compra_id);
+					$compra->delete();
+				}
+				if($noCombustible->camionarrendado_id != null){
+					$compra = CompraRepuestoCamionArrendado::model()->findByPk($noCombustible->compra_id);
+					$compra->delete();
+				}
+				if($noCombustible->equipopropio_id != null){
+					$compra = CompraRepuestoEquipoPropio::model()->findByPk($noCombustible->compra_id);
+					$compra->delete();
+				}
+				if($noCombustible->equipoarrendado_id != null){
+					$compra = CompraRepuestoEquipoArrendado::model()->findByPk($noCombustible->compra_id);
+					$compra->delete();
+				}
+			}
+			if(isset($remuneracion)){
+				if($remuneracion->camionpropio_id != null){
+					$rem = RemuneracionCamionPropio::model()->findByPk($remuneracion->remuneracion_id);
+					$rem->delete();
+				}
+				if($remuneracion->camionarrendado_id != null){
+					$rem = RemuneracionCamionArrendado::model()->findByPk($remuneracion->remuneracion_id);
+					$rem->delete();
+				}
+				if($remuneracion->equipopropio_id != null){
+					$rem = RemuneracionEquipoPropio::model()->findByPk($remuneracion->remuneracion_id);
+					$rem->delete();
+				}
+				if($remuneracion->equipoarrendado_id != null){
+					$rem = RemuneracionEquipoArrendado::model()->findByPk($remuneracion->remuneracion_id);
+					$rem->delete();
+				}
+			}
+		}
+		
 		//borro todos los gastos creados con chipax
 		//esto borrará los gasto_completa y también los combustible, nocombustible y remuneraciones creados
 		Gasto::model()->deleteAllByAttributes(['chipax'=>1]);
+
 		//ahora hay que limpiar los reports que no tengan cargas, compras o remuneraciones asociadas por si fueron creados
-		
 		//para camionesPropios
 		Yii::app()->db->createCommand("
 			delete from rCamionPropio
