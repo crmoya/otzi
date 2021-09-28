@@ -62,9 +62,9 @@ return array(
 		// uncomment the following to use a MySQL database
 		*/
 		'db'=>array(
-			'connectionString' => 'mysql:host=127.0.0.1;dbname=cot27290_SAM',
+			'connectionString' => 'mysql:host=127.0.0.1;dbname=cristhia_SAM',
 			'emulatePrepare' => true,
-			'username' => 'cot27290_SAM',
+			'username' => 'cristhia_SAM',
 			'password' => '?)ZkEI(O]nDl',
 			'charset' => 'utf8',
 			'enableParamLogging' => true,
