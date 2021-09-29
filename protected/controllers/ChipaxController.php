@@ -163,18 +163,20 @@ class ChipaxController extends Controller
                     $cargaComb->fechaRendicion = $gasto->issue_date;
                     $cargaComb->precioUnitario = 0;
                     $cargaComb->valorTotal = (int)$gastoCompleta->monto_neto + (int)$gastoCompleta->impuesto_especifico;
+                    
                     if(isset($faenaRG)){
                         $cargaComb->faena_id = $faenaRG->faena_id;
                     }
                     else{
                         $cargaComb->faena_id = 0;
                     }
-                    if(isset($faenaRG)){
+                    if(isset($tipoCombustibleRG)){
                         $cargaComb->tipoCombustible_id = $tipoCombustibleRG->tipoCombustible_id;
                     }
                     else{
                         $cargaComb->tipoCombustible_id = 0;
                     }
+
                     $cargaComb->supervisorCombustible_id = 0;
                     if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
                         $cargaComb->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
@@ -1590,7 +1592,6 @@ class ChipaxController extends Controller
 
             }
 
-            
             if(count($errores) > 0){
                 throw new Exception("No se pudo crear la carga de combustible o el report automático para asociar el gasto en SAM.");
             }

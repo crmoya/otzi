@@ -108,7 +108,7 @@ class Carga{
 						else{
 							$cargaComb->faena_id = 0;
 						}
-						if(isset($faenaRG)){
+						if(isset($tipoCombustibleRG)){
 							$cargaComb->tipoCombustible_id = $tipoCombustibleRG->tipoCombustible_id;
 						}
 						else{
@@ -227,7 +227,7 @@ class Carga{
 						$cargaComb->rut_proveedor = $gastoCompleta->rut_proveedor;
 						$cargaComb->observaciones = "Registro de Rindegastos";
 						$cargaComb->tipo_documento = Tools::traducirTipoDocumento($gastoCompleta->tipo_documento);
-						if(isset($faenaRG)){
+						if(isset($tipoCombustibleRG)){
 							$cargaComb->tipoCombustible_id = $tipoCombustibleRG->tipoCombustible_id;
 						}
 						else{
@@ -316,7 +316,7 @@ class Carga{
 						else{
 							$cargaComb->faena_id = 0;
 						}
-						if(isset($faenaRG)){
+						if(isset($tipoCombustibleRG)){
 							$cargaComb->tipoCombustible_id = $tipoCombustibleRG->tipoCombustible_id;
 						}
 						else{
@@ -421,7 +421,7 @@ class Carga{
 						else{
 							$cargaComb->faena_id = 0;
 						}
-						if(isset($faenaRG)){
+						if(isset($tipoCombustibleRG)){
 							$cargaComb->tipoCombustible_id = $tipoCombustibleRG->tipoCombustible_id;
 						}
 						else{
