@@ -23,6 +23,7 @@ class SiteController extends Controller
 		);
 	}
 
+	/*
 	public function actionClean()
 	{
 		//borro las cargas, compras y remuneraciones asociadas a los gastos
@@ -134,6 +135,7 @@ class SiteController extends Controller
 		")->execute();
 		
 	}
+	*/
 
 	/*
 	public function actionConfigureRoles()
