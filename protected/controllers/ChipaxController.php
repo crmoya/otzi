@@ -24,6 +24,7 @@ class ChipaxController extends Controller
             }
     
             $gastoJson = json_decode(file_get_contents("php://input"), true);
+            var_dump($gastoJson);die;
 
             $rs= Yii::app()->db->createCommand('select max(id) as id from gasto')->queryAll();
             $maxid = 0;
