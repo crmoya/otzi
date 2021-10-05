@@ -221,8 +221,11 @@ class GastoCompleta extends CActiveRecord
 				else if(isset($gastoImagen->medium)){
 					return $gastoImagen->medium;
 				}
-				if(isset($gastoImagen->small)){
+				else if(isset($gastoImagen->small)){
 					return $gastoImagen->small;
+				}
+				else if(isset($gastoImagen->file_name)){
+					return "https://www.cristhianmoya.com/html2png?html=" . $gastoImagen->file_name;
 				}
 			}
 		}
