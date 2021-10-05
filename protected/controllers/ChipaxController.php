@@ -44,6 +44,10 @@ class ChipaxController extends Controller
             $gasto->report_id = null;
             $gasto->expense_policy_id = null;
             $gasto->chipax = 1;
+
+            $gastoImagen = new GastoImagen();
+            $gastoImagen->gasto_id = $gasto->id;
+
             $gastoCompleta = new GastoCompleta();
             $gastoCompleta->gasto_id = $gasto->id;
             foreach($gastoJson as $key => $value) {
@@ -90,6 +94,9 @@ class ChipaxController extends Controller
                     case "vehiculo_seleccionado":
                         $gastoCompleta->vehiculo_equipo = $value;
                         break;
+                    case "html_factura":
+                        $gastoImagen->file_name = $value;
+                        break;
                     default:
                         break;
                 }
@@ -101,7 +108,9 @@ class ChipaxController extends Controller
             if(!$gastoCompleta->save()){
                 throw new Exception("No se pudo crear el gasto completo");
             }        
-
+            if(!$gastoImagen->save()){
+                throw new Exception("No se pudo crear la imagen del gasto");
+            }
 
             //procesar gasto
             //primero filtrar por categoría
