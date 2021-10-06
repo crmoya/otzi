@@ -225,7 +225,7 @@ class GastoCompleta extends CActiveRecord
 					return $gastoImagen->small;
 				}
 				else if(isset($gastoImagen->file_name)){
-					return "https://www.cristhianmoya.com/html2png?html=" . $gastoImagen->file_name;
+					return "https://www.otzi.cl/SAM/index.php/gastoImagen/render?id=" . $gastoImagen->id;
 				}
 			}
 		}
