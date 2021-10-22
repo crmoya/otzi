@@ -1640,8 +1640,6 @@ class ChipaxController extends Controller
             $dev = [];
             $faenas = null;
             $es_combustible = in_array($categoria,Tools::CATEGORIAS_COMBUSTIBLES_CHIPAX);
-            echo json_encode(['mensaje'=> $es_combustible]);
-            die;
             if($es_combustible){
                 $faenas = Faena::model()->findAllByAttributes(['combustible'=>1,'vigente'=>'SÍ']);
             }
