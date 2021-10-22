@@ -1616,4 +1616,33 @@ class ChipaxController extends Controller
 		echo $respuesta;
 
 	}
+
+    public function actionGetFaenas(){
+        ini_set("memory_limit", "-1");
+        set_time_limit(0);
+        $respuesta = json_encode(['status'=>'ERROR']);
+        try {
+            $categoriaJson = json_decode(file_get_contents("php://input"), true);
+            $categoria = $categoriaJson['categoria'];
+            $dev = [];
+            $faenas = null;
+            if(in_array($categoria,Tools::CATEGORIAS_COMBUSTIBLES_CHIPAX)){
+                $faenas = Faena::model()->findAllByAttributes(['combustible'=>1,'vigente'=>'SÍ']);
+            }
+            else{
+                $faenas = Faena::model()->findAllByAttributes(['vigente'=>'SÍ']);
+            }
+            foreach($faenas as $faena){
+                $dev[] = [
+                    'id' => $faena->id,
+                    'nombre' => $faena->nombre,
+                ];
+            }
+            $respuesta = json_encode(['status'=>'OK','faenas'=>$dev]);
+        }
+        catch(Exception $e){
+            $respuesta = json_encode(['status'=>'ERROR']);
+        }
+        echo $respuesta;
+    }
 }
