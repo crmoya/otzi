@@ -176,7 +176,7 @@ class FaenaController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('index', 'admin', 'view', 'createv', 'update', 'adminv', 'delete','exportar','export','listunits','getunit'),
+                'actions' => array('index', 'admin', 'view', 'createv', 'update', 'adminv', 'delete','exportar','export','listunits','getunit','combustible'),
                 'roles' => array('administrador'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -217,6 +217,7 @@ class FaenaController extends Controller {
         $model = new Faena();
     	if (isset($_POST['Faena'])) {
     		$model->attributes = $_POST['Faena'];
+			$model->combustible = $_POST['Faena']['combustible'];
     		$model->vigente = $_POST['Faena']['vigente'];
 			$valid = true;
 			if(isset($_POST['OrigendestinoFaena'])){
@@ -338,6 +339,7 @@ class FaenaController extends Controller {
 
             $model->attributes = $_POST['Faena'];
 			$model->vigente = $_POST['Faena']['vigente'];
+			$model->combustible = $_POST['Faena']['combustible'];
             
             if ($model->validate()) {
             	try{
@@ -347,6 +349,8 @@ class FaenaController extends Controller {
             		//ir borrando de la lista los que estén en el update
             		//hacer delete de los que queden en la lista
             		$odes=OrigendestinoFaena::model()->findAllByAttributes(array('faena_id'=>$id));
+
+					
             		
             		$ids = array();
             		foreach($odes as $od){
@@ -379,6 +383,7 @@ class FaenaController extends Controller {
 							}
 						}
 					}
+					
             		
 		            foreach($ids as $oId){
 		            	OrigendestinoFaena::model()->deleteByPk($oId);
@@ -397,11 +402,12 @@ class FaenaController extends Controller {
 					}
 
 					$uese=UnidadfaenaEquipo::model()->findAllByAttributes(array('faena_id'=>$id));
+					
             		$idse = array();
             		foreach($uese as $ue){
             			array_push($idse,$ue->id);
 					}
-
+					
 					if(isset($_POST['Unidadfaena'])){
 						foreach($_POST['Unidadfaena'] as $up){
 							$u = null;
@@ -485,6 +491,8 @@ class FaenaController extends Controller {
 		         	}            
 		         	
             	}catch(Exception $e){
+					var_dump($e);
+					die;
             		Yii::app()->user->setFlash('errorGrabarFaena',"No se pudieron guardar los cambios, por favor revise que el Origen/Destino para esta Faena no esté actualmente utilizado en algún reporte.");
             		$this->refresh();
             	}
@@ -499,6 +507,21 @@ class FaenaController extends Controller {
 			'unidadesE' => $unidadesE,
         ));
     }
+
+	public function actionCombustible(){
+		$id = Yii::app()->request->getPost('id');
+		$combustible = Yii::app()->request->getPost('combustible');
+		$faena = Faena::model()->findByPk($id);
+		if(isset($faena)){
+			$faena->combustible = $combustible;
+			if($faena->save()){
+				echo $combustible;
+			}
+			else{
+				echo "ERROR";
+			}
+		}
+	}
 
     /**
      * Deletes a particular model.

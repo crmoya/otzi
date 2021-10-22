@@ -26,6 +26,12 @@ $cs->registerCoreScript('jquery');
 	</div>
 
 	<div class="row">
+		<?php echo $form->labelEx($model, 'combustible'); ?>
+		<?php echo $form->dropDownList($model, 'combustible', CHtml::listData(array(array('id' => 1, 'nombre' => 'SÍ'), array('id' => 0, 'nombre' => 'NO')), 'id', 'nombre'),['id'=>'combustible']); ?>
+		<?php echo $form->error($model, 'combustible'); ?>
+	</div>
+
+	<div class="row">
 		<?php echo $form->labelEx($model, 'vigente'); ?>
 		<?php echo $form->dropDownList($model, 'vigente', CHtml::listData(array(array('id' => 'SÍ', 'nombre' => 'SÍ'), array('id' => 'NO', 'nombre' => 'NO')), 'id', 'nombre')); ?>
 		<?php echo $form->error($model, 'vigente'); ?>
@@ -399,7 +405,7 @@ $cs->registerCoreScript('jquery');
 	<?php $this->endWidget(); ?>
 
 </div><!-- form -->
-
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
 	$(document).ready(function(e) {
 
@@ -584,6 +590,42 @@ $cs->registerCoreScript('jquery');
 				}
 			});
 			return ok;
+		});
+
+		$('#combustible').change(function(e){
+			var combustible = $(this).val();
+			var id = '<?=$model->id?>';
+			var faena = '<?=$model->nombre?>';
+			$.ajax({
+				type: "POST",
+				url: "<?php echo Yii::app()->createUrl('//faena/combustible/'); ?>",
+				data: {
+					id: id,
+					combustible: combustible,
+				}
+			}).done(function(msg) {
+				if(msg == 1){
+					Swal.fire({
+						title: "Cambios realizados con éxito",
+						text: "La faena " + faena + " se ha asociado a combustibles",
+						icon: 'success',
+					});
+				}
+				else if(msg == 0){
+					Swal.fire({
+						title: "Cambios realizados con éxito",
+						text: "La faena " + faena + " ya no está asociada a combustibles",
+						icon: 'success',
+					});
+				}
+				else{
+					Swal.fire({
+						title: "Error",
+						text: "No se han podido guardar los cambios, reintente",
+						icon: 'error',
+					});
+				}
+			});
 		});
 	});
 </script>

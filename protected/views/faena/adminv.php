@@ -40,6 +40,11 @@ $('.search-form form').submit(function(){
 	'columns'=>array(
 		'id',
 		'nombre',
+		[
+			'name'=>'combustible',
+			'value'=>'$data->combustible==1?"SÍ":"NO"',
+			'filter'=>CHtml::listData([['id'=>1,'name'=>'SÍ'],['id'=>0,'name'=>'NO'],], 'id', 'name'),
+		],
 		'vigente',
 		array(
 			'class'=>'CButtonColumn',

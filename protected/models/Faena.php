@@ -49,7 +49,7 @@ class Faena extends CActiveRecord
 			array('nombre', 'length', 'max'=>200),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, nombre,vigente', 'safe', 'on'=>'search'),
+			array('id, nombre,vigente,combustible', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -255,6 +255,7 @@ class Faena extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('nombre',$this->nombre,true);
 		$criteria->compare('vigente',$this->vigente);
+		$criteria->compare('combustible',$this->combustible);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

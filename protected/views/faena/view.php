@@ -23,6 +23,7 @@ $this->menu=array(
 	'attributes'=>array(
 		'id',
 		'nombre',
+		['name'=>'combustible','value'=>$model->combustible==1?"SÍ":"NO"],
 		'vigente',
 	),
 )); ?>
