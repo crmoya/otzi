@@ -24,12 +24,6 @@ class ChipaxController extends Controller
             }
     
             $gastoJson = json_decode(file_get_contents("php://input"), true);
-
-
-            echo "<pre>";
-            print_r($gastoJson);
-            die;
-
             $vehiculos = $gastoJson['vehiculos_seleccionados'];
             foreach($vehiculos as $vehiculo){
                 $vehiculo_nombre = $vehiculo['nombre'];
