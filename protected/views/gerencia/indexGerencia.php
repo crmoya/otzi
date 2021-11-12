@@ -40,7 +40,7 @@ Bienvenido <?php echo CHtml::encode($nombre);?>, por favor seleccione una de las
 </ul>
 
 <ul>
- <li><a target="_blank" href="<?php echo Yii::app()->baseUrl;?>/../chipax/web/chipax?hash=<?=Tools::generateSecretChipax()?>">Aplicación de sincronización gastos CHIPAX-RINDEGASTOS</a></li>
+ <li><a target="_blank" href="<?php echo Yii::app()->baseUrl;?>/../chipax/web/index.php/chipax?hash=<?=Tools::generateSecretChipax()?>">Aplicación de sincronización gastos CHIPAX-RINDEGASTOS</a></li>
 </ul>
 
 <ul>
