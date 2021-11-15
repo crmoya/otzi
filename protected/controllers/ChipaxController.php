@@ -59,6 +59,7 @@ class ChipaxController extends Controller
                 $gasto->total = $vehiculo_valor; 
                 $gastoCompleta->monto_neto = $vehiculo_valor;
                 $gastoCompleta->total_calculado = $vehiculo_valor; 
+                $faenaSeleccionadaId = 0;
 
                 foreach($gastoJson as $key => $value) {
                     switch ($key) {
@@ -161,16 +162,7 @@ class ChipaxController extends Controller
                     else{
                         throw new Exception("No se encuentra en SAM el vehículo al cual está asociado el gasto. Por favor, valide que la vinculación a vehículo esté correcta.");
                     }
-                    $combustible->faena_id = $gastoCompleta->centro_costo_faena;
-                    /*
-                    $faenaRG = FaenaRindegasto::model()->findByAttributes(['faena'=>$gastoCompleta->centro_costo_faena]);
-                    if(isset($faenaRG)){
-                        $combustible->faena_id = $faenaRG->faena_id;
-                    }
-                    else{
-                        $combustible->faena_id = 0;
-                    }
-                    */
+                    $combustible->faena_id = $faenaSeleccionadaId;
 
                     //asociar gasto a report de carga de combustible
                     //según el tipo de report, busco si hay uno para la fecha 
@@ -184,12 +176,7 @@ class ChipaxController extends Controller
                         $cargaComb->precioUnitario = 0;
                         $cargaComb->valorTotal = (int)$gastoCompleta->monto_neto + (int)$gastoCompleta->impuesto_especifico;
                         
-                        if(isset($faenaRG)){
-                            $cargaComb->faena_id = $faenaRG->faena_id;
-                        }
-                        else{
-                            $cargaComb->faena_id = 0;
-                        }
+                        $cargaComb->faena_id = $faenaSeleccionadaId;
                         if(isset($tipoCombustibleRG)){
                             $cargaComb->tipoCombustible_id = $tipoCombustibleRG->tipoCombustible_id;
                         }
@@ -289,12 +276,7 @@ class ChipaxController extends Controller
                         $cargaComb->factura = substr($gastoCompleta->nro_documento,0,45);
                         $cargaComb->precioUnitario = 0;
                         $cargaComb->valorTotal = (int)$gastoCompleta->monto_neto + (int)$gastoCompleta->impuesto_especifico;
-                        if(isset($faenaRG)){
-                            $cargaComb->faena_id = $faenaRG->faena_id;
-                        }
-                        else{
-                            $cargaComb->faena_id = 0;
-                        }
+                        $cargaComb->faena_id = $faenaSeleccionadaId;
                         if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
                             $cargaComb->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
                         }
@@ -310,7 +292,7 @@ class ChipaxController extends Controller
                         $cargaComb->rut_proveedor = $gastoCompleta->rut_proveedor;
                         $cargaComb->observaciones = "Registro de Chipax";
                         $cargaComb->tipo_documento = Tools::traducirTipoDocumento($gastoCompleta->tipo_documento);
-                        if(isset($faenaRG)){
+                        if(isset($tipoCombustibleRG)){
                             $cargaComb->tipoCombustible_id = $tipoCombustibleRG->tipoCombustible_id;
                         }
                         else{
@@ -393,13 +375,8 @@ class ChipaxController extends Controller
                         $cargaComb->factura = substr($gastoCompleta->nro_documento,0,45);
                         $cargaComb->precioUnitario = 0;
                         $cargaComb->valorTotal = (int)$gastoCompleta->monto_neto + (int)$gastoCompleta->impuesto_especifico;
-                        if(isset($faenaRG)){
-                            $cargaComb->faena_id = $faenaRG->faena_id;
-                        }
-                        else{
-                            $cargaComb->faena_id = 0;
-                        }
-                        if(isset($faenaRG)){
+                        $cargaComb->faena_id = $faenaSeleccionadaId;
+                        if(isset($tipoCombustibleRG)){
                             $cargaComb->tipoCombustible_id = $tipoCombustibleRG->tipoCombustible_id;
                         }
                         else{
@@ -498,13 +475,8 @@ class ChipaxController extends Controller
                         $cargaComb->factura = substr($gastoCompleta->nro_documento,0,45);
                         $cargaComb->precioUnitario = 0;
                         $cargaComb->valorTotal = (int)$gastoCompleta->monto_neto + (int)$gastoCompleta->impuesto_especifico;
-                        if(isset($faenaRG)){
-                            $cargaComb->faena_id = $faenaRG->faena_id;
-                        }
-                        else{
-                            $cargaComb->faena_id = 0;
-                        }
-                        if(isset($faenaRG)){
+                        $cargaComb->faena_id = $faenaSeleccionadaId;
+                        if(isset($tipoCombustibleRG)){
                             $cargaComb->tipoCombustible_id = $tipoCombustibleRG->tipoCombustible_id;
                         }
                         else{
@@ -638,16 +610,7 @@ class ChipaxController extends Controller
                         throw new Exception("No se encuentra en SAM el vehículo al cual está asociado el gasto. Por favor, valide que la vinculación a vehículo esté correcta.");
                     }
 
-                    $remuneracionRG->faena_id = $gastoCompleta->centro_costo_faena;
-                    /*
-                    $faenaRG = FaenaRindegasto::model()->findByAttributes(['faena'=>$gastoCompleta->centro_costo_faena]);
-                    if(isset($faenaRG)){
-                        $remuneracionRG->faena_id = $faenaRG->faena_id;
-                    }
-                    else{
-                        $remuneracionRG->faena_id = 0;
-                    }
-                    */
+                    $remuneracionRG->faena_id = $faenaSeleccionadaId;
 
                     //asociar gasto a report de remuneración
                     //según el tipo de report, busco si hay uno para la fecha 
@@ -666,12 +629,7 @@ class ChipaxController extends Controller
                         $remuneracion->cantidad = (float)$cantidad;
                         $remuneracion->fechaRendicion = $gasto->issue_date;
                         $remuneracion->unidad = Tools::convertUnidad($gastoCompleta->unidad);
-                        if(isset($faenaRG)){
-                            $remuneracion->faena_id = $faenaRG->faena_id;
-                        }
-                        else{
-                            $remuneracion->faena_id = 0;
-                        }
+                        $remuneracion->faena_id = $faenaSeleccionadaId;
                         $remuneracion->documento = substr($gastoCompleta->nro_documento,0,45);
                         if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
                             $remuneracion->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
@@ -776,12 +734,7 @@ class ChipaxController extends Controller
                         $remuneracion->fechaRendicion = $gasto->issue_date;
                         $remuneracion->cantidad = (float)$cantidad;
                         $remuneracion->unidad = Tools::convertUnidad($gastoCompleta->unidad);
-                        if(isset($faenaRG)){
-                            $remuneracion->faena_id = $faenaRG->faena_id;
-                        }
-                        else{
-                            $remuneracion->faena_id = 0;
-                        }
+                        $remuneracion->faena_id = $faenaSeleccionadaId;
                         $remuneracion->documento = substr($gastoCompleta->nro_documento,0,45);
                         if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
                             $remuneracion->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
@@ -888,12 +841,7 @@ class ChipaxController extends Controller
                         $cantidad = str_replace(",",".",$gastoCompleta->cantidad);
                         $remuneracion->cantidad = (float)$cantidad;
                         $remuneracion->unidad = Tools::convertUnidad($gastoCompleta->unidad);
-                        if(isset($faenaRG)){
-                            $remuneracion->faena_id = $faenaRG->faena_id;
-                        }
-                        else{
-                            $remuneracion->faena_id = 0;
-                        }
+                        $remuneracion->faena_id = $faenaSeleccionadaId;
                         $remuneracion->documento = substr($gastoCompleta->nro_documento,0,45);
                         if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
                             $remuneracion->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
@@ -908,8 +856,7 @@ class ChipaxController extends Controller
                         $remuneracion->rut_proveedor = $gastoCompleta->rut_proveedor;
                         $remuneracion->tipo_documento = Tools::traducirTipoDocumento($gastoCompleta->tipo_documento);
                         $remuneracion->rindegastos = 0;
-
-
+                        
                         //busco un report al que asociar la remuneración:
                         //inicio buscando para la fecha del gasto
                         $fecha = new DateTime($gasto->issue_date);
@@ -1004,12 +951,7 @@ class ChipaxController extends Controller
                         $cantidad = str_replace(",",".",$gastoCompleta->cantidad);
                         $remuneracion->cantidad = (float)$cantidad;
                         $remuneracion->unidad = Tools::convertUnidad($gastoCompleta->unidad);
-                        if(isset($faenaRG)){
-                            $remuneracion->faena_id = $faenaRG->faena_id;
-                        }
-                        else{
-                            $remuneracion->faena_id = 0;
-                        }
+                        $remuneracion->faena_id = $faenaSeleccionadaId;
                         $remuneracion->documento = substr($gastoCompleta->nro_documento,0,45);
                         if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
                             $remuneracion->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
@@ -1144,17 +1086,8 @@ class ChipaxController extends Controller
                         throw new Exception("No se encuentra en SAM el vehículo al cual está asociado el gasto. Por favor, valide que la vinculación a vehículo esté correcta.");
                     }
 
-                    $nocombustible->faena_id = $gastoCompleta->centro_costo_faena;
-                    /*
-                    $faenaRG = FaenaRindegasto::model()->findByAttributes(['faena'=>$gastoCompleta->centro_costo_faena]);
-                    if(isset($faenaRG)){
-                        $nocombustible->faena_id = $faenaRG->faena_id;
-                    }
-                    else{
-                        $nocombustible->faena_id = 0;
-                    }
-                    */
-
+                    $nocombustible->faena_id = $faenaSeleccionadaId;
+                    
                     //asociar gasto a report de compra de repuesto
                     //según el tipo de report, busco si hay uno para la fecha 
                     if($tipo_report == "CP"){
@@ -1172,12 +1105,7 @@ class ChipaxController extends Controller
                         $cantidad = str_replace(",",".",$gastoCompleta->cantidad);
                         $compra->cantidad = (float)$cantidad;
                         $compra->unidad = Tools::convertUnidad($gastoCompleta->unidad);
-                        if(isset($faenaRG)){
-                            $compra->faena_id = $faenaRG->faena_id;
-                        }
-                        else{
-                            $compra->faena_id = 0;
-                        }
+                        $compra->faena_id = $faenaSeleccionadaId;
                         $compra->factura = substr($gastoCompleta->nro_documento,0,45);
                         if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
                             $compra->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
@@ -1283,12 +1211,7 @@ class ChipaxController extends Controller
                         $compra->cantidad = (float)$cantidad;
                         $compra->fechaRendicion = $gasto->issue_date;
                         $compra->unidad = Tools::convertUnidad($gastoCompleta->unidad);
-                        if(isset($faenaRG)){
-                            $compra->faena_id = $faenaRG->faena_id;
-                        }
-                        else{
-                            $compra->faena_id = 0;
-                        }
+                        $compra->faena_id = $faenaSeleccionadaId;
                         $compra->factura = substr($gastoCompleta->nro_documento,0,45);
                         if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
                             $compra->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
@@ -1395,12 +1318,7 @@ class ChipaxController extends Controller
                         $cantidad = str_replace(",",".",$gastoCompleta->cantidad);
                         $compra->cantidad = (float)$cantidad;
                         $compra->unidad = Tools::convertUnidad($gastoCompleta->unidad);
-                        if(isset($faenaRG)){
-                            $compra->faena_id = $faenaRG->faena_id;
-                        }
-                        else{
-                            $compra->faena_id = 0;
-                        }
+                        $compra->faena_id = $faenaSeleccionadaId;
                         $compra->factura = substr($gastoCompleta->nro_documento,0,45);
                         if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
                             $compra->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
@@ -1511,12 +1429,7 @@ class ChipaxController extends Controller
                         $cantidad = str_replace(",",".",$gastoCompleta->cantidad);
                         $compra->cantidad = (float)$cantidad;
                         $compra->unidad = Tools::convertUnidad($gastoCompleta->unidad);
-                        if(isset($faenaRG)){
-                            $compra->faena_id = $faenaRG->faena_id;
-                        }
-                        else{
-                            $compra->faena_id = 0;
-                        }
+                        $compra->faena_id = $faenaSeleccionadaId;
                         $compra->factura = substr($gastoCompleta->nro_documento,0,45);
                         if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
                             $compra->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
