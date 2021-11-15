@@ -11,6 +11,7 @@ class ChipaxController extends Controller
 		$respuesta = json_encode(['status'=>'OK','message' => ""]);
         $errores = [];
         $transaction=$connection->beginTransaction();
+
         try {
             $hash = Yii::app()->request->getQuery('hash');
             $local_hash = Tools::chipaxSecret(0);
@@ -22,7 +23,6 @@ class ChipaxController extends Controller
             if ($hash != $local_hash) {
                 throw new Exception("Hash incorrecto");
             }
-    
             $gastoJson = json_decode(file_get_contents("php://input"), true);
             $vehiculos = $gastoJson['vehiculos_seleccionados'];
             foreach($vehiculos as $vehiculo){
@@ -78,7 +78,14 @@ class ChipaxController extends Controller
                             $gastoCompleta->cantidad = $value;
                             break;
                         case "faena_seleccionada":
-                            $gastoCompleta->centro_costo_faena = $value;
+                            $faenaSeleccionadaId = $value;
+                            $faena = Faena::model()->findByPk($faenaSeleccionadaId);
+                            if(isset($faena)){
+                                $gastoCompleta->centro_costo_faena = $faena->nombre;
+                            }
+                            else{
+                                $gastoCompleta->centro_costo_faena = "-- NO ASIGNADA --";
+                            }
                             break;
                         case "rendidor_seleccionado":
                             $gastoCompleta->nombre_quien_rinde = $value;
