@@ -225,7 +225,7 @@ class GastoCompleta extends CActiveRecord
 					return $gastoImagen->small;
 				}
 				else if(isset($gastoImagen->file_name)){
-					return "https://www.otzi.cl/SAM/index.php/gastoImagen/render?id=" . $gastoImagen->id;
+					return "https://" . $_SERVER['SERVER_NAME'] . "/SAM/index.php/gastoImagen/render?id=" . $gastoImagen->id;
 				}
 			}
 		}
