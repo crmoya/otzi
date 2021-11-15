@@ -37,6 +37,7 @@ class SiteController extends Controller
 			if(isset($gastoCompleta)){
 				$categoria = $gasto->category;
 				
+				/*
 				$faenaSeleccionadaId = 0;
 				$faenaRG = FaenaRindegasto::model()->findByAttributes(['faena'=>$gastoCompleta->centro_costo_faena]);
 				if($faenaRG != null){
@@ -1448,9 +1449,8 @@ class SiteController extends Controller
                     }
 
                 }
+				*/
 				
-				
-				/*
 				if(in_array($categoria,Tools::CATEGORIAS_COMBUSTIBLES_CHIPAX)){
 					$tipo = "combustible";
 					$combustible = CombustibleRindegasto::model()->findByAttributes(['gasto_completa_id'=>$gastoCompleta->id]);
@@ -1541,7 +1541,6 @@ class SiteController extends Controller
 						}
 					}					
 				}		
-				*/		
 			}
 			if($report == null){
 				$noexisten[] = ['gasto'=>$gasto->id,'gastoCompleta'=>$gastoCompleta->id,'tipo'=>$tipo];
