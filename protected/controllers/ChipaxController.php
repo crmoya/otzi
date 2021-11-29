@@ -1671,4 +1671,41 @@ class ChipaxController extends Controller
         }
         echo $respuesta;
     }
+
+    public function actionGetTiposCombustibles(){
+        ini_set("memory_limit", "-1");
+        set_time_limit(0);
+
+        $hash = Yii::app()->request->getQuery('hash');
+        $local_hash = Tools::chipaxSecret(0);
+        $intentos = 1;
+        while ($local_hash != $hash && $intentos <= 30) {
+            $local_hash = Tools::chipaxSecret($intentos);
+            $intentos++;
+        }
+        if ($hash != $local_hash) {
+            throw new Exception("Hash incorrecto");
+        }
+
+        
+        $respuesta = json_encode(['status'=>'ERROR']);
+        try {
+            $categoriaJson = json_decode(file_get_contents("php://input"), true);
+            $categoria = $categoriaJson['categoria'];
+            
+            $dev = [];
+            $tiposCombustibles = TipoCombustible::model()->findAllByAttributes(['vigente'=>'SÍ']);
+            foreach($tiposCombustibles as $tipo){
+                $dev[] = [
+                    'id' => $tipo->id,
+                    'nombre' => $tipo->nombre,
+                ];
+            }
+            $respuesta = json_encode(['status'=>'OK','tipos_combustibles'=>$dev]);
+        }
+        catch(Exception $e){
+            $respuesta = json_encode(['status'=>'ERROR']);
+        }
+        echo $respuesta;
+    }
 }
