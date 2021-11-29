@@ -106,6 +106,10 @@ class ChipaxController extends Controller
                         case "html_factura":
                             $gastoImagen->file_name = $value;
                             break;
+                        case "tipo_combustible_id":
+                            $tipo_combustible = (int)$value;
+                            $gastoCompleta->tipoCombustible_id = $tipo_combustible;
+                            break;
                         default:
                             break;
                     }
@@ -134,12 +138,8 @@ class ChipaxController extends Controller
                     $combustible->gasto_completa_id = intval($gastoCompleta->id);
                     $combustible->status = $gasto->status;
                     $vehiculoRG = VehiculoRindegastos::model()->findByAttributes(['vehiculo'=>$gastoCompleta->vehiculo_equipo]);
-
-                    $tipoCombustibleRG = TipoCombustibleRG::model()->findByAttributes(['tipocombustible'=>$gasto->category_code]);
-                    if(isset($tipoCombustibleRG)){
-                        $combustible->tipoCombustible_id = $tipoCombustibleRG->tipoCombustible_id;
-                    }
-
+                    $combustible->tipoCombustible_id = $gastoCompleta->tipoCombustible_id;
+                    
                     $tipo_report = "";
                     if(isset($vehiculoRG)){
                         if($vehiculoRG->camionpropio_id != null){
@@ -177,12 +177,8 @@ class ChipaxController extends Controller
                         $cargaComb->valorTotal = (int)$gastoCompleta->monto_neto + (int)$gastoCompleta->impuesto_especifico;
                         
                         $cargaComb->faena_id = $faenaSeleccionadaId;
-                        if(isset($tipoCombustibleRG)){
-                            $cargaComb->tipoCombustible_id = $tipoCombustibleRG->tipoCombustible_id;
-                        }
-                        else{
-                            $cargaComb->tipoCombustible_id = 0;
-                        }
+                        $cargaComb->tipoCombustible_id = $combustible->tipoCombustible_id;
+
 
                         $cargaComb->supervisorCombustible_id = 0;
                         if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
@@ -292,12 +288,7 @@ class ChipaxController extends Controller
                         $cargaComb->rut_proveedor = $gastoCompleta->rut_proveedor;
                         $cargaComb->observaciones = "Registro de Chipax";
                         $cargaComb->tipo_documento = Tools::traducirTipoDocumento($gastoCompleta->tipo_documento);
-                        if(isset($tipoCombustibleRG)){
-                            $cargaComb->tipoCombustible_id = $tipoCombustibleRG->tipoCombustible_id;
-                        }
-                        else{
-                            $cargaComb->tipoCombustible_id = 0;
-                        }
+                        $cargaComb->tipoCombustible_id = $combustible->tipoCombustible_id;
                         $cargaComb->supervisorCombustible_id = 0;	
                         $cargaComb->rindegastos = 0;
 
@@ -376,12 +367,7 @@ class ChipaxController extends Controller
                         $cargaComb->precioUnitario = 0;
                         $cargaComb->valorTotal = (int)$gastoCompleta->monto_neto + (int)$gastoCompleta->impuesto_especifico;
                         $cargaComb->faena_id = $faenaSeleccionadaId;
-                        if(isset($tipoCombustibleRG)){
-                            $cargaComb->tipoCombustible_id = $tipoCombustibleRG->tipoCombustible_id;
-                        }
-                        else{
-                            $cargaComb->tipoCombustible_id = 0;
-                        }
+                        $cargaComb->tipoCombustible_id = $combustible->tipoCombustible_id;
                         $cargaComb->supervisorCombustible_id = 0;
                         if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
                             $cargaComb->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
@@ -476,12 +462,7 @@ class ChipaxController extends Controller
                         $cargaComb->precioUnitario = 0;
                         $cargaComb->valorTotal = (int)$gastoCompleta->monto_neto + (int)$gastoCompleta->impuesto_especifico;
                         $cargaComb->faena_id = $faenaSeleccionadaId;
-                        if(isset($tipoCombustibleRG)){
-                            $cargaComb->tipoCombustible_id = $tipoCombustibleRG->tipoCombustible_id;
-                        }
-                        else{
-                            $cargaComb->tipoCombustible_id = 0;
-                        }
+                        $cargaComb->tipoCombustible_id = $combustible->tipoCombustible_id;
                         $cargaComb->supervisorCombustible_id = 0;
                         if(strlen($gastoCompleta->nombre_quien_rinde) > 100){
                             $cargaComb->nombre = substr($gastoCompleta->nombre_quien_rinde,0,100);
