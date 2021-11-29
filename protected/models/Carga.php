@@ -1843,6 +1843,11 @@ class Carga{
 							}
 						}
 
+						if($gasto_completa->centro_costo_faena == null){
+							if($gasto_completa->faena != null){
+								$gasto_completa->centro_costo_faena = $gasto_completa->faena;
+							}
+						}
 						//ya agregué los campos extra, pero debo ver si hay que rectificar el impuesto específico y el IVA 
 						if (isset($gasto_completa)) {
 							if ($gasto->net > 0 && ($gasto_completa->monto_neto == '' || $gasto_completa->monto_neto == null)) {
@@ -2177,6 +2182,13 @@ class Carga{
 								}
 							}
 						}
+
+						if($gasto_completa->centro_costo_faena == null){
+							if($gasto_completa->faena != null){
+								$gasto_completa->centro_costo_faena = $gasto_completa->faena;
+							}
+						}
+						
 
 						//ya agregué los campos extra, pero debo ver si hay que rectificar el impuesto específico y el IVA 
 						if (isset($gasto_completa)) {

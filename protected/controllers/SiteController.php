@@ -23,143 +23,133 @@ class SiteController extends Controller
 		);
 	}
 
-	/*
-	public function actionClean()
-	{
-		//borro las cargas, compras y remuneraciones asociadas a los gastos
-		$gastos = Gasto::model()->findAllByAttributes(['chipax'=>1]);
-		foreach($gastos as $gasto){
-			$gastoCompleta = GastoCompleta::model()->findByAttributes(['gasto_id'=>$gasto->id]);
-			$combustible = CombustibleRindegasto::model()->findByAttributes(['gasto_completa_id'=>$gastoCompleta->id]);
-			$noCombustible = NocombustibleRindegasto::model()->findByAttributes(['gasto_completa_id'=>$gastoCompleta->id]);
-			$remuneracion = RemuneracionRindegasto::model()->findByAttributes(['gasto_completa_id'=>$gastoCompleta->id]);
-			if(isset($combustible)){
-				if($combustible->camionpropio_id != null){
-					$carga = CargaCombCamionPropio::model()->findByPk($combustible->carga_id);
-					$carga->delete();
+	public function actionRepair(){
+		$nocombustibles = NocombustibleRindegasto::model()->findAllByAttributes(['faena_id'=>0]);
+		foreach($nocombustibles as $nocombustible){
+			$gastoCompleta = GastoCompleta::model()->findByPk($nocombustible->gasto_completa_id);
+			$faena_id = 0;
+			if(isset($gastoCompleta)){
+				$faenaRG = FaenaRindegasto::model()->findByAttributes(['faena'=>$gastoCompleta->centro_costo_faena]);
+				if(isset($faenaRG)){
+					$faena_id = $faenaRG->faena_id;
 				}
-				if($combustible->camionarrendado_id != null){
-					$carga = CargaCombCamionArrendado::model()->findByPk($combustible->carga_id);
-					$carga->delete();
+				$nocombustible->faena_id = $faena_id;
+				$nocombustible->save();
+				if($nocombustible->camionpropio_id != null){
+					$compra = CompraRepuestoCamionPropio::model()->findByPk($nocombustible->compra_id);
+					if(isset($compra)){
+						$compra->faena_id = $faena_id;
+						$compra->save();
+					}
 				}
-				if($combustible->equipopropio_id != null){
-					$carga = CargaCombEquipoPropio::model()->findByPk($combustible->carga_id);
-					$carga->delete();
+				if($nocombustible->camionarrendado_id != null){
+					$compra = CompraRepuestoCamionArrendado::model()->findByPk($nocombustible->compra_id);
+					if(isset($compra)){
+						$compra->faena_id = $faena_id;
+						$compra->save();
+					}
 				}
-				if($combustible->equipoarrendado_id != null){
-					$carga = CargaCombEquipoArrendado::model()->findByPk($combustible->carga_id);
-					$carga->delete();
+				if($nocombustible->equipopropio_id != null){
+					$compra = CompraRepuestoEquipoPropio::model()->findByPk($nocombustible->compra_id);
+					if(isset($compra)){
+						$compra->faena_id = $faena_id;
+						$compra->save();
+					}
 				}
-			}
-			if(isset($noCombustible)){
-				if($noCombustible->camionpropio_id != null){
-					$compra = CompraRepuestoCamionPropio::model()->findByPk($noCombustible->compra_id);
-					$compra->delete();
-				}
-				if($noCombustible->camionarrendado_id != null){
-					$compra = CompraRepuestoCamionArrendado::model()->findByPk($noCombustible->compra_id);
-					$compra->delete();
-				}
-				if($noCombustible->equipopropio_id != null){
-					$compra = CompraRepuestoEquipoPropio::model()->findByPk($noCombustible->compra_id);
-					$compra->delete();
-				}
-				if($noCombustible->equipoarrendado_id != null){
-					$compra = CompraRepuestoEquipoArrendado::model()->findByPk($noCombustible->compra_id);
-					$compra->delete();
-				}
-			}
-			if(isset($remuneracion)){
-				if($remuneracion->camionpropio_id != null){
-					$rem = RemuneracionCamionPropio::model()->findByPk($remuneracion->remuneracion_id);
-					$rem->delete();
-				}
-				if($remuneracion->camionarrendado_id != null){
-					$rem = RemuneracionCamionArrendado::model()->findByPk($remuneracion->remuneracion_id);
-					$rem->delete();
-				}
-				if($remuneracion->equipopropio_id != null){
-					$rem = RemuneracionEquipoPropio::model()->findByPk($remuneracion->remuneracion_id);
-					$rem->delete();
-				}
-				if($remuneracion->equipoarrendado_id != null){
-					$rem = RemuneracionEquipoArrendado::model()->findByPk($remuneracion->remuneracion_id);
-					$rem->delete();
+				if($nocombustible->equipoarrendado_id != null){
+					$compra = CompraRepuestoEquipoArrendado::model()->findByPk($nocombustible->compra_id);
+					if(isset($compra)){
+						$compra->faena_id = $faena_id;
+						$compra->save();
+					}
 				}
 			}
 		}
-		
-		//borro todos los gastos creados con chipax
-		//esto borrará los gasto_completa y también los combustible, nocombustible y remuneraciones creados
-		Gasto::model()->deleteAllByAttributes(['chipax'=>1]);
 
-		//ahora hay que limpiar los reports que no tengan cargas, compras o remuneraciones asociadas por si fueron creados
-		//para camionesPropios
-		Yii::app()->db->createCommand("
-			delete from rCamionPropio
-			where 	not exists (select * from cargaCombCamionPropio where rCamionPropio_id = rCamionPropio.id) AND
-					not exists (select * from compraRepuestoCamionPropio where rCamionPropio_id = rCamionPropio.id) AND
-					not exists (select * from remuneracionCamionPropio where rCamionPropio_id = rCamionPropio.id) AND
-					`reporte` LIKE '*%' AND 
-					`observaciones` LIKE '%Report creado automáticamente para asociación con RindeGastos%'
-		")->execute();
+		$combustibles = CombustibleRindegasto::model()->findAllByAttributes(['faena_id'=>0]);
+		foreach($combustibles as $combustible){
+			$gastoCompleta = GastoCompleta::model()->findByPk($combustible->gasto_completa_id);
+			$faena_id = 0;
+			if(isset($gastoCompleta)){
+				$faenaRG = FaenaRindegasto::model()->findByAttributes(['faena'=>$gastoCompleta->centro_costo_faena]);
+				if(isset($faenaRG)){
+					$faena_id = $faenaRG->faena_id;
+				}
+				$combustible->faena_id = $faena_id;
+				$combustible->save();
+				if($combustible->camionpropio_id != null){
+					$carga = CargaCombCamionPropio::model()->findByPk($combustible->carga_id);
+					if(isset($carga)){
+						$carga->faena_id = $faena_id;
+						$carga->save();
+					}
+				}
+				if($nocombustible->camionarrendado_id != null){
+					$carga = CargaCombCamionArrendado::model()->findByPk($combustible->carga_id);
+					if(isset($carga)){
+						$carga->faena_id = $faena_id;
+						$carga->save();
+					}
+				}
+				if($nocombustible->equipopropio_id != null){
+					$carga = CargaCombEquipoPropio::model()->findByPk($combustible->carga_id);
+					if(isset($carga)){
+						$carga->faena_id = $faena_id;
+						$carga->save();
+					}
+				}
+				if($nocombustible->equipoarrendado_id != null){
+					$carga = CargaCombEquipoArrendado::model()->findByPk($combustible->carga_id);
+					if(isset($carga)){
+						$carga->faena_id = $faena_id;
+						$carga->save();
+					}
+				}
+			}
+		}
 
-		//para camionesArrendados
-		Yii::app()->db->createCommand("
-			delete from rCamionArrendado
-			where 	not exists (select * from cargaCombCamionArrendado where rCamionArrendado_id = rCamionArrendado.id) AND
-					not exists (select * from compraRepuestoCamionArrendado where rCamionArrendado_id = rCamionArrendado.id) AND
-					not exists (select * from remuneracionCamionArrendado where rCamionArrendado_id = rCamionArrendado.id) AND
-					`reporte` LIKE '*%' AND 
-					`observaciones` LIKE '%Report creado automáticamente para asociación con RindeGastos%'
-		")->execute();
-
-		//para equiposPropios
-		Yii::app()->db->createCommand("
-			delete from rEquipoPropio
-			where 	not exists (select * from cargaCombEquipoPropio where rEquipoPropio_id = rEquipoPropio.id) AND
-					not exists (select * from compraRepuestoEquipoPropio where rEquipoPropio_id = rEquipoPropio.id) AND
-					not exists (select * from remuneracionEquipoPropio where rEquipoPropio_id = rEquipoPropio.id) AND
-					`reporte` LIKE '*%' AND 
-					`observaciones` LIKE '%Report creado automáticamente para asociación con RindeGastos%'
-		")->execute();
-
-		//para equiposArrendados
-		Yii::app()->db->createCommand("
-			delete from rEquipoArrendado
-			where 	not exists (select * from cargaCombEquipoArrendado where rEquipoArrendado_id = rEquipoArrendado.id) AND
-					not exists (select * from compraRepuestoEquipoArrendado where rEquipoArrendado_id = rEquipoArrendado.id) AND
-					not exists (select * from remuneracionEquipoArrendado where rEquipoArrendado_id = rEquipoArrendado.id) AND
-					`reporte` LIKE '*%' AND 
-					`observaciones` LIKE '%Report creado automáticamente para asociación con RindeGastos%'
-		")->execute();
-		
+		$remuneraciones = RemuneracionRindegasto::model()->findAllByAttributes(['faena_id'=>0]);
+		foreach($remuneraciones as $remuneracion){
+			$gastoCompleta = GastoCompleta::model()->findByPk($remuneracion->gasto_completa_id);
+			$faena_id = 0;
+			if(isset($gastoCompleta)){
+				$faenaRG = FaenaRindegasto::model()->findByAttributes(['faena'=>$gastoCompleta->centro_costo_faena]);
+				if(isset($faenaRG)){
+					$faena_id = $faenaRG->faena_id;
+				}
+				$remuneracion->faena_id = $faena_id;
+				$remuneracion->save();
+				if($remuneracion->camionpropio_id != null){
+					$rem = RemuneracionCamionPropio::model()->findByPk($remuneracion->remuneracion_id);
+					if(isset($rem)){
+						$rem->faena_id = $faena_id;
+						$rem->save();
+					}
+				}
+				if($remuneracion->camionarrendado_id != null){
+					$rem = RemuneracionCamionArrendado::model()->findByPk($remuneracion->remuneracion_id);
+					if(isset($rem)){
+						$rem->faena_id = $faena_id;
+						$rem->save();
+					}
+				}
+				if($remuneracion->equipopropio_id != null){
+					$rem = RemuneracionEquipoPropio::model()->findByPk($remuneracion->remuneracion_id);
+					if(isset($rem)){
+						$rem->faena_id = $faena_id;
+						$rem->save();
+					}
+				}
+				if($remuneracion->equipoarrendado_id != null){
+					$rem = RemuneracionEquipoArrendado::model()->findByPk($remuneracion->remuneracion_id);
+					if(isset($rem)){
+						$rem->faena_id = $faena_id;
+						$rem->save();
+					}
+				}
+			}
+		}
 	}
-	*/
-
-	/*
-	public function actionConfigureRoles()
-	{
-
-		
-		$record=Authassignment::model()->deleteAll();
-		$record=Authitem::model()->deleteAll();
-		$record=Authitemchild::model()->deleteAll();
-		$auth=Yii::app()->authManager;
-
-		$auth->createOperation('configureRoles','configure app roles');
-
-		$role=$auth->createRole('administrador');
-		$role->addChild('configureRoles');
-
-		$role=$auth->createRole('operativo');
-		$role=$auth->createRole('gerencia');
-		
-		$auth->assign('administrador',4);
-
-		$this->render("//admin/indexAdmin",array('nombre'=>Yii::app()->user->nombre));
-	}
-	*/
 
 	/**
 	 * This is the default 'index' action that is invoked
@@ -184,195 +174,6 @@ class SiteController extends Controller
 			}
 		}
 	}
-
-
-	public function actionFixdupli(){
-		$list= Yii::app()->db->createCommand("
-			SELECT count(id) as count,rCamionPropio_id,montoNeto
-			FROM `compraRepuestoCamionPropio` 
-			where observaciones like '%Rindegastos%' 
-			group by rCamionPropio_id,montoNeto 
-			HAVING count(id)>1
-		")->queryAll();
-
-		
-	}
-
-/*
-	public function actionFixcamiones(){
-
-		set_time_limit(0);
-
-		$viajesCamionPropio = ViajeCamionPropio::model()->findAll();
-		foreach($viajesCamionPropio as $viaje){
-			$total = $viaje->total;
-			$totalTransportado = $viaje->totalTransportado;
-			$kms = $viaje->kmRecorridos;
-			if($totalTransportado == 0 || $kms == 0){
-				$pu = 0;
-			}
-			else{
-				$pu = $total / ($totalTransportado * $kms);
-			}
-			$faena_id = $viaje->faena_id;
-			$camionpropio_id = $viaje->rCamionPropio->camiones->id;
-			$unidad = Unidadfaena::UNIDAD_DIAS;
-			$produccion_minima = $viaje->rCamionPropio->camiones->produccionMinima;
-			$unidadFaena = UnidadFaena::model()->findByAttributes(['faena_id'=>$faena_id,'camionpropio_id'=>$camionpropio_id]);
-			if($unidadFaena == null){
-				$unidadFaena = new Unidadfaena();
-				$unidadFaena->faena_id = $faena_id;
-				$unidadFaena->camionpropio_id = $camionpropio_id;
-			}			
-			$unidadFaena->unidad = $unidad;
-			$unidadFaena->pu = $pu;
-			$unidadFaena->produccion_minima = $produccion_minima;
-			$unidadFaena->save();
-		}
-
-		$viajesCamionArrendado = ViajeCamionArrendado::model()->findAll();
-		foreach($viajesCamionArrendado as $viaje){
-			$total = $viaje->total;
-			$totalTransportado = $viaje->totalTransportado;
-			$kms = $viaje->kmRecorridos;
-			if($totalTransportado == 0 || $kms == 0){
-				$pu = 0;
-			}
-			else{
-				$pu = $total / ($totalTransportado * $kms);
-			}
-			$faena_id = $viaje->faena_id;
-			$camionarrendado_id = $viaje->rCamionArrendado->camiones->id;
-			$unidadFaena = UnidadFaena::model()->findByAttributes(['faena_id'=>$faena_id,'camionarrendado_id'=>$camionarrendado_id]);
-			if($unidadFaena == null){
-				$unidadFaena = new Unidadfaena();
-			}
-			$unidad = Unidadfaena::UNIDAD_DIAS;
-			$produccion_minima = $viaje->rCamionArrendado->camiones->produccionMinima;			
-			$unidadFaena->unidad = $unidad;
-			$unidadFaena->pu = $pu;
-			$unidadFaena->faena_id = $faena_id;
-			$unidadFaena->camionarrendado_id = $camionarrendado_id;
-			$unidadFaena->produccion_minima = $produccion_minima;
-			$unidadFaena->save();
-		}
-	}
-	
-
-	
-	public function actionFixmaquinas(){
-
-		set_time_limit(0);
-
-		$unidadesFaenaEquipo = UnidadfaenaEquipo::model()->findAll();
-		foreach($unidadesFaenaEquipo as $unidad){
-			if(!isset($unidad->horas_minimas)){
-				if(isset($unidad->equipoarrendado)){
-					$horas_minimas = (double)$unidad->equipoarrendado->horasMin;
-					$unidad->horas_minimas = $horas_minimas;
-					$unidad->save();
-				} else if(isset($unidad->equipopropio)){
-					$horas_minimas = (double)$unidad->equipopropio->horasMin;
-					$unidad->horas_minimas = $horas_minimas;
-					$unidad->save();
-				}
-			}
-		}
-	}
-
-	
-	public function actionFixmaquinas(){
-
-		set_time_limit(0);
-
-		$rEquiposPropios = REquipoPropio::model()->findAll();
-		foreach($rEquiposPropios as $rEquipoPropio){
-			//agregar unidadfaena_equipo faltantes
-			$uFaenaEquipo = UnidadfaenaEquipo::model()->findByAttributes(['faena_id'=>$rEquipoPropio->faena_id,'equipopropio_id'=>$rEquipoPropio->equipoPropio_id,'unidad'=>UnidadfaenaEquipo::UNIDAD_HORAS]);
-			if(!isset($uFaenaEquipo)){
-				$uFaenaEquipo = new UnidadfaenaEquipo();
-				$uFaenaEquipo->unidad = UnidadfaenaEquipo::UNIDAD_HORAS;
-				if(isset($rEquipoPropio->equipos)){
-					$uFaenaEquipo->pu = $rEquipoPropio->equipos->precioUnitario;
-				}
-				$uFaenaEquipo->faena_id = $rEquipoPropio->faena_id;
-				$uFaenaEquipo->equipopropio_id = $rEquipoPropio->equipoPropio_id;
-				$uFaenaEquipo->save();
-			}
-
-			//agregar expediciones por tiempo faltantes
-			$expedicion = new Expedicionportiempoeq();
-			$expedicion->cantidad = $rEquipoPropio->horas;
-			$expedicion->total = $uFaenaEquipo->pu * $rEquipoPropio->horas;
-			$expedicion->faena_id = $uFaenaEquipo->faena_id;
-			$expedicion->requipopropio_id = $rEquipoPropio->id;
-			$expedicion->unidadfaena_equipo_id = $uFaenaEquipo->id;
-			$expedicion->agregada = 1;
-			$expedicion->save();
-		}
-
-		$rEquiposArrendados = REquipoArrendado::model()->findAll();
-		foreach($rEquiposArrendados as $rEquipoArrendado){
-			$uFaenaEquipo = UnidadfaenaEquipo::model()->findByAttributes(['faena_id'=>$rEquipoArrendado->faena_id,'equipoarrendado_id'=>$rEquipoArrendado->equipoArrendado_id,'unidad'=>UnidadfaenaEquipo::UNIDAD_HORAS]);
-			if(!isset($uFaenaEquipo)){
-				$uFaenaEquipo = new UnidadfaenaEquipo();
-				$uFaenaEquipo->unidad = UnidadfaenaEquipo::UNIDAD_HORAS;
-				if(isset($rEquipoArrendado->equipos)){
-					$uFaenaEquipo->pu = $rEquipoArrendado->equipos->precioUnitario;
-				}
-				$uFaenaEquipo->faena_id = $rEquipoArrendado->faena_id;
-				$uFaenaEquipo->equipoarrendado_id = $rEquipoArrendado->equipoArrendado_id;
-				$uFaenaEquipo->save();
-			}
-			
-			//agregar expediciones por tiempo faltantes
-			$expedicion = new Expedicionportiempoeqarr();
-			$expedicion->cantidad = $rEquipoArrendado->horas;
-			$expedicion->total = $uFaenaEquipo->pu * $rEquipoArrendado->horas;
-			$expedicion->faena_id = $uFaenaEquipo->faena_id;
-			$expedicion->requipoarrendado_id = $rEquipoArrendado->id;
-			$expedicion->unidadfaena_equipo_id = $uFaenaEquipo->id;
-			$expedicion->agregada = 1;
-			$expedicion->save();
-		}
-
-
-
-	}
-	*/
-
-	/*
-	public function actionFix(){
-		$rEquiposPropios = REquipoPropio::model()->findAll();
-		foreach($rEquiposPropios as $rEquipoPropio){
-			$uFaenaEquipo = UnidadfaenaEquipo::model()->findByAttributes(['faena_id'=>$rEquipoPropio->faena_id,'equipopropio_id'=>$rEquipoPropio->equipoPropio_id,'unidad'=>UnidadfaenaEquipo::UNIDAD_HORAS]);
-			if(!isset($uFaenaEquipo)){
-				$uFaenaEquipo = new UnidadfaenaEquipo();
-				$uFaenaEquipo->unidad = UnidadfaenaEquipo::UNIDAD_HORAS;
-				if(isset($rEquipoPropio->equipos)){
-					$uFaenaEquipo->pu = $rEquipoPropio->equipos->precioUnitario;
-				}
-				$uFaenaEquipo->faena_id = $rEquipoPropio->faena_id;
-				$uFaenaEquipo->equipopropio_id = $rEquipoPropio->equipoPropio_id;
-				$uFaenaEquipo->save();
-			}
-		}
-		$rEquiposArrendados = REquipoArrendado::model()->findAll();
-		foreach($rEquiposArrendados as $rEquipoArrendado){
-			$uFaenaEquipo = UnidadfaenaEquipo::model()->findByAttributes(['faena_id'=>$rEquipoArrendado->faena_id,'equipoarrendado_id'=>$rEquipoArrendado->equipoArrendado_id,'unidad'=>UnidadfaenaEquipo::UNIDAD_HORAS]);
-			if(!isset($uFaenaEquipo)){
-				$uFaenaEquipo = new UnidadfaenaEquipo();
-				$uFaenaEquipo->unidad = UnidadfaenaEquipo::UNIDAD_HORAS;
-				if(isset($rEquipoArrendado->equipos)){
-					$uFaenaEquipo->pu = $rEquipoArrendado->equipos->precioUnitario;
-				}
-				$uFaenaEquipo->faena_id = $rEquipoArrendado->faena_id;
-				$uFaenaEquipo->equipoarrendado_id = $rEquipoArrendado->equipoArrendado_id;
-				$uFaenaEquipo->save();
-			}
-		}
-	}
-*/
 
 
 	
@@ -513,7 +314,7 @@ class SiteController extends Controller
 		return array(
 			array(
 				'allow',
-				'actions' => array('login','loginmovil', 'logout', 'error', 'index', 'gastos', 'informes', 'rindegastos','fix','fixmaquinas','fixcamiones','test','fixdupli','clean'),
+				'actions' => array('login','loginmovil', 'logout', 'error', 'index', 'gastos', 'informes', 'rindegastos','fix','fixmaquinas','fixcamiones','test','fixdupli','clean','repair'),
 				'users' => array('*'),
 			),
 			array(
