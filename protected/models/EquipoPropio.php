@@ -35,7 +35,7 @@ class EquipoPropio extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nombre, codigo,precioUnitario,valorHora,consumoEsperado', 'required'),
+			array('nombre, codigo,valorHora,consumoEsperado', 'required'),
 			array('nombre', 'length', 'max'=>100),
 			array('codigo', 'length', 'max'=>45),
 			array('consumoEsperado,coeficienteDeTrato', 'length', 'max'=>10),
