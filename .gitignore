@@ -7,3 +7,4 @@ composer.lock
 error_log
 .DS_Store
 protected/.DS_Store
+protected/config/main.php
