@@ -39,10 +39,10 @@ class GerenciaController extends Controller
 
 		$sql = "
 		select count(*) from 
-		   (select g.issue_date as fecha, gc.rut_proveedor as proveedor, gc.iva as iva, gc.impuesto_especifico as especifico, gc.monto_neto as neto, gc.nro_documento as nro_documento, gc.vehiculo_equipo as maquina, count(*)
+		   (select g.issue_date as fecha, gc.rut_proveedor as proveedor, gc.monto_neto as neto, gc.nro_documento as nro_documento, gc.vehiculo_equipo as maquina, count(*)
 		   from gasto_completa gc
 		   join gasto g on g.id = gc.gasto_id 
-		   GROUP by g.issue_date, gc.rut_proveedor, gc.iva, gc.impuesto_especifico, gc.monto_neto, gc.nro_documento, gc.vehiculo_equipo
+		   GROUP by g.issue_date, gc.rut_proveedor, gc.monto_neto, gc.nro_documento, gc.vehiculo_equipo
 		   HAVING count(*) > 1) t
 		";
 		$duplicados = $db->createCommand($sql)->queryScalar();
@@ -63,14 +63,12 @@ class GerenciaController extends Controller
 			$sql = "
 				select 	g.issue_date as fecha, 
 						gc.rut_proveedor as proveedor, 
-						gc.iva as iva, 
-						gc.impuesto_especifico as especifico, 
 						gc.monto_neto as neto, 
 						gc.nro_documento as nro_documento, 
 						gc.vehiculo_equipo as maquina
 				from gasto_completa gc
 				join gasto g on g.id = gc.gasto_id 
-				GROUP by g.issue_date, gc.rut_proveedor, gc.iva, gc.impuesto_especifico, gc.monto_neto, gc.nro_documento, gc.vehiculo_equipo
+				GROUP by g.issue_date, gc.rut_proveedor, gc.monto_neto, gc.nro_documento, gc.vehiculo_equipo
 				HAVING count(*) > 1
 				order by g.issue_date
 			";
