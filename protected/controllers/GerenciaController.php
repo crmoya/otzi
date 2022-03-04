@@ -78,8 +78,6 @@ class GerenciaController extends Controller
 			{
 				$gastosCompletas = GastoCompleta::model()->findAllByAttributes([
 					'rut_proveedor' => $duplicado['proveedor'],
-					'iva' => $duplicado['iva'],
-					'impuesto_especifico' => $duplicado['impuesto_especifico'],
 					'monto_neto' => $duplicado['neto'],
 					'nro_documento' => $duplicado['nro_documento'],
 					'vehiculo_equipo' => $duplicado['maquina'],
