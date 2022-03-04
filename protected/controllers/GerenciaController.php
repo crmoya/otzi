@@ -101,7 +101,7 @@ class GerenciaController extends Controller
 						if($rindegasto == null)
 						{
 							$compra = true;
-							$rindegasto = NoCombustibleRindegasto::model()->findByAttributes(['gasto_completa_id' => $gastoCompleta->id]);
+							$rindegasto = NocombustibleRindegasto::model()->findByAttributes(['gasto_completa_id' => $gastoCompleta->id]);
 						}
 						if($rindegasto != null)
 						{
