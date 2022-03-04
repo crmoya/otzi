@@ -32,6 +32,165 @@ class GerenciaController extends Controller
 		);
 	}
 
+	function actionDuplicados()
+	{
+		$db=Yii::app()->db;
+		$db->active=true;
+
+		$sql = "
+		select count(*) from 
+		   (select g.issue_date as fecha, gc.rut_proveedor as proveedor, gc.iva as iva, gc.impuesto_especifico as especifico, gc.monto_neto as neto, gc.nro_documento as nro_documento, gc.vehiculo_equipo as maquina, count(*)
+		   from gasto_completa gc
+		   join gasto g on g.id = gc.gasto_id 
+		   GROUP by g.issue_date, gc.rut_proveedor, gc.iva, gc.impuesto_especifico, gc.monto_neto, gc.nro_documento, gc.vehiculo_equipo
+		   HAVING count(*) > 1) t
+		";
+		$duplicados = $db->createCommand($sql)->queryScalar();
+		
+		$db->active=false;
+		$this->render("duplicados",['duplicados'=>$duplicados]);
+	}
+
+	function actionEliminarDuplicados()
+	{
+
+		$db=Yii::app()->db;
+		$db->active=true;
+
+		$transaction = $db->beginTransaction();
+		try
+		{
+			$sql = "
+				select 	g.issue_date as fecha, 
+						gc.rut_proveedor as proveedor, 
+						gc.iva as iva, 
+						gc.impuesto_especifico as especifico, 
+						gc.monto_neto as neto, 
+						gc.nro_documento as nro_documento, 
+						gc.vehiculo_equipo as maquina
+				from gasto_completa gc
+				join gasto g on g.id = gc.gasto_id 
+				GROUP by g.issue_date, gc.rut_proveedor, gc.iva, gc.impuesto_especifico, gc.monto_neto, gc.nro_documento, gc.vehiculo_equipo
+				HAVING count(*) > 1
+				order by g.issue_date
+			";
+			$duplicados = $db->createCommand($sql)->queryAll();
+			$eliminados = 0;
+			foreach($duplicados as $duplicado)
+			{
+				$gastosCompletas = GastoCompleta::model()->findAllByAttributes([
+					'rut_proveedor' => $duplicado['proveedor'],
+					'iva' => $duplicado['iva'],
+					'impuesto_especifico' => $duplicado['impuesto_especifico'],
+					'monto_neto' => $duplicado['neto'],
+					'nro_documento' => $duplicado['nro_documento'],
+					'vehiculo_equipo' => $duplicado['maquina'],
+				]);
+
+				$primero = true;
+				foreach($gastosCompletas as $gastoCompleta)
+				{
+					$gasto = Gasto::model()->findByAttributes(['id' => $gastoCompleta->gasto_id]);
+					if($primero) 
+					{
+						$primero = false;
+						continue;
+					}
+					if($gasto->issue_date == $duplicado['fecha'])
+					{
+						$compra = false;
+						$rindegasto = CombustibleRindegasto::model()->findByAttributes(['gasto_completa_id' => $gastoCompleta->id]);
+						if($rindegasto == null)
+						{
+							$compra = true;
+							$rindegasto = NoCombustibleRindegasto::model()->findByAttributes(['gasto_completa_id' => $gastoCompleta->id]);
+						}
+						if($rindegasto != null)
+						{
+							if($rindegasto->equipoarrendado_id != null)
+							{
+								if($compra)
+								{
+									CompraRepuestoEquipoArrendado::model()->deleteAllByAttributes(['id' => $rindegasto->compra_id]);
+								}
+								else
+								{
+									CargaCombEquipoArrendado::model()->deleteAllByAttributes(['id' => $rindegasto->carga_id]);
+								}
+							}
+							if($rindegasto->equipopropio_id != null)
+							{
+								if($compra)
+								{
+									CompraRepuestoEquipoPropio::model()->deleteAllByAttributes(['id' => $rindegasto->compra_id]);
+								}
+								else
+								{
+									CargaCombEquipoPropio::model()->deleteAllByAttributes(['id' => $rindegasto->carga_id]);
+								}
+							}
+							if($rindegasto->camionarrendado_id != null)
+							{
+								if($compra)
+								{
+									CompraRepuestoCamionArrendado::model()->deleteAllByAttributes(['id' => $rindegasto->compra_id]);
+								}
+								else
+								{
+									CargaCombCamionArrendado::model()->deleteAllByAttributes(['id' => $rindegasto->carga_id]);
+								}
+							}
+							if($rindegasto->camionpropio_id != null)
+							{
+								if($compra)
+								{
+									CompraRepuestoCamionPropio::model()->deleteAllByAttributes(['id' => $rindegasto->compra_id]);
+								}
+								else
+								{
+									CargaCombCamionPropio::model()->deleteAllByAttributes(['id' => $rindegasto->carga_id]);
+								}
+							}
+							if($compra)
+							{
+								NoCombustibleRindegasto::model()->deleteAllByAttributes(['gasto_completa_id' => $gastoCompleta->id]);
+							}
+							else
+							{
+								CombustibleRindegasto::model()->deleteAllByAttributes(['gasto_completa_id' => $gastoCompleta->id]);
+							}
+						}
+						GastoCompleta::model()->deleteAllByAttributes(['id' => $gastoCompleta->id]);
+						Gasto::model()->deleteAllByAttributes(['id' => $gastoCompleta->gasto_id]);
+						$eliminados++;
+					}
+				}
+			}
+
+			$transaction->commit();
+			echo CJSON::encode([
+				'status'=>'OK',
+				'eliminados' => $eliminados,
+			]);
+		}
+		catch(Exception $e)
+		{
+			$transaction->rollback();
+			echo CJSON::encode([
+				'status'=>'ERROR',
+				'message' => $e->getMessage(),
+			]);
+		}
+		finally
+		{
+			$db->active=false;
+		}
+
+		
+		
+		
+	}
+
 	function actionExportarProduccionMaquinaria()
 	{
 		// generate a resultset
@@ -503,7 +662,7 @@ class GerenciaController extends Controller
 	{
 		return array(
 			array('allow',
-					'actions'=>array('generapdf','adjuntos','viewGastoRepuesto','viewGastoCombustible','produccionMaquinaria','exportarProduccionMaquinaria','consumoMaquinaria','exportarConsumoMaquinaria','consumoCamiones','exportarConsumoCamiones','produccionCamiones','exportarProduccionCamiones','gastoCombustible','exportarGastoCombustible','gastoRepuesto','exportarGastoRepuesto','resultados','exportarResultados','operario','exportarOperario','chofer','exportarChofer','exportarDetalleGastoRepuesto','exportarDetalleGastoCombustible'),
+					'actions'=>array('generapdf','adjuntos','viewGastoRepuesto','viewGastoCombustible','produccionMaquinaria','exportarProduccionMaquinaria','consumoMaquinaria','exportarConsumoMaquinaria','consumoCamiones','exportarConsumoCamiones','produccionCamiones','exportarProduccionCamiones','gastoCombustible','exportarGastoCombustible','gastoRepuesto','exportarGastoRepuesto','resultados','exportarResultados','operario','exportarOperario','chofer','exportarChofer','exportarDetalleGastoRepuesto','exportarDetalleGastoCombustible','duplicados','eliminarDuplicados'),
 					'roles'=>array('gerencia'),
 			),
 			array('deny',  // deny all users

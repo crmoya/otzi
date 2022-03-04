@@ -44,5 +44,9 @@ Bienvenido <?php echo CHtml::encode($nombre);?>, por favor seleccione una de las
 </ul>
 
 <ul>
+ <li><?php echo CHtml::link("Eliminación de gastos duplicados",CController::createUrl('//gerencia/duplicados')); ?></li>
+</ul>
+
+<ul>
  <li><?php echo CHtml::link("Cambiar mi clave",CController::createUrl('//site/cambiarClave')); ?></li>
 </ul>
