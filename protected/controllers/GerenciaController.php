@@ -151,7 +151,7 @@ class GerenciaController extends Controller
 							}
 							if($compra)
 							{
-								NoCombustibleRindegasto::model()->deleteAllByAttributes(['gasto_completa_id' => $gastoCompleta->id]);
+								NocombustibleRindegasto::model()->deleteAllByAttributes(['gasto_completa_id' => $gastoCompleta->id]);
 							}
 							else
 							{
