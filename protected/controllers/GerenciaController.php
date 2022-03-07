@@ -131,7 +131,7 @@ class GerenciaController extends Controller
 
 
 		$db->active=false;
-		$this->render("duplicados/index",['duplicados'=>$duplicados]);
+		$this->render("duplicados/list",['duplicados'=>$duplicados]);
 	}
 
 	function actionVerDuplicados()
