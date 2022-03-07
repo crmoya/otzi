@@ -36,7 +36,9 @@ class GerenciaController extends Controller
 	{
 		$db=Yii::app()->db;
 		$db->active=true;
+		$duplicados = 0;
 
+		//gastos
 		$sql = "
 		select count(*) from 
 		   (select g.issue_date as fecha, gc.rut_proveedor as proveedor, gc.monto_neto as neto, gc.nro_documento as nro_documento, gc.vehiculo_equipo as maquina, count(*)
@@ -46,9 +48,296 @@ class GerenciaController extends Controller
 		   HAVING count(*) > 1) t
 		";
 		$duplicados = $db->createCommand($sql)->queryScalar();
+
+		//compraEquipoPropio
+		$sql = "
+		select count(*) from 
+		   (select repuesto, montoNeto, factura, rEquipoPropio_id, tipo_documento,rut_proveedor, cuenta, nombre_proveedor, faena_id, cantidad, unidad, fechaRendicion, observaciones, count(*)
+			from compraRepuestoEquipoPropio crep 
+			group by repuesto, montoNeto, factura, rEquipoPropio_id, tipo_documento, rut_proveedor, cuenta, nombre_proveedor, faena_id, cantidad, unidad, fechaRendicion, observaciones 
+			HAVING count(*) > 1) t
+		";
+		$duplicados += $db->createCommand($sql)->queryScalar();
+
+		//compraEquipoArrendado
+		$sql = "
+		select count(*) from 
+		   (select repuesto, montoNeto, factura, rEquipoArrendado_id, tipo_documento,rut_proveedor, cuenta, nombre_proveedor, faena_id, cantidad, unidad, fechaRendicion, observaciones, count(*)
+			from compraRepuestoEquipoArrendado crep 
+			group by repuesto, montoNeto, factura, rEquipoArrendado_id, tipo_documento, rut_proveedor, cuenta, nombre_proveedor, faena_id, cantidad, unidad, fechaRendicion, observaciones 
+			HAVING count(*) > 1) t
+		";
+		$duplicados += $db->createCommand($sql)->queryScalar();
+
+		//compraCamionPropio
+		$sql = "
+		select count(*) from 
+			(select repuesto, montoNeto, factura, rCamionPropio_id, tipo_documento,rut_proveedor, cuenta, nombre_proveedor, faena_id, cantidad, unidad, fechaRendicion, observaciones, count(*)
+			from compraRepuestoCamionPropio crep 
+			group by repuesto, montoNeto, factura, rCamionPropio_id, tipo_documento, rut_proveedor, cuenta, nombre_proveedor, faena_id, cantidad, unidad, fechaRendicion, observaciones
+			HAVING count(*) > 1) t
+		";
+		$duplicados += $db->createCommand($sql)->queryScalar();
+
+		//compraCamionArrendado
+		$sql = "
+		select count(*) from 
+			(select repuesto, montoNeto, factura, rCamionArrendado_id, tipo_documento,rut_proveedor, cuenta, nombre_proveedor, faena_id, cantidad, unidad, fechaRendicion, observaciones, count(*)
+			from compraRepuestoCamionArrendado crep 
+			group by repuesto, montoNeto, factura, rCamionArrendado_id, tipo_documento, rut_proveedor, cuenta, nombre_proveedor, faena_id, cantidad, unidad, fechaRendicion, observaciones 
+			HAVING count(*) > 1) t
+		";
+		$duplicados += $db->createCommand($sql)->queryScalar();
 		
+		//cargaCamionPropio
+		$sql = "
+		select count(*) from 
+			(select petroleoLts, guia, factura, valorTotal, faena_id, rCamionPropio_id, numero, nombre, fechaRendicion, cuenta, nombre_proveedor, rut_proveedor, tipo_documento, kmCarguio, precioUnitario, tipoCombustible_id, observaciones, count(*)
+			from cargaCombCamionPropio c
+			group by petroleoLts, guia, factura, valorTotal, faena_id, rCamionPropio_id, numero, nombre, fechaRendicion, cuenta, nombre_proveedor, rut_proveedor, tipo_documento, kmCarguio, precioUnitario, tipoCombustible_id, observaciones 
+			having count(*) > 1) t
+		";
+		$duplicados += $db->createCommand($sql)->queryScalar();
+
+		//cargaCamionArrendado
+		$sql = "
+		select count(*) from 
+			(select petroleoLts, guia, factura, valorTotal, faena_id, rCamionArrendado_id, numero, nombre, fechaRendicion, cuenta, nombre_proveedor, rut_proveedor, tipo_documento, kmCarguio, precioUnitario, tipoCombustible_id, observaciones, count(*)
+			from cargaCombCamionArrendado c
+			group by petroleoLts, guia, factura, valorTotal, faena_id, rCamionArrendado_id, numero, nombre, fechaRendicion, cuenta, nombre_proveedor, rut_proveedor, tipo_documento, kmCarguio, precioUnitario, tipoCombustible_id, observaciones 
+			having count(*) > 1) t
+		";
+		$duplicados += $db->createCommand($sql)->queryScalar();
+
+		//cargaEquipoPropio
+		$sql = "
+		select count(*) from 
+			(select petroleoLts, hCarguio,guia,factura ,precioUnitario ,valorTotal ,faena_id ,tipoCombustible_id ,supervisorCombustible_id ,rEquipoPropio_id ,numero ,nombre ,fechaRendicion ,rut_rinde ,cuenta ,nombre_proveedor ,rut_proveedor ,observaciones ,tipo_documento, count(*)
+			from cargaCombEquipoPropio ccea 
+			group by petroleoLts, hCarguio,guia,factura ,precioUnitario ,valorTotal ,faena_id ,tipoCombustible_id ,supervisorCombustible_id ,rEquipoPropio_id ,numero ,nombre ,fechaRendicion ,rut_rinde ,cuenta ,nombre_proveedor ,rut_proveedor ,observaciones ,tipo_documento
+			having count(*) > 1) t
+		";
+		$duplicados += $db->createCommand($sql)->queryScalar();
+
+		//cargaEquipoArrendado
+		$sql = "
+		select count(*) from 
+			(select petroleoLts, hCarguio,guia,factura ,precioUnitario ,valorTotal ,faena_id ,tipoCombustible_id ,supervisorCombustible_id ,rEquipoArrendado_id ,numero ,nombre ,fechaRendicion ,rut_rinde ,cuenta ,nombre_proveedor ,rut_proveedor ,observaciones ,tipo_documento, count(*)
+			from cargaCombEquipoArrendado ccea 
+			group by petroleoLts, hCarguio,guia,factura ,precioUnitario ,valorTotal ,faena_id ,tipoCombustible_id ,supervisorCombustible_id ,rEquipoArrendado_id ,numero ,nombre ,fechaRendicion ,rut_rinde ,cuenta ,nombre_proveedor ,rut_proveedor ,observaciones ,tipo_documento
+			having count(*) > 1) t
+		";
+		$duplicados += $db->createCommand($sql)->queryScalar();
+
+
 		$db->active=false;
-		$this->render("duplicados",['duplicados'=>$duplicados]);
+		$this->render("duplicados/index",['duplicados'=>$duplicados]);
+	}
+
+	function actionVerDuplicados()
+	{
+		$this->pageTitle = "";
+
+		$model=new VGastoCompleta('search');
+		$model->fecha_inicio = date("Y-01-01");
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['VGastoCompleta'])){
+			$model->attributes=$_GET['VGastoCompleta'];
+		}
+
+		$model->policy = $policy;
+		$model->es_remuneraciones = $remuneraciones;
+
+		$gastoNombre = "REMUNERACIONES";
+		if($policy == VGastoCompleta::POLICY_COMBUSTIBLES && $remuneraciones == 0){
+			$gastoNombre = "COMBUSTIBLES";
+			$cabeceras = [
+				['name'=>'Proveedor','width'=>'md'],
+				['name'=>'Fecha','width'=>'md', 'format'=>'date'],
+				['name'=>'Imp. Esp.','width'=>'xs'],
+				['name'=>'IVA','width'=>'xs'],
+				['name'=>'Neto','width'=>'xs'],
+				['name'=>'Total','width'=>'xs'],
+				['name'=>'Categoría','width'=>'md'],
+				['name'=>'Nota','width'=>'md'],
+				['name'=>'Cantidad (lts.)','width'=>'md'],
+				['name'=>'C. Costo Faena','width'=>'md'],
+				['name'=>'Rendidor','width'=>'md'],
+				['name'=>'Nº doc.','width'=>'md'],
+				['name'=>'Tipo doc.','width'=>'sm'],
+				['name'=>'Vehículo Equipo','width'=>'lg'],
+				['name'=>'Folio','width'=>'xs'],
+				['name'=>'Imagen','width'=>'xs'],
+
+				//no visibles pero exportables
+				['name'=>'Folio','visible'=>'false'],
+				['name'=>'Retenido','visible'=>'false'],
+				['name'=>'Cantidad','visible'=>'false'],
+				['name'=>'Departamento','visible'=>'false'],
+				['name'=>'Faena','visible'=>'false'],
+				['name'=>'KM Carguío','visible'=>'false'],
+				['name'=>'Período Planilla','visible'=>'false'],
+				['name'=>'RUT Proveedor','visible'=>'false'],
+				['name'=>'Supervisor combustible','visible'=>'false'],
+				['name'=>'Unidad','visible'=>'false'],
+				['name'=>'Neto','visible'=>'false'],
+				['name'=>'Grupo Categoría','visible'=>'false'],
+				['name'=>'Vehículo Oficina central','visible'=>'false'],
+			];
+	
+			$extra_datos = [
+				['campo'=>'comercio','exportable','dots'=>"md"],
+				['campo'=>'fecha','exportable','dots'=>'md'],
+				['campo'=>'impuesto_especifico','exportable', 'format'=>'money','acumulado'=>'suma'],
+				['campo'=>'iva','exportable', 'format'=>'money','acumulado'=>'suma'],
+				['campo'=>'neto','exportable', 'format'=>'money','acumulado'=>'suma'],
+				['campo'=>'total','exportable', 'format'=>'money','acumulado'=>'suma'],
+				['campo'=>'categoria','exportable','dots'=>"md"],
+				['campo'=>'nota','exportable','dots'=>"md"],
+				['campo'=>'litros_combustible','exportable', 'format'=>'number','acumulado'=>'suma'],
+				['campo'=>'centro_costo_faena','exportable','dots'=>"md"],
+				['campo'=>'nombre_quien_rinde','exportable','dots'=>"md"],
+				['campo'=>'nro_documento','exportable','dots'=>"sm"],
+				['campo'=>'tipo_documento','exportable','dots'=>"sm"],
+				['campo'=>'vehiculo_equipo','exportable','dots'=>"md"],
+				['campo'=>'folio','format'=> 'enlace', 'url'=>"//informeGasto/view", 'params'=>['folio','gasto_id']],
+				['campo'=>'imagen','format'=>'imagen','dots'=>'xs'],
+
+				// no visibles pero exportables
+				['campo'=>'folio','visible'=>'false', 'exportable'],
+				['campo'=>'retenido','visible'=>'false', 'exportable'],
+				['campo'=>'cantidad','visible'=>'false', 'exportable'],
+				['campo'=>'departamento','visible'=>'false', 'exportable'],
+				['campo'=>'faena','visible'=>'false', 'exportable'],
+				['campo'=>'km_carguio','visible'=>'false', 'exportable'],
+				['campo'=>'periodo_planilla','visible'=>'false', 'exportable'],
+				['campo'=>'rut_proveedor','visible'=>'false', 'exportable'],
+				['campo'=>'supervisor_combustible','visible'=>'false', 'exportable'],
+				['campo'=>'unidad','visible'=>'false', 'exportable'],
+				['campo'=>'neto','visible'=>'false', 'exportable'],
+				['campo'=>'grupocategoria','visible'=>'false', 'exportable'],
+				['campo'=>'vehiculo_oficina_central','visible'=>'false', 'exportable'],
+			];
+		}
+		else if($remuneraciones == 0){
+			$gastoNombre = "DEPARTAMENTO DE MAQUINARIA DIFERENTE DE COMBUSTIBLES";
+			$cabeceras = [
+				['name'=>'Comercio','width'=>'md'],
+				['name'=>'Fecha','width'=>'md', 'format'=>'date'],
+				['name'=>'Neto','width'=>'xs'],
+				['name'=>'IVA','width'=>'xs'],
+				['name'=>'Total','width'=>'xs'],
+				['name'=>'Categoría','width'=>'md'],
+				['name'=>'C. Costo Faena','width'=>'md'],
+				['name'=>'Rendidor','width'=>'md'],
+				['name'=>'Tipo doc.','width'=>'sm'],
+				['name'=>'Nº doc.','width'=>'md'],
+				['name'=>'Vehículo Equipo','width'=>'lg'],
+				['name'=>'Folio','width'=>'xs'],
+				['name'=>'Nota','width'=>'lg'],
+				['name'=>'Imagen','width'=>'xs'],
+
+				//no visibles pero exportables
+				['name'=>'Folio','visible'=>'false'],
+				['name'=>'Retenido','visible'=>'false'],
+				['name'=>'Cantidad','visible'=>'false'],
+				['name'=>'Departamento','visible'=>'false'],
+				['name'=>'Faena','visible'=>'false'],
+				['name'=>'Período Planilla','visible'=>'false'],
+				['name'=>'RUT Proveedor','visible'=>'false'],
+				['name'=>'Unidad','visible'=>'false'],
+				['name'=>'Monto Neto','visible'=>'false'],
+				['name'=>'Grupo Categoría','visible'=>'false'],
+				['name'=>'Vehículo Oficina central','visible'=>'false'],
+			];
+	
+			$extra_datos = [
+				['campo'=>'comercio','exportable','dots'=>"md"],
+				['campo'=>'fecha','exportable','dots'=>'md'],
+				['campo'=>'neto','exportable', 'format'=>'money','acumulado'=>'suma'],
+				['campo'=>'iva','exportable', 'format'=>'money','acumulado'=>'suma'],
+				['campo'=>'total','exportable', 'format'=>'money','acumulado'=>'suma'],
+				['campo'=>'categoria','exportable','dots'=>"md"],
+				['campo'=>'centro_costo_faena','exportable','dots'=>"md"],
+				['campo'=>'nombre_quien_rinde','exportable','dots'=>"md"],
+				['campo'=>'tipo_documento','exportable','dots'=>"sm"],
+				['campo'=>'nro_documento','exportable','dots'=>"sm"],
+				['campo'=>'vehiculo_equipo','exportable','dots'=>"md"],
+				['campo'=>'folio','format'=> 'enlace', 'url'=>"//informeGasto/view", 'params'=>['folio','gasto_id']],
+				['campo'=>'nota','exportable','dots'=>'lg'],
+				['campo'=>'imagen','format'=>'imagen','dots'=>'xs'],
+
+				// no visibles pero exportables
+				['campo'=>'folio','visible'=>'false', 'exportable'],
+				['campo'=>'retenido','visible'=>'false', 'exportable'],
+				['campo'=>'cantidad','visible'=>'false', 'exportable'],
+				['campo'=>'departamento','visible'=>'false', 'exportable'],
+				['campo'=>'faena','visible'=>'false', 'exportable'],
+				['campo'=>'periodo_planilla','visible'=>'false', 'exportable'],
+				['campo'=>'rut_proveedor','visible'=>'false', 'exportable'],
+				['campo'=>'unidad','visible'=>'false', 'exportable'],
+				['campo'=>'monto_neto','visible'=>'false', 'exportable'],
+				['campo'=>'grupocategoria','visible'=>'false', 'exportable'],
+				['campo'=>'vehiculo_oficina_central','visible'=>'false'],
+			];
+		}
+		else if($remuneraciones == 1){
+			$cabeceras = [
+				['name'=>'Comercio','width'=>'md'],
+				['name'=>'Fecha','width'=>'md', 'format'=>'date'],
+				['name'=>'Total','width'=>'md'],
+				['name'=>'Categoría','width'=>'md'],
+				['name'=>'C. Costo Faena','width'=>'md'],
+				['name'=>'Tipo doc.','width'=>'md'],
+				['name'=>'Nº doc.','width'=>'md'],
+				['name'=>'Vehículo Equipo','width'=>'lg'],
+				['name'=>'Folio','width'=>'xs'],
+				['name'=>'Nota','width'=>'lg'],
+				['name'=>'Imagen','width'=>'xs'],
+
+				//no visibles pero exportables
+				['name'=>'Folio','visible'=>'false'],
+				['name'=>'Cantidad','visible'=>'false'],
+				['name'=>'RUT Proveedor','visible'=>'false'],
+				['name'=>'Unidad','visible'=>'false'],
+				['name'=>'Monto Neto','visible'=>'false'],
+				['name'=>'Grupo Categoría','visible'=>'false'],
+				['name'=>'Vehículo Oficina central','visible'=>'false'],
+			];
+	
+			$extra_datos = [
+				['campo'=>'comercio','exportable','dots'=>"md"],
+				['campo'=>'fecha','exportable','dots'=>'md'],
+				['campo'=>'neto','exportable', 'format'=>'money','acumulado'=>'suma'],
+				['campo'=>'categoria','exportable','dots'=>"md"],
+				['campo'=>'centro_costo_faena','exportable','dots'=>"md"],
+				['campo'=>'tipo_documento','exportable','dots'=>"sm"],
+				['campo'=>'nro_documento','exportable','dots'=>"sm"],
+				['campo'=>'vehiculo_equipo','exportable','dots'=>"md"],
+				['campo'=>'folio','format'=> 'enlace', 'url'=>"//informeGasto/view", 'params'=>['folio','gasto_id']],
+				['campo'=>'nota','exportable','dots'=>'lg'],
+				['campo'=>'imagen','format'=>'imagen','dots'=>'xs'],
+
+				// no visibles pero exportables
+				['campo'=>'folio','visible'=>'false', 'exportable'],
+				['campo'=>'cantidad','visible'=>'false', 'exportable'],
+				['campo'=>'rut_proveedor','visible'=>'false', 'exportable'],
+				['campo'=>'unidad','visible'=>'false', 'exportable'],
+				['campo'=>'monto_neto','visible'=>'false', 'exportable'],
+				['campo'=>'grupocategoria','visible'=>'false', 'exportable'],
+				['campo'=>'vehiculo_oficina_central','visible'=>'false'],
+			];
+		}
+
+
+		$datos = VGastoCompleta::model()->findAll($model->search());
+
+		$this->render("duplicados/ver",array(
+			'model'=>$model,
+			'datos' => $datos,
+			'cabeceras' => $cabeceras,
+			'extra_datos' => $extra_datos,
+		));
 	}
 
 	function actionEliminarDuplicados()
@@ -161,6 +450,332 @@ class GerenciaController extends Controller
 						$eliminados++;
 					}
 				}
+			}
+
+
+			//ahora elimino las compras y cargas duplicadas
+			//compraEquipoPropio
+			$sql = "
+				select repuesto, montoNeto, factura, rEquipoPropio_id, tipo_documento,rut_proveedor, cuenta, nombre_proveedor, faena_id, cantidad, unidad, fechaRendicion, observaciones, count(*)
+				from compraRepuestoEquipoPropio crep 
+				group by repuesto, montoNeto, factura, rEquipoPropio_id, tipo_documento, rut_proveedor, cuenta, nombre_proveedor, faena_id, cantidad, unidad, fechaRendicion, observaciones 
+				HAVING count(*) > 1
+			";
+			$duplicados = $db->createCommand($sql)->queryAll();
+			foreach($duplicados as $duplicado)
+			{
+				$compras = CompraRepuestoEquipoPropio::model()->findAllByAttributes([
+					'repuesto' => $duplicado['repuesto'],
+					'montoNeto' => $duplicado['montoNeto'],
+					'factura' => $duplicado['factura'],
+					'rEquipoPropio_id' => $duplicado['rEquipoPropio_id'],
+					'tipo_documento' => $duplicado['tipo_documento'],
+					'rut_proveedor' => $duplicado['rut_proveedor'],
+					'cuenta' => $duplicado['cuenta'],
+					'nombre_proveedor' => $duplicado['nombre_proveedor'],
+					'faena_id' => $duplicado['faena_id'],
+					'cantidad' => $duplicado['cantidad'],
+					'unidad' => $duplicado['unidad'],
+					'fechaRendicion' => $duplicado['fechaRendicion'],
+					'observaciones' => $duplicado['observaciones'],
+				]);
+				$primero = true;
+				foreach($compras as $compra) 
+				{
+					if($primero)
+					{
+						$primero = false;
+						continue;
+					}
+					CompraRepuestoEquipoPropio::model()->deleteAllByAttributes(['id' => $compra->id]);
+					$eliminados++;
+				}				
+			}
+			
+			//compraEquipoArrendado
+			$sql = "
+				select repuesto, montoNeto, factura, rEquipoArrendado_id, tipo_documento,rut_proveedor, cuenta, nombre_proveedor, faena_id, cantidad, unidad, fechaRendicion, observaciones, count(*)
+				from compraRepuestoEquipoArrendado crep 
+				group by repuesto, montoNeto, factura, rEquipoArrendado_id, tipo_documento, rut_proveedor, cuenta, nombre_proveedor, faena_id, cantidad, unidad, fechaRendicion, observaciones 
+				HAVING count(*) > 1
+			";
+			$duplicados = $db->createCommand($sql)->queryAll();
+			foreach($duplicados as $duplicado)
+			{
+				$compras = CompraRepuestoEquipoArrendado::model()->findAllByAttributes([
+					'repuesto' => $duplicado['repuesto'],
+					'montoNeto' => $duplicado['montoNeto'],
+					'factura' => $duplicado['factura'],
+					'rEquipoArrendado_id' => $duplicado['rEquipoArrendado_id'],
+					'tipo_documento' => $duplicado['tipo_documento'],
+					'rut_proveedor' => $duplicado['rut_proveedor'],
+					'cuenta' => $duplicado['cuenta'],
+					'nombre_proveedor' => $duplicado['nombre_proveedor'],
+					'faena_id' => $duplicado['faena_id'],
+					'cantidad' => $duplicado['cantidad'],
+					'unidad' => $duplicado['unidad'],
+					'fechaRendicion' => $duplicado['fechaRendicion'],
+					'observaciones' => $duplicado['observaciones'],
+				]);
+				$primero = true;
+				foreach($compras as $compra) 
+				{
+					if($primero)
+					{
+						$primero = false;
+						continue;
+					}
+					CompraRepuestoEquipoArrendado::model()->deleteAllByAttributes(['id' => $compra->id]);
+					$eliminados++;
+				}				
+			}
+
+			//compraCamionPropio
+			$sql = "
+				select repuesto, montoNeto, factura, rCamionPropio_id, tipo_documento,rut_proveedor, cuenta, nombre_proveedor, faena_id, cantidad, unidad, fechaRendicion, observaciones, count(*)
+				from compraRepuestoCamionPropio crep 
+				group by repuesto, montoNeto, factura, rCamionPropio_id, tipo_documento, rut_proveedor, cuenta, nombre_proveedor, faena_id, cantidad, unidad, fechaRendicion, observaciones
+				HAVING count(*) > 1
+			";
+			$duplicados = $db->createCommand($sql)->queryAll();
+			foreach($duplicados as $duplicado)
+			{
+				$compras = CompraRepuestoCamionPropio::model()->findAllByAttributes([
+					'repuesto' => $duplicado['repuesto'],
+					'montoNeto' => $duplicado['montoNeto'],
+					'factura' => $duplicado['factura'],
+					'rCamionPropio_id' => $duplicado['rCamionPropio_id'],
+					'tipo_documento' => $duplicado['tipo_documento'],
+					'rut_proveedor' => $duplicado['rut_proveedor'],
+					'cuenta' => $duplicado['cuenta'],
+					'nombre_proveedor' => $duplicado['nombre_proveedor'],
+					'faena_id' => $duplicado['faena_id'],
+					'cantidad' => $duplicado['cantidad'],
+					'unidad' => $duplicado['unidad'],
+					'fechaRendicion' => $duplicado['fechaRendicion'],
+					'observaciones' => $duplicado['observaciones'],
+				]);
+				$primero = true;
+				foreach($compras as $compra) 
+				{
+					if($primero)
+					{
+						$primero = false;
+						continue;
+					}
+					CompraRepuestoCamionPropio::model()->deleteAllByAttributes(['id' => $compra->id]);
+					$eliminados++;
+				}				
+			}
+
+			//compraCamionArrendado
+			$sql = "
+				select repuesto, montoNeto, factura, rCamionArrendado_id, tipo_documento,rut_proveedor, cuenta, nombre_proveedor, faena_id, cantidad, unidad, fechaRendicion, observaciones, count(*)
+				from compraRepuestoCamionArrendado crep 
+				group by repuesto, montoNeto, factura, rCamionArrendado_id, tipo_documento, rut_proveedor, cuenta, nombre_proveedor, faena_id, cantidad, unidad, fechaRendicion, observaciones 
+				HAVING count(*) > 1
+			";
+			$duplicados = $db->createCommand($sql)->queryAll();
+			foreach($duplicados as $duplicado)
+			{
+				$compras = CompraRepuestoCamionArrendado::model()->findAllByAttributes([
+					'repuesto' => $duplicado['repuesto'],
+					'montoNeto' => $duplicado['montoNeto'],
+					'factura' => $duplicado['factura'],
+					'rCamionArrendado_id' => $duplicado['rCamionArrendado_id'],
+					'tipo_documento' => $duplicado['tipo_documento'],
+					'rut_proveedor' => $duplicado['rut_proveedor'],
+					'cuenta' => $duplicado['cuenta'],
+					'nombre_proveedor' => $duplicado['nombre_proveedor'],
+					'faena_id' => $duplicado['faena_id'],
+					'cantidad' => $duplicado['cantidad'],
+					'unidad' => $duplicado['unidad'],
+					'fechaRendicion' => $duplicado['fechaRendicion'],
+					'observaciones' => $duplicado['observaciones'],
+				]);
+				$primero = true;
+				foreach($compras as $compra) 
+				{
+					if($primero)
+					{
+						$primero = false;
+						continue;
+					}
+					CompraRepuestoCamionArrendado::model()->deleteAllByAttributes(['id' => $compra->id]);
+					$eliminados++;
+				}				
+			}
+			
+			//cargaCamionPropio
+			$sql = "
+				select petroleoLts, guia, factura, valorTotal, faena_id, rCamionPropio_id, numero, nombre, fechaRendicion, cuenta, nombre_proveedor, rut_proveedor, tipo_documento, kmCarguio, precioUnitario, tipoCombustible_id, observaciones, count(*)
+				from cargaCombCamionPropio c
+				group by petroleoLts, guia, factura, valorTotal, faena_id, rCamionPropio_id, numero, nombre, fechaRendicion, cuenta, nombre_proveedor, rut_proveedor, tipo_documento, kmCarguio, precioUnitario, tipoCombustible_id, observaciones 
+				having count(*) > 1
+			";
+			$duplicados = $db->createCommand($sql)->queryAll();
+			foreach($duplicados as $duplicado)
+			{
+				$compras = CargaCombCamionPropio::model()->findAllByAttributes([
+					'petroleoLts' => $duplicado['petroleoLts'],
+					'guia' => $duplicado['guia'],
+					'factura' => $duplicado['factura'],
+					'valorTotal' => $duplicado['valorTotal'],
+					'faena_id' => $duplicado['faena_id'],
+					'rCamionPropio_id' => $duplicado['rCamionPropio_id'],
+					'numero' => $duplicado['numero'],
+					'nombre' => $duplicado['nombre'],
+					'fechaRendicion' => $duplicado['fechaRendicion'],
+					'cuenta' => $duplicado['cuenta'],
+					'nombre_proveedor' => $duplicado['nombre_proveedor'],
+					'rut_proveedor' => $duplicado['rut_proveedor'],
+					'tipo_documento' => $duplicado['tipo_documento'],
+					'kmCarguio' => $duplicado['kmCarguio'],
+					'precioUnitario' => $duplicado['precioUnitario'],
+					'tipoCombustible_id' => $duplicado['tipoCombustible_id'],
+					'observaciones' => $duplicado['observaciones'],
+				]);
+				$primero = true;
+				foreach($compras as $compra) 
+				{
+					if($primero)
+					{
+						$primero = false;
+						continue;
+					}
+					CargaCombCamionPropio::model()->deleteAllByAttributes(['id' => $compra->id]);
+					$eliminados++;
+				}				
+			}
+
+			//cargaCamionArrendado
+			$sql = "
+				select petroleoLts, guia, factura, valorTotal, faena_id, rCamionArrendado_id, numero, nombre, fechaRendicion, cuenta, nombre_proveedor, rut_proveedor, tipo_documento, kmCarguio, precioUnitario, tipoCombustible_id, observaciones, count(*)
+				from cargaCombCamionArrendado c
+				group by petroleoLts, guia, factura, valorTotal, faena_id, rCamionArrendado_id, numero, nombre, fechaRendicion, cuenta, nombre_proveedor, rut_proveedor, tipo_documento, kmCarguio, precioUnitario, tipoCombustible_id, observaciones 
+				having count(*) > 1
+			";
+			$duplicados = $db->createCommand($sql)->queryAll();
+			foreach($duplicados as $duplicado)
+			{
+				$cargas = CargaCombCamionArrendado::model()->findAllByAttributes([
+					'petroleoLts' => $duplicado['petroleoLts'],
+					'guia' => $duplicado['guia'],
+					'factura' => $duplicado['factura'],
+					'valorTotal' => $duplicado['valorTotal'],
+					'faena_id' => $duplicado['faena_id'],
+					'rCamionArrendado_id' => $duplicado['rCamionArrendado_id'],
+					'numero' => $duplicado['numero'],
+					'nombre' => $duplicado['nombre'],
+					'fechaRendicion' => $duplicado['fechaRendicion'],
+					'cuenta' => $duplicado['cuenta'],
+					'nombre_proveedor' => $duplicado['nombre_proveedor'],
+					'rut_proveedor' => $duplicado['rut_proveedor'],
+					'tipo_documento' => $duplicado['tipo_documento'],
+					'kmCarguio' => $duplicado['kmCarguio'],
+					'precioUnitario' => $duplicado['precioUnitario'],
+					'tipoCombustible_id' => $duplicado['tipoCombustible_id'],
+					'observaciones' => $duplicado['observaciones'],
+				]);
+				$primero = true;
+				foreach($cargas as $carga) 
+				{
+					if($primero)
+					{
+						$primero = false;
+						continue;
+					}
+					CargaCombCamionArrendado::model()->deleteAllByAttributes(['id' => $carga->id]);
+					$eliminados++;
+				}				
+			}
+
+			//cargaEquipoPropio
+			$sql = "
+				select petroleoLts, hCarguio,guia,factura ,precioUnitario ,valorTotal ,faena_id ,tipoCombustible_id ,supervisorCombustible_id ,rEquipoPropio_id ,numero ,nombre ,fechaRendicion ,rut_rinde ,cuenta ,nombre_proveedor ,rut_proveedor ,observaciones ,tipo_documento, count(*)
+				from cargaCombEquipoPropio ccea 
+				group by petroleoLts, hCarguio,guia,factura ,precioUnitario ,valorTotal ,faena_id ,tipoCombustible_id ,supervisorCombustible_id ,rEquipoPropio_id ,numero ,nombre ,fechaRendicion ,rut_rinde ,cuenta ,nombre_proveedor ,rut_proveedor ,observaciones ,tipo_documento
+				having count(*) > 1
+			";
+			$duplicados = $db->createCommand($sql)->queryAll();
+			foreach($duplicados as $duplicado)
+			{
+				$cargas = CargaCombEquipoPropio::model()->findAllByAttributes([
+					'petroleoLts' => $duplicado['petroleoLts'],
+					'hCarguio' => $duplicado['hCarguio'],
+					'guia' => $duplicado['guia'],
+					'factura' => $duplicado['factura'],
+					'precioUnitario' => $duplicado['precioUnitario'],
+					'valorTotal' => $duplicado['valorTotal'],
+					'faena_id' => $duplicado['faena_id'],
+					'tipoCombustible_id' => $duplicado['tipoCombustible_id'],
+					'supervisorCombustible_id' => $duplicado['supervisorCombustible_id'],
+					'rEquipoPropio_id' => $duplicado['rEquipoPropio_id'],
+					'numero' => $duplicado['numero'],
+					'nombre' => $duplicado['nombre'],
+					'fechaRendicion' => $duplicado['fechaRendicion'],
+					'rut_rinde' => $duplicado['rut_rinde'],
+					'cuenta' => $duplicado['cuenta'],
+					'nombre_proveedor' => $duplicado['nombre_proveedor'],
+					'rut_proveedor' => $duplicado['rut_proveedor'],
+					'observaciones' => $duplicado['observaciones'],
+					'tipo_documento' => $duplicado['tipo_documento'],
+				]);
+				$primero = true;
+				foreach($cargas as $carga) 
+				{
+					if($primero)
+					{
+						$primero = false;
+						continue;
+					}
+					CargaCombEquipoPropio::model()->deleteAllByAttributes(['id' => $carga->id]);
+					$eliminados++;
+				}				
+			}
+
+			//cargaEquipoArrendado
+			$sql = "
+				select petroleoLts, hCarguio,guia,factura ,precioUnitario ,valorTotal ,faena_id ,tipoCombustible_id ,supervisorCombustible_id ,rEquipoArrendado_id ,numero ,nombre ,fechaRendicion ,rut_rinde ,cuenta ,nombre_proveedor ,rut_proveedor ,observaciones ,tipo_documento, count(*)
+				from cargaCombEquipoArrendado ccea 
+				group by petroleoLts, hCarguio,guia,factura ,precioUnitario ,valorTotal ,faena_id ,tipoCombustible_id ,supervisorCombustible_id ,rEquipoArrendado_id ,numero ,nombre ,fechaRendicion ,rut_rinde ,cuenta ,nombre_proveedor ,rut_proveedor ,observaciones ,tipo_documento
+				having count(*) > 1
+			";
+			$duplicados = $db->createCommand($sql)->queryAll();
+			foreach($duplicados as $duplicado)
+			{
+				$cargas = CargaCombEquipoArrendado::model()->findAllByAttributes([
+					'petroleoLts' => $duplicado['petroleoLts'],
+					'hCarguio' => $duplicado['hCarguio'],
+					'guia' => $duplicado['guia'],
+					'factura' => $duplicado['factura'],
+					'precioUnitario' => $duplicado['precioUnitario'],
+					'valorTotal' => $duplicado['valorTotal'],
+					'faena_id' => $duplicado['faena_id'],
+					'tipoCombustible_id' => $duplicado['tipoCombustible_id'],
+					'supervisorCombustible_id' => $duplicado['supervisorCombustible_id'],
+					'rEquipoArrendado_id' => $duplicado['rEquipoArrendado_id'],
+					'numero' => $duplicado['numero'],
+					'nombre' => $duplicado['nombre'],
+					'fechaRendicion' => $duplicado['fechaRendicion'],
+					'rut_rinde' => $duplicado['rut_rinde'],
+					'cuenta' => $duplicado['cuenta'],
+					'nombre_proveedor' => $duplicado['nombre_proveedor'],
+					'rut_proveedor' => $duplicado['rut_proveedor'],
+					'observaciones' => $duplicado['observaciones'],
+					'tipo_documento' => $duplicado['tipo_documento'],
+				]);
+				$primero = true;
+				foreach($cargas as $carga) 
+				{
+					if($primero)
+					{
+						$primero = false;
+						continue;
+					}
+					CargaCombEquipoArrendado::model()->deleteAllByAttributes(['id' => $carga->id]);
+					$eliminados++;
+				}				
 			}
 
 			$transaction->commit();
@@ -658,7 +1273,15 @@ class GerenciaController extends Controller
 	{
 		return array(
 			array('allow',
-					'actions'=>array('generapdf','adjuntos','viewGastoRepuesto','viewGastoCombustible','produccionMaquinaria','exportarProduccionMaquinaria','consumoMaquinaria','exportarConsumoMaquinaria','consumoCamiones','exportarConsumoCamiones','produccionCamiones','exportarProduccionCamiones','gastoCombustible','exportarGastoCombustible','gastoRepuesto','exportarGastoRepuesto','resultados','exportarResultados','operario','exportarOperario','chofer','exportarChofer','exportarDetalleGastoRepuesto','exportarDetalleGastoCombustible','duplicados','eliminarDuplicados'),
+					'actions'=>array(
+						'generapdf','adjuntos','viewGastoRepuesto','viewGastoCombustible',
+						'produccionMaquinaria','exportarProduccionMaquinaria','consumoMaquinaria',
+						'exportarConsumoMaquinaria','consumoCamiones','exportarConsumoCamiones',
+						'produccionCamiones','exportarProduccionCamiones','gastoCombustible',
+						'exportarGastoCombustible','gastoRepuesto','exportarGastoRepuesto','resultados',
+						'exportarResultados','operario','exportarOperario','chofer','exportarChofer',
+						'exportarDetalleGastoRepuesto','exportarDetalleGastoCombustible','duplicados',
+						'eliminarDuplicados','verDuplicados'),
 					'roles'=>array('gerencia'),
 			),
 			array('deny',  // deny all users
