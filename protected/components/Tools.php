@@ -27,22 +27,22 @@ class Tools
 		'Cop. 13.1 Remuneraciones del Personal Indirecto',
 		'Cop. 13.2 Remuneraciones Personal externo',
 		'14 Honorarios Profesionales',
-		'14.1 Honorarios Profesionales Abogados',
-		'14.2 Honorarios Profesionales Notarios, CBR',
+		//'14.1 Honorarios Profesionales Abogados',
+		//'14.2 Honorarios Profesionales Notarios, CBR',
 		'14.3 Honorarios Técnicos, Profesionales, Otros',
 		'Cop. 14 Honorarios Profesionales',
-		'Cop. 14.1 Profesionales Abogados',
+		//'Cop. 14.1 Profesionales Abogados',
 		'Cop. 14.2 Honorarios Técnicos, Profesionales, Otro',
-		'Cop. 14.3 Honorarios Profesionales Notarios, CBR',
+		//'Cop. 14.3 Honorarios Profesionales Notarios, CBR',
 		'CG.- 13 Remuneraciones del Personal',
 		'CG.-Honorarios Profesionales',
-		'CG.- 14 Honorarios Profesionales Abogados',
+		//'CG.- 14 Honorarios Profesionales Abogados',
 		'CG.- 14.2_Honorarios Técnicos, Profesionales Otros',
-		'CG.- 14.3 Honorarios Profesionales Notarios, CBR',
+		//'CG.- 14.3 Honorarios Profesionales Notarios, CBR',
 	];
 
 	const CATEGORIAS_REMUNERACIONES_RINDEGASTOS = [
-		'13 Remuneraciones del Personal',
+		/*'13 Remuneraciones del Personal',
 		'13.1 Remuneraciones del Personal Indirecto',
 		'13.2 Remuneraciones Personal externo',
 		'13.2 Remuneraciones personal externo (por ej. Moncho)',
@@ -50,7 +50,7 @@ class Tools
 		'14.3 Honorarios Técnicos, Profesionales, Otros',
 		'2-1-06-007 Imposiciones valor nominal 2019',
 		'2-1-06-008 Imposiciones valor nominal 2018',
-		'Cop. 2-1-06-008 Imposiciones valor nominal 2018'
+		'Cop. 2-1-06-008 Imposiciones valor nominal 2018'*/
 	];
 
 	public static function charAt($string, $i){
