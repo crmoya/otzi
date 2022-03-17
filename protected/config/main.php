@@ -102,7 +102,8 @@ return array(
 		'adminEmail'=>'contacto@mvs.cl',
 	),
 	'modules'=>array(
-		/*'gii'=>array(
+		/*
+		'gii'=>array(
 			'class'=>'system.gii.GiiModule',
 			'password'=>'g11m0dul3',
 		),*/

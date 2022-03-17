@@ -6,16 +6,27 @@ $cs->registerCoreScript('jquery');
 ?>
 <h5>Eliminación de registros de gastos duplicados</h5>
 
-<div class="row">
-    <div class="col-md-12">
-        Actualmente hay <?=$duplicados?> registros duplicados <div class='btn btn-danger' id='eliminar'>Eliminar <i class='fa-solid fa-trash-can'></i></div>
-        <!--Actualmente hay <?=$duplicados?> registros duplicados <a class='btn btn-success' href="<?=CController::createUrl('gerencia/verDuplicados')?>">Ver <i class='fa-solid fa-list'></i></a>-->
-    </div>
-</div>
+<ul>
+    <li>
+        Hay <?=$gastos?> gastos duplicados <a class='btn btn-success boton' href="<?=CController::createUrl('gerencia/gastosDuplicados')?>">Ver <i class='fa-solid fa-list'></i></a>
+    </li>
+    <li>
+        Hay <?=$compras?> compras duplicadas <a class='btn btn-success boton' href="<?=CController::createUrl('gerencia/comprasDuplicadas')?>">Ver <i class='fa-solid fa-list'></i></a>
+    </li>
+    <li>
+        Hay <?=$cargas?> cargas de combustible duplicadas <a class='btn btn-success boton' href="<?=CController::createUrl('gerencia/cargasDuplicadas')?>">Ver <i class='fa-solid fa-list'></i></a>
+    </li>
+    <li>
+        Hay <?=$remuneraciones?> remuneraciones duplicadas <a class='btn btn-success boton' href="<?=CController::createUrl('gerencia/remuneracionesDuplicadas')?>">Ver <i class='fa-solid fa-list'></i></a>
+    </li>
+</ul>
 
 <style>
     .row {
         margin-bottom: 20px;
+    }
+    .boton {
+        margin: 10px;
     }
 </style>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
