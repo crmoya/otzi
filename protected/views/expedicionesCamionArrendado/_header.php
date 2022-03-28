@@ -76,6 +76,7 @@
 	<td>
 		<?php echo $form->labelEx($model,'camion_id'); ?><br/>
 	    <?php echo $form->dropDownList($model,'camion_id', CHtml::listData(CamionArrendado::model()->listarTodos(), 'id', 'nombre')); ?>
+		<?php echo $form->hiddenField($model,'faena_id'); ?>
 	</td>
 	<td>
 		<?php echo CHtml::submitButton('Filtrar',['class'=>'btn btn-primary']); ?>

@@ -48,6 +48,7 @@ class ExpedicionesCamionPropioController extends Controller
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['ExpedicionesCamionPropio'])){
 			$model->attributes=$_GET['ExpedicionesCamionPropio'];
+			$model->faena_id = $_GET['ExpedicionesCamionPropio']['faena_id'];
 		}
 
 		$cabeceras = [

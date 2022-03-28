@@ -51,6 +51,7 @@ class GastoCombustibleController extends Controller
 			$model->attributes=$_GET['GastoCombustible'];
 		}
 
+
 	
 		$cabeceras = [
 			['name'=>'Máquina o camión','width'=>'lg'],

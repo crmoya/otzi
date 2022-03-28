@@ -41,15 +41,14 @@ class ExpedicionesEquipoController extends Controller
 	{
 		
 		$this->pageTitle = "";
-
 		$model=new ExpedicionesEquipo('search');
 		$model->fecha_inicio = date("Y-m-01");
 		$model->fecha_fin = date("Y-m-t");
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['ExpedicionesEquipo'])){
 			$model->attributes=$_GET['ExpedicionesEquipo'];
+			$model->faena_id = $_GET['ExpedicionesEquipo']['faena_id'];
 		}
-
 		$cabeceras = [
 			['name'=>'Fecha','width'=>'md'],
 			['name'=>'Reporte','width'=>'md'],
