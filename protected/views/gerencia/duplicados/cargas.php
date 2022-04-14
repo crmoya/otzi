@@ -82,7 +82,7 @@ echo $this->renderPartial('//gerencia/duplicados/_cuerpo',['datos'=>$datos, 'cab
                 url: "<?php echo Yii::app()->createUrl('//gerencia/eliminarDuplicados/'); ?>",
                 data: {
                     ids: ids,
-                    tipo: 'compras',
+                    tipo: 'cargas',
                 }
             }).done(function(msg) {
                 Swal.close()
