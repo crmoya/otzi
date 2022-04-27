@@ -41,6 +41,7 @@ Bienvenido <?php echo CHtml::encode($nombre);?>, por favor seleccione una de las
 
 <ul>
  <li><a target="_blank" href="<?php echo Yii::app()->baseUrl;?>/../sincronizadorsam/web/index.php/sincronizador?hash=<?=Tools::generateSecretChipax()?>">Aplicación de sincronización gastos CHIPAX-RINDEGASTOS</a></li>
+ <li><a target="_blank" href="<?php echo Yii::app()->baseUrl;?>/../sincronizadorsam/web/index.php/sincronizador/rinde-gastos?hash=<?=Tools::generateSecretChipax()?>">Aplicación de sincronización gastos RINDEGASTOS</a></li>
 </ul>
 
 <ul>
