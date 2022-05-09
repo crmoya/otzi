@@ -12,7 +12,7 @@ class ExpedicionesCamion extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fecha_inicio, fecha_fin, agruparPor,tipoCombustible_id,propiosOArrendados,decimales', 'safe', 'on'=>'search'),
+			array('chofer_id,fecha_inicio, fecha_fin, agruparPor,tipoCombustible_id,propiosOArrendados,decimales', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -45,6 +45,12 @@ class ExpedicionesCamion extends CActiveRecord
 			}
 		}
 
+		if(isset($this->chofer_id))
+		{
+			$criteria->addCondition('chofer_id = :chofer');
+			$criteria->params[':chofer'] = $this->chofer_id;
+		}
+
 		return $criteria;
 	}
 
@@ -57,6 +63,7 @@ class ExpedicionesCamion extends CActiveRecord
 	public $propiosOArrendados;
 	public $agruparPor;
 	public $tipoCombustible_id;
+	public $chofer_id;
 
 
 	public function tableName()

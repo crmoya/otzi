@@ -97,6 +97,7 @@ class ProduccionCamionesController extends Controller
 
 	
 	public function actionRedirect($camion_id, $chofer_id, $faena_id, $tipo_camion, $fecha_inicio, $fecha_fin){
+
 		if($tipo_camion == "CA"){
 			return $this->redirect(["//expedicionesCamionArrendado/admin?".
 										"ExpedicionesCamionArrendado[camion_id]=$camion_id&".
@@ -105,13 +106,21 @@ class ProduccionCamionesController extends Controller
 										"ExpedicionesCamionArrendado[fecha_inicio]=$fecha_inicio&".
 										"ExpedicionesCamionArrendado[fecha_fin]=$fecha_fin"]);
 		}
-		if($tipo_camion == "CP"){
+		else if($tipo_camion == "CP"){
 			return $this->redirect(["//expedicionesCamionPropio/admin?".
 										"ExpedicionesCamionPropio[camion_id]=$camion_id&".
 										"ExpedicionesCamionPropio[chofer_id]=$chofer_id&".
 										"ExpedicionesCamionPropio[faena_id]=$faena_id&".
 										"ExpedicionesCamionPropio[fecha_inicio]=$fecha_inicio&".
 										"ExpedicionesCamionPropio[fecha_fin]=$fecha_fin"]);
+		}
+		else if($tipo_camion == "")
+		{
+			return $this->redirect(["//expedicionesCamion/admin?".
+										"ExpedicionesCamion[chofer_id]=$chofer_id&".
+										"ExpedicionesCamion[faena_id]=$faena_id&".
+										"ExpedicionesCamion[fecha_inicio]=$fecha_inicio&".
+										"ExpedicionesCamion[fecha_fin]=$fecha_fin"]);
 		}
 	}
 }
