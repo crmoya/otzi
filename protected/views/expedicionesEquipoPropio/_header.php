@@ -75,7 +75,7 @@
 	</td>
 	<td>
 		<?php echo $form->labelEx($model,'equipo_id'); ?><br/>
-	    <?php echo $form->dropDownList($model,'equipo_id', CHtml::listData(EquipoPropio::model()->listarTodos(), 'id', 'nombre')); ?>
+	    <?php echo $form->dropDownList($model,'equipo_id', CHtml::listData(EquipoPropio::model()->listar(), 'id', 'nombre')); ?>
 	</td>
 	<td>
 		<?php echo CHtml::submitButton('Filtrar',['class'=>'btn btn-primary']); ?>
