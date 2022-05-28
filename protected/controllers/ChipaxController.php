@@ -24,6 +24,8 @@ class ChipaxController extends Controller
                 throw new Exception("Hash incorrecto");
             }
             $gastoJson = json_decode(file_get_contents("php://input"), true);
+            $operador_id = isset($gastoJson["operador_id"]) ? json_decode($gastoJson["operador_id"]) : 0;
+            
             $vehiculos = $gastoJson['vehiculos_seleccionados'];
             foreach($vehiculos as $vehiculo){
                 $vehiculo_nombre = $vehiculo['nombre'];
@@ -523,7 +525,7 @@ class ChipaxController extends Controller
                                 $report->hInicial = 0;
                                 $report->hFinal = 0;
                                 $report->horas = 0;
-                                $report->operador_id = 0;
+                                $report->operador_id = $operador_id;
                                 $report->panne = 0;
                                 $report->iniPanne = "";
                                 $report->finPanne = "";
@@ -626,7 +628,6 @@ class ChipaxController extends Controller
                         $remuneracion->tipo_documento = Tools::traducirTipoDocumento($gastoCompleta->tipo_documento);
                         $remuneracion->rindegastos = 0;
 
-
                         //busco un report al que asociar la remuneración:
                         //inicio buscando para la fecha del gasto
                         $fecha = new DateTime($gasto->issue_date);
@@ -650,7 +651,7 @@ class ChipaxController extends Controller
                                     //fix fin de mes
                                     $report->fecha = $fecha->format('Y-m-d');
                                     $report->camionPropio_id = (int)$vehiculoRG->camionpropio_id;
-                                    $report->chofer_id = 0;
+                                    $report->chofer_id = $operador_id;
                                     $report->panne = 0;
                                     $report->iniPanne = "";
                                     $report->finPanne = "";
@@ -673,7 +674,7 @@ class ChipaxController extends Controller
                                     $report->observaciones = "Report creado automáticamente para asociación con RindeGastos";
                                 }
                                 $report->camionPropio_id = (int)$vehiculoRG->camionpropio_id;
-                                $report->chofer_id = 0;
+                                $report->chofer_id = $operador_id;
                                 $report->panne = 0;
                                 $report->iniPanne = "";
                                 $report->finPanne = "";
@@ -756,7 +757,7 @@ class ChipaxController extends Controller
                                     $report->fecha = $fecha->format('Y-m-d');
                                     $report->camionArrendado_id = (int)$vehiculoRG->camionarrendado_id;
                                     $report->ordenCompra = "OC - Chipax";
-                                    $report->chofer_id = 0;
+                                    $report->chofer_id = $operador_id;
                                     $report->panne = 0;
                                     $report->iniPanne = "";
                                     $report->finPanne = "";
@@ -780,7 +781,7 @@ class ChipaxController extends Controller
                                 }
                                 $report->camionArrendado_id = (int)$vehiculoRG->camionarrendado_id;
                                 $report->ordenCompra = "OC - Chipax";
-                                $report->chofer_id = 0;
+                                $report->chofer_id = $operador_id;
                                 $report->panne = 0;
                                 $report->iniPanne = "";
                                 $report->finPanne = "";
@@ -865,7 +866,7 @@ class ChipaxController extends Controller
                                     $report->hInicial = 0;
                                     $report->hFinal = 0;
                                     $report->horas = 0;
-                                    $report->operador_id = 0;
+                                    $report->operador_id = $operador_id;
                                     $report->panne = 0;
                                     $report->iniPanne = "";
                                     $report->finPanne = "";
@@ -891,7 +892,7 @@ class ChipaxController extends Controller
                                 $report->hInicial = 0;
                                 $report->hFinal = 0;
                                 $report->horas = 0;
-                                $report->operador_id = 0;
+                                $report->operador_id = $operador_id;
                                 $report->panne = 0;
                                 $report->iniPanne = "";
                                 $report->finPanne = "";
@@ -976,7 +977,7 @@ class ChipaxController extends Controller
                                     $report->hInicial = 0;
                                     $report->hFinal = 0;
                                     $report->horas = 0;
-                                    $report->operador_id = 0;
+                                    $report->operador_id = $operador_id;
                                     $report->panne = 0;
                                     $report->iniPanne = "";
                                     $report->finPanne = "";
@@ -1002,7 +1003,7 @@ class ChipaxController extends Controller
                                 $report->hInicial = 0;
                                 $report->hFinal = 0;
                                 $report->horas = 0;
-                                $report->operador_id = 0;
+                                $report->operador_id = $operador_id;
                                 $report->panne = 0;
                                 $report->iniPanne = "";
                                 $report->finPanne = "";
