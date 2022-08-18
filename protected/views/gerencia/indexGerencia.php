@@ -8,6 +8,7 @@ Bienvenido <?php echo CHtml::encode($nombre);?>, por favor seleccione una de las
  <li><?php echo CHtml::link("Informe de Gasto de Combustible",CController::createUrl('//gastoCombustible/admin')); ?></li>
  <li><?php echo CHtml::link("Informe de Gasto de Repuestos",CController::createUrl('//gastoRepuesto/admin')); ?></li>
  <li><?php echo CHtml::link("Informe de Gasto de Remuneraciones",CController::createUrl('//gastoRemuneraciones/admin')); ?></li>
+ <li><?php echo CHtml::link("(Nuevo) Informe de Gasto de Remuneraciones",CController::createUrl('//remuneraciones-sam/index')); ?></li>
 </ul>
 <ul>
  <li><?php echo CHtml::link("Informe de Resultados",CController::createUrl('//resultados/admin')); ?></li>
