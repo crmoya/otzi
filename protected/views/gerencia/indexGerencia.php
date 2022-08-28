@@ -7,7 +7,6 @@ Bienvenido <?php echo CHtml::encode($nombre); ?>, por favor seleccione una de la
 <ul>
     <li><?php echo CHtml::link("Informe de Gasto de Combustible", CController::createUrl('//gastoCombustible/admin')); ?></li>
     <li><?php echo CHtml::link("Informe de Gasto de Repuestos", CController::createUrl('//gastoRepuesto/admin')); ?></li>
-    <li><?php echo CHtml::link("Informe de Gasto de Remuneraciones", CController::createUrl('//gastoRemuneraciones/admin')); ?></li>
     <li>
         <a target="_blank" href="<?php echo Yii::app()->baseUrl; ?>/../sincronizadorsam/web/index.php/remuneraciones-sam/index?hash=<?= Tools::generateSecretChipax() ?>">
             <i>(Nuevo)</i> Informe de Gasto de Remuneraciones
@@ -41,7 +40,6 @@ Bienvenido <?php echo CHtml::encode($nombre); ?>, por favor seleccione una de la
 <ul>
     <li><?php echo CHtml::link("Visualizar gastos RindeGastos COMBUSTIBLES", CController::createUrl('//gastoCompleta/admin', ['policy' => GastoCompleta::POLICY_COMBUSTIBLES])); ?></li>
     <li><?php echo CHtml::link("Visualizar gastos RindeGastos DEPARTAMENTO DE MAQUINARIA DIFERENTE DE COMBUSTIBLES", CController::createUrl('//gastoCompleta/admin', ['policy' => 41786])); ?></li>
-    <li><?php echo CHtml::link("Visualizar gastos de REMUNERACIONES", CController::createUrl('//gastoCompleta/admin', ['remuneraciones' => 1])); ?></li>
 </ul>
 
 <ul>

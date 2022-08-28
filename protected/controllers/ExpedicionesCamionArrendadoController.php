@@ -144,10 +144,10 @@ class ExpedicionesCamionArrendadoController extends Controller
 			}
 
 			//remuneraciones
-			$sueldos = RemuneracionCamionArrendado::model()->findAllByAttributes(['rCamionArrendado_id'=>$report['id']]);
+			/* $sueldos = RemuneracionCamionArrendado::model()->findAllByAttributes(['rCamionArrendado_id'=>$report['id']]);
 			foreach($sueldos as $sueldo){
 				$remuneraciones += $sueldo->montoNeto;
-			}
+			} */
 
 			$dato['tipo'] = $report['tipo'];
 			$dato['fecha'] = $report['fecha'];
@@ -166,10 +166,56 @@ class ExpedicionesCamionArrendadoController extends Controller
 			$dato['produccion'] = $produccion;
 			$dato['combustible'] = $combustible;
 			$dato['repuestos'] = $repuestos;
-			$dato['remuneraciones'] = $remuneraciones;
+			$dato['remuneraciones'] = 0;
 			$datos[] = (object)$dato;
-
 		}
+		
+		// REMUNERACIONES SAM
+		$criteria = new CDbCriteria();
+		if ($model->fecha_inicio != "" && $model->fecha_fin == "") {
+			$criteria->addCondition('fecha_rendicion >= :fecha_inicio');
+			$criteria->params[':fecha_inicio'] = $model->fecha_inicio;
+		}
+		if ($model->fecha_inicio == "" && $model->fecha_fin != "") {
+			$criteria->addCondition('fecha_rendicion <= :fecha_fin');
+			$criteria->params = [':fecha_fin' => $model->fecha_fin];
+		}
+		if ($model->fecha_inicio != "" && $model->fecha_fin != "") {
+			$criteria->addCondition('fecha_rendicion >= :fecha_inicio and fecha_rendicion <= :fecha_fin');
+			$criteria->params[':fecha_inicio'] = $model->fecha_inicio;
+			$criteria->params[':fecha_fin'] = $model->fecha_fin;
+		}
+
+		$criteria->addCondition("tipo_equipo_camion = :ca");
+		$criteria->params[":ca"] = "CA";
+		//$criteria->group = "";
+		//$criteria->select = "SUM(neto)";
+		$remuneraciones = RemuneracionesSam::model()->with('camionArrendado')->findAll($criteria);
+
+		foreach ($remuneraciones as $r) {
+			$dato['tipo'] = "";
+			$dato['fecha'] = $r["fecha_rendicion"];
+			$dato['reporte'] = "";
+			$dato['observaciones'] = $r["descripcion"];
+			$dato['observaciones_obra'] = "";
+			$dato['camion'] = $r["camionArrendado"]["nombre"];
+			$dato['camion_codigo'] = $r["camionArrendado"]["codigo"];
+			$dato['km_recorridos'] = 0;
+			$dato['km_gps'] = 0;
+			$dato['horas'] = 0;
+			$dato['panne'] = "No";
+			$dato['horas_panne'] = 0;
+			$dato['validado'] = "";
+			$dato['validador'] = "";
+			$dato['id'] = "";
+			$dato['produccion'] = "";
+			$dato['combustible'] = 0;
+			$dato['repuestos'] = 0;
+			$dato['remuneraciones'] = $r["neto"];
+
+			$datos[] = (object)$dato;
+		}
+
 		$this->render("admin",array(
 			'model'=>$model,
 			'datos' => $datos,
