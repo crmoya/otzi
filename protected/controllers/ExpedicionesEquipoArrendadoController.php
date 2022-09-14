@@ -179,7 +179,7 @@ class ExpedicionesEquipoArrendadoController extends Controller {
 			$criteria->params[':fecha_inicio'] = $model->fecha_inicio;
 			$criteria->params[':fecha_fin'] = $model->fecha_fin;
 		}
-		$criteria->compare('equipoPropio_id',$model->camion_id);
+		$criteria->compare('equipoPropio_id',$model->equipo_id);
 		$criteria->addCondition("tipo_equipo_camion = :ea");
 		$criteria->params[":ea"] = "EA";
 		
