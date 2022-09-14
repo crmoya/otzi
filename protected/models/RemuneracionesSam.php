@@ -32,11 +32,11 @@
  * @property integer $gasto_id
  *
  * The followings are the available model relations:
- * @property Camionarrendado $camionArrendado
- * @property Camionpropio $camionPropio
+ * @property CamionArrendado $camionArrendado
+ * @property CamionPropio $camionPropio
  * @property Chofer $chofer
- * @property Equipoarrendado $equipoArrendado
- * @property Equipopropio $equipoPropio
+ * @property EquipoArrendado $equipoArrendado
+ * @property EquipoPropio $equipoPropio
  * @property Faena $faena
  * @property Gasto $gasto
  * @property Operador $operador
@@ -79,11 +79,11 @@ class RemuneracionesSam extends CActiveRecord {
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'camionArrendado' => array(self::BELONGS_TO, 'Camionarrendado', 'camionArrendado_id'),
-			'camionPropio' => array(self::BELONGS_TO, 'Camionpropio', 'camionPropio_id'),
+			'camionArrendado' => array(self::BELONGS_TO, 'CamionArrendado', 'camionArrendado_id'),
+			'camionPropio' => array(self::BELONGS_TO, 'CamionPropio', 'camionPropio_id'),
 			'chofer' => array(self::BELONGS_TO, 'Chofer', 'chofer_id'),
-			'equipoArrendado' => array(self::BELONGS_TO, 'Equipoarrendado', 'equipoArrendado_id'),
-			'equipoPropio' => array(self::BELONGS_TO, 'Equipopropio', 'equipoPropio_id'),
+			'equipoArrendado' => array(self::BELONGS_TO, 'EquipoArrendado', 'equipoArrendado_id'),
+			'equipoPropio' => array(self::BELONGS_TO, 'EquipoPropio', 'equipoPropio_id'),
 			'faena' => array(self::BELONGS_TO, 'Faena', 'faena_id'),
 			'gasto' => array(self::BELONGS_TO, 'Gasto', 'gasto_id'),
 			'operador' => array(self::BELONGS_TO, 'Operador', 'operador_id'),
