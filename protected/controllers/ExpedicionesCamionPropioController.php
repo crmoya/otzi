@@ -188,6 +188,7 @@ class ExpedicionesCamionPropioController extends Controller {
 			$dato['repuestos'] = $repuestos;
 			$dato['remuneraciones'] = 0;
 
+
 			$datos[] = (object)$dato;
 		}
 
@@ -206,9 +207,10 @@ class ExpedicionesCamionPropioController extends Controller {
 			$criteria->params[':fecha_inicio'] = $model->fecha_inicio;
 			$criteria->params[':fecha_fin'] = $model->fecha_fin;
 		}
-
 		$criteria->addCondition("tipo_equipo_camion = :cp");
 		$criteria->params[":cp"] = "CP";
+		$criteria->compare('camionPropio_id',$model->camion_id);
+		
 		//$criteria->group = "";
 		//$criteria->select = "SUM(neto)";
 		$remuneraciones = RemuneracionesSam::model()->with('camionPropio')->findAll($criteria);
