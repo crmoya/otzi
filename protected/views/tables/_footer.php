@@ -89,11 +89,11 @@ $(document).ready( function () {
 					format: {
 						body: function(data, row, column, node) {
 							data = data.replace("$","");
-							var numero = data.replace(".","");
-							numero = numero.replace(",","");
+							var numero = data.replaceAll(".","");
+							numero = numero.replaceAll(",","");
 							if($.isNumeric(numero)){
-								data = data.replace(".","");
-								data = data.replace(',', '.');
+								data = data.replaceAll(".","");
+								data = data.replaceAll(',', '.');
 							}
 							return data;
 						}
