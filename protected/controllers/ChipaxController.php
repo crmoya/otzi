@@ -117,6 +117,15 @@ class ChipaxController extends Controller
                     }
                 }
                 
+                //procesar gasto
+                //primero filtrar por categoría
+                $categoria = trim($gasto->category);
+                if(in_array($categoria,Tools::CATEGORIAS_COMBUSTIBLES_CHIPAX)){
+                    $gasto->expense_policy_id = GastoCompleta::POLICY_COMBUSTIBLES;
+                } else {
+                    $gasto->expense_policy_id = GastoCompleta::POLICY_MAQUINARIA;
+                }
+
                 if(!$gasto->save()){
                     throw new Exception("No se pudo crear el gasto");
                 } 
@@ -126,10 +135,6 @@ class ChipaxController extends Controller
                 if(!$gastoImagen->save()){
                     throw new Exception("No se pudo crear la imagen del gasto");
                 }
-
-                //procesar gasto
-                //primero filtrar por categoría
-                $categoria = trim($gasto->category);
                 
                 //COMBUSTIBLES
                 if(in_array($categoria,Tools::CATEGORIAS_COMBUSTIBLES_CHIPAX)){
