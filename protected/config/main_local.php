@@ -62,7 +62,7 @@ return array(
 		'db' => array(
 			'connectionString' => 'mysql:host=127.0.0.1;dbname=cot27290_SAM',
 			'emulatePrepare' => true,
-			'username' => 'root',
+			'username' => 'cot27290_SAM',
 			'password' => 'root',
 			'charset' => 'utf8',
 			'enableParamLogging' => true,

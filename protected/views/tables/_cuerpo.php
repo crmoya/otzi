@@ -1,6 +1,7 @@
 <?php if(isset($esquema)):?>
 
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 Columnas del informe: <i class="toggle icon-plus-sign open-columns"></i>
 <div class="columns">

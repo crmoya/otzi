@@ -210,19 +210,13 @@ class GastoCompletaController extends Controller
 			$cabeceras = [
 				['name'=>'Proveedor','width'=>'md'],
 				['name'=>'Fecha','width'=>'md', 'format'=>'date'],
-				['name'=>'Imp. Esp.','width'=>'xs'],
+				/* ['name'=>'Imp. Esp.','width'=>'xs'],
 				['name'=>'IVA','width'=>'xs'],
-				['name'=>'Neto','width'=>'xs'],
-				['name'=>'Total','width'=>'xs'],
-				['name'=>'Categoría','width'=>'md'],
-				['name'=>'Nota','width'=>'md'],
+				['name'=>'Neto','width'=>'xs'], */
+				['name'=>'Imp. + Neto','width'=>'md'],
 				['name'=>'Cantidad (lts.)','width'=>'md'],
-				['name'=>'C. Costo Faena','width'=>'md'],
-				['name'=>'Rendidor','width'=>'md'],
 				['name'=>'Nº doc.','width'=>'md'],
-				['name'=>'Tipo doc.','width'=>'sm'],
 				['name'=>'Vehículo Equipo','width'=>'lg'],
-				['name'=>'Folio','width'=>'xs'],
 				['name'=>'Imagen','width'=>'xs'],
 
 				//no visibles pero exportables
@@ -240,23 +234,24 @@ class GastoCompletaController extends Controller
 				['name'=>'Grupo Categoría','visible'=>'false'],
 				['name'=>'Vehículo Oficina central','visible'=>'false'],
 			];
+
+			if ($model->chkCategoria == 1) array_push($cabeceras, ['name'=>'Categoría','width'=>'md']);
+			if ($model->chkNota == 1) array_push($cabeceras, ['name'=>'Nota','width'=>'md']);
+			if ($model->chkCentroCosto == 1) array_push($cabeceras, ['name'=>'C. Costo Faena','width'=>'md']);
+			if ($model->chkRendidor == 1) array_push($cabeceras, ['name'=>'Rendidor','width'=>'md']);
+			if ($model->chkTipoDocumento == 1) array_push($cabeceras, ['name'=>'Tipo doc.','width'=>'sm']);
+			if ($model->chkFolio == 1) array_push($cabeceras, ['name'=>'Folio','width'=>'xs']);
 	
 			$extra_datos = [
 				['campo'=>'comercio','exportable','dots'=>"md"],
 				['campo'=>'fecha','exportable','dots'=>'md'],
-				['campo'=>'impuesto_especifico','exportable', 'format'=>'money','acumulado'=>'suma'],
+				/* ['campo'=>'impuesto_especifico','exportable', 'format'=>'money','acumulado'=>'suma'],
 				['campo'=>'iva','exportable', 'format'=>'money','acumulado'=>'suma'],
-				['campo'=>'neto','exportable', 'format'=>'money','acumulado'=>'suma'],
+				['campo'=>'neto','exportable', 'format'=>'money','acumulado'=>'suma'], */
 				['campo'=>'total','exportable', 'format'=>'money','acumulado'=>'suma'],
-				['campo'=>'categoria','exportable','dots'=>"md"],
-				['campo'=>'nota','exportable','dots'=>"md"],
 				['campo'=>'litros_combustible','exportable', 'format'=>'number','acumulado'=>'suma'],
-				['campo'=>'centro_costo_faena','exportable','dots'=>"md"],
-				['campo'=>'nombre_quien_rinde','exportable','dots'=>"md"],
 				['campo'=>'nro_documento','exportable','dots'=>"sm"],
-				['campo'=>'tipo_documento','exportable','dots'=>"sm"],
 				['campo'=>'vehiculo_equipo','exportable','dots'=>"md"],
-				['campo'=>'folio','format'=> 'enlace', 'url'=>"//informeGasto/view", 'params'=>['folio','gasto_id']],
 				['campo'=>'imagen','format'=>'imagen','dots'=>'xs'],
 
 				// no visibles pero exportables
@@ -274,6 +269,14 @@ class GastoCompletaController extends Controller
 				['campo'=>'grupocategoria','visible'=>'false', 'exportable'],
 				['campo'=>'vehiculo_oficina_central','visible'=>'false', 'exportable'],
 			];
+
+			if ($model->chkCategoria == 1) array_push($extra_datos, ['campo'=>'categoria','exportable','dots'=>"md"]);
+			if ($model->chkNota == 1) array_push($extra_datos, ['campo'=>'nota','exportable','dots'=>"md"]);
+			if ($model->chkCentroCosto == 1) array_push($extra_datos, ['campo'=>'centro_costo_faena','exportable','dots'=>"md"]);
+			if ($model->chkRendidor == 1) array_push($extra_datos, ['campo'=>'nombre_quien_rinde','exportable','dots'=>"md"]);
+			if ($model->chkTipoDocumento == 1) array_push($extra_datos, ['campo'=>'tipo_documento','exportable','dots'=>"sm"]);
+			if ($model->chkFolio == 1) array_push($extra_datos, ['campo'=>'folio','format'=> 'enlace', 'url'=>"//informeGasto/view", 'params'=>['folio','gasto_id']]);
+			
 		}
 		else if($remuneraciones == 0){
 			$gastoNombre = "DEPARTAMENTO DE MAQUINARIA DIFERENTE DE COMBUSTIBLES";
@@ -281,16 +284,10 @@ class GastoCompletaController extends Controller
 				['name'=>'Comercio','width'=>'md'],
 				['name'=>'Fecha','width'=>'md', 'format'=>'date'],
 				['name'=>'Neto','width'=>'xs'],
-				['name'=>'IVA','width'=>'xs'],
-				['name'=>'Total','width'=>'xs'],
-				['name'=>'Categoría','width'=>'md'],
-				['name'=>'C. Costo Faena','width'=>'md'],
-				['name'=>'Rendidor','width'=>'md'],
-				['name'=>'Tipo doc.','width'=>'sm'],
+				/* ['name'=>'IVA','width'=>'xs'],
+				['name'=>'Total','width'=>'xs'], */
 				['name'=>'Nº doc.','width'=>'md'],
 				['name'=>'Vehículo Equipo','width'=>'lg'],
-				['name'=>'Folio','width'=>'xs'],
-				['name'=>'Nota','width'=>'lg'],
 				['name'=>'Imagen','width'=>'xs'],
 
 				//no visibles pero exportables
@@ -306,21 +303,22 @@ class GastoCompletaController extends Controller
 				['name'=>'Grupo Categoría','visible'=>'false'],
 				['name'=>'Vehículo Oficina central','visible'=>'false'],
 			];
+
+			if ($model->chkCategoria == 1) array_push($cabeceras, ['name'=>'Categoría','width'=>'md']);
+			if ($model->chkNota == 1) array_push($cabeceras, ['name'=>'Nota','width'=>'md']);
+			if ($model->chkCentroCosto == 1) array_push($cabeceras, ['name'=>'C. Costo Faena','width'=>'md']);
+			if ($model->chkRendidor == 1) array_push($cabeceras, ['name'=>'Rendidor','width'=>'md']);
+			if ($model->chkTipoDocumento == 1) array_push($cabeceras, ['name'=>'Tipo doc.','width'=>'sm']);
+			if ($model->chkFolio == 1) array_push($cabeceras, ['name'=>'Folio','width'=>'xs']);
 	
 			$extra_datos = [
 				['campo'=>'comercio','exportable','dots'=>"md"],
 				['campo'=>'fecha','exportable','dots'=>'md'],
 				['campo'=>'neto','exportable', 'format'=>'money','acumulado'=>'suma'],
-				['campo'=>'iva','exportable', 'format'=>'money','acumulado'=>'suma'],
-				['campo'=>'total','exportable', 'format'=>'money','acumulado'=>'suma'],
-				['campo'=>'categoria','exportable','dots'=>"md"],
-				['campo'=>'centro_costo_faena','exportable','dots'=>"md"],
-				['campo'=>'nombre_quien_rinde','exportable','dots'=>"md"],
-				['campo'=>'tipo_documento','exportable','dots'=>"sm"],
+				/* ['campo'=>'iva','exportable', 'format'=>'money','acumulado'=>'suma'],
+				['campo'=>'total','exportable', 'format'=>'money','acumulado'=>'suma'], */
 				['campo'=>'nro_documento','exportable','dots'=>"sm"],
 				['campo'=>'vehiculo_equipo','exportable','dots'=>"md"],
-				['campo'=>'folio','format'=> 'enlace', 'url'=>"//informeGasto/view", 'params'=>['folio','gasto_id']],
-				['campo'=>'nota','exportable','dots'=>'lg'],
 				['campo'=>'imagen','format'=>'imagen','dots'=>'xs'],
 
 				// no visibles pero exportables
@@ -336,6 +334,13 @@ class GastoCompletaController extends Controller
 				['campo'=>'grupocategoria','visible'=>'false', 'exportable'],
 				['campo'=>'vehiculo_oficina_central','visible'=>'false'],
 			];
+
+			if ($model->chkCategoria == 1) array_push($extra_datos, ['campo'=>'categoria','exportable','dots'=>"md"]);
+			if ($model->chkNota == 1) array_push($extra_datos, ['campo'=>'nota','exportable','dots'=>"md"]);
+			if ($model->chkCentroCosto == 1) array_push($extra_datos, ['campo'=>'centro_costo_faena','exportable','dots'=>"md"]);
+			if ($model->chkRendidor == 1) array_push($extra_datos, ['campo'=>'nombre_quien_rinde','exportable','dots'=>"md"]);
+			if ($model->chkTipoDocumento == 1) array_push($extra_datos, ['campo'=>'tipo_documento','exportable','dots'=>"sm"]);
+			if ($model->chkFolio == 1) array_push($extra_datos, ['campo'=>'folio','format'=> 'enlace', 'url'=>"//informeGasto/view", 'params'=>['folio','gasto_id']]);
 		}
 		else if($remuneraciones == 1){
 			$cabeceras = [
@@ -384,7 +389,6 @@ class GastoCompletaController extends Controller
 				['campo'=>'vehiculo_oficina_central','visible'=>'false'],
 			];
 		}
-
 
 		$datos = VGastoCompleta::model()->findAll($model->search());
 

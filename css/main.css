@@ -213,3 +213,15 @@ div.search-form {
 .operations li a:hover {
 	background: #80CFFF;
 }
+
+@media (min-width: 1920px) {
+	.container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+		max-width: 1800px;
+	}
+}
+
+@media (min-width: 1400px) {
+	.container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+		max-width: 1320px;
+	}
+}
