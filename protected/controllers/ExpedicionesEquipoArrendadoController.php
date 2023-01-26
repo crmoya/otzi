@@ -192,7 +192,7 @@ class ExpedicionesEquipoArrendadoController extends Controller {
 				$dato['observaciones'] = $r["descripcion"];
 				$dato['observaciones_obra'] = "";
 				$dato['equipo'] = $r["equipoArrendado"]["nombre"];
-				$dato['equipo_codigo'] = $r["equipoArrendado"]["codigo"];
+				$dato['equipo_codigo'] = isset($r["equipoArrendado"]["codigo"]) ? $r["equipoArrendado"]["codigo"] : "";
 				$dato['horas_reales'] = 0;
 				$dato['horas_gps'] = 0;
 				$dato['panne'] = "No";
