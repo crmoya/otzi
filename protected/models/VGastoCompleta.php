@@ -37,6 +37,7 @@ class VGastoCompleta extends CActiveRecord
 	public $chkRendidor;
 	public $chkTipoDocumento;
 	public $chkFolio;
+	public $delete;
 
 	/**
 	 * @return array validation rules for model attributes.
@@ -51,7 +52,8 @@ class VGastoCompleta extends CActiveRecord
 			array('retenido, cantidad, centro_costo_faena, departamento, faena, impuesto_especifico, iva, km_carguio, litros_combustible, monto_neto, nombre_quien_rinde, nro_documento, periodo_planilla, rut_proveedor, supervisor_combustible, tipo_documento, unidad, vehiculo_equipo, vehiculo_oficina_central', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.*/
-			array('id, fecha_inicio, fecha_fin, igual, chkCategoria, chkNota, chkCentroCosto, chkRendidor, chkTipoDocumento, chkFolio', 'safe', 'on'=>'search'),
+			array('id, fecha_inicio, fecha_fin, igual, chkCategoria, chkNota, chkCentroCosto, chkRendidor,
+					chkTipoDocumento, chkFolio, delete', 'safe', 'on'=>'search'),
 		);
 	}
 

@@ -29,7 +29,7 @@ class GastoCompletaController extends Controller
 		return array(
 			array(
 				'allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions' => array('index', 'view', 'create', 'update', 'admin', 'delete', 'exportar', 'export'),
+				'actions' => array('index', 'view', 'create', 'update', 'admin', 'delete', 'exportar', 'export', 'deleteGasto'),
 				'roles' => array('gerencia'),
 			),
 			array(
@@ -289,6 +289,7 @@ class GastoCompletaController extends Controller
 				['name'=>'Nº doc.','width'=>'md'],
 				['name'=>'Vehículo Equipo','width'=>'lg'],
 				['name'=>'Imagen','width'=>'xs'],
+				['name'=>'Acciones','width'=>'xs'],
 
 				//no visibles pero exportables
 				['name'=>'Folio','visible'=>'false'],
@@ -320,6 +321,7 @@ class GastoCompletaController extends Controller
 				['campo'=>'nro_documento','exportable','dots'=>"sm"],
 				['campo'=>'vehiculo_equipo','exportable','dots'=>"md"],
 				['campo'=>'imagen','format'=>'imagen','dots'=>'xs'],
+				['campo'=>'delete', 'format'=>'delete', 'dots'=>'xs', 'url'=>"//gastoCompleta/deleteGasto", 'params'=>['gasto_id']],
 
 				// no visibles pero exportables
 				['campo'=>'folio','visible'=>'false', 'exportable'],
@@ -355,6 +357,7 @@ class GastoCompletaController extends Controller
 				['name'=>'Folio','width'=>'xs'],
 				['name'=>'Nota','width'=>'lg'],
 				['name'=>'Imagen','width'=>'xs'],
+				['name'=>'Acciones','width'=>'xs'],
 
 				//no visibles pero exportables
 				['name'=>'Folio','visible'=>'false'],
@@ -378,6 +381,7 @@ class GastoCompletaController extends Controller
 				['campo'=>'folio','format'=> 'enlace', 'url'=>"//informeGasto/view", 'params'=>['folio','gasto_id']],
 				['campo'=>'nota','exportable','dots'=>'lg'],
 				['campo'=>'imagen','format'=>'imagen','dots'=>'xs'],
+				['campo'=>'delete', 'dots'=>'xs'],
 
 				// no visibles pero exportables
 				['campo'=>'folio','visible'=>'false', 'exportable'],
@@ -400,6 +404,17 @@ class GastoCompletaController extends Controller
 			'gastoNombre' => $gastoNombre,
 		));
 	}
+
+	public function actionDeleteGasto($gasto_id) {
+		if (Yii::app()->request->isAjaxRequest) {
+			$gasto = Gasto::model()->findByPk($gasto_id);
+			$gasto->delete();
+			echo json_encode("SUCCESS");
+		} else {
+			echo "pillín pillín";
+		}
+	}
+
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.

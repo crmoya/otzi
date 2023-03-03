@@ -1,8 +1,8 @@
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <?php if(isset($esquema)):?>
 
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 Columnas del informe: <i class="toggle icon-plus-sign open-columns"></i>
 <div class="columns">
 	<div class="row">
@@ -242,6 +242,23 @@ $(document).ready(function(e){
 								$valor = "SIN IMAGEN";
 							}
 						}
+						if ($extra_dato["format"] == "delete") {
+							$params = "";
+							if(isset($extra_dato['params'])){
+								foreach($extra_dato['params'] as $param){
+									$params .= $param . "=" . $fila->$param . "&";
+								}
+							}
+							$newpage = "";
+							if(isset($extra_dato['new-page'])){
+								if($extra_dato['new-page'] == 'true'){
+									$newpage = "target ='_blank'";
+								}
+							}
+							$valor = '<button class="delete-gasto" url="' . CController::createUrl($extra_dato['url'])
+							. '?' . $params .'"><i class="fa fa-trash text-danger" aria-hidden="true"></i></button>';
+							// $valor = '<a class="btn seleccionar" href="' . $fila->$campo . '"><img src="' . Yii::app()->request->baseUrl . '/images/basura.png"></a>';
+						}
 						if($extra_dato['format'] == "enlace"){
 							$params = "";
 							if(isset($extra_dato['params'])){
@@ -339,3 +356,53 @@ $(document).ready(function(e){
 		
 	</table>
 </div>
+<script>
+	$(document).ready(function() {
+		$('.delete-gasto').click(function(e){
+			var url = $(this).attr("url");
+			Swal.fire({
+				title: "Eliminar Gasto",
+				text: "¿Está seguro de eliminar este gasto?",
+				// icon: 'info',
+				showConfirmButton: true,
+				showDenyButton: true,
+				// showCancelButton: true,
+				confirmButtonText: 'Borrar',
+				denyButtonText: 'Cancelar',
+				dangerMode: true,
+			}).then((result) => {
+				if (result.isConfirmed) {
+					$.ajax({
+						type: "POST",
+						url: url,
+					}).done(function(msg) {
+						var respuesta = JSON.parse(msg);
+						console.log(respuesta);
+						if (respuesta != 'SUCCESS') {
+							Swal.fire({
+								title: "ERROR",
+								text: "No se pudo eliminar el gasto. Error: " + respuesta.message,
+								icon: 'error',
+							});
+						}
+						else{
+							Swal.fire({
+								title: "Registro Gasto Eliminado",
+								text: "Se eliminó el gasto exitosamente",
+								icon: 'success',
+							});
+							location.reload();
+						}
+					});
+				} else {
+					Swal.fire({
+						title: "Acción Cancelada",
+						text: "Se canceló la eliminación del Gasto",
+						icon: 'info',
+					});
+				}
+			})
+
+		});
+	});
+</script>
