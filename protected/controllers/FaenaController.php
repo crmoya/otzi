@@ -176,7 +176,8 @@ class FaenaController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('index', 'admin', 'view', 'createv', 'update', 'adminv', 'delete','exportar','export','listunits','getunit','combustible'),
+                'actions' => array('index', 'admin', 'view', 'createv', 'update', 'adminv', 'delete','exportar',
+									'export','listunits','getunit','combustible', 'updateNoVigente', 'updateSiVigente'),
                 'roles' => array('administrador'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -491,7 +492,8 @@ class FaenaController extends Controller {
 		         	}            
 		         	
             	}catch(Exception $e){
-					var_dump($e);
+					echo "<pre>";
+					print_r($e);
 					die;
             		Yii::app()->user->setFlash('errorGrabarFaena',"No se pudieron guardar los cambios, por favor revise que el Origen/Destino para esta Faena no esté actualmente utilizado en algún reporte.");
             		$this->refresh();
@@ -507,6 +509,20 @@ class FaenaController extends Controller {
 			'unidadesE' => $unidadesE,
         ));
     }
+
+	public function actionUpdateNoVigente($id) {
+		$model = $this->loadModel($id);
+		$model->vigente = "NO";
+		$model->save();
+		$this->redirect(['adminv']);
+	}
+
+	public function actionUpdateSiVigente($id) {
+		$model = $this->loadModel($id);
+		$model->vigente = "SÍ";
+		$model->save();
+		$this->redirect(['adminv']);
+	}
 
 	public function actionCombustible(){
 		$id = Yii::app()->request->getPost('id');

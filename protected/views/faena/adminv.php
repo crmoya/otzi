@@ -48,6 +48,25 @@ $('.search-form form').submit(function(){
 		'vigente',
 		array(
 			'class'=>'CButtonColumn',
+			'template'=>'{view}{delete}{update}{down}{up}',
+			"buttons" => [
+				'down' => [
+					'label'=>'<i class="fa fa-ban text-danger"></i>',
+					'url'=> '"updateNoVigente?id=$data->id"',
+					'visible'=>'$data->vigente == "SÍ"',
+					'click'=>'function(e){
+						
+					}',
+				],
+				'up' => [
+					'label'=>'<i class="fa fa-ban text-success"></i>',
+					'url'=> '"updateSiVigente?id=$data->id"',
+					'visible'=>'$data->vigente == "NO"',
+					'click'=>'function(e){
+						
+					}',
+				],
+			]
 		),
 	),
 )); ?>
