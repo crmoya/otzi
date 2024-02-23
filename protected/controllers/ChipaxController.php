@@ -30,6 +30,7 @@ class ChipaxController extends Controller
             foreach($vehiculos as $vehiculo){
                 $vehiculo_nombre = $vehiculo['nombre'];
                 $vehiculo_valor = $vehiculo['valor'];
+                $vehiculo_nota = $vehiculo['nota'];
 
                 $rs= Yii::app()->db->createCommand('select max(id) as id from gasto')->queryAll();
                 $maxid = 0;
@@ -75,8 +76,8 @@ class ChipaxController extends Controller
                             $gasto->category = $value;
                             break;
                         case "nota":
-                            $gasto->note = $value;
-                            break;
+                            $gasto->note = $vehiculo_nota;
+                            break; 
                         case "cantidad":
                             $gastoCompleta->cantidad = $value;
                             break;
