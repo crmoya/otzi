@@ -111,15 +111,45 @@ Bienvenido <?php echo CHtml::encode($nombre); ?>, por favor seleccione una de la
                 <br />
                 Por favor ESPERE, no cierre esta ventana ni realice ninguna acción hasta que el proceso termine.
                 <br />
-                <div class="d-flex justify-content-center">
-                    <div class="spinner-border text-info" style="width: 4rem; height: 4rem;" role="status">
-                        <span class="sr-only">Sincronizando información desde RindeGastos...</span>
+                <br />
+                <div class="row">
+                    <div class="col-md-8 text-center">
+                        Sincronización con Chipax
+                    </div>
+                    <div class="col-md-4" id="estado-proceso-chipax">
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-border text-info" style="width: 1.5rem; height: 1.5rem;" role="status">
+                                <span class="sr-only"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 text-center">
+                        Sincronización con Rinde Gastos
+                    </div>
+                    <div class="col-md-4" id="estado-proceso-rinde-gastos">
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-border text-info" style="width: 1.5rem; height: 1.5rem;" role="status">
+                                <span class="sr-only"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 text-center">
+                        Sincronización de Informes
+                    </div>
+                    <div class="col-md-4" id="estado-proceso-informes">
+                        <div class="d-flex justify-content-between">
+                            <div class="spinner-border text-info" style="width: 1.5rem; height: 1.5rem;" role="status">
+                                <span class="sr-only"></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-
-            </div>
+            <div class="modal-footer justify-content-center"></div>
         </div>
     </div>
 </div>
@@ -131,9 +161,26 @@ Bienvenido <?php echo CHtml::encode($nombre); ?>, por favor seleccione una de la
             $('#myModal').modal();
             $.ajax({
                 type: "POST",
-                url: "<?php echo Yii::app()->baseUrl; ?>/../sincronizadorsam/web/index.php/sincronizador/sincronizar?hash=<?= Tools::generateSecretChipax() ?>",
+                url: "<?php echo Yii::app()->baseUrl; ?>/../sincronizadorsam/web/index.php/sincronizador/sincronizar-chipax-data?hash=<?= Tools::generateSecretChipax() ?>",
+            }).then(function(html) {
+                $("#estado-proceso-chipax").html('<i class="fa fa-2x fa-check text-success"></i>');
+                return $.ajax({
+                    type: "POST",
+                    url: "<?php echo Yii::app()->baseUrl; ?>/../sincronizadorsam/web/index.php/sincronizador/sincronizar-rinde-gastos-data?hash=<?= Tools::generateSecretChipax() ?>",
+                });
+            }).then(function(html) {
+                $("#estado-proceso-rinde-gastos").html('<i class="fa fa-2x fa-check text-success"></i>');
+                return $.ajax({
+                    type: "POST",
+                    url: "<?php echo Yii::app()->baseUrl; ?>/../sincronizadorsam/web/index.php/sincronizador/sincronizar-informes-data?hash=<?= Tools::generateSecretChipax() ?>",
+                });
+            }).then(function(html) {
+                $("#estado-proceso-informes").html('<i class="fa fa-2x fa-check text-success"></i>');
             }).done(function(html) {
-                $(".modal-body").html(html);
+                $(".modal-footer").html('Proceso finalizado! &nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-2x fa-check text-success"></i>');
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                console.error("Error al ejecutar la solicitud AJAX:", textStatus, errorThrown);
+                $("#mensaje-error").text("Error al sincronizar: " + errorThrown);
             });
         });
     });
