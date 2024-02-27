@@ -17,8 +17,8 @@ class TareasController extends Controller {
 
     public function actionSincronizarGastos() {
         $cronFile = Yii::app()->basePath . '/../cron.php';
-        // $command = "/usr/local/bin/php $cronFile gastos";
-        $command = "php $cronFile gastos";
+        $command = "/usr/local/bin/php $cronFile gastos";
+        // $command = "php $cronFile gastos";
         exec($command, $output, $exitCode);
 
         if ($exitCode === 0) {
@@ -31,8 +31,8 @@ class TareasController extends Controller {
 
     public function actionSincronizarInformes() {
         $cronFile = Yii::app()->basePath . '/../cron.php';
-        // $command = "/usr/local/bin/php $cronFile informes";
-        $command = "php $cronFile informes";
+        $command = "/usr/local/bin/php $cronFile informes";
+        // $command = "php $cronFile informes";
         exec($command, $output, $exitCode);
 
         if ($exitCode === 0) {
@@ -44,8 +44,8 @@ class TareasController extends Controller {
 
     public function actionSincronizarRindeGastos() {
         $cronFile = Yii::app()->basePath . '/../cron.php';
-        // $command = "/usr/local/bin/php $cronFile rinde";
-        $command = "php $cronFile rinde";
+        $command = "/usr/local/bin/php $cronFile rinde";
+        // $command = "php $cronFile rinde";
         exec($command, $output, $exitCode);
 
         if ($exitCode === 0) {
