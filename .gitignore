@@ -10,3 +10,4 @@ protected/.DS_Store
 protected/config/main.php
 protected/controllers/RCamionArrendadoController.bak.php
 protected/views/rCamionArrendado/camionesArrendados.bak.php
+.vscode/launch.json
