@@ -82,9 +82,9 @@ Bienvenido <?php echo CHtml::encode($nombre); ?>, por favor seleccione una de la
         ); */ ?>
     <!-- <button type="button" id="sincronizacion-modal">Sincronización Data RindeGastos</button> -->
     <button id="sync-combustibles-modal" type="button" class="btn btn-info" data-toggle="modal">
-        Sincronización Combustibles y Maquinaria <i class="fa fa-sync"></i></button>
+        Obtener datos para Sincronizador <i class="fa fa-sync"></i></button>
     <button id="sync-rindegastos-modal" type="button" class="btn btn-warning" data-toggle="modal">
-        Sincronización Data RindeGastos <i class="fa fa-sync"></i></button></button>
+        Sincronización Generador de Excel <i class="fa fa-sync"></i></button></button>
 </ul>
 
 <!-- <div id="myModal" title="Sincronización con RindeGastos">

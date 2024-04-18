@@ -11,7 +11,13 @@
  * @property integer $total
  * @property string $category
  * @property string $category_group
- * @property string $note
+ * @property integer $status
+ * @property integer $tax
+ * @property integer $other_taxes
+ * @property string $category_code
+ * @property integer $report_id
+ * @property integer $expense_policy_id
+ * @property integer $chipax
  *
  * The followings are the available model relations:
  * @property ExtraGasto[] $extraGastos

@@ -31,6 +31,9 @@ class ChipaxController extends Controller
                 $vehiculo_nombre = $vehiculo['nombre'];
                 $vehiculo_valor = $vehiculo['valor'];
                 $vehiculo_nota = $vehiculo['nota'];
+                $vehiculo_cantidad = $vehiculo['cantidad'];
+                $vehiculo_unidad_seleccionada = $vehiculo['unidad_seleccionada'];
+                $vehiculo_carguio = $vehiculo['carguio'];
 
                 $rs= Yii::app()->db->createCommand('select max(id) as id from gasto')->queryAll();
                 $maxid = 0;
@@ -104,7 +107,7 @@ class ChipaxController extends Controller
                             $gastoCompleta->tipo_documento = $value;
                             break;
                         case "unidad_seleccionada":
-                            $gastoCompleta->unidad = $value;
+                            $gastoCompleta->unidad = $vehiculo_unidad_seleccionada;
                             break;
                         case "html_factura":
                             $gastoImagen->file_name = $value;
@@ -139,6 +142,11 @@ class ChipaxController extends Controller
                 
                 //COMBUSTIBLES
                 if(in_array($categoria,Tools::CATEGORIAS_COMBUSTIBLES_CHIPAX)){
+                    $gastoCompleta->litros_combustible = $vehiculo_cantidad;
+                    $gastoCompleta->km_carguio = $vehiculo_carguio;
+                    if(!$gastoCompleta->save()){
+                        throw new Exception("No se pudo modificar litros combustible");
+                    }
                     $combustible = new CombustibleRindegasto();
                     $combustible->fecha = $gasto->issue_date;
                     $combustible->litros = floatval($gastoCompleta->litros_combustible);
