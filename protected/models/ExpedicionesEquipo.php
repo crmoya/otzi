@@ -12,7 +12,7 @@ class ExpedicionesEquipo extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fecha_inicio, fecha_fin, agruparPor,tipoCombustible_id,propiosOArrendados,decimales', 'safe', 'on'=>'search'),
+			array('fecha_inicio, fecha_fin, agruparPor,tipoCombustible_id,propiosOArrendados,decimales, operador_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -55,6 +55,7 @@ class ExpedicionesEquipo extends CActiveRecord
 	public $tipoCombustible_id;
 	public $decimales;
 	public $faena_id;
+	public $operador_id;
 
 	public function tableName()
 	{

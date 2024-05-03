@@ -48,6 +48,8 @@ class ExpedicionesEquipoController extends Controller
 		if(isset($_GET['ExpedicionesEquipo'])){
 			$model->attributes=$_GET['ExpedicionesEquipo'];
 			$model->faena_id = $_GET['ExpedicionesEquipo']['faena_id'];
+			$model->equipo_id = $_GET['ExpedicionesEquipo']['equipo_id'];
+			$model->operador_id = $_GET['ExpedicionesEquipo']['operador_id'];
 		}
 		$cabeceras = [
 			['name'=>'Fecha','width'=>'md'],

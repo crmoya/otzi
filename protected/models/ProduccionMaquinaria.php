@@ -89,7 +89,7 @@ class ProduccionMaquinaria extends CActiveRecord
 				$finAgrupacion = "		operador,operador_id";
 			}
 			if($this->agruparPor == "CENTROGESTION"){
-				$inicioAgrupacion = "	'' as tipo_maquina,
+				$inicioAgrupacion = "	tipo_maquina,
 										'' as maquina,
 										'' as maquina_id,
 										'' as operador,
@@ -111,7 +111,7 @@ class ProduccionMaquinaria extends CActiveRecord
 				$finAgrupacion = "		tipo_maquina,maquina,maquina_id,centro_gestion,faena_id";
 			}
 			if($this->agruparPor == "CENTROOPERADOR"){
-				$inicioAgrupacion = "	'' as tipo_maquina,
+				$inicioAgrupacion = "	tipo_maquina,
 										'' as maquina,
 										'' as maquina_id,
 										operador,
