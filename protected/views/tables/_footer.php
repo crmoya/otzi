@@ -43,7 +43,11 @@ $(document).ready( function () {
 
 	// DataTable
 	var table = $('#datos').DataTable({
-		dom: 'Bfrtip',
+		dom: 'Blfrtip',
+    	lengthMenu: [
+			[10, 25, 50, 100, -1],
+			['10 registros', '25 registros', '50 registros', '100 registros', 'Mostrar todo']
+		],
 		columns: [
 			<?php
 			for($j=0; $j<count($extra_datos); $j++){
@@ -62,6 +66,7 @@ $(document).ready( function () {
 			?>
 		],
 		buttons: [
+			{ extend: 'pageLength', className: 'buttons-collection'},
 			{
 				extend: 'excelHtml5',
 				text: 'Excel',
@@ -111,7 +116,13 @@ $(document).ready( function () {
 		language: {
 			//"url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
 			"decimal": ",",
-			"thousands": "."
+			"thousands": ".",
+			buttons: {
+				pageLength: {
+					_: 'Mostrar %d registros <span class="dt-button-down-arrow">▼</span>',
+					'-1': 'Mostrar Todo'
+				}
+			}
 		},
 		"footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
@@ -310,5 +321,9 @@ $(document).ready( function () {
 }
 .validar-1:hover, .validar-2:hover{
 	cursor: pointer;
+}
+.buttons-page-length {
+    border: 1px solid rgb(89, 91, 94) !important;
+    background: rgba(255, 255, 255, 0.15) !important;
 }
 </style>
