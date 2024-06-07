@@ -7,6 +7,7 @@
  * @property integer $id
  * @property integer $unidad
  * @property string $pu
+ * @property double $horas_minimas
  * @property integer $faena_id
  * @property integer $equipoarrendado_id
  * @property integer $equipopropio_id
@@ -62,6 +63,7 @@ class UnidadfaenaEquipo extends CActiveRecord
 			array('unidad, faena_id, equipoarrendado_id, equipopropio_id', 'numerical', 'integerOnly'=>true),
 			array('pu', 'length', 'max'=>12),
 			array('pu','esDecimal'),
+			array('horas_minimas','esDecimal'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, unidad, pu, faena_id, equipoarrendado_id, equipopropio_id,observaciones', 'safe', 'on'=>'search'),
@@ -94,6 +96,7 @@ class UnidadfaenaEquipo extends CActiveRecord
 			'faena_id' => 'Faena',
 			'equipoarrendado_id' => 'Equipoarrendado',
 			'equipopropio_id' => 'Equipopropio',
+			'horas_minimas' => 'Horas Mín',
 		);
 	}
 

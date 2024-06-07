@@ -3,7 +3,15 @@
 class ExpedicionesEquipoPropio extends CActiveRecord
 {
 
-
+	public $chkHrsReales;
+	public $chkHrsGPS;
+	public $chkProduccionReal;
+	public $chkProduccionMinima;
+	public $chkCombLts;
+	public $chkRepuestos;
+	public $chkRemuneraciones;
+	public $chkHrsPanne;
+	public $chkPanne;
 	/**
 	 * @return array validation rules for model attributes.
 	 */
@@ -13,6 +21,8 @@ class ExpedicionesEquipoPropio extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('fecha_inicio, fecha_fin, equipo_id, faena_id, reporte, operador_id', 'safe', 'on'=>'search'),
+			array('chkHrsReales, chkHrsGPS, chkProduccionReal, chkProduccionMinima, chkCombLts, chkRepuestos, chkRemuneraciones,
+				chkHrsPanne, chkPanne', 'safe'),
 		);
 	}
 
@@ -70,6 +80,15 @@ class ExpedicionesEquipoPropio extends CActiveRecord
 		return [
 			'equipo_id' => 'Equipo',
 			'faena_id' => 'Faena',
+			'chkHrsReales' => 'Hrs. Reales',
+			'chkHrsGPS' => 'Hrs. GPS',
+			'chkProduccionReal' => 'Prod. Real',
+			'chkProduccionMinima' => 'Prod. Mínima',
+			'chkCombLts' => 'Comb. Lts.',
+			'chkRepuestos' => 'Repuestos',
+			'chkRemuneraciones' => 'Remuneraciones',
+			'chkHrsPanne' => 'Hrs. Panne',
+			'chkPanne' => 'Panne',
 		];
 	}
 

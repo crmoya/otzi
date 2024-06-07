@@ -55,7 +55,8 @@ class ExpedicionesEquipoArrendadoController extends Controller {
 			['name' => 'Equipo', 'width' => 'lg'],
 			['name' => 'Hrs.Reales', 'width' => 'sm'],
 			['name' => 'Hrs.GPS', 'width' => 'sm'],
-			['name' => 'Producción', 'width' => 'md'],
+			['name' => 'Producción Real', 'width' => 'md'],
+			['name' => 'Producción Mínima', 'width' => 'md'],
 			['name' => 'Comb.Lts', 'width' => 'sm'],
 			['name' => 'Repuestos($)', 'width' => 'sm'],
 			['name' => 'Remuneraciones($)', 'width' => 'md'],
@@ -77,6 +78,7 @@ class ExpedicionesEquipoArrendadoController extends Controller {
 			['campo' => 'horas_reales', 'exportable', 'format' => 'number', 'acumulado' => 'suma'],
 			['campo' => 'horas_gps', 'exportable', 'format' => 'number', 'acumulado' => 'suma'],
 			['campo' => 'produccion', 'exportable', 'format' => 'money', 'acumulado' => 'suma'],
+			['campo' => 'produccion_min', 'exportable', 'format' => 'money', 'acumulado' => 'suma'],
 			['campo' => 'combustible', 'exportable', 'format' => 'number', 'acumulado' => 'suma'],
 			['campo' => 'repuestos', 'exportable', 'format' => 'money', 'acumulado' => 'suma'],
 			['campo' => 'remuneraciones', 'exportable', 'format' => 'money', 'acumulado' => 'suma'],
@@ -105,15 +107,18 @@ class ExpedicionesEquipoArrendadoController extends Controller {
 			}
 
 			$produccion = 0;
+			$produccion_min = 0;
 			$combustible = 0;
 			$repuestos = 0;
 			$remuneraciones = 0;
 
 			$continue = false;
 			//producción	
-			$expediciones = Expedicionportiempoeqarr::model()->findAllByAttributes(['requipoarrendado_id' => $report['id']]);
+			$expediciones = Expedicionportiempoeqarr::model()->with("unidadfaenaEquipo")
+								->findAllByAttributes(['requipoarrendado_id' => $report['id']]);
 			foreach ($expediciones as $expedicion) {
 				$produccion += $expedicion->total;
+				$produccion_min += $expedicion->unidadfaenaEquipo->horas_minimas * $expedicion->unidadfaenaEquipo->pu;
 				if ($model->faena_id != null && $model->faena_id != "") {
 					if ($model->faena_id != $expedicion->faena_id) {
 						$continue = true;
@@ -158,6 +163,7 @@ class ExpedicionesEquipoArrendadoController extends Controller {
 			$dato['validador'] = $report['validador'];
 			$dato['id'] = $report['id'];
 			$dato['produccion'] = $produccion;
+			$dato['produccion_min'] = $produccion_min;
 			$dato['combustible'] = $combustible;
 			$dato['repuestos'] = $repuestos;
 			$dato['remuneraciones'] = 0;
