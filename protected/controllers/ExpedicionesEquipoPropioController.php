@@ -134,10 +134,12 @@ class ExpedicionesEquipoPropioController extends Controller {
 
 			$continue = false;
 			//producción	
-			$expediciones = Expedicionportiempoeq::model()->with("unidadfaenaEquipo")
+			$expediciones = Expedicionportiempoeq::model()->with(["unidadfaenaEquipo", "requipopropio"])
 							->findAllByAttributes(['requipopropio_id' => $report['id']]);
 			foreach ($expediciones as $expedicion) {
-				$produccion += $expedicion->total;
+				// Se hace cambio para calcular manualmente el monto (horas reales * PU)
+				$produccion = ($expedicion->requipopropio->hFinal - $expedicion->requipopropio->hInicial) * $expedicion->unidadfaenaEquipo->pu;
+				// $produccion += $expedicion->total;
 				$produccion_min += $expedicion->unidadfaenaEquipo->horas_minimas * $expedicion->unidadfaenaEquipo->pu;
 				if ($model->faena_id != null && $model->faena_id != "") {
 					if ($model->faena_id != $expedicion->faena_id) {
