@@ -1567,17 +1567,15 @@ class Carga{
 		ini_set("memory_limit", "-1");
 		set_time_limit(0);
 
+		//elimino todo lo anterior
+		Gasto::model()->deleteAllByAttributes(['chipax'=> 0]);
+
 		$connection= Yii::app()->db;
 		$transaction=$connection->beginTransaction();
 
 		try {
-
-			//elimino todo lo anterior
-			Gasto::model()->deleteAllByAttributes(['chipax'=> 0]);
-
 			//AHORA TRAIGO LOS
 			//GASTOS Y SUS DERIVADOS
-
 			$limite = 1;
 			$primero = true;
 			for ($i = 1; $i <= $limite; $i++) {
