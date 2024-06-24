@@ -92,10 +92,14 @@ jQuery(document).ready(function () {
 		var i = place.find(".rowIndex").length > 0 ? place.find(".rowIndex").max() + 1 : 0;
 		$(template(i)).appendTo(place);
 		// NUEVO!! Cantidad toma el dato "diario" de "Datos de la Expedición"
-		if ($("#REquipoPropio_horas").val() != "") {
-			const cantidadesPU = place.find(".cantidad")
+		const cantidadesPU = place.find(".cantidad")
+		if ($("#REquipoPropio_horas").val() != null && $("#REquipoPropio_horas").val() != "") {
 			for (i=0; i<cantidadesPU.length; i++) {
 				cantidadesPU[i].value = $("#REquipoPropio_horas").val()
+			}
+		} else if ($("#REquipoArrendado_horas").val() != null && $("#REquipoArrendado_horas").val() != "") {
+			for (i=0; i<cantidadesPU.length; i++) {
+				cantidadesPU[i].value = $("#REquipoArrendado_horas").val()
 			}
 		}
 
