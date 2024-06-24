@@ -91,6 +91,14 @@ jQuery(document).ready(function () {
 		var place = $(this).parents(".templateFrame:first").children(".templateTarget");
 		var i = place.find(".rowIndex").length > 0 ? place.find(".rowIndex").max() + 1 : 0;
 		$(template(i)).appendTo(place);
+		// NUEVO!! Cantidad toma el dato "diario" de "Datos de la Expedición"
+		if ($("#REquipoPropio_horas").val() != "") {
+			const cantidadesPU = place.find(".cantidad")
+			for (i=0; i<cantidadesPU.length; i++) {
+				cantidadesPU[i].value = $("#REquipoPropio_horas").val()
+			}
+		}
+
 		place.siblings('.templateHead').show();
 		// start specific commands
 
