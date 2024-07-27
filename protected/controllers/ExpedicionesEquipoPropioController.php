@@ -68,15 +68,15 @@ class ExpedicionesEquipoPropioController extends Controller {
 			['name' => 'Modificaciones', 'filtro' => 'false'],
 		];
 
-		if ($model->chkHrsReales == 1) array_splice($cabeceras, count($cabeceras)-4, 0, [['name'=>'Hrs.Reales','width'=>'sm']]);
-		if ($model->chkHrsGPS == 1) array_splice($cabeceras, count($cabeceras)-4, 0, [['name'=>'Hrs.GPS','width'=>'sm']]);
-		if ($model->chkProduccionReal == 1) array_splice($cabeceras, count($cabeceras)-4, 0, [['name'=>'Producción Real','width'=>'sm']]);
-		if ($model->chkProduccionMinima == 1) array_splice($cabeceras, count($cabeceras)-4, 0, [['name'=>'Producción Mínima','width'=>'sm']]);
-		if ($model->chkCombLts == 1) array_splice($cabeceras, count($cabeceras)-4, 0, [['name'=>'Comb.Lts','width'=>'sm']]);
-		if ($model->chkRepuestos == 1) array_splice($cabeceras, count($cabeceras)-4, 0, [['name'=>'Repuestos($)','width'=>'sm']]);
-		if ($model->chkRemuneraciones == 1) array_splice($cabeceras, count($cabeceras)-4, 0, [['name'=>'Remuneraciones($)','width'=>'sm']]);
-		if ($model->chkHrsPanne == 1) array_splice($cabeceras, count($cabeceras)-4, 0, [['name'=>'Hrs.Panne','width'=>'sm']]);
-		if ($model->chkPanne == 1) array_splice($cabeceras, count($cabeceras)-4, 0, [['name'=>'Panne','width'=>'sm']]);
+		if ($model->chkHrsReales == 1) array_splice($cabeceras, count($cabeceras) - 4, 0, [['name' => 'Hrs.Reales', 'width' => 'sm']]);
+		if ($model->chkHrsGPS == 1) array_splice($cabeceras, count($cabeceras) - 4, 0, [['name' => 'Hrs.GPS', 'width' => 'sm']]);
+		if ($model->chkProduccionReal == 1) array_splice($cabeceras, count($cabeceras) - 4, 0, [['name' => 'Producción Real', 'width' => 'sm']]);
+		if ($model->chkProduccionMinima == 1) array_splice($cabeceras, count($cabeceras) - 4, 0, [['name' => 'Producción Mínima', 'width' => 'sm']]);
+		if ($model->chkCombLts == 1) array_splice($cabeceras, count($cabeceras) - 4, 0, [['name' => 'Comb.Lts', 'width' => 'sm']]);
+		if ($model->chkRepuestos == 1) array_splice($cabeceras, count($cabeceras) - 4, 0, [['name' => 'Repuestos($)', 'width' => 'sm']]);
+		if ($model->chkRemuneraciones == 1) array_splice($cabeceras, count($cabeceras) - 4, 0, [['name' => 'Remuneraciones($)', 'width' => 'sm']]);
+		if ($model->chkHrsPanne == 1) array_splice($cabeceras, count($cabeceras) - 4, 0, [['name' => 'Hrs.Panne', 'width' => 'sm']]);
+		if ($model->chkPanne == 1) array_splice($cabeceras, count($cabeceras) - 4, 0, [['name' => 'Panne', 'width' => 'sm']]);
 
 		$extra_datos = [
 			['campo' => 'fecha', 'exportable', 'dots' => "sm"],
@@ -100,15 +100,15 @@ class ExpedicionesEquipoPropioController extends Controller {
 			['campo' => 'id', 'format' => 'enlace-imagen', 'new-page' => 'true', 'url' => "//rEquipoPropio/verHistorial", 'params' => ['id'], 'ordenable' => 'false'],
 		];
 
-		if ($model->chkHrsReales == 1) array_splice($extra_datos, count($extra_datos)-4, 0, [['campo' => 'horas_reales', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
-		if ($model->chkHrsGPS == 1) array_splice($extra_datos, count($extra_datos)-4, 0, [['campo' => 'horas_gps', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
-		if ($model->chkProduccionReal == 1) array_splice($extra_datos, count($extra_datos)-4, 0, [['campo' => 'produccion', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
-		if ($model->chkProduccionMinima == 1) array_splice($extra_datos, count($extra_datos)-4, 0, [['campo' => 'produccion_min', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
-		if ($model->chkCombLts == 1) array_splice($extra_datos, count($extra_datos)-4, 0, [['campo' => 'combustible', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
-		if ($model->chkRepuestos == 1) array_splice($extra_datos, count($extra_datos)-4, 0, [['campo' => 'repuestos', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
-		if ($model->chkRemuneraciones == 1) array_splice($extra_datos, count($extra_datos)-4, 0, [['campo' => 'remuneraciones', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
-		if ($model->chkHrsPanne == 1) array_splice($extra_datos, count($extra_datos)-4, 0, [['campo' => 'horas_panne', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
-		if ($model->chkPanne == 1) array_splice($extra_datos, count($extra_datos)-4, 0, [['campo' => 'panne', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
+		if ($model->chkHrsReales == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'horas_reales', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
+		if ($model->chkHrsGPS == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'horas_gps', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
+		if ($model->chkProduccionReal == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'produccion', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
+		if ($model->chkProduccionMinima == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'produccion_min', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
+		if ($model->chkCombLts == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'combustible', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
+		if ($model->chkRepuestos == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'repuestos', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
+		if ($model->chkRemuneraciones == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'remuneraciones', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
+		if ($model->chkHrsPanne == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'horas_panne', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
+		if ($model->chkPanne == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'panne', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
 
 		$reports = ExpedicionesEquipoPropio::model()->findAll($model->search());
 
@@ -135,7 +135,7 @@ class ExpedicionesEquipoPropioController extends Controller {
 			$continue = false;
 			//producción	
 			$expediciones = Expedicionportiempoeq::model()->with(["unidadfaenaEquipo", "requipopropio"])
-							->findAllByAttributes(['requipopropio_id' => $report['id']]);
+				->findAllByAttributes(['requipopropio_id' => $report['id']]);
 			foreach ($expediciones as $expedicion) {
 				// Se hace cambio para calcular manualmente el monto (horas reales * PU)
 				$produccion = ($expedicion->requipopropio->hFinal - $expedicion->requipopropio->hInicial) * $expedicion->unidadfaenaEquipo->pu;
@@ -206,7 +206,7 @@ class ExpedicionesEquipoPropioController extends Controller {
 			$criteria->params[':fecha_inicio'] = $model->fecha_inicio;
 			$criteria->params[':fecha_fin'] = $model->fecha_fin;
 		}
-		$criteria->compare('equipoPropio_id',$model->equipo_id);
+		$criteria->compare('equipoPropio_id', $model->equipo_id);
 		$criteria->addCondition("tipo_equipo_camion = :ep");
 		$criteria->params[":ep"] = "EP";
 		//$criteria->group = "";
@@ -230,6 +230,7 @@ class ExpedicionesEquipoPropioController extends Controller {
 				$dato['validador'] = "";
 				$dato['id'] = "";
 				$dato['produccion'] = "";
+				$dato['produccion_min'] = "";
 				$dato['combustible'] = 0;
 				$dato['repuestos'] = 0;
 				$dato['remuneraciones'] = $r["neto"];

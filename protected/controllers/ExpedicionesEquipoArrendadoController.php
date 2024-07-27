@@ -207,6 +207,7 @@ class ExpedicionesEquipoArrendadoController extends Controller {
 				$dato['validador'] = "";
 				$dato['id'] = "";
 				$dato['produccion'] = "";
+				$dato['produccion_min'] = "";
 				$dato['combustible'] = 0;
 				$dato['repuestos'] = 0;
 				$dato['remuneraciones'] = $r["neto"];
