@@ -76,18 +76,18 @@
 		<?php echo $form->labelEx($model, 'chkHrsGPS'); ?>
 		<?php echo $form->checkBox($model, 'chkHrsGPS',  array('checked' => $model->chkHrsGPS == 1 ? "checked" : "")); ?><br />
 
-		<?php echo $form->labelEx($model, 'chkProduccionReal'); ?>
-		<?php echo $form->checkBox($model, 'chkProduccionReal',  array('checked' => $model->chkProduccionReal == 1 ? "checked" : "")); ?><br />
+		<?php echo $form->labelEx($model, 'chkHrsMin'); ?>
+		<?php echo $form->checkBox($model, 'chkHrsMin',  array('checked' => $model->chkHrsMin == 1 ? "checked" : "")); ?><br />
 	</div>
 	<div class="col-md-2">
+		<?php echo $form->labelEx($model, 'chkProduccionReal'); ?>
+		<?php echo $form->checkBox($model, 'chkProduccionReal',  array('checked' => $model->chkProduccionReal == 1 ? "checked" : "")); ?><br />
+
 		<?php echo $form->labelEx($model, 'chkProduccionMinima'); ?>
 		<?php echo $form->checkBox($model, 'chkProduccionMinima',  array('checked' => $model->chkProduccionMinima == 1 ? "checked" : "")); ?><br />
 
 		<?php echo $form->labelEx($model, 'chkCombLts'); ?>
 		<?php echo $form->checkBox($model, 'chkCombLts',  array('checked' => $model->chkCombLts == 1 ? "checked" : "")); ?><br />
-
-		<?php echo $form->labelEx($model, 'chkRepuestos'); ?>
-		<?php echo $form->checkBox($model, 'chkRepuestos',  array('checked' => $model->chkRepuestos == 1 ? "checked" : "")); ?><br />
 	</div>
 	<div class="col-md-2">
 		<?php echo $form->labelEx($model, 'chkRemuneraciones'); ?>
@@ -98,6 +98,9 @@
 
 		<?php echo $form->labelEx($model, 'chkPanne'); ?>
 		<?php echo $form->checkBox($model, 'chkPanne',  array('checked' => $model->chkPanne == 1 ? "checked" : "")); ?><br />
+		
+		<?php echo $form->labelEx($model, 'chkRepuestos'); ?>
+		<?php echo $form->checkBox($model, 'chkRepuestos',  array('checked' => $model->chkRepuestos == 1 ? "checked" : "")); ?><br />
 	</div>
 
 </div>

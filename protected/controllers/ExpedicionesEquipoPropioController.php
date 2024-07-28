@@ -70,6 +70,7 @@ class ExpedicionesEquipoPropioController extends Controller {
 
 		if ($model->chkHrsReales == 1) array_splice($cabeceras, count($cabeceras) - 4, 0, [['name' => 'Hrs.Reales', 'width' => 'sm']]);
 		if ($model->chkHrsGPS == 1) array_splice($cabeceras, count($cabeceras) - 4, 0, [['name' => 'Hrs.GPS', 'width' => 'sm']]);
+		if ($model->chkHrsMin == 1) array_splice($cabeceras, count($cabeceras) - 4, 0, [['name' => 'Hrs.Mínimas', 'width' => 'sm']]);
 		if ($model->chkProduccionReal == 1) array_splice($cabeceras, count($cabeceras) - 4, 0, [['name' => 'Producción Real', 'width' => 'sm']]);
 		if ($model->chkProduccionMinima == 1) array_splice($cabeceras, count($cabeceras) - 4, 0, [['name' => 'Producción Mínima', 'width' => 'sm']]);
 		if ($model->chkCombLts == 1) array_splice($cabeceras, count($cabeceras) - 4, 0, [['name' => 'Comb.Lts', 'width' => 'sm']]);
@@ -102,6 +103,7 @@ class ExpedicionesEquipoPropioController extends Controller {
 
 		if ($model->chkHrsReales == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'horas_reales', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
 		if ($model->chkHrsGPS == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'horas_gps', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
+		if ($model->chkHrsMin == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'horas_min', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
 		if ($model->chkProduccionReal == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'produccion', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
 		if ($model->chkProduccionMinima == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'produccion_min', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
 		if ($model->chkCombLts == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'combustible', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
@@ -128,6 +130,7 @@ class ExpedicionesEquipoPropioController extends Controller {
 
 			$produccion = 0;
 			$produccion_min = 0;
+			$horas_minimas = 0;
 			$combustible = 0;
 			$repuestos = 0;
 			$remuneraciones = 0;
@@ -141,6 +144,7 @@ class ExpedicionesEquipoPropioController extends Controller {
 				$produccion = ($expedicion->requipopropio->hFinal - $expedicion->requipopropio->hInicial) * $expedicion->unidadfaenaEquipo->pu;
 				// $produccion += $expedicion->total;
 				$produccion_min += $expedicion->unidadfaenaEquipo->horas_minimas * $expedicion->unidadfaenaEquipo->pu;
+				$horas_minimas = $expedicion->unidadfaenaEquipo->horas_minimas;
 				if ($model->faena_id != null && $model->faena_id != "") {
 					if ($model->faena_id != $expedicion->faena_id) {
 						$continue = true;
@@ -177,6 +181,7 @@ class ExpedicionesEquipoPropioController extends Controller {
 			$dato['equipo'] = $report['equipo'];
 			$dato['equipo_codigo'] = $report['equipo_codigo'];
 			$dato['horas_reales'] = $report['horas_reales'];
+			$dato['horas_min'] = $horas_minimas;
 			$dato['horas_gps'] = $report['horas_gps'];
 			$dato['panne'] = $report['panne'];
 			$dato['horas_panne'] = $report['horas_panne'];
