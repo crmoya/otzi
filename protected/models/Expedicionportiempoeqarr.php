@@ -13,7 +13,7 @@
  *
  * The followings are the available model relations:
  * @property Faena $faena
- * @property Requipoarrendado $requipoarrendado
+ * @property REquipoArrendado $requipoarrendado
  * @property UnidadfaenaEquipo $unidadfaenaEquipo
  */
 class Expedicionportiempoeqarr extends CActiveRecord
@@ -52,7 +52,7 @@ class Expedicionportiempoeqarr extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'faena' => array(self::BELONGS_TO, 'Faena', 'faena_id'),
-			'requipoarrendado' => array(self::BELONGS_TO, 'Requipoarrendado', 'requipoarrendado_id'),
+			'requipoarrendado' => array(self::BELONGS_TO, 'REquipoArrendado', 'requipoarrendado_id'),
 			'unidadfaenaEquipo' => array(self::BELONGS_TO, 'UnidadfaenaEquipo', 'unidadfaena_equipo_id'),
 		);
 	}
