@@ -137,7 +137,7 @@ class ExpedicionesEquipoArrendadoController extends Controller {
 
 			$continue = false;
 			//producción	
-			$expediciones = Expedicionportiempoeqarr::model()->with("unidadfaenaEquipo")
+			$expediciones = Expedicionportiempoeqarr::model()->with(["unidadfaenaEquipo", "requipoarrendado"])
 								->findAllByAttributes(['requipoarrendado_id' => $report['id']]);
 			foreach ($expediciones as $expedicion) {
 				// Se hace cambio para calcular manualmente el monto (horas reales * PU)
