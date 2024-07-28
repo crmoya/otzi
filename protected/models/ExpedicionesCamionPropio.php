@@ -2,7 +2,15 @@
 
 class ExpedicionesCamionPropio extends CActiveRecord
 {
-
+	public $chkKms;
+	public $chkKmsGPS;
+	public $chkHrs;
+	public $chkProduccion;
+	public $chkCombLts;
+	public $chkRepuestos;
+	public $chkRemuneraciones;
+	public $chkHrsPanne;
+	public $chkPanne;
 
 	/**
 	 * @return array validation rules for model attributes.
@@ -13,6 +21,8 @@ class ExpedicionesCamionPropio extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('fecha_inicio, fecha_fin, camion_id, reporte, faena_id,chofer_id', 'safe', 'on'=>'search'),
+			array('chkKms, chkKmsGPS, chkHrs, chkProduccion, chkCombLts, chkRepuestos,
+				chkRemuneraciones, chkHrsPanne, chkPanne', 'safe'),
 		);
 	}
 
@@ -71,6 +81,15 @@ class ExpedicionesCamionPropio extends CActiveRecord
 		return [
 			'camion_id' => 'Camión',
 			'faena_id' => 'Faena',
+			'chkKms' => 'Kms.',
+			'chkKmsGPS' => 'Kms. GPS',
+			'chkHrs' => 'Hrs.',
+			'chkProduccion' => 'Producción',
+			'chkCombLts' => 'Comb. Lts.',
+			'chkRepuestos' => 'Repuestos',
+			'chkRemuneraciones' => 'Remuneraciones',
+			'chkHrsPanne' => 'Hrs. Panne',
+			'chkPanne' => 'Panne',
 		];
 	}
 

@@ -98,24 +98,23 @@
 
 		<?php echo $form->labelEx($model, 'chkPanne'); ?>
 		<?php echo $form->checkBox($model, 'chkPanne',  array('checked' => $model->chkPanne == 1 ? "checked" : "")); ?><br />
-		
+
 		<?php echo $form->labelEx($model, 'chkRepuestos'); ?>
 		<?php echo $form->checkBox($model, 'chkRepuestos',  array('checked' => $model->chkRepuestos == 1 ? "checked" : "")); ?><br />
 	</div>
-
-</div>
-<div class="row mt-2 mb-4">
-	<div class="col-md-2">
-		<?php echo $form->labelEx($model, 'reporte'); ?><br />
-		<?php echo $form->textField($model, 'reporte', array('size' => 10)); ?>
-	</div>
-	<div class="col-md-2">
-		<?php echo $form->labelEx($model, 'equipo_id'); ?><br />
-		<?php echo $form->dropDownList($model, 'equipo_id', CHtml::listData(EquipoPropio::model()->listar(), 'id', 'nombre')); ?>
-	</div>
-	<div class="col-md-4 offset-md-1">
-		<div class="btn btn-info exportar-adjuntos">Exportar adjuntos</div>
-		<?php echo CHtml::submitButton('Filtrar', ['class' => 'btn btn-primary']); ?>
+	<div class="row mt-2 mb-4">
+		<div class="col-md-2">
+			<?php echo $form->labelEx($model, 'reporte'); ?><br />
+			<?php echo $form->textField($model, 'reporte', array('size' => 10)); ?>
+		</div>
+		<div class="col-md-2">
+			<?php echo $form->labelEx($model, 'equipo_id'); ?><br />
+			<?php echo $form->dropDownList($model, 'equipo_id', CHtml::listData(EquipoPropio::model()->listar(), 'id', 'nombre')); ?>
+		</div>
+		<div class="col-md-4 offset-md-1">
+			<div class="btn btn-info exportar-adjuntos">Exportar adjuntos</div>
+			<?php echo CHtml::submitButton('Filtrar', ['class' => 'btn btn-primary']); ?>
+		</div>
 	</div>
 </div>
 <?php $this->endWidget(); ?>
