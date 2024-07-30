@@ -12,6 +12,7 @@
  * @property string $hInicial
  * @property string $hFinal
  * @property string $horas
+ * @property double $horas_panne
  * @property integer $operador_id
  * @property integer $validado
  * @property integer $validador_id
@@ -24,6 +25,7 @@ class REquipoPropio extends CActiveRecord
 	public $clave_admin_1;
 	public $clave_admin_2;
 	public $validador_nm;
+	public $horas_panne;
 
 	public $equipo;
 	public $codigo;
@@ -69,6 +71,7 @@ class REquipoPropio extends CActiveRecord
 		return array(
 			array('fecha, reporte, equipoPropio_id, horas, operador_id', 'required'),
 			array('equipoPropio_id, operador_id', 'numerical', 'integerOnly' => true),
+			array('horas_panne', 'numerical', 'integerOnly' => false),
 			array('hInicial, hFinal, horas,horasGps,reporte', 'length', 'max' => 12),
 			array('observaciones', 'safe'),
 			array('reporte', 'unique'),

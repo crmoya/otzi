@@ -356,18 +356,39 @@ class OperativoController extends Controller
 			$model->observaciones_obra = $_POST['REquipoPropio']['observaciones_obra'];
 			$model->fecha = Tools::fixFecha($model->fecha);
 
-			$model->iniPanne = $_POST['REquipoPropio']['iniPanne'];
-			$model->finPanne = $_POST['REquipoPropio']['finPanne'];
+			/* $model->iniPanne = $_POST['REquipoPropio']['iniPanne'];
+			$model->finPanne = $_POST['REquipoPropio']['finPanne']; */
 			$model->panne = $_POST['REquipoPropio']['panne'];
 			$model->usuario_id = Yii::app()->user->id;
 
 			if ($model->panne == 1) {
-				$iniPanne = str_replace(":", "", $_POST['REquipoPropio']['iniPanne']);
+				/* $iniPanne = str_replace(":", "", $_POST['REquipoPropio']['iniPanne']);
 				$finPanne = str_replace(":", "", $_POST['REquipoPropio']['finPanne']);
 				$minutos = $finPanne - $iniPanne;
 				$horas = (int)($minutos / 100);
-				$min = $minutos % 100;
-				$model->minPanne = $horas * 60 + $min;
+				$min = $minutos % 100; */
+				$model->minPanne = $model->horas_panne * 60;
+				$model->iniPanne = "08:00";
+				$horasPanne = $model->horas_panne; // Valor entre 1 y 12
+				// Convertimos iniPanne a un objeto DateTime
+				$iniPanneTime = DateTime::createFromFormat('H:i', $model->iniPanne);
+				// Si iniPanneTime es válido, sumamos horas y minutos según corresponda
+				if ($iniPanneTime !== false) {
+					// Dividimos las horas en la parte entera y la parte decimal
+					$horasEnteras = floor($horasPanne);
+					$minutos = ($horasPanne - $horasEnteras) * 60;
+					// Sumamos las horas enteras
+					$iniPanneTime->modify("+{$horasEnteras} hours");
+					// Sumamos los minutos si los hay
+					if ($minutos > 0) {
+						$iniPanneTime->modify("+{$minutos} minutes");
+					}
+					// Obtenemos la hora final como cadena
+					$model->finPanne = $iniPanneTime->format('H:i');
+				} else {
+					// Manejo del caso en que iniPanne no se pueda convertir correctamente
+					$model->finPanne = null;
+				}
 			} else {
 				$model->minPanne = 0;
 			}
