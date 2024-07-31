@@ -166,8 +166,8 @@ class OperativoController extends Controller
 			$model->fecha = Tools::fixFecha($model->fecha);
 			$model->usuario_id = Yii::app()->user->id;
 
-			$model->iniPanne = $_POST['RCamionPropio']['iniPanne'];
-			$model->finPanne = $_POST['RCamionPropio']['finPanne'];
+			/* $model->iniPanne = $_POST['RCamionPropio']['iniPanne'];
+			$model->finPanne = $_POST['RCamionPropio']['finPanne']; */
 			$model->panne = $_POST['RCamionPropio']['panne'];
 			$model->horometro_inicial = $_POST['RCamionPropio']['horometro_inicial'];
 			$model->horometro_final = $_POST['RCamionPropio']['horometro_final'];
@@ -179,9 +179,7 @@ class OperativoController extends Controller
 					$model->kmFinal = number_format($model->kmFinal * Tools::FACTOR_KMS_MILLAS,2,".","");
 				}
 			}
-			
-
-			if ($model->panne == 1) {
+			/* if ($model->panne == 1) {
 				$iniPanne = str_replace(":", "", $_POST['RCamionPropio']['iniPanne']);
 				$finPanne = str_replace(":", "", $_POST['RCamionPropio']['finPanne']);
 				$minutos = $finPanne - $iniPanne;
@@ -190,9 +188,33 @@ class OperativoController extends Controller
 				$model->minPanne = $horas * 60 + $min;
 			} else {
 				$model->minPanne = 0;
+			} */
+			if ($model->panne == 1) {
+				$model->minPanne = $model->horas_panne * 60;
+				$model->iniPanne = "08:00";
+				$horasPanne = $model->horas_panne; // Valor entre 1 y 12
+				// Convertimos iniPanne a un objeto DateTime
+				$iniPanneTime = DateTime::createFromFormat('H:i', $model->iniPanne);
+				// Si iniPanneTime es válido, sumamos horas y minutos según corresponda
+				if ($iniPanneTime !== false) {
+					// Dividimos las horas en la parte entera y la parte decimal
+					$horasEnteras = floor($horasPanne);
+					$minutos = ($horasPanne - $horasEnteras) * 60;
+					// Sumamos las horas enteras
+					$iniPanneTime->modify("+{$horasEnteras} hours");
+					// Sumamos los minutos si los hay
+					if ($minutos > 0) {
+						$iniPanneTime->modify("+{$minutos} minutes");
+					}
+					// Obtenemos la hora final como cadena
+					$model->finPanne = $iniPanneTime->format('H:i');
+				} else {
+					// Manejo del caso en que iniPanne no se pueda convertir correctamente
+					$model->finPanne = null;
+				}
+			} else {
+				$model->minPanne = 0;
 			}
-
-
 
 			if ($model->save()){
 
@@ -531,7 +553,7 @@ class OperativoController extends Controller
 			$model->observaciones_obra = $_POST['REquipoArrendado']['observaciones_obra'];
 			$model->fecha = Tools::fixFecha($model->fecha);
 			$model->usuario_id = Yii::app()->user->id;
-
+/*
 			$model->iniPanne = $_POST['REquipoArrendado']['iniPanne'];
 			$model->finPanne = $_POST['REquipoArrendado']['finPanne'];
 			$model->panne = $_POST['REquipoArrendado']['panne'];
@@ -546,7 +568,34 @@ class OperativoController extends Controller
 			} else {
 				$model->minPanne = 0;
 			}
-			
+		*/	
+			$model->panne = $_POST['REquipoArrendado']['panne'];
+			if ($model->panne == 1) {
+				$model->minPanne = $model->horas_panne * 60;
+				$model->iniPanne = "08:00";
+				$horasPanne = $model->horas_panne; // Valor entre 1 y 12
+				// Convertimos iniPanne a un objeto DateTime
+				$iniPanneTime = DateTime::createFromFormat('H:i', $model->iniPanne);
+				// Si iniPanneTime es válido, sumamos horas y minutos según corresponda
+				if ($iniPanneTime !== false) {
+					// Dividimos las horas en la parte entera y la parte decimal
+					$horasEnteras = floor($horasPanne);
+					$minutos = ($horasPanne - $horasEnteras) * 60;
+					// Sumamos las horas enteras
+					$iniPanneTime->modify("+{$horasEnteras} hours");
+					// Sumamos los minutos si los hay
+					if ($minutos > 0) {
+						$iniPanneTime->modify("+{$minutos} minutes");
+					}
+					// Obtenemos la hora final como cadena
+					$model->finPanne = $iniPanneTime->format('H:i');
+				} else {
+					// Manejo del caso en que iniPanne no se pueda convertir correctamente
+					$model->finPanne = null;
+				}
+			} else {
+				$model->minPanne = 0;
+			}
 
 			if ($model->save()) {
 
@@ -686,8 +735,8 @@ class OperativoController extends Controller
 			$model->observaciones_obra = $_POST['RCamionArrendado']['observaciones_obra'];
 			$model->fecha = Tools::fixFecha($model->fecha);
 			$model->usuario_id = Yii::app()->user->id;
-			$model->iniPanne = $_POST['RCamionArrendado']['iniPanne'];
-			$model->finPanne = $_POST['RCamionArrendado']['finPanne'];
+			/* $model->iniPanne = $_POST['RCamionArrendado']['iniPanne'];
+			$model->finPanne = $_POST['RCamionArrendado']['finPanne']; */
 			$model->panne = $_POST['RCamionArrendado']['panne'];
 			$model->horometro_inicial = $_POST['RCamionArrendado']['horometro_inicial'];
 			$model->horometro_final = $_POST['RCamionArrendado']['horometro_final'];
@@ -700,13 +749,39 @@ class OperativoController extends Controller
 				}
 			}
 
-			if ($model->panne == 1) {
+			/* if ($model->panne == 1) {
 				$iniPanne = str_replace(":", "", $_POST['RCamionArrendado']['iniPanne']);
 				$finPanne = str_replace(":", "", $_POST['RCamionArrendado']['finPanne']);
 				$minutos = $finPanne - $iniPanne;
 				$horas = (int)($minutos / 100);
 				$min = $minutos % 100;
 				$model->minPanne = $horas * 60 + $min;
+			} else {
+				$model->minPanne = 0;
+			} */
+			if ($model->panne == 1) {
+				$model->minPanne = $model->horas_panne * 60;
+				$model->iniPanne = "08:00";
+				$horasPanne = $model->horas_panne; // Valor entre 1 y 12
+				// Convertimos iniPanne a un objeto DateTime
+				$iniPanneTime = DateTime::createFromFormat('H:i', $model->iniPanne);
+				// Si iniPanneTime es válido, sumamos horas y minutos según corresponda
+				if ($iniPanneTime !== false) {
+					// Dividimos las horas en la parte entera y la parte decimal
+					$horasEnteras = floor($horasPanne);
+					$minutos = ($horasPanne - $horasEnteras) * 60;
+					// Sumamos las horas enteras
+					$iniPanneTime->modify("+{$horasEnteras} hours");
+					// Sumamos los minutos si los hay
+					if ($minutos > 0) {
+						$iniPanneTime->modify("+{$minutos} minutes");
+					}
+					// Obtenemos la hora final como cadena
+					$model->finPanne = $iniPanneTime->format('H:i');
+				} else {
+					// Manejo del caso en que iniPanne no se pueda convertir correctamente
+					$model->finPanne = null;
+				}
 			} else {
 				$model->minPanne = 0;
 			}

@@ -8,6 +8,7 @@
  * @property string $fecha
  * @property integer $reporte
  * @property string $observaciones
+ * @property double $horas_panne
  * @property integer $camionPropio_id
  * @property integer $chofer_id
  * @property string $iniPanne
@@ -24,6 +25,7 @@ class RCamionPropio extends CActiveRecord
 	public $administrador_2;
 	public $clave_admin_1;
 	public $clave_admin_2;
+	public $horas_panne;
 
 	public $camion;
 	public $usuario;
@@ -73,10 +75,11 @@ class RCamionPropio extends CActiveRecord
 		return array(
 			array('fecha, reporte, camionPropio_id,chofer_id', 'required'),
 			array('camionPropio_id,chofer_id', 'numerical', 'integerOnly' => true),
+			array('horas_panne', 'numerical', 'integerOnly' => false),
 			array('camionPropio_id,kmInicial,kmFinal,kmGps', 'length', 'max' => 10),
 			array('reporte', 'length', 'max' => 12),
 			array('reporte','unique'),
-			array('observaciones', 'safe'),
+			array('observaciones, iniPanne, finPanne', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('camion,validador_nm,usuario,codigo,fecha, reporte, observaciones_obra,observaciones,validado', 'safe', 'on' => 'search'),

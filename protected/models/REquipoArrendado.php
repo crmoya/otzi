@@ -12,6 +12,7 @@
  * @property string $hInicial
  * @property string $hFinal
  * @property string $horas
+ * @property double $horas_panne
  * @property integer $equipoArrendado_id
  * @property integer $operador_id
  * @property integer $validado
@@ -24,6 +25,7 @@ class REquipoArrendado extends CActiveRecord
 	public $administrador_2;
 	public $clave_admin_1;
 	public $clave_admin_2;
+	public $horas_panne;
 
 	public $equipo;
 	public $usuario;
@@ -68,6 +70,7 @@ class REquipoArrendado extends CActiveRecord
 		return array(
 			array('fecha, reporte, ordenCompra, horas, equipoArrendado_id, operador_id', 'required'),
 			array('equipoArrendado_id, operador_id', 'numerical', 'integerOnly' => true),
+			array('horas_panne', 'numerical', 'integerOnly' => false),
 			array('ordenCompra', 'length', 'max' => 45),
 			array('hInicial, hFinal, horas,horasGps,reporte', 'length', 'max' => 12),
 			array('observaciones', 'safe'),

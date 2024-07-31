@@ -943,17 +943,17 @@ $cs->registerCoreScript('jquery');
 		<legend>Datos de Panne</legend>
 		<table>
 			<tr>
-				<td style='width:150px;'>¿Ingresar Panne?</td><td><?php echo $form->checkbox($model,'panne',array('id'=>'checkPanne'));?></td>
+				<td style='width:150px;'>¿Ingresar Panne?</td>
+				<td><?php echo $form->checkbox($model, 'panne', array('id' => 'checkPanne')); ?></td>
 			</tr>
 			<tr>
 				<td colspan='2'>
 					<div id='panne'>
 						<table>
 							<tr>
-								<td>Hora Inicio</td>
-								<td><?php echo $form->dropDownList($model,"iniPanne",CHtml::listData(Tools::listarHoras(), 'id', 'nombre'),array('class'=>'iniPanne'));?></td>
-								<td>Hora Fin</td>
-								<td><?php echo $form->dropDownList($model,"finPanne",CHtml::listData(Tools::listarHoras(), 'id', 'nombre'),array('class'=>'finPanne'));?><span id='errorPanne'></span></td>
+								<td style="width: 20%">Horas en Panne</td>
+								<td><?php echo $form->numberField($model, "horas_panne", ['min' => 0.5, 'max' => 12, 'step' => 0.5],
+									['class' => 'iniPanne']); ?><span id='errorPanne'></span></td>
 							</tr>
 						</table>
 					</div>

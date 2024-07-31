@@ -9,6 +9,7 @@
  * @property integer $reporte
  * @property string $observaciones
  * @property string $ordenCompra
+ * @property double $horas_panne
  * @property integer $camionArrendado_id
  * @property integer $chofer_id
  * @property integer $validado
@@ -21,6 +22,7 @@ class RCamionArrendado extends CActiveRecord
 	public $administrador_2;
 	public $clave_admin_1;
 	public $clave_admin_2;
+	public $horas_panne;
 
 	public $camion;
 	public $usuario;
@@ -69,6 +71,7 @@ class RCamionArrendado extends CActiveRecord
 		return array(
 			array('fecha, reporte, ordenCompra, camionArrendado_id,chofer_id', 'required'),
 			array('camionArrendado_id,chofer_id', 'numerical', 'integerOnly' => true),
+			array('horas_panne', 'numerical', 'integerOnly' => false),
 			array('kmInicial,kmFinal,kmGps', 'length', 'max' => 10),
 			array('reporte', 'length', 'max' => 12),
 			array('ordenCompra', 'length', 'max' => 45),
