@@ -150,6 +150,11 @@ class ExpedicionesEquipoPropioController extends Controller {
 						$continue = true;
 					}
 				}
+				if ($expedicion->requipopropio->panne == 1) {
+					$horasPanne = $expedicion->requipopropio->minPanne / 60;
+					$horasReales = $expedicion->unidadfaenaEquipo->horas_minimas - $horasPanne;
+					$produccion_min = $horasReales < 0 ? 0 : $horasReales * $expedicion->unidadfaenaEquipo->pu;
+				}
 			}
 			if ($continue) {
 				continue;

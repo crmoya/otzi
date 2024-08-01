@@ -42,13 +42,13 @@ $cs->registerCoreScript('jquery');
 		<?php echo $form->textField($model,'consumoPromedio',array('size'=>10,'maxlength'=>10,'class'=>'fixed')); ?>
 		<?php echo $form->error($model,'consumoPromedio'); ?>
 	</div>
-	
+	<!-- 
 	<div class="row">
-		<?php echo $form->labelEx($model,'produccionMinima'); ?>
-		<?php echo $form->textField($model,'produccionMinima',array('size'=>10,'maxlength'=>10,'class'=>'fixed')); ?>
-		<?php echo $form->error($model,'produccionMinima'); ?>
+		<?php $form->labelEx($model,'produccionMinima'); ?>
+		<?php $form->textField($model,'produccionMinima',array('size'=>10,'maxlength'=>10,'class'=>'fixed')); ?>
+		<?php $form->error($model,'produccionMinima'); ?>
 	</div>
-	
+	 -->
 	<div class="row">
 		<?php echo $form->labelEx($model,'horasMin'); ?>
 		<?php echo $form->textField($model,'horasMin',array('size'=>10,'maxlength'=>10,'class'=>'fixed')); ?>
