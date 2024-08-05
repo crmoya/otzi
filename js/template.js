@@ -101,6 +101,14 @@ jQuery(document).ready(function () {
 			for (i=0; i<cantidadesPU.length; i++) {
 				cantidadesPU[i].value = $("#REquipoArrendado_horas").val()
 			}
+		} else if ($("#RCamionPropio_horas").val() != null && $("#RCamionPropio_horas").val() != "") {
+			for (i=0; i<cantidadesPU.length; i++) {
+				cantidadesPU[i].value = $("#RCamionPropio_horas").val()
+			}
+		} else if ($("#RCamionArrendado_horas").val() != null && $("#RCamionArrendado_horas").val() != "") {
+			for (i=0; i<cantidadesPU.length; i++) {
+				cantidadesPU[i].value = $("#RCamionArrendado_horas").val()
+			}
 		}
 
 		place.siblings('.templateHead').show();
@@ -268,6 +276,7 @@ jQuery(document).ready(function () {
 		var valorFinal = $(".fixedHF").val();
 		var valor = (valorFinal - valorInicial).toFixed(2);
 		$(".fixedH").val(valor);
+		$(".cantidad").val(valor);
 	});
 
 	$(document.body).on('change', '.fixedHF', function (e) {
@@ -284,6 +293,7 @@ jQuery(document).ready(function () {
 		var valorFinal = $(this).val();
 		var valor = (valorFinal - valorInicial).toFixed(2);
 		$(".fixedH").val(valor);
+		$(".cantidad").val(valor);
 	});
 
 	$(document.body).on('change', '.fixedHInicial', function (e) {
