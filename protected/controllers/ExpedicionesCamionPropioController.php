@@ -110,8 +110,8 @@ class ExpedicionesCamionPropioController extends Controller {
 		if ($model->chkCombLts == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'combustible', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
 		if ($model->chkRepuestos == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'repuestos', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
 		if ($model->chkRemuneraciones == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'remuneraciones', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
-		if ($model->chkHrsPanne == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'horas_panne', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
-		if ($model->chkPanne == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'panne', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
+		if ($model->chkHrsPanne == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'horas_panne', 'exportable', 'format' => 'decimal1', 'acumulado' => 'suma']]);
+		if ($model->chkPanne == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'panne', 'exportable']]);
 
 		$reports = ExpedicionesCamionPropio::model()->findAll($model->search());
 
@@ -199,7 +199,8 @@ class ExpedicionesCamionPropioController extends Controller {
 			$dato['km_gps'] = $report['km_gps'];
 			$dato['horas'] = $report['horas'];
 			$dato['panne'] = $report['panne'];
-			$dato['horas_panne'] = $report['horas_panne'];
+			$floatValue = floatval($report['horas_panne']);
+			$dato['horas_panne'] = number_format($floatValue, 1);
 			$dato['validado'] = $report['validado'];
 			$dato['validador'] = $report['validador'];
 			$dato['id'] = $report['id'];

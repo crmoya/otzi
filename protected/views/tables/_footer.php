@@ -183,13 +183,16 @@ $(document).ready( function () {
 						var parteDecimalTotalesParciales = parseFloat(totalesParciales[indice]) - parseInt(totalesParciales[indice]);
 						var decimalesTotalesParciales = Math.round10(parteDecimalTotalesParciales, -decimales);
 
-						totales[indice] = format((totales[indice] + "").replaceAll('.',','));
+						var totalString = (totales[indice] + "").replace('.', ',');
+						totales[indice] = format(totalString);
 						if(parteDecimalTotales > 0){
-							totales[indice] = totales[indice] + "," + (decimalesTotales + "").substr(2);
+							totales[indice] = totalString;// + "," + (decimalesTotales + "").substr(2);
 						}
-						totalesParciales[indice] = format((totalesParciales[indice] + "").replaceAll('.',','));
+						var totalParcialesString = (totalesParciales[indice] + "").replace('.', ',');
+						totalesParciales[indice] = format(totalParcialesString);
 						if(parteDecimalTotalesParciales > 0){
-							totalesParciales[indice] = totalesParciales[indice] + "," + (decimalesTotalesParciales + "").substr(2);
+							totalesParciales[indice] = totalParcialesString;
+							// totalesParciales[indice] = totalParcialesString + "," + (decimalesTotalesParciales + "").substr(2);
 						}
 						
 					<?php 
