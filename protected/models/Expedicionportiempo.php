@@ -11,7 +11,7 @@
  * @property integer $unidadfaena_id
  *
  * The followings are the available model relations:
- * @property Rcamionpropio $rcamionpropio
+ * @property RCamionPropio $rcamionpropio
  * @property Unidadfaena $unidadfaena
  */
 class Expedicionportiempo extends CActiveRecord
@@ -50,7 +50,7 @@ class Expedicionportiempo extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'rcamionpropio' => array(self::BELONGS_TO, 'Rcamionpropio', 'rcamionpropio_id'),
+			'rcamionpropio' => array(self::BELONGS_TO, 'RCamionPropio', 'rcamionpropio_id'),
 			'unidadfaena' => array(self::BELONGS_TO, 'Unidadfaena', 'unidadfaena_id'),
 		);
 	}

@@ -74,6 +74,7 @@ class ExpedicionesCamionPropioController extends Controller {
 		if ($model->chkKmsGPS == 1) array_splice($cabeceras, count($cabeceras) - 4, 0, [['name' => 'Kms.GPS', 'width' => 'sm']]);
 		if ($model->chkHrs == 1) array_splice($cabeceras, count($cabeceras) - 4, 0, [['name' => 'Hrs.', 'width' => 'sm']]);
 		if ($model->chkProduccion == 1) array_splice($cabeceras, count($cabeceras) - 4, 0, [['name' => 'Producción', 'width' => 'sm']]);
+		if ($model->chkProduccionMinima == 1) array_splice($cabeceras, count($cabeceras) - 4, 0, [['name' => 'Producción Mínima', 'width' => 'sm']]);
 		if ($model->chkCombLts == 1) array_splice($cabeceras, count($cabeceras) - 4, 0, [['name' => 'Comb.Lts', 'width' => 'sm']]);
 		if ($model->chkRepuestos == 1) array_splice($cabeceras, count($cabeceras) - 4, 0, [['name' => 'Repuestos($)', 'width' => 'sm']]);
 		if ($model->chkRemuneraciones == 1) array_splice($cabeceras, count($cabeceras) - 4, 0, [['name' => 'Remuneraciones($)', 'width' => 'sm']]);
@@ -107,6 +108,7 @@ class ExpedicionesCamionPropioController extends Controller {
 		if ($model->chkKmsGPS == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'km_gps', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
 		if ($model->chkHrs == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'horas', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
 		if ($model->chkProduccion == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'produccion', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
+		if ($model->chkProduccionMinima == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'produccion_min', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
 		if ($model->chkCombLts == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'combustible', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
 		if ($model->chkRepuestos == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'repuestos', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
 		if ($model->chkRemuneraciones == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'remuneraciones', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
@@ -119,6 +121,7 @@ class ExpedicionesCamionPropioController extends Controller {
 		foreach ($reports as $report) {
 
 			$produccion = 0;
+			$produccion_min = 0;
 			$combustible = 0;
 			$repuestos = 0;
 			$remuneraciones = 0;
@@ -155,11 +158,20 @@ class ExpedicionesCamionPropioController extends Controller {
 			//producción por tiempo:
 			$expediciones = Expedicionportiempo::model()->findAllByAttributes(['rcamionpropio_id' => $report['id']]);
 			foreach ($expediciones as $expedicion) {
+				// Se hace cambio para calcular manualmente el monto (horas reales * PU)
+				$produccion = ($expedicion->rcamionpropio->horometro_inicial - $expedicion->rcamionpropio->horometro_final) * $expedicion->unidadfaena->pu;
+				// $produccion += $expedicion->total;
+				$produccion_min += $expedicion->unidadfaena->produccion_minima * $expedicion->unidadfaena->pu;
 				$produccion += $expedicion->total;
 				if ($model->faena_id != null && $model->faena_id != "") {
 					if ($model->faena_id != $expedicion->faena_id) {
 						$continue = true;
 					}
+				}
+				if ($expedicion->rcamionpropio->panne == 1) {
+					$horasPanne = $expedicion->rcamionpropio->minPanne / 60;
+					$horasReales = $expedicion->unidadfaena->produccion_minima - $horasPanne;
+					$produccion_min = $horasReales < 0 ? 0 : $horasReales * $expedicion->unidadfaena->pu;
 				}
 			}
 
@@ -205,6 +217,7 @@ class ExpedicionesCamionPropioController extends Controller {
 			$dato['validador'] = $report['validador'];
 			$dato['id'] = $report['id'];
 			$dato['produccion'] = $produccion;
+			$dato['produccion_min'] = $produccion_min;
 			$dato['combustible'] = $combustible;
 			$dato['repuestos'] = $repuestos;
 			$dato['remuneraciones'] = 0;
@@ -253,6 +266,7 @@ class ExpedicionesCamionPropioController extends Controller {
 			$dato['validador'] = "";
 			$dato['id'] = "";
 			$dato['produccion'] = "";
+			$dato['produccion_min'] = "";
 			$dato['combustible'] = 0;
 			$dato['repuestos'] = 0;
 			$dato['remuneraciones'] = $r["neto"];

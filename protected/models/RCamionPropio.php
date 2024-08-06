@@ -11,6 +11,8 @@
  * @property double $horas_panne
  * @property integer $camionPropio_id
  * @property integer $chofer_id
+ * @property string $horometro_inicial
+ * @property string $horometro_final
  * @property string $iniPanne
  * @property string $finPanne
  * @property integer $validado
@@ -82,7 +84,7 @@ class RCamionPropio extends CActiveRecord
 			array('observaciones, iniPanne, finPanne', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('camion,validador_nm,usuario,codigo,fecha, reporte, observaciones_obra,observaciones,validado', 'safe', 'on' => 'search'),
+			array('camion,validador_nm,usuario,codigo,fecha, reporte, observaciones_obra,observaciones,validado,horometro_inicial,horometro_final', 'safe', 'on' => 'search'),
 		);
 	}
 

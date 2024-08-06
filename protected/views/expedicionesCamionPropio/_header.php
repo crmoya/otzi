@@ -71,6 +71,9 @@
 		<?php echo $form->labelEx($model, 'chkProduccion'); ?>
 		<?php echo $form->checkBox($model, 'chkProduccion', array('checked' => $model->chkProduccion == 1 ? "checked" : "")); ?><br />
 
+		<?php echo $form->labelEx($model, 'chkProduccionMinima'); ?>
+		<?php echo $form->checkBox($model, 'chkProduccionMinima',  array('checked' => $model->chkProduccionMinima == 1 ? "checked" : "")); ?><br />
+
 		<?php echo $form->labelEx($model, 'chkCombLts'); ?>
 		<?php echo $form->checkBox($model, 'chkCombLts', array('checked' => $model->chkCombLts == 1 ? "checked" : "")); ?><br />
 
