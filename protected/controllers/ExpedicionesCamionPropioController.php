@@ -175,6 +175,7 @@ class ExpedicionesCamionPropioController extends Controller {
 				if ($expedicion->rcamionpropio->panne == 1) {
 					$horasPanne = $expedicion->rcamionpropio->minPanne / 60;
 					$horas_min = $expedicion->unidadfaena->produccion_minima - $horasPanne;
+					$horas_min = $horas_min < 0 ? 0 : $horas_min;
 					$horasReales = $horas_min;
 					$produccion_min = $horasReales < 0 ? 0 : $horasReales * $expedicion->unidadfaena->pu;
 				}

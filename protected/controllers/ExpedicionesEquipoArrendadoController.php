@@ -152,7 +152,9 @@ class ExpedicionesEquipoArrendadoController extends Controller {
 				}
 				if ($expedicion->requipoarrendado->panne == 1) {
 					$horasPanne = $expedicion->requipoarrendado->minPanne / 60;
-					$horasReales = $expedicion->unidadfaenaEquipo->horas_minimas - $horasPanne;
+					$horas_minimas = $expedicion->unidadfaenaEquipo->horas_minimas - $horasPanne;
+					$horas_minimas = $horas_minimas < 0 ? 0 : $horas_minimas;
+					$horasReales = $horas_minimas;
 					$produccion_min = $horasReales < 0 ? 0 : $horasReales * $expedicion->unidadfaenaEquipo->pu;
 				}
 			}
@@ -232,6 +234,7 @@ class ExpedicionesEquipoArrendadoController extends Controller {
 				$dato['equipo'] = $r["equipoArrendado"]["nombre"];
 				$dato['equipo_codigo'] = isset($r["equipoArrendado"]["codigo"]) ? $r["equipoArrendado"]["codigo"] : "";
 				$dato['horas_reales'] = 0;
+				$dato['horas_min'] = 0;
 				$dato['horas_gps'] = 0;
 				$dato['panne'] = "No";
 				$dato['horas_panne'] = 0;

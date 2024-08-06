@@ -152,7 +152,9 @@ class ExpedicionesEquipoPropioController extends Controller {
 				}
 				if ($expedicion->requipopropio->panne == 1) {
 					$horasPanne = $expedicion->requipopropio->minPanne / 60;
-					$horasReales = $expedicion->unidadfaenaEquipo->horas_minimas - $horasPanne;
+					$horas_minimas = $expedicion->unidadfaenaEquipo->horas_minimas - $horasPanne;
+					$horas_minimas = $horas_minimas < 0 ? 0 : $horas_minimas;
+					$horasReales = $horas_minimas;
 					$produccion_min = $horasReales < 0 ? 0 : $horasReales * $expedicion->unidadfaenaEquipo->pu;
 				}
 			}
@@ -233,6 +235,7 @@ class ExpedicionesEquipoPropioController extends Controller {
 				$dato['equipo'] = $r["equipoPropio"]["nombre"];
 				$dato['equipo_codigo'] = $r["equipoPropio"]["codigo"];
 				$dato['horas_reales'] = 0;
+				$dato['horas_min'] = 0;
 				$dato['horas_gps'] = 0;
 				$dato['panne'] = "No";
 				$dato['horas_panne'] = 0;
