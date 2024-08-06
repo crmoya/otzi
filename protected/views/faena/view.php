@@ -79,6 +79,9 @@ $this->menu=array(
 				PU
 			</th>
 			<th style='background:#e5f1f4;border:white 1px solid;'>
+				Horas Mínimas
+			</th>
+			<th style='background:#e5f1f4;border:white 1px solid;'>
 				Observaciones
 			</th>
 		</tr>
@@ -101,6 +104,7 @@ $this->menu=array(
 					<td style='background:#f8f8f8;border:white 1px solid;'>".$camion."</td>
 					<td style='background:#f8f8f8;border:white 1px solid;'>".$unidad."</td>
 					<td style='background:#f8f8f8;border:white 1px solid;'>".$u['pu']."</td>
+					<td style='background:#f8f8f8;border:white 1px solid;'>".$u['produccion_minima']."</td>
 					<td style='background:#f8f8f8;border:white 1px solid;'>".$u['observaciones']."</td>
 				</tr>";
                 
