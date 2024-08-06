@@ -66,6 +66,9 @@
 
 		<?php echo $form->labelEx($model, 'chkHrs'); ?>
 		<?php echo $form->checkBox($model, 'chkHrs', array('checked' => $model->chkHrs == 1 ? "checked" : "")); ?><br />
+
+		<?php echo $form->labelEx($model, 'chkHrsMin'); ?>
+		<?php echo $form->checkBox($model, 'chkHrsMin', array('checked' => $model->chkHrsMin == 1 ? "checked" : "")); ?><br />
 	</div>
 	<div class="col-md-2">
 		<?php echo $form->labelEx($model, 'chkProduccion'); ?>

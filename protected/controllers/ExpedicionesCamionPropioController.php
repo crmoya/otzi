@@ -73,6 +73,7 @@ class ExpedicionesCamionPropioController extends Controller {
 		if ($model->chkKms == 1) array_splice($cabeceras, count($cabeceras) - 4, 0, [['name' => 'Kms.', 'width' => 'sm']]);
 		if ($model->chkKmsGPS == 1) array_splice($cabeceras, count($cabeceras) - 4, 0, [['name' => 'Kms.GPS', 'width' => 'sm']]);
 		if ($model->chkHrs == 1) array_splice($cabeceras, count($cabeceras) - 4, 0, [['name' => 'Hrs.', 'width' => 'sm']]);
+		if ($model->chkHrsMin == 1) array_splice($cabeceras, count($cabeceras) - 4, 0, [['name' => 'Hrs.Mín.', 'width' => 'sm']]);
 		if ($model->chkProduccion == 1) array_splice($cabeceras, count($cabeceras) - 4, 0, [['name' => 'Producción', 'width' => 'sm']]);
 		if ($model->chkProduccionMinima == 1) array_splice($cabeceras, count($cabeceras) - 4, 0, [['name' => 'Producción Mínima', 'width' => 'sm']]);
 		if ($model->chkCombLts == 1) array_splice($cabeceras, count($cabeceras) - 4, 0, [['name' => 'Comb.Lts', 'width' => 'sm']]);
@@ -107,6 +108,7 @@ class ExpedicionesCamionPropioController extends Controller {
 		if ($model->chkKms == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'km_recorridos', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
 		if ($model->chkKmsGPS == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'km_gps', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
 		if ($model->chkHrs == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'horas', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
+		if ($model->chkHrsMin == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'horas_min', 'exportable', 'format' => 'decimal1', 'acumulado' => 'suma']]);
 		if ($model->chkProduccion == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'produccion', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
 		if ($model->chkProduccionMinima == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'produccion_min', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
 		if ($model->chkCombLts == 1) array_splice($extra_datos, count($extra_datos) - 4, 0, [['campo' => 'combustible', 'exportable', 'format' => 'number', 'acumulado' => 'suma']]);
@@ -122,6 +124,7 @@ class ExpedicionesCamionPropioController extends Controller {
 
 			$produccion = 0;
 			$produccion_min = 0;
+			$horas_min = 0;
 			$combustible = 0;
 			$repuestos = 0;
 			$remuneraciones = 0;
@@ -159,7 +162,7 @@ class ExpedicionesCamionPropioController extends Controller {
 			$expediciones = Expedicionportiempo::model()->findAllByAttributes(['rcamionpropio_id' => $report['id']]);
 			foreach ($expediciones as $expedicion) {
 				// Se hace cambio para calcular manualmente el monto (horas reales * PU)
-				$produccion = ($expedicion->rcamionpropio->horometro_inicial - $expedicion->rcamionpropio->horometro_final) * $expedicion->unidadfaena->pu;
+				// $produccion += ($expedicion->rcamionpropio->horometro_inicial - $expedicion->rcamionpropio->horometro_final) * $expedicion->unidadfaena->pu;
 				// $produccion += $expedicion->total;
 				$produccion_min += $expedicion->unidadfaena->produccion_minima * $expedicion->unidadfaena->pu;
 				$produccion += $expedicion->total;
@@ -168,9 +171,11 @@ class ExpedicionesCamionPropioController extends Controller {
 						$continue = true;
 					}
 				}
+				$horas_min += $expedicion->unidadfaena->produccion_minima;
 				if ($expedicion->rcamionpropio->panne == 1) {
 					$horasPanne = $expedicion->rcamionpropio->minPanne / 60;
-					$horasReales = $expedicion->unidadfaena->produccion_minima - $horasPanne;
+					$horas_min = $expedicion->unidadfaena->produccion_minima - $horasPanne;
+					$horasReales = $horas_min;
 					$produccion_min = $horasReales < 0 ? 0 : $horasReales * $expedicion->unidadfaena->pu;
 				}
 			}
@@ -210,6 +215,7 @@ class ExpedicionesCamionPropioController extends Controller {
 			$dato['km_recorridos'] = $report['km_recorridos'];
 			$dato['km_gps'] = $report['km_gps'];
 			$dato['horas'] = $report['horas'];
+			$dato['horas_min'] = $horas_min;
 			$dato['panne'] = $report['panne'];
 			$floatValue = floatval($report['horas_panne']);
 			$dato['horas_panne'] = number_format($floatValue, 1);
@@ -260,6 +266,7 @@ class ExpedicionesCamionPropioController extends Controller {
 			$dato['km_recorridos'] = 0;
 			$dato['km_gps'] = 0;
 			$dato['horas'] = 0;
+			$dato['horas_min'] = 0;
 			$dato['panne'] = "No";
 			$dato['horas_panne'] = 0;
 			$dato['validado'] = "";

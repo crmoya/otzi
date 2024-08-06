@@ -5,7 +5,9 @@ class ExpedicionesCamionArrendado extends CActiveRecord
 	public $chkKms;
 	public $chkKmsGPS;
 	public $chkHrs;
+	public $chkHrsMin;
 	public $chkProduccion;
+	public $chkProduccionMinima;
 	public $chkCombLts;
 	public $chkRepuestos;
 	public $chkRemuneraciones;
@@ -21,7 +23,7 @@ class ExpedicionesCamionArrendado extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('fecha_inicio, fecha_fin, camion_id, faena_id, reporte, chofer_id', 'safe', 'on'=>'search'),
-			array('chkKms, chkKmsGPS, chkHrs, chkProduccion, chkCombLts, chkRepuestos,
+			array('chkKms, chkKmsGPS, chkHrs, chkHrsMin, chkProduccion, chkProduccionMinima, chkCombLts, chkRepuestos,
 				chkRemuneraciones, chkHrsPanne, chkPanne', 'safe'),
 		);
 	}
@@ -84,7 +86,9 @@ class ExpedicionesCamionArrendado extends CActiveRecord
 			'chkKms' => 'Kms.',
 			'chkKmsGPS' => 'Kms. GPS',
 			'chkHrs' => 'Hrs.',
+			'chkHrsMin' => 'Hrs.Mín.',
 			'chkProduccion' => 'Producción',
+			'chkProduccionMinima' => 'Prod.Mín.',
 			'chkCombLts' => 'Comb. Lts.',
 			'chkRepuestos' => 'Repuestos',
 			'chkRemuneraciones' => 'Remuneraciones',
