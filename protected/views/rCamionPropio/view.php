@@ -30,10 +30,14 @@
 				<td><?php echo CHtml::encode(number_format($model->kmFinal, 2, ',', '.')); ?></td>
 			</tr>
 			<tr>
-				<td style='font-size:0.9em;'><b>Km GPS:</b></td>
-				<td><?php echo CHtml::encode(number_format($model->kmGps, 2, ',', '.')); ?></td>
-				<td style='font-size:0.9em;'><b>Km Recorridos:</b></td>
-				<td><?php echo CHtml::encode(number_format($recorridos, 2, ',', '.')); ?></td>
+				<td style='font-size:0.9em;'><b>Horómetro Inicial:</b></td>
+				<td><?php echo CHtml::encode(number_format($model->horometro_inicial, 2, ',', '.')); ?></td>
+				<td style='font-size:0.9em;'><b>Horómetro Final:</b></td>
+				<td><?php echo CHtml::encode(number_format($model->horometro_final, 2, ',', '.')); ?></td>
+			</tr>
+			<tr>
+				<td style='font-size:0.9em;'><b>Horas:</b></td>
+				<td><?php echo CHtml::encode(number_format($model->horometro_final - $model->horometro_inicial, 2, ',', '.')); ?></td>
 			</tr>
 		</table>
 	</fieldset>
